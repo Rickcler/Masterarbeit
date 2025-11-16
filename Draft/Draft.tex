@@ -1,0 +1,160 @@
+\documentclass[12pt,a4paper]{scrreprt}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage{natbib}
+\usepackage{hyperref}
+\bibliographystyle{apalike}
+\begin{document}
+
+\section*{Categorical Time-Series Analysis}
+\subsection*{General Notation}
+
+$(X_t)$ is a categorical (ordinal/ nominal) \textit{stationary} process  
+\begin{enumerate}
+    \item $E(X_t) = \mu_X\quad \forall t$
+    \item $E(X_t^2) < \infty \quad \forall t$
+    \item $Cov(X_t, X_{t+h}) = \gamma(h) \quad  \forall t, ~ h$ 
+\end{enumerate}
+
+with range $S = \{s_0, \ldots, s_m\}~ m \in \mathbb{N}$. While the order of the elements in $S$ represents the natural of the elements in the ordinal case, it is arbitrary in the case of nominal $S$ and only used for readability and consistency in notation.  \\
+
+Analytical tools for ordinal time series are using the marginal CDF ($\boldsymbol{f}$) while tools for nominal data are based on the marginal PMF ($\boldsymbol{p}$): 
+\begin{align*}
+    \boldsymbol{f} &:= F(X_{t ~ (ord.)}) = (f_0, ~ \ldots, f_{m-1})^T  = (P(X_{t ~ (ord.)} \leq s_0), ~ \ldots,P(X_{t ~ (ord.)}\leq s_{m-1}))^T \\
+    \boldsymbol{p} &:= f(X_{t ~ (nom.)}) = (p_0, ~ \ldots, p_{m})^T  = (P(X_{t ~ (nom.)} = s_0), ~ \ldots,P(X_{t ~ (nom.)} = s_{m}))^T
+\end{align*}
+
+And bivariate (cumulative) probabilities with time lag $(h)$ are accordingly: 
+\begin{align*}
+    f_{i j}(h) &= P(X_t \leq s_i, X_{t+h} \leq s_j) \quad j, i < m\\
+    p_{i j}(h) &= P(X_t = s_i, X_{t+h} = s_j) \quad j, i \leq m  
+\end{align*}
+\subsection*{Location}
+
+For ordinal data, the measure of location if given by the median and for ordinal its the mode
+\[Med(X_{t~ (ord.)}) = min(s_i \in  S: F(s_i) \geq \frac{1}{2})\]
+\[Mod(X_{t~ (nom.)}) = s_i \in S: P(X_t = s_i) =arg  max(\boldsymbol{p})\]
+
+\subsection*{Measures of Dispersion}
+
+Dispersion of categorical variables is commonly quantified via the 
+\emph{Index of Ordinal Variation} (IOV) for ordinal data and the 
+\emph{Index of Qualitative Variation} (IQV) for nominal data. 
+Both measures take values in the interval $[0,1]$, where $0$ indicates 
+no dispersion (degenerate one–point distribution) and $1$ indicates 
+maximal dispersion.
+
+For ordinal variables, dispersion is defined in terms of the CDF vector 
+$\mathbf{f}$:
+\[
+\mathrm{IOV}
+= \frac{4}{m}\sum_{i=0}^{m-1} f_i (1 - f_i),
+\]
+where $f_i = P(X_t \le s_i)$.
+
+For nominal variables, dispersion is defined in terms of the PMF 
+$\mathbf{p}$:
+\[
+\mathrm{IQV}
+= \frac{m+1}{m}\bigg(1 - \sum_{i=0}^{m} p_i^2\bigg),
+\qquad p_i = P(X_t = s_i).
+\]
+
+\subsubsection*{Minimal Dispersion}
+
+Both measures attain the value $0$ if and only if the distribution is 
+degenerate, that is, if all probability mass is concentrated in a single 
+category.
+
+\paragraph{Ordinal case.}
+A one–point distribution is characterized by a CDF vector 
+$\mathbf{f}$ of the form
+\[
+\mathbf{f} \in \left\{
+\begin{pmatrix} 1 \\ 1 \\ \vdots \\ 1 \end{pmatrix},
+\begin{pmatrix} 0 \\ 1 \\ \vdots \\ 1 \end{pmatrix}, 
+\ldots,
+\begin{pmatrix} 0 \\ 0 \\ \vdots \\ 1 \end{pmatrix}
+\right\}.
+\]
+In each case, at every index $i$ either $f_i = 0$ or $f_i = 1$, hence
+\[
+f_i(1 - f_i) = 0 \qquad \forall i.
+\]
+Therefore,
+\[
+\mathrm{IOV} = \frac{4}{m}\sum_{i=0}^{m-1} f_i(1 - f_i) = 0.
+\]
+
+\paragraph{Nominal case.}
+A degenerate distribution has a PMF of the form
+\[
+\mathbf{p} \in \left\{
+\begin{pmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{pmatrix},
+\begin{pmatrix} 0 \\ 1 \\ \vdots \\ 0 \end{pmatrix},
+\ldots,
+\begin{pmatrix} 0 \\ 0 \\ \vdots \\ 1 \end{pmatrix}
+\right\}.
+\]
+Thus,
+\[
+\sum_{i=0}^m p_i^2 = m \cdot 0 + 1\cdot 1= 1,
+\]
+and therefore
+\[
+\mathrm{IQV} = \frac{m+1}{m}(1 - 1) = 0.
+\]
+
+
+\subsubsection*{Maximal Dispersion}
+
+\paragraph{Ordinal case.}
+Dispersion of an ordinal variable is maximal when half of the 
+probability mass lies in the lowest category and half in the highest 
+category; all intermediate categories receive probability zero.  
+This results in a CDF vector
+\[
+\mathbf{f} = \left(\tfrac{1}{2}, \tfrac{1}{2}, \ldots, \tfrac{1}{2}\right)^\top.
+\]
+Then
+\[
+f_i(1 - f_i) = \frac{1}{2}\left(1 - \frac{1}{2}\right) = \frac{1}{4} \qquad \forall i,
+\]
+and thus
+\[
+\mathrm{IOV}
+= \frac{4}{m} \cdot \sum_{i=0}^{m-1} \frac{1}{4}
+= \frac{4}{m} \cdot \frac{m}{4}
+= 1.
+\]
+
+\paragraph{Nominal case.}
+Maximal dispersion is obtained when probability mass is distributed 
+uniformly across all $m+1$ categories:
+\[
+p_i = \frac{1}{m+1}, \qquad i = 0,\ldots,m.
+\]
+Then
+\[
+\sum_{i=0}^m p_i^2 = (m+1)\frac{1}{(m+1)^2}
+= \frac{1}{m+1},
+\]
+so that
+\[
+\mathrm{IQV}
+= \frac{m+1}{m}\left(1 - \frac{1}{m+1}\right)
+= \frac{m+1}{m} \cdot \frac{m}{m+1}
+= 1.
+\]
+
+\section*{Samples Measures}
+
+For the estimation of the (cumulative) probabailities based on samples we use the (cumulative) relative frequencies, that can be be best expressed if switching from $(X_t)$ to its binarization ($(\boldsymbol{Z_t})$ for ordinal variables, $(\boldsymbol{Y}_t)$ for nominal):
+\[\boldsymbol{Z}_t = (Z_{t, 0}, \ldots, Z_{t, m-1})^T,  Z_{t, i} = I_{\{X_t \leq s_i\}} \qquad \boldsymbol{Y}_t = (Y_{t, 0}, \ldots, Y_{t, m})^T, Y_{t, i} = I_{\{X_t = s_i\}}  \]
+
+Now we can estimate $\boldsymbol{p}/ \boldsymbol{f}$ by taking the mean about the binarization:
+\[\boldsymbol{\hat{f}} = \frac{1}{n}\sum_{t=1}^{n} \boldsymbol{Z}_t, \quad \boldsymbol{\hat{p}} = \frac{1}{n}\sum_{t=1}^{n} \boldsymbol{Y}_t \]
+\end{document}
