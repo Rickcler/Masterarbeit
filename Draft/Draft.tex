@@ -10,28 +10,60 @@
 \begin{document}
 
 \section*{Categorical Time-Series Analysis}
+
 \subsection*{General Notation}
 
-$(X_t)$ is a categorical (ordinal/ nominal) \textit{stationary} process  
-\begin{enumerate}
-    \item $E(X_t) = \mu_X\quad \forall t$
-    \item $E(X_t^2) < \infty \quad \forall t$
-    \item $Cov(X_t, X_{t+h}) = \gamma(h) \quad  \forall t, ~ h$ 
-\end{enumerate}
+Let $(X_t)$ be a \textit{stationary categorical time series}, where each $X_t$ takes values in
+\[
+S = \{s_0, \dots, s_m\}, \qquad m \in \mathbb{N}.
+\]
+$(X_t)$ may be \text{nominal}, in which case the order of the elements in $S$ in arbitrary and solely useful for notational consistency, or $ordinal$, in which case the order of the elements in $S$ reflects the inherent oder     of the elements.  
+Stationarity requires
+\[
+\begin{aligned}
+E(X_t) &= \mu_X \quad &&\forall t, \\
+E(X_t^2) &< \infty \quad &&\forall t, \\
+\mathrm{Cov}(X_t, X_{t+h}) &= \gamma(h) \quad &&\forall t,h. 
+\end{aligned}
+\]
 
-with range $S = \{s_0, \ldots, s_m\}~ m \in \mathbb{N}$. While the order of the elements in $S$ represents the natural of the elements in the ordinal case, it is arbitrary in the case of nominal $S$ and only used for readability and consistency in notation.  \\
+\subsection*{Marginal Distributions}
 
-Analytical tools for ordinal time series are using the marginal CDF ($\boldsymbol{f}$) while tools for nominal data are based on the marginal PMF ($\boldsymbol{p}$): 
-\begin{align*}
-    \boldsymbol{f} &:= F(X_{t ~ (ord.)}) = (f_0, ~ \ldots, f_{m-1})^T  = (P(X_{t ~ (ord.)} \leq s_0), ~ \ldots,P(X_{t ~ (ord.)}\leq s_{m-1}))^T \\
-    \boldsymbol{p} &:= f(X_{t ~ (nom.)}) = (p_0, ~ \ldots, p_{m})^T  = (P(X_{t ~ (nom.)} = s_0), ~ \ldots,P(X_{t ~ (nom.)} = s_{m}))^T
-\end{align*}
+Since ordinal and nominal scales encode different types of information, their marginal distributions require different representations.
 
-And bivariate (cumulative) probabilities with time lag $(h)$ are accordingly: 
-\begin{align*}
-    f_{i j}(h) &= P(X_t \leq s_i, X_{t+h} \leq s_j) \quad j, i < m\\
-    p_{i j}(h) &= P(X_t = s_i, X_{t+h} = s_j) \quad j, i \leq m  
-\end{align*}
+\begin{itemize}
+    \item \textbf{Ordinal data:} To integrate the order inherent to $S$ we use the cumulative distribution function (CDF)
+    \[
+    \mathbf{f} = (f_0, \dots, f_{m-1})^\top, 
+    \qquad 
+    f_i := P(X_t \le s_i).
+    \]
+
+    \item \textbf{Nominal data:} Since categories are unordered, we use the marginal probability mass function (PMF)
+    \[
+    \mathbf{p} = (p_0, \dots, p_m)^\top, 
+    \qquad
+    p_i := P(X_t = s_i),
+    \]
+\end{itemize}
+
+\subsection*{Bivariate Probabilities at Lag $h$}
+
+Temporal dependence can be described by bivariate (lag-$h$) probabilities:
+
+\begin{itemize}
+    \item \textbf{Ordinal series (cumulative):}
+    \[
+    f_{ij}(h) := P(X_t \le s_i,\, X_{t+h} \le s_j), \qquad i,j < m.
+    \]
+
+    \item \textbf{Nominal series (joint):}
+    \[
+    p_{ij}(h) := P(X_t = s_i,\, X_{t+h} = s_j), \qquad i,j \le m.
+    \]
+\end{itemize}
+
+These quantities serve as input for dependence measures such as association coefficients or transition structures.
 \subsection*{Location}
 
 For ordinal data, the measure of location if given by the median and for ordinal its the mode
@@ -51,9 +83,8 @@ For ordinal variables, dispersion is defined in terms of the CDF vector
 $\mathbf{f}$:
 \[
 \mathrm{IOV}
-= \frac{4}{m}\sum_{i=0}^{m-1} f_i (1 - f_i),
-\]
-where $f_i = P(X_t \le s_i)$.
+= \frac{4}{m}\sum_{i=0}^{m-1} f_i (1 - f_i), \text{ where } f_i = P(X_t \le s_i)\]
+
 
 For nominal variables, dispersion is defined in terms of the PMF 
 $\mathbf{p}$:
@@ -157,4 +188,37 @@ For the estimation of the (cumulative) probabailities based on samples we use th
 
 Now we can estimate $\boldsymbol{p}/ \boldsymbol{f}$ by taking the mean about the binarization:
 \[\boldsymbol{\hat{f}} = \frac{1}{n}\sum_{t=1}^{n} \boldsymbol{Z}_t, \quad \boldsymbol{\hat{p}} = \frac{1}{n}\sum_{t=1}^{n} \boldsymbol{Y}_t \]
+
+To get the asymptotics of the different sample measures, we first need a CLT on $ \boldsymbol{\hat{f}}/ \boldsymbol{\hat{p}}$ \\
+,0
+As our data are not (necesarilly) indepedent, the CLT only holds for a stationary process that fullfills a strong mixing condition (e.g. alpha mixing; Bradley 2005). The stationarity of $\boldsymbol{Z_t}/ \boldsymbol{Y_t}$ follows from the stationarity of $X_t$, as the transforming function is deterministic. \\
+
+A sequence is said to be $\alpha$-mixing, if: 
+\begin{align*}
+    \text{For any event } &A \in \sigma(X_s : s \leq t) \text{ and event } B \in \sigma(X_s : s \geq t+h ) \text{ the }\alpha\text{-coefficient} \\
+    & \alpha(h)=  \sup |P(A\cup B) - P(A)P(B)| \text{ goes to } 0 \text{ for } h \rightarrow \infty
+\end{align*}
+
+If $\alpha$-mixing is satisfied it holds that: 
+ 
+\[\sqrt{n} (\overbrace{\bar{\boldsymbol{Z}}_t}^{= \boldsymbol{\hat{f}}}- \boldsymbol{f} )\overset{d}{\rightarrow} \mathcal{N}(0, \boldsymbol{\Sigma}), \quad\text{ with } \boldsymbol{\Sigma} = (\sigma_{i,j})_{i,j = 0, ~ \ldots, m-1} \]
+\[\text{where }\sigma_{i,j} = Cov(Z_{0,i},Z_{0,j}) + \sum_{h=1}^{\infty} \left(Cov(Z_{0, i}, Z_{h, j}) + Cov(Z_{h, i}, Z_{0, j})\right) \]
+\[\text{and } Cov(Z_{t, i}, Z_{s, j}) = \begin{cases}
+    f_{ij}(t-s)-f_i f_j & \text{if } t \geq s \\
+    f_{ji}(s-t)-f_i f_j & \text{if } s \geq t 
+\end{cases}\]
+
+To now derive the asymptotics of the dispersion measures (scalar functions) we can apply the delta method (i.e. Theorem on 5.25 on Asymptotic Distribution of $g(\boldsymbol{X}_n)$ in the formulary) according to which the following holds:
+ 
+\[n^{\frac{1}{2}}(IOV(\boldsymbol{\hat{f}})- IOV(\boldsymbol{f})) \overset{d}{\rightarrow} \mathcal{N}(0, \boldsymbol{G\Sigma G})\]
+\[\text{Where } G_{1 \times m} = \left[\frac{\partial IOV(\boldsymbol{f})}{\partial \hat{f}_0}, \ldots, \frac{\partial IOV(\boldsymbol{f})}{\partial \hat{f}_{m-1}}\right]' \]
+
+The derivations for other dispersion metrics are analogous.
+
+\section*{Modelling Missingness}
+
+To model the missingness amplitude modulation is used. The concept stems from physics and allows to model a stochastic process that runs concurrent to another one an modulates its amplitude. In the case of missingness the main process $(X_t)_{t}$ is either there or not there. Therefor we can define our apmlitude modulating process as 
+\[O_t \in \{0,1\} \quad \forall t\] 
+where $O_t = 1$ if $(X_t)$ is observed and 0 if it isn't
+
 \end{document}
