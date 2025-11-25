@@ -13,12 +13,14 @@
 
 \subsection*{General Notation}
 
-Let $(X_t)$ be a \textit{stationary categorical time series}, where each $X_t$ takes values in
+Let $(X_t)$ be a \textit{categorical}  time series process, where each $X_t$ takes values in
 \[
-S = \{s_0, \dots, s_m\}, \qquad m \in \mathbb{N}.
+S := \{s_0, \dots, s_m\}, \qquad m \in \mathbb{N}.
 \]
-$(X_t)$ may be \text{nominal}, in which case the order of the elements in $S$ in arbitrary and solely useful for notational consistency, or $ordinal$, in which case the order of the elements in $S$ reflects the inherent oder     of the elements.  
-Stationarity requires
+
+$(X_t)$ may be \textit{nominal}, in which case the order of magnitude of the elements in $S$ is arbitrary and solely usesd for notational consistency, or $ordinal$, in which case the order of the elements in $S$ reflects the inherent order of the elements.\\  
+
+Furthermore, $(X_t)$ is assumed to be stationary. A distinction is made between two forms of stationarity. A process is said to be weakly stationary if:
 \[
 \begin{aligned}
 E(X_t) &= \mu_X \quad &&\forall t, \\
@@ -27,9 +29,12 @@ E(X_t^2) &< \infty \quad &&\forall t, \\
 \end{aligned}
 \]
 
+In contrast, strong stationarity requires that all finite-dimensional distributions are invariant under time shifts, i.e.,
+\[F_{X_t, \ldots, X_{t + j}} = F_{X_{t+h}, \ldots, X_{t+h + j}} \quad \forall t, j, h\]
+
 \subsection*{Marginal Distributions}
 
-Since ordinal and nominal scales encode different types of information, their marginal distributions require different representations.
+Since ordinal and nominal data encode different types of information, their marginal distributions require different representations:
 
 \begin{itemize}
     \item \textbf{Ordinal data:} To integrate the order inherent to $S$ we use the cumulative distribution function (CDF)
