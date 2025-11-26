@@ -21,7 +21,7 @@ S := \{s_0, \dots, s_m\}, \qquad m \in \mathbb{N}.
 $(X_t)$ may be \textit{nominal}, in which case the order of magnitude of the elements in $S$ is arbitrary and solely usesd for notational consistency, or $ordinal$, in which case the order of the elements in $S$ reflects the inherent order of the elements.\\  
 
 Furthermore, $(X_t)$ is assumed to be stationary. A distinction is made between two forms of stationarity. A process is said to be weakly stationary if:
-\[
+    \[
 \begin{aligned}
 E(X_t) &= \mu_X \quad &&\forall t, \\
 E(X_t^2) &< \infty \quad &&\forall t, \\
@@ -31,26 +31,29 @@ E(X_t^2) &< \infty \quad &&\forall t, \\
 
 In contrast, strong stationarity requires that all finite-dimensional distributions are invariant under time shifts, i.e.,
 \[F_{X_t, \ldots, X_{t + j}} = F_{X_{t+h}, \ldots, X_{t+h + j}} \quad \forall t, j, h\]
-
 \subsection*{Marginal Distributions}
 
-Since ordinal and nominal data encode different types of information, their marginal distributions require different representations:
-
+Regardless of whether we consider a simple categorical process with few categories or attempt to describe a complex, temporally evolving process using moments and measures of serial dependence, the analysis of categorical processes is always built on examination of the marginal probabilities. However, because ordinal and nominal data encode different types of information, their marginals are typically represented in different ways:
 \begin{itemize}
-    \item \textbf{Ordinal data:} To integrate the order inherent to $S$ we use the cumulative distribution function (CDF)
+    \item \textbf{Ordinal data:}  
+    Analytical tools for ordinal processes must preserve the natural ordering of the elements in $S$. Measures that ignore this ordering—such as the mode—would discard essential information about the relative positions of the categories. For this reason, methods for ordinal data rely on the marginal cumulative distribution function (CDF), which accumulates probabilities in accordance with the natural ordering of the categories, thereby preserving the ordinal structure, and is therefore the standard representation for ordinal data:
     \[
-    \mathbf{f} = (f_0, \dots, f_{m-1})^\top, 
-    \qquad 
-    f_i := P(X_t \le s_i).
+        \mathbf{f} = (f_0, \dots, f_{m-1})^\top,
+        \qquad 
+        f_i := P(X_t \le s_i).
     \]
+    Although one could equivalently estimate the PMF and derive the CDF from it, representing ordinal data through the CDF is often more convenient and aligns with widely used modelling frameworks.
 
-    \item \textbf{Nominal data:} Since categories are unordered, we use the marginal probability mass function (PMF)
+    \item \textbf{Nominal data:}  
+    Since the categories of nominal variables do not possess a meaningful order, statistical procedures cannot make use of cumulative structure.  
+    Therefore the marginal distribution is best represented by the probability mass function (PMF):
     \[
-    \mathbf{p} = (p_0, \dots, p_m)^\top, 
-    \qquad
-    p_i := P(X_t = s_i),
+        \mathbf{p} = (p_0, \dots, p_{m-1})^\top,
+        \qquad 
+        p_i := P(X_t = s_i).
     \]
 \end{itemize}
+
 
 \subsection*{Bivariate Probabilities at Lag $h$}
 
