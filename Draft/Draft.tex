@@ -33,7 +33,8 @@ In contrast, strong stationarity requires that all finite-dimensional distributi
 \[F_{X_t, \ldots, X_{t + j}} = F_{X_{t+h}, \ldots, X_{t+h + j}} \quad \forall t, j, h\]
 \subsection*{Marginal Distributions}
 
-Regardless of whether we consider a simple categorical process with few categories or attempt to describe a complex, temporally evolving process using moments and measures of serial dependence, the analysis of categorical processes is always built on examination of the marginal probabilities. However, because ordinal and nominal data encode different types of information, their marginals are typically represented in different ways:
+Regardless of whether we consider a simple categorical process with few categories or attempt to describe a complex, temporally evolving process using moments and measures of serial dependence, the analysis of categorical processes is always built on the examination of the marginal probabilities. However, because ordinal and nominal data encode different types of information, their marginals are typically represented in different ways:
+
 \begin{itemize}
     \item \textbf{Ordinal data:}  
     Analytical tools for ordinal processes must preserve the natural ordering of the elements in $S$. Measures that ignore this ordering—such as the mode—would discard essential information about the relative positions of the categories. For this reason, methods for ordinal data rely on the marginal cumulative distribution function (CDF), which accumulates probabilities in accordance with the natural ordering of the categories, thereby preserving the ordinal structure, and is therefore the standard representation for ordinal data:
@@ -42,13 +43,16 @@ Regardless of whether we consider a simple categorical process with few categori
         \qquad 
         f_i := P(X_t \le s_i).
     \]
+
+    For ordinal data, it is sufficient to consider the cumulative probabilities of the categories $0, \ldots , m-1$ since the cumulative probability of the last category $m$ is always equal to 1. \\
+    
     Although one could equivalently estimate the PMF and derive the CDF from it, representing ordinal data through the CDF is often more convenient and aligns with widely used modelling frameworks.
 
     \item \textbf{Nominal data:}  
     Since the categories of nominal variables do not possess a meaningful order, statistical procedures cannot make use of cumulative structure.  
     Therefore the marginal distribution is best represented by the probability mass function (PMF):
     \[
-        \mathbf{p} = (p_0, \dots, p_{m-1})^\top,
+        \mathbf{p} = (p_0, \dots, p_{m})^\top,
         \qquad 
         p_i := P(X_t = s_i).
     \]
@@ -74,33 +78,30 @@ Temporal dependence can be described by bivariate (lag-$h$) probabilities:
 These quantities serve as input for dependence measures such as association coefficients or transition structures.
 \subsection*{Location}
 
-For ordinal data, the measure of location if given by the median and for ordinal its the mode
-\[Med(X_{t~ (ord.)}) = min(s_i \in  S: F(s_i) \geq \frac{1}{2})\]
-\[Mod(X_{t~ (nom.)}) = s_i \in S: P(X_t = s_i) =arg  max(\boldsymbol{p})\]
+The choice of a location measure for a categorical process depends on whether the process is ordinal or nominal. 
+For an ordinal process, the natural ordering of the categories must be respected, and the median serves as an appropriate measure of central tendency:
+\[
+\operatorname{Med}(X_t)
+=
+\min \bigl\{\, s_i \in S : F(s_i) \ge \tfrac{1}{2} \,\bigr\}.
+\]
 
+For a nominal process, any measure that relies on ordering is inappropriate. 
+Instead, a location measure must depend only on the category probabilities. 
+The mode, defined as the most probable category,
+\[
+\operatorname{Mod}(X_t) = \arg\max_{s_i \in S} P(X_t = s_i),
+\]
+is therefore the natural choice.
 \subsection*{Measures of Dispersion}
 
-Dispersion of categorical variables is commonly quantified via the 
-\emph{Index of Ordinal Variation} (IOV) for ordinal data and the 
-\emph{Index of Qualitative Variation} (IQV) for nominal data. 
-Both measures take values in the interval $[0,1]$, where $0$ indicates 
-no dispersion (degenerate one–point distribution) and $1$ indicates 
-maximal dispersion.
+The concept of dispersion differs between ordinal and nominal processes. Therefore, two separate measures are used: the \emph{Index of Ordinal Variation} (IOV) for ordinal data and the \emph{Index of Qualitative Variation} (IQV) for nominal data. Both indices are scaled to the interval $[0,1]$, where a value of $0$ represents minimal dispersion and a value of $1$ represents maximal dispersion.\\
 
-For ordinal variables, dispersion is defined in terms of the CDF vector 
-$\mathbf{f}$:
+
 \[
 \mathrm{IOV}
-= \frac{4}{m}\sum_{i=0}^{m-1} f_i (1 - f_i), \text{ where } f_i = P(X_t \le s_i)\]
+= \frac{4}{m}\sum_{i=0}^{m-1} f_i (1 - f_i) \qquad \mathrm{IQV} = \frac{m+1}{m}\bigg(1 - \sum_{i=0}^{m} p_i^2\bigg) \]
 
-
-For nominal variables, dispersion is defined in terms of the PMF 
-$\mathbf{p}$:
-\[
-\mathrm{IQV}
-= \frac{m+1}{m}\bigg(1 - \sum_{i=0}^{m} p_i^2\bigg),
-\qquad p_i = P(X_t = s_i).
-\]
 
 \subsubsection*{Minimal Dispersion}
 
@@ -109,43 +110,75 @@ degenerate, that is, if all probability mass is concentrated in a single
 category.
 
 \paragraph{Ordinal case.}
-A one–point distribution is characterized by a CDF vector 
-$\mathbf{f}$ of the form
+A one–point distribution assigns all probability mass to a single category 
+$s_j \in S$.  
+For ordinal data, this corresponds to a CDF vector $\mathbf{f}$ of the form
 \[
-\mathbf{f} \in \left\{
+\mathbf{f} \in 
+\left\{
 \begin{pmatrix} 1 \\ 1 \\ \vdots \\ 1 \end{pmatrix},
-\begin{pmatrix} 0 \\ 1 \\ \vdots \\ 1 \end{pmatrix}, 
+\begin{pmatrix} 0 \\ 1 \\ \vdots \\ 1 \end{pmatrix},
 \ldots,
 \begin{pmatrix} 0 \\ 0 \\ \vdots \\ 1 \end{pmatrix}
-\right\}.
+\right\}
+:= \{\boldsymbol{c}_0,\ldots,\boldsymbol{c}_m\} \subset [0,1]^{m+1}.
 \]
-In each case, at every index $i$ either $f_i = 0$ or $f_i = 1$, hence
+In each of these cases, every component satisfies $f_i \in \{0,1\}$, and thus
 \[
 f_i(1 - f_i) = 0 \qquad \forall i.
 \]
 Therefore,
 \[
-\mathrm{IOV} = \frac{4}{m}\sum_{i=0}^{m-1} f_i(1 - f_i) = 0.
+\mathrm{IOV}
+= \frac{4}{m}\sum_{i=0}^{m-1} f_i (1 - f_i)
+= 0.
 \]
-
-\paragraph{Nominal case.}
-A degenerate distribution has a PMF of the form
+Conversely, if $\mathrm{IOV}=0$, then
 \[
-\mathbf{p} \in \left\{
+\sum_{i=0}^{m-1} f_i(1 - f_i) = 0,
+\]
+and since each term is nonnegative,
+\[
+f_i(1 - f_i) = 0 \quad \forall i.
+\]
+This is only possible if $f_i \in \{0,1\}$ for all $i$, which implies
+$\mathbf{f} \in \{\boldsymbol{e}_0,\ldots,\boldsymbol{e}_m\}$.  
+Hence, $\mathrm{IOV}=0$ holds \emph{exactly} for one–point distributions.
+\paragraph{Nominal case.}
+A degenerate (one--point) distribution assigns all probability mass to a single 
+category $s_j \in S$, which corresponds to a PMF vector of the form
+\[
+\mathbf{p} \in 
+\left\{
 \begin{pmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{pmatrix},
 \begin{pmatrix} 0 \\ 1 \\ \vdots \\ 0 \end{pmatrix},
 \ldots,
 \begin{pmatrix} 0 \\ 0 \\ \vdots \\ 1 \end{pmatrix}
-\right\}.
+\right\}
+:= \{\boldsymbol{e}_0,\ldots,\boldsymbol{e}_m\} \subset [0,1]^{m+1}..
+\]
+In each of these cases, exactly one component equals $1$ and all others equal $0$, so
+\[
+\sum_{i=0}^m p_i^2 = 1.
 \]
 Thus,
 \[
-\sum_{i=0}^m p_i^2 = m \cdot 0 + 1\cdot 1= 1,
+\mathrm{IQV} 
+= \frac{m+1}{m}\bigl(1 - \sum_{i=0}^m p_i^2\bigr) 
+= \frac{m+1}{m}(1 - 1) = 0.
 \]
-and therefore
+Conversely, if $\mathrm{IQV} = 0$, then
 \[
-\mathrm{IQV} = \frac{m+1}{m}(1 - 1) = 0.
+\frac{m+1}{m}\Bigl(1 - \sum_{i=0}^m p_i^2\Bigr) = 0
+\quad\Longrightarrow\quad
+\sum_{i=0}^m p_i^2 = 1.
 \]
+As all probabilities satisfy $0 \leq p_i \leq 1$, it follows that \[
+p_i^2 \leq p_i \quad \forall p_i, \text{ and } p_i^2 < p_i \quad \forall p_i \notin \{0,1\}.
+\]
+Since $\sum_{i=1}^{m}p_i = 1$, it follows that the only way $\sum_i p_i^2 = 1$ can hold is if exactly one $p_i$ equals 1 and all others are 0. In other words, the distribution is degenerate and $\boldsymbol{p} \in \{\boldsymbol{e}_0,\ldots, \boldsymbol{e}_{m}\}$.
+
+ 
 
 
 \subsubsection*{Maximal Dispersion}
@@ -153,8 +186,9 @@ and therefore
 \paragraph{Ordinal case.}
 Dispersion of an ordinal variable is maximal when half of the 
 probability mass lies in the lowest category and half in the highest 
-category; all intermediate categories receive probability zero.  
-This results in a CDF vector
+category; all intermediate categories have probability zero.  
+This results in a CDF vector0,
+
 \[
 \mathbf{f} = \left(\tfrac{1}{2}, \tfrac{1}{2}, \ldots, \tfrac{1}{2}\right)^\top.
 \]
@@ -169,6 +203,23 @@ and thus
 = \frac{4}{m} \cdot \frac{m}{4}
 = 1.
 \]
+To show that $\mathrm{IOV} = 1 \Rightarrow \boldsymbol{f} = (\tfrac{1}{2}, \ldots, \tfrac{1}{2})^T$, recall that the IOV only depends on $\boldsymbol{f}$ through the sum
+\[
+\sum_{i=0}^{m-1} f_i (1 - f_i).
+\]
+Taking the derivative of $g(f_i) := f_i(1-f_i)$  and setting it to zero yields:
+\begin{align*}
+\frac{\partial}{\partial f_i} g(f_i) &= 1 - 2 f_i, \\
+1 - 2 f_i &\overset{!}{=} 0, \\
+f_i &= \frac{1}{2}.
+\end{align*}
+
+Since $g(f_i=0) = g(f_i = 1)=0$, the fucntion is concave and this critical point is indeed the global maximum.  
+Since its been already shown that $IOV(\boldsymbol{f} = (\frac{1}{2}, \ldots, \frac{1}{2})^T) = 1$, it directly follows that
+\[
+IOV(\boldsymbol{f}) = 1 \Leftrightarrow \boldsymbol{f} = (\frac{1}{2}, \ldots, \frac{1}{2})^T
+\]
+
 
 \paragraph{Nominal case.}
 Maximal dispersion is obtained when probability mass is distributed 
