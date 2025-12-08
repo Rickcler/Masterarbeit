@@ -139,7 +139,7 @@ Conversely, if $\mathrm{IOV}=0$, then
 \]
 and since each term is nonnegative,
 \[
-f_i(1 - f_i) = 0 \quad \forall i.
+f_i(1 - f_i) \overset{!}{=} 0 \quad \forall i.
 \]
 This is only possible if $f_i \in \{0,1\}$ for all $i$, which implies
 $\mathbf{f} \in \{\boldsymbol{e}_0,\ldots,\boldsymbol{e}_m\}$.  
@@ -186,8 +186,8 @@ Since $\sum_{i=1}^{m}p_i = 1$, it follows that the only way $\sum_i p_i^2 = 1$ c
 \paragraph{Ordinal case.}
 Dispersion of an ordinal variable is maximal when half of the 
 probability mass lies in the lowest category and half in the highest 
-category; all intermediate categories have probability zero.  
-This results in a CDF vector0,
+category; with all intermediate categories having probability zero.  
+This results in a CDF vector,
 
 \[
 \mathbf{f} = \left(\tfrac{1}{2}, \tfrac{1}{2}, \ldots, \tfrac{1}{2}\right)^\top.
@@ -239,7 +239,12 @@ so that
 = \frac{m+1}{m} \cdot \frac{m}{m+1}
 = 1.
 \]
-
+And if $\mathrm{IQV} = 1$:
+\[\frac{m+1}{m} (1- \sum_{i=0}^{m} p_i^2) = 1 \Rightarrow (1-\sum_{i=1}^{m}p_i^2) = \frac{m}{m+1} \Rightarrow \sum_{i=1}^{m} p_i^2 = \frac{1}{m+1}\]
+Given $\sum_{i=0}^{m}p_i = 1$ it follows that
+\[\arg \underset{\boldsymbol{p}}{\min} \sum_{i=0}^{m} p_i^2 = (\frac{1}{m+1}, \ldots, \frac{1}{m+1})^T\] 
+since it generally holds that given some vector $X$ and its components sum $\sum_{i=1}^{m}x_i = c$, with c being some constant, that 
+\[\arg \underset{\boldsymbol{X}}{\min} \sum_{i=1}^{m}x_i = (\frac{1}{m}, \ldots, \frac{1}{m}) \]
 \section*{Samples Measures}
 
 For the estimation of the (cumulative) probabailities based on samples we use the (cumulative) relative frequencies, that can be be best expressed if switching from $(X_t)$ to its binarization ($(\boldsymbol{Z_t})$ for ordinal variables, $(\boldsymbol{Y}_t)$ for nominal):
