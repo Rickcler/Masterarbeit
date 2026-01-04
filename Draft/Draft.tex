@@ -7,13 +7,26 @@
 \usepackage{natbib}
 \usepackage{hyperref}
 \bibliographystyle{apalike}
+
 \begin{document}
 
 \section*{Categorical Time-Series Analysis}
+% Kategorien genauer definieren (Modus auch als informative Metrik bei ordinalen Daten) 
+% IOV = 1 
+% Bradley Buch - Introduction to strong mixing conditions (Fernleihe; Kapitel 5)
+% Zu Messbarenfunktionen: Klenke, Bauer (Maßtheorie; Wahrscheinlichkeitstheorie; Messbare Abbildungen S. 52 Indikatorfunktion), Georgii, Maß und Wahrscheinlichkeitstheorie, Brockwell: Theory and Methodes, Shao Mathematical statistics 
+% Cramer Wolt Methode um zu begründen warum sich CLT auf Mehrdimensionalität überträgt. 
+% Exponentiellerate (definition kann als "gegeben" angenommen werde), 
+% Was sind Beispiele für Kategoriale Zeitreihen mit exponentiellen 
+% Oberwolfach reports 
+% Ideen von weiter hinten aus dem paper für konkretes aussehen der Zeitreihe
+% Fokianos Tjostheim (Paper) 
+
 
 \subsection*{General Notation}
 
 Let $(X_t)$ be a \textit{categorical}  time series process, where each $X_t$ takes values in
+
 \[
 S := \{s_0, \dots, s_m\}, \qquad m \in \mathbb{N}.
 \]
@@ -46,7 +59,7 @@ Regardless of whether we consider a simple categorical process with few categori
 
     For ordinal data, it is sufficient to consider the cumulative probabilities of the categories $0, \ldots , m-1$ since the cumulative probability of the last category $m$ is always equal to 1. \\
     
-    Although one could equivalently estimate the PMF and derive the CDF from it, representing ordinal data through the CDF is often more convenient and aligns with widely used modelling frameworks.
+    Although one could equivalently estimate the PMF and derive the CDF from it, representing ordinal data through the CDF is often more convenient as it this form that is used to compute metrics for location and disperson.
 
     \item \textbf{Nominal data:}  
     Since the categories of nominal variables do not possess a meaningful order, statistical procedures cannot make use of cumulative structure.  
@@ -75,16 +88,10 @@ Temporal dependence can be described by bivariate (lag-$h$) probabilities:
     \]
 \end{itemize}
 
-These quantities serve as input for dependence measures such as association coefficients or transition structures.
+These quantities serve as input for dependence measures such as the ordinal/ nominal Cohen's K.
 \subsection*{Location}
 
-The choice of a location measure for a categorical process depends on whether the process is ordinal or nominal. 
-For an ordinal process, the natural ordering of the categories must be respected, and the median serves as an appropriate measure of central tendency:
-\[
-\operatorname{Med}(X_t)
-=
-\min \bigl\{\, s_i \in S : F(s_i) \ge \tfrac{1}{2} \,\bigr\}.
-\]
+The choice of a location measure for a categorical process depends on whether the process is nominal or ordinal. 
 
 For a nominal process, any measure that relies on ordering is inappropriate. 
 Instead, a location measure must depend only on the category probabilities. 
@@ -92,7 +99,16 @@ The mode, defined as the most probable category,
 \[
 \operatorname{Mod}(X_t) = \arg\max_{s_i \in S} P(X_t = s_i),
 \]
-is therefore the natural choice.
+is therefore the natural choice. It provides a meaningful summary of the process by identifying the most frequent category.
+
+For an ordinal process, the natural ordering of the categories allows for additional measures of central tendency. 
+While the mode can still be informative as the most frequent category, the median respects the ordering of categories and is often more useful for describing the central location:
+\[
+\operatorname{Med}(X_t)
+=
+\min \bigl\{\, s_i \in S : F(s_i) \ge \tfrac{1}{2} \,\bigr\}.
+\]
+Thus, for ordinal data, both the mode and the median carry information, but they capture slightly different aspects of location: the mode identifies the most typical category, whereas the median indicates the midpoint in the ordered scale.
 \subsection*{Measures of Dispersion}
 
 The concept of dispersion differs between ordinal and nominal processes. Therefore, two separate measures are used: the \emph{Index of Ordinal Variation} (IOV) for ordinal data and the \emph{Index of Qualitative Variation} (IQV) for nominal data. Both indices are scaled to the interval $[0,1]$, where a value of $0$ represents minimal dispersion and a value of $1$ represents maximal dispersion.\\
@@ -217,54 +233,116 @@ f_i &= \frac{1}{2}.
 Since $g(f_i=0) = g(f_i = 1)=0$, the fucntion is concave and this critical point is indeed the global maximum.  
 Since its been already shown that $IOV(\boldsymbol{f} = (\frac{1}{2}, \ldots, \frac{1}{2})^T) = 1$, it directly follows that
 \[
-IOV(\boldsymbol{f}) = 1 \Leftrightarrow \boldsymbol{f} = (\frac{1}{2}, \ldots, \frac{1}{2})^T
+IOV(\boldsymbol{f}) = 1 \Leftrightarrow \boldsymbol{f} = (\frac{1}{2}, \ldots, \frac{1}{2})^\top
 \]
 
-
 \paragraph{Nominal case.}
-Maximal dispersion is obtained when probability mass is distributed 
-uniformly across all $m+1$ categories:
+For nominal data, maximal dispersion is attained when probability mass is distributed uniformly across all $m+1$ categories, i.e.
 \[
 p_i = \frac{1}{m+1}, \qquad i = 0,\ldots,m.
 \]
-Then
+In this case,
 \[
-\sum_{i=0}^m p_i^2 = (m+1)\frac{1}{(m+1)^2}
-= \frac{1}{m+1},
+\sum_{i=0}^m p_i^2 = (m+1)\frac{1}{(m+1)^2} = \frac{1}{m+1},
 \]
-so that
+and hence
 \[
 \mathrm{IQV}
 = \frac{m+1}{m}\left(1 - \frac{1}{m+1}\right)
-= \frac{m+1}{m} \cdot \frac{m}{m+1}
 = 1.
 \]
-And if $\mathrm{IQV} = 1$:
-\[\frac{m+1}{m} (1- \sum_{i=0}^{m} p_i^2) = 1 \Rightarrow (1-\sum_{i=1}^{m}p_i^2) = \frac{m}{m+1} \Rightarrow \sum_{i=1}^{m} p_i^2 = \frac{1}{m+1}\]
-Given $\sum_{i=0}^{m}p_i = 1$ it follows that
-\[\arg \underset{\boldsymbol{p}}{\min} \sum_{i=0}^{m} p_i^2 = (\frac{1}{m+1}, \ldots, \frac{1}{m+1})^T\] 
-since it generally holds that given some vector $X$ and its components sum $\sum_{i=1}^{m}x_i = c$, with c being some constant, that 
-\[\arg \underset{\boldsymbol{X}}{\min} \sum_{i=1}^{m}x_i = (\frac{1}{m}, \ldots, \frac{1}{m}) \]
+Conversely, suppose that $\mathrm{IQV} = 1$. Then
+\[
+\frac{m+1}{m}\left(1 - \sum_{i=0}^m p_i^2\right) = 1
+\quad\Longrightarrow\quad
+\sum_{i=0}^m p_i^2 = \frac{1}{m+1}.
+\]
+Thus, maximizing $\mathrm{IQV}$ is equivalent to minimizing
+\[
+f(\boldsymbol p) := \sum_{i=0}^m p_i^2
+\quad \text{subject to} \quad
+\sum_{i=0}^m p_i = 1.
+\]
+Introducing the Lagrangian (with Lagrange multiplier $\lambda$)
+\[
+\mathcal L(\boldsymbol p, \lambda)
+:= \sum_{i=0}^m p_i^2 - \lambda\left(\sum_{i=0}^m p_i - 1\right),
+\]
+the first-order conditions are
+\begin{align*}
+    \frac{\partial \mathcal L}{\partial p_j} = 2p_j - \lambda &= 0\\
+    \Rightarrow \quad 2p_j &= \lambda, \qquad j=0,\dots,m,
+\end{align*}
+together with the constraint $\sum_{i=0}^m p_i = 1$.
+Since the same multiplier $\lambda$ applies to all components, it follows that
+\[
+p_0 = p_1 = \dots = p_m.
+\]
+Imposing the constraint yields
+\[
+(m+1)p_j = 1 \quad \Longrightarrow \quad p_j = \frac{1}{m+1} \quad \forall j \in 0,\dots, m .
+\]
+Hence, $f(\boldsymbol p)$ is uniquely minimized at
+\[
+\boldsymbol p = \left(\tfrac{1}{m+1}, \dots, \tfrac{1}{m+1}\right)^\top,
+\]
+and therefore $\mathrm{IQV}$ attains its maximal value at the uniform distribution.
+
+
 \section*{Samples Measures}
 
-For the estimation of the (cumulative) probabailities based on samples we use the (cumulative) relative frequencies, that can be be best expressed if switching from $(X_t)$ to its binarization ($(\boldsymbol{Z_t})$ for ordinal variables, $(\boldsymbol{Y}_t)$ for nominal):
-\[\boldsymbol{Z}_t = (Z_{t, 0}, \ldots, Z_{t, m-1})^T,  Z_{t, i} = I_{\{X_t \leq s_i\}} \qquad \boldsymbol{Y}_t = (Y_{t, 0}, \ldots, Y_{t, m})^T, Y_{t, i} = I_{\{X_t = s_i\}}  \]
-
+For the estimation of the (cumulative) probabilities based on samples we use the (cumulative) relative frequencies, that can best be expressed by switching from $(X_t)$ to its binarization ($(\boldsymbol{Z_t})$ for ordinal variables, $(\boldsymbol{Y}_t)$ for nominal):
+\[\boldsymbol{Z}_t := (Z_{t, 0}, \ldots, Z_{t, m-1})^T,  Z_{t, i} = I_{\{X_t \leq s_i\}} \qquad \boldsymbol{Y}_t := (Y_{t, 0}, \ldots, Y_{t, m})^T, Y_{t, i} = I_{\{X_t = s_i\}}  \]
 Now we can estimate $\boldsymbol{p}/ \boldsymbol{f}$ by taking the mean about the binarization:
 \[\boldsymbol{\hat{f}} = \frac{1}{n}\sum_{t=1}^{n} \boldsymbol{Z}_t, \quad \boldsymbol{\hat{p}} = \frac{1}{n}\sum_{t=1}^{n} \boldsymbol{Y}_t \]
 
-To get the asymptotics of the different sample measures, we first need a CLT on $ \boldsymbol{\hat{f}}/ \boldsymbol{\hat{p}}$ \\
-,0
-As our data are not (necesarilly) indepedent, the CLT only holds for a stationary process that fullfills a strong mixing condition (e.g. alpha mixing; Bradley 2005). The stationarity of $\boldsymbol{Z_t}/ \boldsymbol{Y_t}$ follows from the stationarity of $X_t$, as the transforming function is deterministic. \\
+To derive the asymptotic distributions of the sample measures we first need a central limit theorem for the vectors $\hat{\mathbf p}$ and $\hat{\mathbf f}$. Because the observations are not assumed to dependent, we instead assume that $(X_t)$ is strictly stationary and $\alpha$-mixing with exponetially decreasing weights. \\
+To define $\alpha$-mixing (see Bradley, 2005), let  
+\[
+\mathcal{F}_J^L := \sigma(X_t : J \le t \le L),
+\]
+where $\sigma(\cdot)$ denotes the $\sigma$-field generated by the enclosed random variables.
+The $\alpha$-mixing coefficients of the process $(X_t)_{t \in \mathbb{Z}}$ are given by
+\[
+\alpha(n)
+:= \sup_{j \in \mathbb{Z}}
+\ \sup_{A \in \mathcal{F}_{-\infty}^j,\; B \in \mathcal{F}_{j+n}^{\infty}}
+\bigl| P(A \cap B) - P(A)P(B) \bigr|.
+\]
 
-A sequence is said to be $\alpha$-mixing, if: 
+A process is called \emph{$\alpha$-mixing} (or strongly mixing) if  
+\[
+\alpha(n) \longrightarrow 0 \qquad \text{as } n \to \infty.
+\]
+
+Furthermore, the process is assumed to be \emph{$\alpha$-mixing with exponentially decaying coefficients}, meaning that there exist constants $C>0$ and $\rho \in (0,1)$ such that
+\[
+\alpha(n) \leq C \rho^n \qquad \text{for all } n \in \mathbb{N}.
+\]
+This condition is sufficient to ensure the summability requirement
+\[
+\sum_{n=1}^{\infty} \alpha(n)^{\lambda/(2+\lambda)} < \infty,
+\]
+which follows from the inequality
 \begin{align*}
-    \text{For any event } &A \in \sigma(X_s : s \leq t) \text{ and event } B \in \sigma(X_s : s \geq t+h ) \text{ the }\alpha\text{-coefficient} \\
-    & \alpha(h)=  \sup |P(A\cup B) - P(A)P(B)| \text{ goes to } 0 \text{ for } h \rightarrow \infty
+\sum_{n=1}^{\infty} \alpha(n)^{\lambda/(2+\lambda)}
+&\le \sum_{n=1}^{\infty} (C \rho^n)^{\lambda/(2+\lambda)} 
+= C^{\lambda/(2+\lambda)} \sum_{n=1}^{\infty} \rho^{\,n\lambda/(2+\lambda)} \\
+&= C^{\lambda/(2+\lambda)} \left(\overbrace{\sum_{n=0}^{\infty} \rho^{n \lambda/2+\lambda}}^{\text{geom. series*}} -1 \right) 
+= C^{\lambda/(2+\lambda)}\left(\frac{1}{1-\rho^{\lambda/2+\lambda}} - 1\right) \tag*{Since $0 < \rho^{\lambda/(2+\lambda)}< 1,  ~\forall \lambda$}   
+< \infty,
 \end{align*}
 
-If $\alpha$-mixing is satisfied it holds that: 
- 
+Since $g_i(X_t):= I_{X_t \leq s_i} = Z_{t,i}$ (as well as $h_i(X_t):= I_{X_t = s_i} = Y_{t,i}$ for nominal data) is a measurable function of $X_t$, both strict stationarity as well as $\alpha$-mixing  are presevered in $\boldsymbol{Z} $(/$\boldsymbol{Y}$; ich konnte bisher leider noch keinen Verweis in der Literatur finden der das explizit macht). 
+
+Moreover, since $\boldsymbol{Z_t}$ and $\boldsymbol{Y_t}$ are vectors of indicatorvariables we trivially also have
+\[E\lvert Z_{t,i}\rvert^{2+\lambda} < \infty  \text{ for any } \lambda > 0\].
+
+so that the CLT from Ibragimov (Theorem 1.7; 1962) applies to $\boldsymbol{Z_t}$ and $\boldsymbol{Y_t}$. It follows: \\
+
+\end{document}
+
+provided appropriate moment and mixing-rate conditions hold
 \[\sqrt{n} (\overbrace{\bar{\boldsymbol{Z}}_t}^{= \boldsymbol{\hat{f}}}- \boldsymbol{f} )\overset{d}{\rightarrow} \mathcal{N}(0, \boldsymbol{\Sigma}), \quad\text{ with } \boldsymbol{\Sigma} = (\sigma_{i,j})_{i,j = 0, ~ \ldots, m-1} \]
 \[\text{where }\sigma_{i,j} = Cov(Z_{0,i},Z_{0,j}) + \sum_{h=1}^{\infty} \left(Cov(Z_{0, i}, Z_{h, j}) + Cov(Z_{h, i}, Z_{0, j})\right) \]
 \[\text{and } Cov(Z_{t, i}, Z_{s, j}) = \begin{cases}
