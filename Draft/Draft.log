@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.8.21)  20 DEC 2025 11:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.8.21)  13 JAN 2026 15:14
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -494,14 +494,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 60--61
  []
 
 
-
-[1
-
-{C:/Users/Victor/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}]
 Overfull \hbox (0.47821pt too wide) in paragraph at lines 64--67
 \T1/lmr/m/n/12 ing-ful or-der, sta-tis-ti-cal pro-ce-dures can-not make use of cu-mu-la-tive struc-ture. There-
  []
 
+
+
+[1
+
+{C:/Users/Victor/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}]
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <14.4> on input line 75.
 LaTeX Font Info:    External font `lmex10' loaded for size
@@ -509,7 +510,7 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <7> on input line 75.
 
-Underfull \hbox (badness 10000) in paragraph at lines 114--115
+Underfull \hbox (badness 10000) in paragraph at lines 112--113
 
  []
 
@@ -524,13 +525,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 114--115
 [5]
 
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 341--342
 
- []
+[7]
 
-
-
-[7] (Draft.aux)
+[8] (Draft.aux)
  ***********
 LaTeX2e <2024-06-01> patch level 2
 L3 programming layer <2024-07-20>
@@ -545,9 +543,9 @@ Here is how much of TeX's memory you used:
  36447 multiletter control sequences out of 15000+600000
  630778 words of font info for 91 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,16n,107p,10970b,513s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,10n,107p,10970b,531s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi6.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmib10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr6.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy6.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Draft.pdf (7 pages, 231783 bytes).
+Output written on Draft.pdf (8 pages, 240790 bytes).
 PDF statistics:
  153 PDF objects out of 1000 (max. 8388607)
  26 named destinations out of 1000 (max. 500000)
