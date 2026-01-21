@@ -74,7 +74,7 @@ Regardless of whether we consider a simple categorical process with few categori
 
 \subsection*{Bivariate Probabilities at Lag $h$}
 
-Temporal dependence can be described by bivariate (lag-$h$) probabilities:
+Temporal dependence in categorical time series can be quantified through bivariate lag-$h$ probabilities. These represent the joint probability that the process takes a specific category at time $t$ and another category at time $t+h$
 
 \begin{itemize}
     \item \textbf{Ordinal series (cumulative):}
@@ -169,7 +169,7 @@ category $s_j \in S$, which corresponds to a PMF vector of the form
 \ldots,
 \begin{pmatrix} 0 \\ 0 \\ \vdots \\ 1 \end{pmatrix}
 \right\}
-:= \{\boldsymbol{e}_0,\ldots,\boldsymbol{e}_m\} \subset [0,1]^{m+1}..
+:= \{\boldsymbol{e}_0,\ldots,\boldsymbol{e}_m\} \subset [0,1]^{m+1}.
 \]
 In each of these cases, exactly one component equals $1$ and all others equal $0$, so
 \[
@@ -339,7 +339,7 @@ g_i(X_t) := \mathbb{I}\{X_t \le s_i\},
 \qquad
 h_i(X_t) := \mathbb{I}\{X_t = s_i\},
 \]
-are measurable functions of $X_t$ (see Bauer and Burckel, 1995, p.~49).
+are measurable functions of $X_t$ (see Klenke, 2005, p.~34).
 Since measurability preserves strict stationarity, the binarized processes
 $(g_i(X_t))$ and $(h_i(X_t))$ are strictly stationary whenever $(X_t)$ is
 strictly stationary (see Kallenberg, 2002, p.~558).
@@ -381,17 +381,35 @@ Indeed, if $\alpha(n) \le C \rho^n$ with constants $C>0$ and $\rho\in(0,1)$, the
 \end{align*}
 since $0 < \rho^{\lambda/(2+\lambda)} < 1$ for all $\lambda > 0$.\\
 Moreover, the CLT additionally requires the existence of moments of order
-$2+\lambda$. This condition is trivially satisfied in our setting, since
-$\boldsymbol{Z}_t$ and $\boldsymbol{Y}_t$ are vectors of indicator variables.
-In particular, for all $i$ and any $\lambda > 0$,
+$2+\lambda$ for some $\lambda > 0$. This condition is trivially satisfied in our setting, since
+$\boldsymbol{Z}_t$ and $\boldsymbol{Y}_t$ are vectors of indicator variables. In particular, for any 
+\[|Z_{t,i}|^{2+\lambda} \in \{0,1\},\]
+and hence all higher order moments exist. Consequently, for all $i \in 0,\ldots, m$ and $\lambda > 0$, 
 \[
 \mathbb{E}\lvert Z_{t,i}\rvert^{2+\lambda} < \infty,
 \]
 and analogously for $Y_{t,i}$.
 
-According to the Cramer-Wold device, a series of random vectors $\boldsymbol{Z}_T \in \mathbb{R}^{m+1}$ assympotatically approaches a multivariat normal distribution exactly if for every $\boldsymbol{a} \in \mathbb{R}^{m+1}$ the scalar projections 
-\[\boldsymbol{a}^{\top}\boldsymbol{Z}_t = \sum_{i=0}^{m}a_i Z_{t,i}\]
-converge to a univariate normal distribution.
+According to the Cramér-Wold device, $\boldsymbol{Z}_T$ converges in distribution to a multivariate normal distribution $\mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})$ if and only if for every fixed non-zero vector $\boldsymbol{a} \in \mathbb{R}^{m+1}\setminus{\boldsymbol{0}}$, the scalar projections
+\[U_t := \boldsymbol{a}^{\top}\boldsymbol{Z}_t = \sum_{i=0}^{m}a_i Z_{t,i}\]
+converge in distribution to a univariate normal distribution $\mathcal{N}(\boldsymbol{a}^\top\boldsymbol{\mu}, \boldsymbol{a}^\top\boldsymbol{\Sigma}\boldsymbol{a})$.\\
+Since each $\boldsymbol{Z}_t$ is the binarization vector of  $X_t$, it can only take values in the finite set
+\[\{\boldsymbol{c}_0, \ldots, \boldsymbol{c}_0\}\] 
+where 
+\[\boldsymbol{c}_j := (1, \ldots, 1, 0, \ldots, 0)^\top\] 
+has exactly $j+1$ ones followed by $m-j$ zeros.
+Consequently, for any fixed $\boldsymbol{a}$, the projection $U_t$ takes values in the finite set 
+\[\mathcal{A}_a := \{\boldsymbol{a}^{\top}\boldsymbol{c}_j\mid j = 0, \ldots,m\} = \left\{\sum_{i=0}^{j}a_i \mid j = 0, \ldots, m \right\}\] 
+Equivalently, $U_t$ can be directly expressed as a deterministic function $h: S \to \mathcal{A}_a$ of the original state $s_i$ of $X_t$:
+\[h_{\boldsymbol{a}}(s_i) := \sum_{i=0}^{j} a_i\quad \forall j = 0, \ldots, m,\]
+so that $U_t = h_{\boldsymbol{a}}(X_t)$. Since $S$ is finite and equipped with the discrete $\sigma$-algebra $2^S$ (the power set), any function from $S$ to $\mathcal{A}_{\boldsymbol{a}} \subset \mathbb{R}$ is measurable. In particular, for any subset $E\subset \mathcal{A}_{\boldsymbol{a}}$ the preimage
+\[h^{-1}(E):= \{s_i\in S: h_{\boldsymbol{a}}(s_i) \in E \}\] 
+is a subset of $S$ and therefor belongs to $2^{S}$.
+
+Since $U_t$ is a measurable function of $X_t$, it remains it's properties of strict stationarity and $\alpha$-mixing with exponentially decaying coefficients. 
+
+Accordingly, the summability condiition is satisfied and since $U_t$ is in the discrete set $\mathcal{A}_a$, it holds that 
+\[E|U_t|^{2+\lambda} < \infty  \forall \lambda > 0\]  %Argument reicht an der Stelle nicht aus; es geht um Boundedness 
 \end{document}
 
 provided appropriate moment and mixing-rate conditions hold
