@@ -394,22 +394,29 @@ According to the Cramér-Wold device, $\boldsymbol{Z}_T$ converges in distributi
 \[U_t := \boldsymbol{a}^{\top}\boldsymbol{Z}_t = \sum_{i=0}^{m}a_i Z_{t,i}\]
 converge in distribution to a univariate normal distribution $\mathcal{N}(\boldsymbol{a}^\top\boldsymbol{\mu}, \boldsymbol{a}^\top\boldsymbol{\Sigma}\boldsymbol{a})$.\\
 Since each $\boldsymbol{Z}_t$ is the binarization vector of  $X_t$, it can only take values in the finite set
-\[\{\boldsymbol{c}_0, \ldots, \boldsymbol{c}_0\}\] 
+\[\{\boldsymbol{c}_0, \ldots, \boldsymbol{c}_m\}\] 
 where 
 \[\boldsymbol{c}_j := (1, \ldots, 1, 0, \ldots, 0)^\top\] 
 has exactly $j+1$ ones followed by $m-j$ zeros.
 Consequently, for any fixed $\boldsymbol{a}$, the projection $U_t$ takes values in the finite set 
 \[\mathcal{A}_a := \{\boldsymbol{a}^{\top}\boldsymbol{c}_j\mid j = 0, \ldots,m\} = \left\{\sum_{i=0}^{j}a_i \mid j = 0, \ldots, m \right\}\] 
 Equivalently, $U_t$ can be directly expressed as a deterministic function $h: S \to \mathcal{A}_a$ of the original state $s_i$ of $X_t$:
-\[h_{\boldsymbol{a}}(s_i) := \sum_{i=0}^{j} a_i\quad \forall j = 0, \ldots, m,\]
+\[h_{\boldsymbol{a}}(s_j) := \sum_{i=0}^{j} a_i\quad \forall j = 0, \ldots, m,\]
 so that $U_t = h_{\boldsymbol{a}}(X_t)$. Since $S$ is finite and equipped with the discrete $\sigma$-algebra $2^S$ (the power set), any function from $S$ to $\mathcal{A}_{\boldsymbol{a}} \subset \mathbb{R}$ is measurable. In particular, for any subset $E\subset \mathcal{A}_{\boldsymbol{a}}$ the preimage
 \[h^{-1}(E):= \{s_i\in S: h_{\boldsymbol{a}}(s_i) \in E \}\] 
 is a subset of $S$ and therefor belongs to $2^{S}$.
 
 Since $U_t$ is a measurable function of $X_t$, it remains it's properties of strict stationarity and $\alpha$-mixing with exponentially decaying coefficients. 
 
-Accordingly, the summability condiition is satisfied and since $U_t$ is in the discrete set $\mathcal{A}_a$, it holds that 
-\[E|U_t|^{2+\lambda} < \infty  \forall \lambda > 0\]  %Argument reicht an der Stelle nicht aus; es geht um Boundedness 
+Accordingly, the summability condition is satisfied (follows from the $\alpha$-mixing with exponentially decaying coefficients) and since $U_t$ is in the discrete, finite set $\mathcal{A}_a$, there exists  
+\[M := \max_{j=0,\dots, m}  |\sum_{i=0}^{j} a_i|   < \infty\]  %Argument reicht an der Stelle nicht aus; es geht um 
+Since $|U_t| \leq M$, we have $|U_t|^{2 + \lambda}\leq M^{2+\lambda}$ for every $\lambda > 0$  , and therefore
+\[E|U_t|^{2 + \lambda} < |M|^{2+\lambda} < \infty \quad \forall \lambda > 0\]
+
+Since $U_t$ is strictly stationary, $\alpha$-mixing and satsifying the summability aswell as the moement condition, the CLT from Ibragimov is applicable. Hence, according to the Cramer-Wold device, the sample mean
+\[\bar{\boldsymbol{Z}_n}:= \frac{1}{n} \sum_{t=1}^{n} \boldsymbol{Z}_t\]
+satisfies the following multivariat CLT: 
+\[\sqrt{n}\bigl(\bar{\boldsymbol{Z}_n}- \boldsymbol{\mu}_z\bigr) \xrightarrow[n \to \infty]{d} \mathcal{N}\bigl(\boldsymbol{0}, \boldsymbol{\Sigma}_Z\bigr)\]
 \end{document}
 
 provided appropriate moment and mixing-rate conditions hold
