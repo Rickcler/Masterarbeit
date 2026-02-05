@@ -11,12 +11,9 @@
 \begin{document}
 
 \section*{Categorical Time-Series Analysis}
-% Kategorien genauer definieren (Modus auch als informative Metrik bei ordinalen Daten) 
-% IOV = 1 
 % Bradley Buch - Introduction to strong mixing conditions (Fernleihe; Kapitel 5)
 % Zu Messbarenfunktionen: Klenke, Bauer (Maßtheorie; Wahrscheinlichkeitstheorie; Messbare Abbildungen S. 52 Indikatorfunktion), Georgii, Maß und Wahrscheinlichkeitstheorie, Brockwell: Theory and Methodes, Shao Mathematical statistics 
 % Cramer Wolt Methode um zu begründen warum sich CLT auf Mehrdimensionalität überträgt. 
-% Exponentiellerate (definition kann als "gegeben" angenommen werde), 
 % Was sind Beispiele für Kategoriale Zeitreihen mit exponentiellen 
 % Oberwolfach reports 
 % Ideen von weiter hinten aus dem paper für konkretes aussehen der Zeitreihe
@@ -413,31 +410,69 @@ Accordingly, the summability condition is satisfied (follows from the $\alpha$-m
 Since $|U_t| \leq M$, we have $|U_t|^{2 + \lambda}\leq M^{2+\lambda}$ for every $\lambda > 0$  , and therefore
 \[E|U_t|^{2 + \lambda} < |M|^{2+\lambda} < \infty \quad \forall \lambda > 0\]
 
-Since $U_t$ is strictly stationary, $\alpha$-mixing and satsifying the summability aswell as the moement condition, the CLT from Ibragimov is applicable. Hence, according to the Cramer-Wold device, the sample mean
-\[\bar{\boldsymbol{Z}_n}:= \frac{1}{n} \sum_{t=1}^{n} \boldsymbol{Z}_t\]
+Since $U_t$ is strictly stationary, $\alpha$-mixing and satsifying the summability aswell as the moment condition, the CLT from Ibragimov is applicable. It follows that the sample mean 
+\[\bar{U}_t := \frac{1}{n}\sum_{t=1}^{n}U_t\]
+satisfies the CLT:
+\[\sqrt{n}(\bar{U}_t - \mu_{U_t}) \xrightarrow[n \to \infty]{d} \mathcal{N}(0, \sigma_{\boldsymbol{a}}),\] 
+where 
+\begin{align*}
+    \mu_{U_{t}} = E[U_t] \quad \text{ and } \quad\sigma_{\boldsymbol{a}} &= Var(U_t) + 2 \sum_{h = 1}^{\infty} Cov(U_t, U_{t+h})\\
+    &= \sum_{i,j} a_i a_j \left[Cov(Z_{t,i}, Z_{t,j}) + 2 \sum_{h=1}^{\infty} Cov(Z_{t,i}, Z_{t+h, j})\right]
+\end{align*}
+Hence, according to the Cramer-Wold device, the sample mean
+\[\bar{\boldsymbol{Z}_n}:= \frac{1}{n} \sum_{t=1}^{n} \boldsymbol{Z}_t = \boldsymbol{\hat{f}}\]
 satisfies the following multivariat CLT: 
-\[\sqrt{n}\bigl(\bar{\boldsymbol{Z}_n}- \boldsymbol{\mu}_z\bigr) \xrightarrow[n \to \infty]{d} \mathcal{N}\bigl(\boldsymbol{0}, \boldsymbol{\Sigma}_Z\bigr)\]
-\end{document}
-
-provided appropriate moment and mixing-rate conditions hold
-\[\sqrt{n} (\overbrace{\bar{\boldsymbol{Z}}_t}^{= \boldsymbol{\hat{f}}}- \boldsymbol{f} )\overset{d}{\rightarrow} \mathcal{N}(0, \boldsymbol{\Sigma}), \quad\text{ with } \boldsymbol{\Sigma} = (\sigma_{i,j})_{i,j = 0, ~ \ldots, m-1} \]
-\[\text{where }\sigma_{i,j} = Cov(Z_{0,i},Z_{0,j}) + \sum_{h=1}^{\infty} \left(Cov(Z_{0, i}, Z_{h, j}) + Cov(Z_{h, i}, Z_{0, j})\right) \]
-\[\text{and } Cov(Z_{t, i}, Z_{s, j}) = \begin{cases}
-    f_{ij}(t-s)-f_i f_j & \text{if } t \geq s \\
-    f_{ji}(s-t)-f_i f_j & \text{if } s \geq t 
-\end{cases}\]
-
-To now derive the asymptotics of the dispersion measures (scalar functions) we can apply the delta method (i.e. Theorem on 5.25 on Asymptotic Distribution of $g(\boldsymbol{X}_n)$ in the formulary) according to which the following holds:
- 
-\[n^{\frac{1}{2}}(IOV(\boldsymbol{\hat{f}})- IOV(\boldsymbol{f})) \overset{d}{\rightarrow} \mathcal{N}(0, \boldsymbol{G\Sigma G})\]
-\[\text{Where } G_{1 \times m} = \left[\frac{\partial IOV(\boldsymbol{f})}{\partial \hat{f}_0}, \ldots, \frac{\partial IOV(\boldsymbol{f})}{\partial \hat{f}_{m-1}}\right]' \]
-
+\[\sqrt{n}\bigl(\bar{\boldsymbol{Z}_n}- \boldsymbol{f}\bigr) \xrightarrow[n \to \infty]{d} \mathcal{N}\bigl(\boldsymbol{0}, \boldsymbol{\Sigma}_Z\bigr), \quad \text{with } \boldsymbol{\Sigma_{Z}} = (\sigma_{\boldsymbol{Z}; i,j})_{i,j = 0, \ldots, m-1}\]
+where $\boldsymbol{\Sigma}_{Z}$ must satisfy that for all $\boldsymbol{a} \in \mathbb{R}^{m}$
+\[\boldsymbol{a^T\Sigma_{Z}a} = \sigma_{\boldsymbol{a}} = \sum_{i,j} a_i a_j \left[Cov(Z_{t,i}, Z_{t,j}) + 2 \sum_{h=1}^{\infty} Cov(Z_{t,i}, Z_{t+h, j})\right],\]
+which implies
+\[\sigma_{\boldsymbol{Z}; i,j} = Cov(Z_{t,i}, Z_{t,j}) + 2 \sum_{h= 1}^{\infty}Cov(Z_{t,i}, Z_{t+h,j }).\]
+Since 
+\[Cov(Z_{t,i}, Z_{t,j}) = E[Z_{t,i}Z_{t,j}] - E[Z_{t,i}]E[Z_{t,j}] = f_{\min\{i,j\}} - f_i f_j\]
+and 
+\[Cov(Z_{t,i}, Z_{t+h, j}) = E[Z_{t,i}Z_{t+h, j}] - E[Z_{t,i}]E[Z_{t+h,j}] = f_{ij}(h) - f_i f_j\]
+we can also write the elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}}$ as 
+\[\sigma_{\boldsymbol{Z}; i,j } = \left(f_{\min\{i,j\}} - f_if_j\right) + 2 \sum_{h=1}^{\infty} \left[ f_{ij}(h) -f_i f_j \right]\]
+According to the multivariate delta-method a random variable $G^* := g^*(\boldsymbol{\Theta^*})$, where $\boldsymbol{\Theta^*} \in \mathbb{R}^{m}$, $\boldsymbol{\Theta^*}\overset{asy.}{\sim} \mathcal{N}(\boldsymbol{\Theta}, \boldsymbol{\Sigma^*})$ and  $g: \mathbb{R}^m\rightarrow \mathbb{R}$ is a continously diffentiable function, satisfies 
+\[G^* \overset{asy.}{\sim} \mathcal{N}(g^*(\boldsymbol{\Theta}), n^{-1}\boldsymbol{j\Sigma j^{\top}} )\]   
+where $\boldsymbol{j}$ is the one-dimensional Jakobi-matrix (i.e. vector) and where $j_i =  \frac{\partial g^*(\boldsymbol{\Theta})}{\partial \theta_i}$. \\
+Since we've shown that $\boldsymbol{\hat{f}}$ is assymptotically normal we can use this to derive the asymptotic properties of sample measures like the IOV. The respective jacobian is given by:
+\begin{align*}
+    \boldsymbol{j}_{IOV} &= \left(\frac{\partial IOV(\boldsymbol{f})}{\partial f_0 }, \ldots, \frac{\partial IOV(\boldsymbol{f})}{\partial f_{m-1} }\right) = \frac{4}{m}\left((1- 2 f_0), \ldots,(1-2f_{m-1}) \right)
+\end{align*}
+which leads to an asymptotic variance of the IOV:
+\begin{align*}
+    Var(\widehat{IOV(\boldsymbol{f})}) &= \boldsymbol{j}_{IOV} \boldsymbol{\Sigma}_Z \boldsymbol{j}_{IOV}^{\top} = \sum_{i=0}^{m-1} \sum_{j=0}^{m-1} \frac{4(1- 2 f_i)}{m} \frac{4(1- 2 f_j)}{m} \sigma_{\boldsymbol{Z}; i,j}\\
+    &=  \frac{16}{m^2} \sum_{i,j = 0}^{m-1} (1-2f_i)(1- 2 f_j) \sigma_{\boldsymbol{Z}; i,j}
+\end{align*}
+and since $\boldsymbol{\hat{f}}$ has $\boldsymbol{f}$ as its asymptotic expectation, it follows
+\[E[\widehat{IOV(\boldsymbol{f})}] \overset{asy.}{=} IOV(E[\boldsymbol{\hat{f}}]) = IOV(\boldsymbol{f}).\]
+In a similiar way the asymptotic properties of other dispersion metrics such as the skew can be analyzed. A simple measure for the skew of an ordinal process is given by:
+\[\text{skew}(\boldsymbol{f}) = \frac{2}{m} \sum_{i=0}^{m-1}f_i - 1.\]
+The jacobian for the skew is given by
+\[\boldsymbol{j}_{skew} = \left(\frac{\partial skew(\boldsymbol{f})}{\partial f_0}, \ldots, \frac{\partial skew(\boldsymbol{f})}{\partial f_{m-1}}\right) = \left(\frac{2}{m}, \ldots, \frac{2}{m}\right)\]
+such that we end up with assymptotic expectation and variance: 
+\begin{align*}
+    Var(\widehat{\text{skew}(\boldsymbol{f})}) &= n^{-1}\boldsymbol{j}_{skew}\Sigma_{\boldsymbol{Z}}\boldsymbol{j}_{skew}^{\top} = \frac{1}{n}\frac{4}{m^2}\sum_{0}^{m-1}\sigma_{\boldsymbol{Z}; ij} \\
+    E(\widehat{\text{skew}(\boldsymbol{f})}) &= \text{skew}(E(\hat{\boldsymbol{f}})) = \text{skew}(\boldsymbol{f})
+\end{align*}
 The derivations for other dispersion metrics are analogous.
 
 \section*{Modelling Missingness}
 
-To model the missingness amplitude modulation is used. The concept stems from physics and allows to model a stochastic process that runs concurrent to another one an modulates its amplitude. In the case of missingness the main process $(X_t)_{t}$ is either there or not there. Therefor we can define our apmlitude modulating process as 
-\[O_t \in \{0,1\} \quad \forall t\] 
-where $O_t = 1$ if $(X_t)$ is observed and 0 if it isn't. 
+To model the missingness, the concept of \textbf{amplitude modulation} is employed. This approach, inspired by signal processing, models a stochastic process $(O_t)_t$ that runs concurrently with the main process $(X_t)_t$ and modulates its "amplitude" in a binary manner:
+
+\[
+O_t \in \{0,1\} \quad \forall t
+\]
+where $O_t = 1$ indicates that $X_t$ is fully observed (amplitude = 1), and $O_t = 0$ indicates that $X_t$ is missing (amplitude = 0).
+
+The amplitude modulating process $O_t$ can be:
+\begin{itemize}
+    \item \textbf{Deterministic}: For each $t$, $O_t = o_t$ where $o_t \in \{0,1\}$ is a known, fixed value.
+    \item \textbf{Stochastic}: $O_t$ follows a probability distribution with $\pi := P(O_t=1)$, possibly dependent on the history of $X_t$, $O_t$, or external factors.
+\end{itemize}
+The amplitude modulation is applied to the vector of binarizations $\boldsymbol{Z}_t$ to get $(O_t \boldsymbol{Z}_t)$. We then define the naive estimator
+\[\hat{\mathfrak{f}}:= \frac{1}{n} \sum_{t=1}^{n}O_t \boldsymbol{Z}_t\]
 
 \end{document}

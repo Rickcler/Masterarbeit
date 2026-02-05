@@ -1,42 +1,41 @@
 library(dplyr)
 library(plyr)
 library(tidyr)
-library(ggplot2)
+
 
 
 #' Generate BinAR(1) process
-
 generate_binar1 <- function(n, m, p, r) {
-  # Initialize
+  # n: Länge der Zeitreihe
+  # m: Parameter der Binomialverteilung
+  # p: Erwartungswert der stationären Verteilung = E[I_t]
+  # r: Thinning-Parameter (muss in [0, 1] sein)
+  alpha <- (p * (1-r)) + r
+  beta <- p * (1-r)
+  # Initialisiere
   I <- numeric(n)
   
-  # Initial value from stationary distribution: Bin(m, p)
+  # Startwert aus stationärer Verteilung: Bin(m, p)
   I[1] <- rbinom(1, m, p)
   
-  # Generate the process
+  # Erzeuge den Prozess
   for (t in 2:n) {
-    # BinAR(1) evolution: I_t = α∘I_{t-1} + ε_t
-    # where α∘ is binomial thinning with parameter r
-    # and ε_t ~ Bin(m, p(1-r)/(1-p*r))
-    alpha_thinned <- rbinom(1, I[t-1], r)
-    epsilon <- rbinom(1, m, p*(1-r)/(1-p*r)) # Ensures that the marginal distribution is Bin(m, p)
-    I[t] <- alpha_thinned + epsilon
+    
+    I[t] <- rbinom(1, I[t-1], alpha) + rbinom(1, m - I[t-1], beta)  
   }
   
   return(I)
 }
-
-# Test with small example
-set.seed(123)
-test_counts <- generate_binar1(n = 10000, m = 3, p = 0.2, r = 0.35)
-print(test_counts)
-
-#' Generate amplitude-modulating process (missing observations)
-
+#'' Generate Amplitude-modulating process
 generate_O <- function(n, pi) {
   rbinom(n, 1, pi)
 }
+# Test with small example
+set.seed(123)
+test_counts <- generate_binar1(n = 10000, m = 3, p = 0.2, r = 0.35)
 
+
+#-- Function to compute the empirical marginal cdf 
 marginal_probs_e <- function(m, data, n) {
   marg_probs <- numeric(m)
   for (i in 0:m-1) {
@@ -44,8 +43,8 @@ marginal_probs_e <- function(m, data, n) {
   } 
   return(marg_probs)
 }
-marginal_probs_e(m = 3, data = test_counts, n = length(test_counts))
 
+#-- Function to compute the empirical lag(1) cdf
 biv_probs_e <- function(m, data, n, h = 1) {
   biv_probs <- numeric(m)
   for (i in 0:m-1) {
@@ -53,48 +52,6 @@ biv_probs_e <- function(m, data, n, h = 1) {
   } 
   return(biv_probs)
 }
-
-biv_probs_e(m = 3, data = test_counts, n = length(test_counts), h = 1)
-
-
-marginal_probs_T <- function(m, p) {
-  cumsum(dbinom(0:(m-1), m, p))
-}
-marginal_probs_T(m = 3, p = 0.2)
-
-joint_cdf_lag1 <- function(m, p, r) {
-  # p* for innovation term
-  p_star <- p * (1 - r) / (1 - p * r)
-  
-  joint_pmf <- matrix(0, nrow = m, ncol = m)
-
-  marginal <- dbinom(0:(m-1), m, p)
-
-  for (a in 0: (m-1)) {
-    for (b in 0:(m-1)) {
-      trans_prob <- 0
-      for (k in 0:min(a, b)) {
-        thinning_prob <- choose(a,k) * r^k*(1-r)^(a-k)
-
-        innov_prob <- choose(m - a, b - k) * 
-          p_star^(b - k) * 
-          (1 - p_star)^(m - a - b + k)
-
-        trans_prob <- trans_prob + thinning_prob * innov_prob
-      }
-      joint_pmf[a + 1, b + 1] <- marginal[a + 1] * trans_prob
-    }
-  }
-  joint_cdf <- matrix(0, nrow = m, ncol = m)
-  for (a in 0:(m-1)) {
-    for (b in 0:(m-1)) {
-      joint_cdf[a + 1, b + 1] <- sum(joint_pmf[1:(a + 1), 1:(b + 1)])
-    }
-  }
-  return(joint_cdf)
-}
-
-joint_cdf_lag1(m = 3, p = 0.2, r = 0.35)
 
 #' Simulation function
 simulation <- function(n, m, p, r, pi, n_reps = 100) {
@@ -104,15 +61,14 @@ simulation <- function(n, m, p, r, pi, n_reps = 100) {
   count_process <- generate_binar1(n, m, p, r)
   Missing_process <- generate_O(n, pi)
   observed_counts <- count_process[Missing_process ==1]
-  CDF <- marginal_probs(m, observed_counts, length(observed_counts))
+  CDF <- marginal_probs_e(m, observed_counts, length(observed_counts))
   results[rep, 1] <- (4/m)*(sum(CDF *(1-CDF)))
   results[rep, 2] <- (2/m)*sum(CDF-1)
-  results[rep, 3] <- sum(biv_probs(m, observed_counts, length(observed_counts), h = 1) - CDF^2)/sum(CDF*(1-CDF))
-  results[rep, 4] <- sum(biv_probs(m, observed_counts, length(observed_counts), h = 2) - CDF^2)/sum(CDF*(1-CDF))
+  results[rep, 3] <- sum(biv_probs_e(m, observed_counts, length(observed_counts), h = 1) - CDF^2)/sum(CDF*(1-CDF))
+  results[rep, 4] <- sum(biv_probs_e(m, observed_counts, length(observed_counts), h = 2) - CDF^2)/sum(CDF*(1-CDF))
   }
   return(rbind(colMeans(results, na.rm= T), apply(results, 2, sd)))
 }
-
 
 
 simulation(n = 100, m = 3, p = 0.2, r = 0.35, pi = 0.8, n_reps = 10)
@@ -125,45 +81,60 @@ scenarios <- expand.grid(
   r = c(0, 0.35, 0.50),
   pi = c(1, 0.95, 0.9, 0.85, 0.8, 0.75, 0.5)
 )
-scenarios
-# Filter für Paper-Szenarien
 scenarios <- scenarios[
   (scenarios$m == 3 & scenarios$p == 0.20 & scenarios$r %in% c(0, 0.35)) |
   (scenarios$m == 10 & scenarios$p == 0.45 & scenarios$r %in% c(0, 0.50)),
 ]
 
+# Index reset
+rownames(scenarios) <- NULL
 
-# Convert scenarios to a list of lists
-scenarios_list <- split(scenarios, seq(nrow(scenarios)))
-results <- lapply(scenarios_list, function(params) {
-  simulation(
-    n = params$n, 
-    m = params$m, 
-    p = params$p, 
-    r = params$r, 
-    pi = params$pi, 
-    n_reps = 100
-  )
-})
 results <- apply(scenarios, 1, function(row) {
   simulation(
     n = row["n"], m = row["m"], p = row["p"], 
-    r = row["r"], pi = row["pi"], n_reps = 100
+    r = row["r"], pi = row["pi"], n_reps = 1000
   )
 })
 
-target_scenarios <- scenarios[
+target_scenarios <-  scenarios[
+  scenarios$m == 3 & 
+  scenarios$p == 0.20 & 
+  scenarios$r == 0.35 &
+  scenarios$pi %in% c(1, 0.75) &
+  scenarios$n %in% c(50, 100, 250, 500, 1000),
+]
+
+sim_indices <- which(
   scenarios$m == 3 & 
   scenarios$p == 0.20 & 
   scenarios$r == 0.35 &
   scenarios$pi %in% c(1, 0.75) &
   scenarios$n %in% c(50, 100, 250, 500, 1000)
-]
-plot_1 <- results[,scenarios$m == 3 & 
-  scenarios$p == 0.20 & 
-  scenarios$r == 0.35 &
-  scenarios$pi %in% c(1, 0.75) &
-  scenarios$n %in% c(50, 100, 250, 500, 1000)]
+)
+
+IOV_sim <- results[1:2,sim_indices ]
+
+# Sortiere die Szenarien wie in group_info
+sim_scenarios <- scenarios[sim_indices, ]
+
+
+# Extrahiere die entsprechenden simulierten Ergebnisse
+sim_means <- as.numeric(IOV_sim[1, ])  # Erste Zeile: Mittelwerte
+sim_sds <- as.numeric(IOV_sim[2, ])    # Zweite Zeile: Standardabweichungen
+
+sim_df <- data.frame(
+  n = sim_scenarios$n,
+  pi = sim_scenarios$pi,
+  m = sim_scenarios$m,
+  p = sim_scenarios$p,
+  r = sim_scenarios$r,
+  type = "Simulated",
+  mean = sim_means,
+  sd = sim_sds,
+  lower = sim_means - sim_sds,
+  upper = sim_means + sim_sds
+)
+
 
 
 selected_indices <- which(scenarios$m == 3 & 
@@ -171,6 +142,7 @@ selected_indices <- which(scenarios$m == 3 &
                          scenarios$r == 0.35 &
                          scenarios$pi %in% c(1, 0.75) &
                          scenarios$n %in% c(50, 100, 250, 500, 1000))
+
 
 group_info <- data.frame(
   index = selected_indices,
@@ -226,13 +198,3 @@ ggplot(plot_data, aes(x = x_pos, y = mean, color = factor(pi))) +
   theme(plot.title = element_text(hjust = 0.5),
         plot.subtitle = element_text(hjust = 0.5),
         legend.position = "bottom")
-
-get_marginal_cdf  <- function(m,p) {
-  cdf <- numeric(m-1)
-  for (i in 0:(m-1)) {
-    cdf[i+1] <- pbinom(i, m, p)
-  }
-  return(cdf)
-}
-
-get_marginal_cdf(3, 0.2)
