@@ -283,6 +283,7 @@ Hence, $f(\boldsymbol p)$ is uniquely minimized at
 \]
 and therefore $\mathrm{IQV}$ attains its maximal value at the uniform distribution.
 
+\section*{Measures of temporal dependence}
 
 \section*{Samples Measures}
 
@@ -460,7 +461,7 @@ The derivations for other dispersion metrics are analogous.
 
 \section*{Modelling Missingness}
 
-To model the missingness, the concept of \textbf{amplitude modulation} is employed. This approach, inspired by signal processing, models a stochastic process $(O_t)_t$ that runs concurrently with the main process $(X_t)_t$ and modulates its "amplitude" in a binary manner:
+To model the missingness, the concept of \textbf{amplitude modulation} is employed. This approach models missingness through a binary stochastic process $(O_t)_t$ that runs concurrently with the main process $(X_t)_t$ and modulates its "amplitude"  in a binary manner:
 
 \[
 O_t \in \{0,1\} \quad \forall t
@@ -470,9 +471,21 @@ where $O_t = 1$ indicates that $X_t$ is fully observed (amplitude = 1), and $O_t
 The amplitude modulating process $O_t$ can be:
 \begin{itemize}
     \item \textbf{Deterministic}: For each $t$, $O_t = o_t$ where $o_t \in \{0,1\}$ is a known, fixed value.
-    \item \textbf{Stochastic}: $O_t$ follows a probability distribution with $\pi := P(O_t=1)$, possibly dependent on the history of $X_t$, $O_t$, or external factors.
+    \item \textbf{Stochastic}: $O_t$ follows a probability distribution with $\pi_t := P(O_t=1)$, possibly dependent on the history of $X_t$, $O_t$, or external factors.
 \end{itemize}
-The amplitude modulation is applied to the vector of binarizations $\boldsymbol{Z}_t$ to get $(O_t \boldsymbol{Z}_t)$. We then define the naive estimator
-\[\hat{\mathfrak{f}}:= \frac{1}{n} \sum_{t=1}^{n}O_t \boldsymbol{Z}_t\]
+The amplitude modulation is applied to the binarization vector $\boldsymbol{Z}_t$ to obtain the observable $(O_t \boldsymbol{Z}_t)$. We then define the naive estimator of $\boldsymbol{f}$ as:
+\[\hat{\mathfrak{f}}:= \frac{1}{n} \sum_{t=1}^{n}O_t \boldsymbol{Z}_t.\]
+To assess the performance of this naive estimaton we compute its expectation
+\[E[\hat{\mathfrak{f}}] = \frac{1}{n} \sum_{t = 1}^{n} E[O_t\boldsymbol{Z_t}] = \frac{1}{n} \sum_{t = 1}^{n} E[\boldsymbol{Z_t} E[O_t|\boldsymbol{Z}_t]],\]
+where the last equality follows from the law of iterated expectations.\\
+The dependendce structure between $(O_t)_t$ and $(\boldsymbol{Z}_t)_t$ (or equivalently $(X_t)_t$) is crucial. Under the assumption of independence, the expression simplifies to
+\[\frac{1}{n} \sum_{t = 1}^{n} E[\boldsymbol{Z_t} E[O_t|\boldsymbol{Z}_t]] \overset{i.i.d.}{=} \frac{1}{n}\sum_{t=1}^{n} E[\boldsymbol{Z}_t]  E[O_t] = \left(\frac{1}{n} \sum_{t=1}^{n} E[O_t]\right) \boldsymbol{f} \]
+Since $E[\hat{\mathfrak{f}}]$ deviates from $\boldsymbol{f}$ by the factor $\frac{1}{n}\sum_{t=1}^{n}E[O_t]$, it implies that $\boldsymbol{f}$ should be estimated using the corrected estimator:
+\[\hat{\boldsymbol{f^*}} := \frac{\frac{1}{n} \sum_{t=1}^{n}O_t \boldsymbol{Z}_t}{\frac{1}{n}\sum_{t=1}^{n} O_t}=: \frac{\hat{\mathfrak{f}}}{\bar{O}}\]
+Under the assumption of the independence of $(O_t)$ and $(X_t)$, the stochastic properties of the corrected estimator $\hat{\boldsymbol{f^*}}$ can be studied. If $(O_t)$ is deterministic, then $E[O_t] = o_t \in \{0,1\}$ for any given $t$. It follows that
+\[\frac{1}{n}\sum_{t=1}^{n} E[O_t] = \frac{1}{n}\sum_{t=1}^{n} O_t = \bar{O},\]
+and therefore, here $\hat{\boldsymbol{f}^*} = \boldsymbol{f}/\bar{O}$ is a perfectly unbiased estimator of $\boldsymbol{f}$. However, if $O_t$ is a stochastic process then $E[O_t] = \pi_t \in (0; 1]$ and
+\[\frac{1}{n}\sum_{t=1}^{n} E[O_t]= \frac{1}{n}\sum_{t=1}^{n} \pi_t \neq \frac{1}{n}\sum_{t=1}^{n} O_t = \bar{O},\]
+to where $\hat{\boldsymbol{f^*}}$ is generally biased. To study this bias we assume $O_t$ to be stationary, with $E[O_t] = \pi $ and a autocovariance function $\gamma_{O}(h) := Cov[O_h, O_0]$ and joint expectations $\pi(h):= E[O_h O_0] = \gamma_O(h) + \pi^2$
 
 \end{document}

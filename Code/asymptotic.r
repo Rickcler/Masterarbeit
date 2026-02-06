@@ -75,7 +75,7 @@ Sigma_Star <- function(m, p, r, pi) {
       # i.i.d.-Teil (Missingness)
       iid_part <- (1 / pi) * (f[smaller + 1] - f[i + 1] * f[j + 1])
 
-      H <- 12  # oder adaptiv: bis r^H < 1e-8
+      H <- 50  # oder adaptiv: bis r^H < 1e-8
       lag_sum <- 0
 
       for (h in 1:H) {
@@ -90,7 +90,7 @@ Sigma_Star <- function(m, p, r, pi) {
 
   return(Sigma)
 }
-Sigma_Star(m, p, r, pi)
+Sigma_Star(10, 0.45, 0.5, 0.75)
 IOV_asymptotic <- function(Sigma, marginal_cdf, n, m) {
 
   variance_sum <- 0
@@ -104,7 +104,7 @@ IOV_asymptotic <- function(Sigma, marginal_cdf, n, m) {
     }
   }
 
-  Var_IOV <- (16 / (n * m^2)) * variance_sum
+  Var_IOV <- (1/n)*(16/m^2) * variance_sum
 
   IOV_real <- (4 / m) * sum(marginal_cdf * (1 - marginal_cdf))
 
@@ -118,10 +118,10 @@ IOV_asymptotic <- function(Sigma, marginal_cdf, n, m) {
 Skew_asymptotic <- function(Sigma, marginal_cdf, n,  m){
   skew_real <- (2/m) *  sum(marginal_cdf - 1)
   skew_expectation <- skew_real
-  skew_variance <- (4 / n *m^2)* sum(Sigma)
-  return(c(skew_expectation, skew_variance))
+  skew_variance <- (1/n)*(4/m^2)* sum(Sigma)
+  return(c(skew_expectation, sqrt(skew_variance)))
 }
-
+Skew_asymptotic(Sigma_Star(m, p, r, pi), pbinom(0:2, 3, 0.2), 50, 3)
 
 
 scenarios <- expand.grid(
@@ -129,60 +129,51 @@ scenarios <- expand.grid(
   m = c(3, 10),
   p = c(0.20, 0.45),
   r = c(0, 0.35, 0.50),
-  pi = c(1, 0.95, 0.9, 0.85, 0.8, 0.75, 0.5)
+  pi = c(1, 0.75)
 )
+
 scenarios <- scenarios[
-  (scenarios$m == 3 & scenarios$p == 0.20 & scenarios$r %in% c(0, 0.35)) |
-  (scenarios$m == 10 & scenarios$p == 0.45 & scenarios$r %in% c(0, 0.50)),
-]
+  (scenarios$m == 3 & scenarios$p == 0.20 & scenarios$r  == 0.35) | 
+  (scenarios$m == 10 & scenarios$p == 0.45 & scenarios$r  == 0.5),]
+
 # Index reset
 rownames(scenarios) <- NULL
-
-
-target_scenarios <-  scenarios[
-  scenarios$m == 3 & 
-  scenarios$p == 0.20 & 
-  scenarios$r == 0.35 &
-  scenarios$pi %in% c(1, 0.75) &
-  scenarios$n %in% c(50, 100, 250, 500, 1000),
-]
-
-IOV_asymp_results <- apply(target_scenarios, 1, function(row){
+unique_coeffs <- rbind(c(m= 3, p = 0.2, r = 0.35, pi = 1),
+                       c(m= 10, p = 0.45, r = 0.5, pi = 1),
+                       c(m= 3, p = 0.2, r = 0.35, pi = 0.75),
+                       c(m= 10, p = 0.45, r = 0.5, pi = 0.75))
+unique_n <- c(50, 100, 250, 500, 1000)
+Asymp_results <- apply(unique_coeffs, 1, function(params){
+  marginal <- pbinom(0:(params["m"]-1), params["m"], params["p"])
+  Sigma <- Sigma_Star(params["m"],params["p"], params["r"], params["pi"])
+  return(sapply(unique_n,function(row){
+    return(c(IOV_asymptotic(Sigma, marginal, row["n"], params["m"]), Skew_asymptotic(Sigma, marginal, row["n"], params["m"])))
+  }))
+})
+Asymp_results <- sapply(scenarios, 1, function(row){
   marginal <- pbinom(0:(row["m"]-1), row["m"], row["p"])
   Sigma <- Sigma_Star(row["m"],row["p"], row["r"], row["pi"])
-  return(IOV_asymptotic(Sigma, marginal, row["n"], row["m"]))
+  return(c(IOV_asymptotic(Sigma, marginal, row["n"], row["m"]), Skew_asymptotic(Sigma, marginal, row["n"], row["m"])))
 })
 
-Skew_asymp_results <- apply(target_scenarios, 1, function(row){
+Skew_asymp_results <- apply(scenarios, 1, function(row){
   marginal <- pbinom(0:(row["m"]-1), row["m"], row["p"])
   Sigma <- Sigma_Star(row["m"],row["p"], row["r"], row["pi"])
   return(Skew_asymptotic(Sigma, marginal, row["n"], row["m"]))
 })
 
-Skew_asymp_results
-# 1. Erstelle Dataframe für asymptotische Ergebnisse
+
+
 
 asymp_df <- data.frame(
-  n = sim_scenarios$n,
-  pi = sim_scenarios$pi,
-  m = sim_scenarios$m,
-  p = sim_scenarios$p,
-  r = sim_scenarios$r,
-  type = "Asymptotic",
-  mean = as.numeric(IOV_asymp_results[1, ]),
-  sd = as.numeric(IOV_asymp_results[2, ]),
-  lower = as.numeric(IOV_asymp_results[1, ]) - as.numeric(IOV_asymp_results[2, ]),
-  upper = as.numeric(IOV_asymp_results[1, ]) + as.numeric(IOV_asymp_results[2, ])
-)
-asymp_df <- data.frame(
-  n = target_scenarios$n,
-  pi = target_scenarios$pi,
-  m = target_scenarios$m,
-  p = target_scenarios$p,
-  r = target_scenarios$r,
+  n = scenarios$n,
+  pi = scenarios$pi,
+  m = scenarios$m,
+  p = scenarios$p,
+  r = scenarios$r,
   type = "Asymptotic",
   mean_IOV = as.numeric(IOV_asymp_results[1, ]),
-  sd = as.numeric(IOV_asymp_results[2, ]),
+  sd_IOV = as.numeric(IOV_asymp_results[2, ]),
   lower_IOV = as.numeric(IOV_asymp_results[1, ]) - as.numeric(IOV_asymp_results[2, ]),
   upper_IOV = as.numeric(IOV_asymp_results[1, ]) + as.numeric(IOV_asymp_results[2, ]),
   mean_Skew = as.numeric(Skew_asymp_results[1, ]),
