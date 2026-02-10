@@ -94,22 +94,6 @@ results <- apply(scenarios, 1, function(row) {
 })
 
 
-sim_indices_1 <- which(
-  scenarios$m == 3 & 
-  scenarios$p == 0.20 & 
-  scenarios$r == 0.35 &
-  scenarios$pi %in% c(1, 0.75) &
-  scenarios$n %in% c(50, 100, 250, 500, 1000)
-)
-
-sim_indices_2 <- which(
-  scenarios$m == 10 & 
-  scenarios$p == 0.45 & 
-  scenarios$r == 0.5 &
-  scenarios$pi %in% c(1, 0.75) &
-  scenarios$n %in% c(50, 100, 250, 500, 1000)
-)
-
 
 
 

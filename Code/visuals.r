@@ -1,61 +1,86 @@
 library(ggplot2)
 
 combined_df <- rbind(asymp_df, sim_df)
-
+head(combined_df)
 # 4. Erstelle eine kombinierte x-Position
 # Wir wollen: n → pi → type (Asymptotic/Simulated)
 combined_df$group_id <- interaction(
+  combined_df$p,
   combined_df$n, 
   combined_df$pi, 
   combined_df$type,
   sep = "_"
 )
 
+# Assuming your data has different p values
+# First, let's add the true values for each p
+combined_df <- combined_df %>%
+  mutate(
+    true_IOV = apply(combined_df, 1, function(row) {
+      m_val <- as.numeric(row["m"])
+      p_val <- as.numeric(row["p"])
+      marginal <- pbinom(0:(m_val-1), m_val, p_val)
+      (4/m_val) * sum(marginal * (1 - marginal))
+    }),
+    true_Skew = apply(combined_df, 1, function(row) {
+      m_val <- as.numeric(row["m"])
+      p_val <- as.numeric(row["p"])
+      marginal <- pbinom(0:(m_val-1), m_val, p_val)
+      (2/m_val) * sum(marginal - 1)
+    })
+  )
 
-# Erstelle eindeutige x-Positionen
-unique_groups <- unique(combined_df[, c("n", "pi", "type")])
+
+
+# 6.IOV-Scenario 1 Plot erstellen
+c = 0.2 # Ändere {0.2, 0.45} 
+
+subset <- combined_df %>% filter(p == c)
+
+
+unique_groups <- unique(subset[, c("n", "pi", "type")])
 unique_groups <- unique_groups[order(unique_groups$n, -unique_groups$pi, 
-                                     factor(unique_groups$type, levels = c("Simulated","Asymptotic" ))), ]
+                                    factor(unique_groups$type, levels = c("Simulated","Asymptotic" ))), ]
 
 # Weise x-Positionen zu
 x_positions <- setNames(1:nrow(unique_groups), 
-                       paste(unique_groups$n, unique_groups$pi, unique_groups$type, sep = "_"))
+                      paste(unique_groups$n, unique_groups$pi, unique_groups$type, sep = "_"))
 
-combined_df$x_pos <- x_positions[as.character(paste(combined_df$n, combined_df$pi, combined_df$type, sep = "_"))]
+subset$x_pos <- x_positions[as.character(paste(subset$n, subset$pi, subset$type, sep = "_"))]
 
 # 5. Erstelle x-Achsen-Beschriftungen
 # Gruppiere nach n und pi
-group_labels <- unique(combined_df[, c("n", "pi")])
+group_labels <- unique(subset[, c("n", "pi")])
 group_labels <- group_labels[order(group_labels$n, -group_labels$pi), ]
 
 # Bestimme die mittleren Positionen für jede n-pi Kombination
 group_centers <- sapply(1:nrow(group_labels), function(i) {
   n_val <- group_labels$n[i]
   pi_val <- group_labels$pi[i]
-  pos <- combined_df$x_pos[combined_df$n == n_val & combined_df$pi == pi_val]
+  pos <- subset$x_pos[subset$n == n_val & subset$pi == pi_val]
   mean(pos)
 })
 
 # Erstelle Beschriftungen
 x_labels <- paste0("n = ", group_labels$n, "\nπ = ", group_labels$pi)
 
-# Marginal CDF berechnen
-marginal_cdf <- pbinom(0:2, 3, 0.2)  # Nur i=1,...,m (nicht 0 oder m)
-# Für m=3: i=1,2,3
+subset$x_pos <- as.numeric(as.character(subset$x_pos))
 
-# Wahrer IOV
-true_IOV <- (4/3) * sum(marginal_cdf * (1 - marginal_cdf))
-true_skew <- (2/m) * sum(marginal_cdf- 1)
-# 6.IOV Plot erstellen
-ggplot(combined_df, aes(x = x_pos, y = mean_IOV, 
+t_IOV <- subset$true_IOV[1]          # Correct way: extract first value
+t_Skew <- subset$true_Skew[1]        # Correct way: extract first value
+m_val <- subset$m[1]                 # Correct way: extract first value
+p_val <- subset$p[1]                 # Correct way: extract first value
+r_val <- subset$r[1]                 # Correct way: extract first value
+subset
+ggplot(subset, aes(x = x_pos, y = mean_IOV, 
                         color = type, 
                         shape = factor(pi))) +
   # Horizontale Linie für wahren IOV-Wert
-  geom_hline(yintercept = true_IOV, 
-             color = "darkgreen", 
-             linetype = "dashed",
-             linewidth = 1,
-             alpha = 0.7) +
+  geom_hline(yintercept = t_IOV, 
+            color = "darkgreen", 
+            linetype = "dashed",
+            linewidth = 1,
+            alpha = 0.7) +
   # Punkte für Mittelwerte
   geom_point(size = 3.5, position = position_dodge(width = 0.2)) +
   
@@ -66,7 +91,7 @@ ggplot(combined_df, aes(x = x_pos, y = mean_IOV,
                 position = position_dodge(width = 0.2)) +
   
   # Verbindungslinien zwischen Asymptotic und Simulated für gleiche n,pi
-  geom_line(data = combined_df, 
+  geom_line(data = subset, 
             aes(group = interaction(n, pi)),
             color = "gray50", 
             linetype = "dashed",
@@ -94,13 +119,13 @@ ggplot(combined_df, aes(x = x_pos, y = mean_IOV,
   # Labels und Titel
   labs(
     title = "Comparison of Asymptotic vs Simulated IOV Results",
-    subtitle = "For BinAR(1) process with m=3, p=0.2, r=0.35",
+    subtitle = sprintf("For BinAR(1) process with m = %d, p = %.2f, r = %.2f", m_val, p_val, r_val),
     x = "Scenario (Sample Size n and Missing Probability π)",
     y = "IOV Value"
   ) +
   
   # Y-Achse begrenzen auf 0.35-0.55
-  coord_cartesian(ylim = c(0.35, 0.55)) +
+  coord_cartesian(ylim = c(t_IOV - 0.125,t_IOV + 0.075)) +
   
   # Theme
   theme_minimal() +
@@ -118,22 +143,22 @@ ggplot(combined_df, aes(x = x_pos, y = mean_IOV,
   
   # Optional: Hintergrund für Gruppen
   annotate("rect", 
-           xmin = c(0.5, 2.5, 4.5, 6.5, 8.5),
-           xmax = c(2.5, 4.5, 6.5, 8.5, 10.5),
-           ymin = -Inf, ymax = Inf,
-           alpha = 0.05, fill = "gray90")
+          xmin = c(0.5, 2.5, 4.5, 6.5, 8.5),
+          xmax = c(2.5, 4.5, 6.5, 8.5, 10.5),
+          ymin = -Inf, ymax = Inf,
+          alpha = 0.05, fill = "gray90")
 
 
 # 8. Skew Plot erstellen
-ggplot(combined_df, aes(x = x_pos, y = mean_Skew, 
+ggplot(subset, aes(x = x_pos, y = mean_Skew, 
                         color = type, 
                         shape = factor(pi))) +
   # Horizontale Linie für wahren IOV-Wert
-  geom_hline(yintercept = true_skew, 
-             color = "darkgreen", 
-             linetype = "dashed",
-             linewidth = 1,
-             alpha = 0.7) +
+  geom_hline(yintercept = t_Skew, 
+            color = "darkgreen", 
+            linetype = "dashed",
+            linewidth = 1,
+            alpha = 0.7) +
   # Punkte für Mittelwerte
   geom_point(size = 3.5, position = position_dodge(width = 0.2)) +
   
@@ -144,7 +169,7 @@ ggplot(combined_df, aes(x = x_pos, y = mean_Skew,
                 position = position_dodge(width = 0.2)) +
   
   # Verbindungslinien zwischen Asymptotic und Simulated für gleiche n,pi
-  geom_line(data = combined_df, 
+  geom_line(data = subset, 
             aes(group = interaction(n, pi)),
             color = "gray50", 
             linetype = "dashed",
@@ -172,13 +197,13 @@ ggplot(combined_df, aes(x = x_pos, y = mean_Skew,
   # Labels und Titel
   labs(
     title = "Comparison of Asymptotic vs Simulated Skew Results",
-    subtitle = "For BinAR(1) process with m=3, p=0.2, r=0.35",
+    subtitle = sprintf("For BinAR(1) process with m = %d, p = %.2f, r = %.2f", m_val, p_val, r_val),
     x = "Scenario (Sample Size n and Missing Probability π)",
-    y = "IOV Value"
+    y = "Skew Value"
   ) +
   
   # Y-Achse begrenzen auf 0.35-0.55
-  coord_cartesian(ylim = c(-0.55, -0.25)) +
+  coord_cartesian(ylim = c(t_Skew -0.15, t_Skew+0.15)) +
   
   # Theme
   theme_minimal() +
@@ -196,7 +221,7 @@ ggplot(combined_df, aes(x = x_pos, y = mean_Skew,
   
   # Optional: Hintergrund für Gruppen
   annotate("rect", 
-           xmin = c(0.5, 2.5, 4.5, 6.5, 8.5),
-           xmax = c(2.5, 4.5, 6.5, 8.5, 10.5),
-           ymin = -Inf, ymax = Inf,
-           alpha = 0.05, fill = "gray90")
+          xmin = c(0.5, 2.5, 4.5, 6.5, 8.5),
+          xmax = c(2.5, 4.5, 6.5, 8.5, 10.5),
+          ymin = -Inf, ymax = Inf,
+          alpha = 0.05, fill = "gray90")
