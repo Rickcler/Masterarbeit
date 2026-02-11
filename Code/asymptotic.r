@@ -39,7 +39,7 @@ lag_h_joint_pmf <- function(m, p, r, h = 1) {
   lag_h_conditional(m, p, r, h = h) * dbinom(0:m, m, p) 
 }
 
-
+asymp_df
 #-- Get CDF from PMF matrix
 pmf_to_cdf <- function(pmf) {
   cdf <- apply(pmf, 2, cumsum)
@@ -120,6 +120,25 @@ Skew_asymptotic <- function(Sigma, marginal_cdf, n,  m){
   return(c(skew_expectation, sqrt(skew_variance)))
 }
 
+Cohens_asymptotic_iid <- function(n, pi, m , marginal_cdf) {
+  t_1 <- 0
+  t_2 <- 0
+  t_3 <-0
+  f <- marginal_cdf 
+  for (i in 0:(m-1)) {
+    for (j in 0:(m-1)) {
+      smaller <- min(i,j)
+      t_1 <- t_1 + (f[smaller+1] -f[i+1]*f[j+1])^2
+      t_2 <- t_2 + (f[i+1]*f[j+1]*(f[smaller+1]-(f[i+1]*f[j+1])))
+    }
+    t_3 <- t_3 + (f[i+1]*(1-f[i+1]))  
+  }
+  t_3 <- t_3^2
+  Var_Cohens_K <- ((1/n)*(1/pi^2)*(t_1/t_3)) + ((2/n)*((1-pi)/pi^2)*(t_2/t_3))
+  Expectation_Cohens_K <- -(1/(n * pi))
+  return(c(Expectation_Cohens_K, sqrt(Var_Cohens_K)))
+}
+Cohens_asymptotic(50, 1, 3, pbinom(0:2, 3, 0.45))
 
 
 scenarios <- expand.grid(
@@ -171,7 +190,7 @@ for (scenario_idx in 1:nrow(unique_coeffs)) {
   for (n_val in unique_n) {
     iov_result <- IOV_asymptotic(Sigma, marginal, n_val, m_val)
     skew_result <- Skew_asymptotic(Sigma, marginal, n_val, m_val)
-    
+    C_result <- Cohens_asymptotic(n_val, pi_val, m_val, marginal)
     # Create a row for this combination
     row <- data.frame(
       n = n_val,
@@ -187,9 +206,12 @@ for (scenario_idx in 1:nrow(unique_coeffs)) {
       mean_Skew = skew_result[1],
       sd_Skew = skew_result[2],
       lower_Skew = skew_result[1] - skew_result[2],
-      upper_Skew = skew_result[1] + skew_result[2]
+      upper_Skew = skew_result[1] + skew_result[2],
+      mean_C = C_result[1],
+      sd_C = C_result[2],
+      lower_C = C_result[1] - C_result[2],
+      upper_C = C_result[1] + C_result[2]
     )
-    
     asymp_df <- rbind(asymp_df, row)
   }
 }

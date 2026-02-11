@@ -34,6 +34,10 @@ generate_O <- function(n, pi) {
 set.seed(123)
 test_counts <- generate_binar1(n = 10000, m = 3, p = 0.2, r = 0.35)
 
+generate_iid <- function(p, m, n) {
+  rbinom(n, m, p)
+} 
+
 
 #-- Function to compute the empirical marginal cdf 
 marginal_probs_e <- function(m, data, n) {
@@ -59,13 +63,16 @@ simulation <- function(n, m, p, r, pi, n_reps = 100) {
   for (rep in 1:n_reps) {
   # Generate BinAR(1) process
   count_process <- generate_binar1(n, m, p, r)
-  Missing_process <- generate_O(n, pi)
+  Missing_process <- generate_O(n, pi) 
   observed_counts <- count_process[Missing_process ==1]
   CDF <- marginal_probs_e(m, observed_counts, length(observed_counts))
+  
+  iid_process <- generate_iid(p, m, n) # Für Cohens(k)
+  observed_counts_iid <- iid_process[Missing_process == 1]
   results[rep, 1] <- (4/m)*(sum(CDF *(1-CDF)))
   results[rep, 2] <- (2/m)*sum(CDF-1)
-  results[rep, 3] <- sum(biv_probs_e(m, observed_counts, length(observed_counts), h = 1) - CDF^2)/sum(CDF*(1-CDF))
-  results[rep, 4] <- sum(biv_probs_e(m, observed_counts, length(observed_counts), h = 2) - CDF^2)/sum(CDF*(1-CDF))
+  results[rep, 3] <- sum(biv_probs_e(m, observed_counts_iid, length(observed_counts_iid), h = 1) - CDF^2)/sum(CDF*(1-CDF))
+  results[rep, 4] <- sum(biv_probs_e(m, observed_counts_iid, length(observed_counts_iid), h = 2) - CDF^2)/sum(CDF*(1-CDF))
   }
   return(rbind(colMeans(results, na.rm= T), apply(results, 2, sd)))
 }
@@ -110,6 +117,9 @@ sim_IOV_sds <- as.numeric(IOV_sim[2, ])    # Zweite Zeile: Standardabweichungen
 sim_Skew_means <- as.numeric(Skew_sim[1, ])  # Erste Zeile: Mittelwerte
 sim_Skew_sds <- as.numeric(Skew_sim[2, ])    # Zweite Zeile: Standardabweichungen
 
+sim_Co_1_means <- as.numeric(Co_1_sim[1, ])  # Erste Zeile: Mittelwerte
+sim_Co_1_sds <- as.numeric(Co_1_sim[2, ])    # Zweite Zeile: Standardabweichungen
+
 
 sim_df <- data.frame(
   n = scenarios$n,
@@ -125,5 +135,9 @@ sim_df <- data.frame(
   mean_Skew = sim_Skew_means,
   sd_Skew = sim_Skew_sds,
   lower_Skew = sim_Skew_means - sim_Skew_sds,
-  upper_Skew = sim_Skew_means + sim_Skew_sds
+  upper_Skew = sim_Skew_means + sim_Skew_sds,
+  mean_C = sim_Co_1_means,
+  sd_C = sim_Co_1_sds,
+  lower_C = sim_Co_1_means - sim_Co_1_sds,
+  upper_C = sim_Co_1_means + sim_Co_1_sds
 )
