@@ -486,6 +486,7 @@ Under the assumption of the independence of $(O_t)$ and $(X_t)$, the stochastic 
 \[\frac{1}{n}\sum_{t=1}^{n} E[O_t] = \frac{1}{n}\sum_{t=1}^{n} O_t = \bar{O},\]
 and therefore, here $\hat{\boldsymbol{f}^*} = \boldsymbol{f}/\bar{O}$ is a perfectly unbiased estimator of $\boldsymbol{f}$. However, if $O_t$ is a stochastic process then $E[O_t] = \pi_t \in (0; 1]$ and
 \[\frac{1}{n}\sum_{t=1}^{n} E[O_t]= \frac{1}{n}\sum_{t=1}^{n} \pi_t \neq \frac{1}{n}\sum_{t=1}^{n} O_t = \bar{O},\]
-to where $\hat{\boldsymbol{f^*}}$ is generally biased. To study this bias we assume $O_t$ to be stationary, with $E[O_t] = \pi $ and a autocovariance function $\gamma_{O}(h) := Cov[O_h, O_0]$ and joint expectations $\pi(h):= E[O_h O_0] = \gamma_O(h) + \pi^2$
+to where $\hat{\boldsymbol{f^*}}$ is generally biased. To study this bias we assume $O_t$ to be stationary, with $E[O_t] = \pi $ and a autocovariance function $\gamma_{O}(h) := Cov[O_h, O_0]$ and joint expectations $\pi(h):= E[O_h O_0] = \gamma_O(h) + \pi^2$. Furthermore, to study the joint asymptotic behaviour of $O_t$ and $Z_t$ we define the extended binary vectors:
+\[\boldsymbol{Z}^*_t:= (O_t, O_t Z_{t,0}, \ldots, O_t Z_{t,0})^\top =  O_t (1, \boldsymbol{Z}^\top_t)^\top\]
 
 \end{document}
