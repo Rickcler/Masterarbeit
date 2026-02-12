@@ -216,5 +216,5 @@ for (scenario_idx in 1:nrow(unique_coeffs)) {
   }
 }
 
-save.image("Masterarbeit.RData")
+load("Masterarbeit.RData")
 

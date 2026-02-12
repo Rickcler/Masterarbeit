@@ -4,6 +4,7 @@ library(plyr)
 library(tidyr)
 
 
+
 combined_df <- rbind(asymp_df, sim_df)
 head(combined_df)
 # 4. Erstelle eine kombinierte x-Position
@@ -32,19 +33,7 @@ combined_df <- combined_df %>%
       marginal <- pbinom(0:(m_val-1), m_val, p_val)
       (2/m_val) * sum(marginal - 1)
     }),
-    true_C1 = apply(combined_df, 1, function(row) {
-      m_val <- as.numeric(row["m"])
-      p_val <- as.numeric(row["p"])
-      r_val <- as.numeric(row["r"])
-      joint_cdf <- lag_h_joint_cdf(m_val, p_val, r_val)
-      marginal <- pbinom(0:(m_val-1), m_val, p_val)
-      num <- 0
-      for (i in 1:m_val) {
-        num <- num + (joint_cdf[i,i] - marginal[i]^2 )
-      }
-      denom <- sum(marginal*(1-marginal))
-      num/denom
-    })
+    true_C1 = 0
   )
 
 
@@ -299,7 +288,7 @@ ggplot(subset, aes(x = x_pos, y = mean_C,
   ) +
   
   # Y-Achse begrenzen auf 0.35-0.55
-  coord_cartesian(ylim = c(t_C1 -0.15, t_C1+0.15)) +
+  coord_cartesian(ylim = c(-0.3, 0.3)) +
   
   # Theme
   theme_minimal() +

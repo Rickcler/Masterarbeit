@@ -38,6 +38,19 @@ generate_iid <- function(p, m, n) {
   rbinom(n, m, p)
 } 
 
+biv_probs_e <- function(m, data, O, n, h = 1) {
+  biv_probs <- numeric(m)
+  valid <- (O[1:(n-h)] == 1) & (O[(h+1):n] == 1)
+  for (i in 0:(m-1)) {
+    biv_probs[i+1] <- sum(
+      (data[1:(n-h)] <= i) *
+      (data[(h+1):n] <= i) *
+      valid
+    ) / sum(valid)
+  }
+  return(biv_probs)
+}
+
 
 #-- Function to compute the empirical marginal cdf 
 marginal_probs_e <- function(m, data, n) {
@@ -52,11 +65,12 @@ marginal_probs_e <- function(m, data, n) {
 biv_probs_e <- function(m, data, n, h = 1) {
   biv_probs <- numeric(m)
   for (i in 0:(m-1)) {
-    biv_probs[i+1] <- sum((data[1:(n-h)] <= i)*(data[(h+1):n] <= i))*(1/(n-h))
+    biv_probs[i+1] <- (1/(n-h)) * sum((data[1:(n-h)] <= i)*(data[(h+1):n] <= i))
   } 
   return(biv_probs)
 }
-
+biv_probs_e(3, generate_iid(0.2, 3, 1000), 1000)
+pbinom(0:2, 3, 0.2)
 #' Simulation function
 simulation <- function(n, m, p, r, pi, n_reps = 100) {
   results <- matrix(NA, nrow = n_reps, ncol = 4, dimnames = list(NULL, c("IOV", "Skew", "lag1_Cohen", "lag2_Cohen")))
@@ -69,10 +83,11 @@ simulation <- function(n, m, p, r, pi, n_reps = 100) {
   
   iid_process <- generate_iid(p, m, n) # Für Cohens(k)
   observed_counts_iid <- iid_process[Missing_process == 1]
+  CDF_iid <- marginal_probs_e(m, observed_counts_iid, length(observed_counts_iid))
   results[rep, 1] <- (4/m)*(sum(CDF *(1-CDF)))
   results[rep, 2] <- (2/m)*sum(CDF-1)
-  results[rep, 3] <- sum(biv_probs_e(m, observed_counts_iid, length(observed_counts_iid), h = 1) - CDF^2)/sum(CDF*(1-CDF))
-  results[rep, 4] <- sum(biv_probs_e(m, observed_counts_iid, length(observed_counts_iid), h = 2) - CDF^2)/sum(CDF*(1-CDF))
+  results[rep, 3] <-   sum(biv_probs_e(m, iid_process, Missing_process, n, h = 1) - CDF_iid^2) /sum(CDF_iid*(1-CDF_iid))
+  results[rep, 4] <- sum(biv_probs_e(m, iid_process, Missing_process, n, h = 2) - CDF_iid^2)/sum(CDF_iid*(1-CDF_iid))
   }
   return(rbind(colMeans(results, na.rm= T), apply(results, 2, sd)))
 }
@@ -102,7 +117,7 @@ results <- apply(scenarios, 1, function(row) {
 
 
 
-
+save.image("Masterarbeit.RData")
 
 IOV_sim <- results[1:2,]
 Skew_sim <- results[3:4, ]
