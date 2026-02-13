@@ -473,9 +473,9 @@ The amplitude modulating process $O_t$ can be:
     \item \textbf{Deterministic}: For each $t$, $O_t = o_t$ where $o_t \in \{0,1\}$ is a known, fixed value.
     \item \textbf{Stochastic}: $O_t$ follows a probability distribution with $\pi_t := P(O_t=1)$, possibly dependent on the history of $X_t$, $O_t$, or external factors.
 \end{itemize}
-The amplitude modulation is applied to the binarization vector $\boldsymbol{Z}_t$ to obtain the observable $(O_t \boldsymbol{Z}_t)$. We then define the naive estimator of $\boldsymbol{f}$ as:
+The amplitude modulation is applied to the binarization vector $\boldsymbol{Z}_t$ to obtain the observable process $(O_t \boldsymbol{Z}_t)$. We then define the naive estimator of $\boldsymbol{f}$ as:
 \[\hat{\mathfrak{f}}:= \frac{1}{n} \sum_{t=1}^{n}O_t \boldsymbol{Z}_t.\]
-To assess the performance of this naive estimaton we compute its expectation
+To assess the performance of this naive estimator we compute its expectation
 \[E[\hat{\mathfrak{f}}] = \frac{1}{n} \sum_{t = 1}^{n} E[O_t\boldsymbol{Z_t}] = \frac{1}{n} \sum_{t = 1}^{n} E[\boldsymbol{Z_t} E[O_t|\boldsymbol{Z}_t]],\]
 where the last equality follows from the law of iterated expectations.\\
 The dependendce structure between $(O_t)_t$ and $(\boldsymbol{Z}_t)_t$ (or equivalently $(X_t)_t$) is crucial. Under the assumption of independence, the expression simplifies to
@@ -484,9 +484,19 @@ Since $E[\hat{\mathfrak{f}}]$ deviates from $\boldsymbol{f}$ by the factor $\fra
 \[\hat{\boldsymbol{f^*}} := \frac{\frac{1}{n} \sum_{t=1}^{n}O_t \boldsymbol{Z}_t}{\frac{1}{n}\sum_{t=1}^{n} O_t}=: \frac{\hat{\mathfrak{f}}}{\bar{O}}\]
 Under the assumption of the independence of $(O_t)$ and $(X_t)$, the stochastic properties of the corrected estimator $\hat{\boldsymbol{f^*}}$ can be studied. If $(O_t)$ is deterministic, then $E[O_t] = o_t \in \{0,1\}$ for any given $t$. It follows that
 \[\frac{1}{n}\sum_{t=1}^{n} E[O_t] = \frac{1}{n}\sum_{t=1}^{n} O_t = \bar{O},\]
-and therefore, here $\hat{\boldsymbol{f}^*} = \boldsymbol{f}/\bar{O}$ is a perfectly unbiased estimator of $\boldsymbol{f}$. However, if $O_t$ is a stochastic process then $E[O_t] = \pi_t \in (0; 1]$ and
+and therefore, here $\hat{\boldsymbol{f}^*} = \hat{\mathfrak{f}}/\bar{O}$ is a perfectly unbiased estimator of $\boldsymbol{f}$. However, if $O_t$ is a stochastic process then $E[O_t] = \pi_t \in (0; 1]$ and
 \[\frac{1}{n}\sum_{t=1}^{n} E[O_t]= \frac{1}{n}\sum_{t=1}^{n} \pi_t \neq \frac{1}{n}\sum_{t=1}^{n} O_t = \bar{O},\]
-to where $\hat{\boldsymbol{f^*}}$ is generally biased. To study this bias we assume $O_t$ to be stationary, with $E[O_t] = \pi $ and a autocovariance function $\gamma_{O}(h) := Cov[O_h, O_0]$ and joint expectations $\pi(h):= E[O_h O_0] = \gamma_O(h) + \pi^2$. Furthermore, to study the joint asymptotic behaviour of $O_t$ and $Z_t$ we define the extended binary vectors:
-\[\boldsymbol{Z}^*_t:= (O_t, O_t Z_{t,0}, \ldots, O_t Z_{t,0})^\top =  O_t (1, \boldsymbol{Z}^\top_t)^\top\]
+to where $\hat{\boldsymbol{f^*}}$ is generally biased. To study this bias we assume $(O_t)$ and $(X_t)$ to be stationary and $\alpha$-mixing with exponetially decaying coefficients, with $E[O_t] = \pi $ and a autocovariance function $\gamma_{O}(h) := Cov[O_h, O_0]$ and joint expectations $\pi(h):= E[O_h O_0] = \gamma_O(h) + \pi^2$. To study the joint asymptotic distribution of the estimator $\hat{\boldsymbol{f}}^*$, we introduce the extended binary vectors in order to derive the joint asymptotic distribution of all sample averages entering its definition:
+\[\boldsymbol{Z}^*_t:= (O_t, O_t Z_{t,0}, \ldots, O_t Z_{t,0})^\top =  O_t (1, \boldsymbol{Z}^\top_t)^\top,\]
+where the elements of $\boldsymbol{Z}_t^*$ are are numbered as $Z_{t,-1}^*, Z_{t,0}^*, \ldots, Z_{t,m-1}^*$The expectation of $\boldsymbol{Z}_t^*$ is given by
+\begin{align*}
+    E[\boldsymbol{Z}^{*}_t] &= (E[O_t], E[O_t Z_{t,0}], \ldots, E[O_t Z_{t,m-1}])^\top \\
+    &= (E[O_t], E[O_t] E[Z_{t,0}], \ldots, E[O_t] E[Z_{t,m-1}])^\top \tag{Independence}\\
+    &= (\pi, \pi f_0, \ldots, \pi f_{m-1})^\top \\
+    &=\pi (1, \boldsymbol{f}^{\top})^\top =: \boldsymbol{\mu}_{\boldsymbol{Z}_t^{*}}.
+\end{align*}
+Since the processes $(O_t)$ and $(\boldsymbol{Z}_t)$ are independent and stationary, the joint process $((O_t, \boldsymbol{Z}_t)^{\top})$ is also stationary. Moreover, if both processes are $\alpha$-mixing, then the joint process is $\alpha$-mixing. As $\boldsymbol{Z}_t^*$ is a measurable function of $(O_t, \boldsymbol{Z})^\top$ it follows that $\boldsymbol{Z}^*_t$ is stationary and $\alpha$-mixing (with exponentially decaying coefficients). \\
+To study the asymptotic properties of $\boldsymbol{Z}*_t$ we once again use Cramer-Wold. Let
+\[U_t^* = \boldsymbol{a}^\top\boldsymbol{Z}^*_t, \quad \boldsymbol{a}\in \mathbb{R}^{m+1}\]  
 
 \end{document}
