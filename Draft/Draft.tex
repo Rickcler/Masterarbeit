@@ -496,7 +496,29 @@ where the elements of $\boldsymbol{Z}_t^*$ are are numbered as $Z_{t,-1}^*, Z_{t
     &=\pi (1, \boldsymbol{f}^{\top})^\top =: \boldsymbol{\mu}_{\boldsymbol{Z}_t^{*}}.
 \end{align*}
 Since the processes $(O_t)$ and $(\boldsymbol{Z}_t)$ are independent and stationary, the joint process $((O_t, \boldsymbol{Z}_t)^{\top})$ is also stationary. Moreover, if both processes are $\alpha$-mixing, then the joint process is $\alpha$-mixing. As $\boldsymbol{Z}_t^*$ is a measurable function of $(O_t, \boldsymbol{Z})^\top$ it follows that $\boldsymbol{Z}^*_t$ is stationary and $\alpha$-mixing (with exponentially decaying coefficients). \\
-To study the asymptotic properties of $\boldsymbol{Z}*_t$ we once again use Cramer-Wold. Let
-\[U_t^* = \boldsymbol{a}^\top\boldsymbol{Z}^*_t, \quad \boldsymbol{a}\in \mathbb{R}^{m+1}\]  
+To study the asymptotic properties of $\boldsymbol{Z}^*_t$ we once again use Cramer-Wold. Let
+\[U_t^* = \boldsymbol{a}^\top\boldsymbol{Z}^*_t, \quad \boldsymbol{a}\in \mathbb{R}^{m+1}.\]  
+The argument for why $U_t*$ satisfies the conditions of Ibragimovs CLT is exactly the same as in the argument for why the linear projections of the non-missing estimator $\boldsymbol{Z}_t$ ($U_t$) converges. It follows that 
+\[\sqrt{n}(\bar{U}^*_t- \mu_{U^*_t}) \xrightarrow[n \rightarrow \infty]{d} \mathcal{N}(0, \sigma_{a}^*)\] 
 
+where $\mu_{U_t^*} = E(U_t) = \boldsymbol{a}^\top \boldsymbol{\mu}_{\boldsymbol{Z}_t^*}$ and 
+\begin{align*}
+    \sigma^*_{a} &= Var(U_t^*) + 2\sum_{h=1}^{\infty}Cov(U_t, U_{t+h}) \\
+    \text{where}\quad Var(U_t^*) &= \boldsymbol{a}^\top Var(\boldsymbol{Z}^*_t) \boldsymbol{a} = \sum_{i, j = - 1}^{m-1} a_{i+1} a_{j+1} Cov(Z^*_{t, i}, Z^*_{t, j})\\
+    \text{and} \quad Cov(U_t^*, U_{t+h}^*) &= \boldsymbol{a}^\top Cov(\boldsymbol{Z}^*_t, \boldsymbol{Z}^{*\top}_{t+h}) \boldsymbol{a} \\
+    \text{such that } \quad \sigma^*_{a} &= \boldsymbol{a}^\top (Var(\boldsymbol{Z}^*_t) + 2 \sum_{h = 1 }^{\infty} Cov(\boldsymbol{Z}^*_t, \boldsymbol{Z}^{*}_{t+h})) \boldsymbol{a}.
+\end{align*}
+According to Cramer-Wold we can follow, that since every linear projection $U_t^*$ in asymptotitcally normal we can follow that the sample mean
+\[\bar{\boldsymbol{Z}}^*_n := \frac{1}{n} \sum_{t=1}^{n} \boldsymbol{Z}^*_t\]
+satisfies the multivariat CLT 
+\[\sqrt{n} \left( \bar{\boldsymbol{Z}}^*_n - \boldsymbol{\mu}_{\boldsymbol{Z}_t^*} \right) \xrightarrow[n \to \infty]{d} \mathcal{N}\left( \boldsymbol{0}, \boldsymbol{\Sigma}_{\boldsymbol{Z}^*} \right)\]
+where $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$ must sastisfy for all $a \in \mathbb{R}^{m+1}$
+\[\boldsymbol{a}^\top\boldsymbol{\Sigma}_{\boldsymbol{Z}^*} \boldsymbol{a} = \sigma^*_a = \boldsymbol{a}^\top (Var(\boldsymbol{Z}^*_t) + 2 \sum_{h = 1 }^{\infty} Cov(\boldsymbol{Z}^*_t, \boldsymbol{Z}^{*}_{t+h})) \boldsymbol{a}\]
+which indicates
+\[\boldsymbol{\Sigma}_{\boldsymbol{Z}^*} = Var(\boldsymbol{Z}^*_t) + 2\sum_{h=1}^{\infty}Cov(\boldsymbol{Z}_{t}^*, \boldsymbol{Z}_{t+h}^*).\]
+The individudal elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$ are given by 
+\[\sigma_{\boldsymbol{Z}^*; i,j} = \begin{cases}
+    Var(O_t) + 2 \sum_{h = 1}^\infty Cov(O_t, O_{t+h}) = \pi (1-\pi) 2 \sum_{h=1}^{\infty} \gamma_O(h) & \text{ if } i = j =-1 \\
+    Cov(O_t, O_tZ_{t, j}) + 2 \sum_{h = 1}^\infty Cov(O_t , O_{t+h}Z_{t+h, j}) =
+\end{cases}\]
 \end{document}
