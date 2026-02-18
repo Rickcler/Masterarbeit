@@ -517,8 +517,26 @@ where $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$ must sastisfy for all $a \in \mat
 which indicates
 \[\boldsymbol{\Sigma}_{\boldsymbol{Z}^*} = Var(\boldsymbol{Z}^*_t) + 2\sum_{h=1}^{\infty}Cov(\boldsymbol{Z}_{t}^*, \boldsymbol{Z}_{t+h}^*).\]
 The individudal elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$ are given by 
-\[\sigma_{\boldsymbol{Z}^*; i,j} = \begin{cases}
-    Var(O_t) + 2 \sum_{h = 1}^\infty Cov(O_t, O_{t+h}) = \pi (1-\pi) 2 \sum_{h=1}^{\infty} \gamma_O(h) & \text{ if } i = j =-1 \\
-    Cov(O_t, O_tZ_{t, j}) + 2 \sum_{h = 1}^\infty Cov(O_t , O_{t+h}Z_{t+h, j}) =
-\end{cases}\]
+\[
+\sigma_{\boldsymbol{Z}^*; i,j} = 
+\begin{cases}
+    \begin{aligned}
+        &Var(O_t) + 2 \sum_{h = 1}^\infty Cov(O_t, O_{t+h})  \\
+        &\quad = \pi (1-\pi) + 2 \sum_{h=1}^{\infty} \gamma_O(h) 
+    \end{aligned} & \text{ if } i = j = -1 \\[2ex]
+    \begin{aligned}
+        &Cov(O_t, O_tZ_{t, j}) + 2 \sum_{h = 1}^\infty Cov(O_t , O_{t+h}Z_{t+h, j}) \\
+        &\quad = (E[O_t^2]E[Z_{t, j}] - E[O_t]E[O_t]E[Z_{t, j}]) \\
+        &\quad + 2\sum_{h=1}^{\infty} (E[O_t O_{t+h}]E[Z_{t, j}] - E[O_t]E[O_{t+h}]E[Z_{t,j}]) \\
+        &\quad =(\pi(1-\pi) + \pi^2)f_j - \pi^2f_j + 2 \sum_{t=1}^\infty (\gamma_O(h) + \pi^2)f_j - \pi^2 f_j \\
+        &\quad = f_j (\pi(1-\pi) + 2\sum_{t=1}^{\infty}\gamma_O(h)) = f_j\sigma_{\boldsymbol{Z}*}  
+    \end{aligned} & \text{if }j > i = -1 \\[2ex]
+    \begin{aligned}
+        &Cov(O_t Z_{t, j}, O_t Z_{t, i}) +  \sum_{h= 1}^{\infty}Cov(O_{t}Z_{t, j}, O_{t+h} Z_{t+h, i}) + Cov(O_{t+h}Z_{t+h, j}, O_t Z_{t, i}) \\
+        &\quad = (E[O_t^2] E[Z_{t,i} Z_{t,j}] - \pi^2f_if_j) \\
+        &\quad +  \sum_{h=1}^{\infty} (E[O_tO_{t+h}]E[Z_{t,j}Z_{t+h,i}] - \pi^2f_i f_j)+ (E[O_tO_{t+h}]E[Z_{t+h,j}Z_{t,i}] - \pi^2f_i f_j) \\
+        &\quad = (\pi(1-\pi) + \pi^2)f_{\min\{i,j\}} - \pi^2f_if_j+ \sum_{h=1}^{\infty} (\gamma_O(h)+\pi^2)(f_{ji}(h)+f_{ij}(h)) - 2\pi^2 f_i f_j)
+    \end{aligned}
+\end{cases}
+\]
 \end{document}
