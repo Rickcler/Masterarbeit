@@ -547,5 +547,24 @@ The individudal elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$ are given b
 To now derive the asymptotic properties of $\hat{\boldsymbol{f}}*$ we define the function $\boldsymbol{g}:= [0,1]^{m+1} \rightarrow [0,1]^{m}$ as 
 \[g_j(x_{-1}, x_{0}, \ldots, x_{m-1}) = x_j / x_{-1}, \quad \text{for } j = 0 \ldots, m-1,\]
 such that
-\[g(\bar{\boldsymbol{Z}^*_t}) = \hat{\boldsymbol{f}}^* \text{ and } g(\bar{\boldsymbol{\mu}}_{\boldsymbol{Z}^*}^*) = \boldsymbol{f}\]
+\[g(\bar{\boldsymbol{Z}^*_t}) = \hat{\boldsymbol{f}}^* \text{ and } g(\bar{\boldsymbol{\mu}}_{\boldsymbol{Z}^*}^*) = \boldsymbol{f}.\]
+The Jacobiana matrix of $\boldsymbol{g}(\boldsymbol{x})$ evaluated at $\boldsymbol{x} = \boldsymbol{\mu}_{\boldsymbol{Z}^*}$ is given by 
+\[\boldsymbol{G}_{(m+1)\times m} = 
+\begin{pmatrix}
+    \frac{\partial g_0(\boldsymbol{x})}{\partial Z^*_{-1}}& \ldots & \frac{\partial g_0(\boldsymbol{x})}{\partial Z^*_{m-1}}\\
+    \vdots & \cdots& \vdots\\
+    \frac{\partial g_{m-1}(\boldsymbol{x})}{\partial Z^*_{-1}}& \ldots & \frac{\partial g_{m-1}(\boldsymbol{x})}{\partial Z^*_{m-1}}
+\end{pmatrix} = 
+\begin{pmatrix}
+    -\frac{f_0}{\pi} &  \frac{1}{\pi} & 0 & \ldots & 0\\
+    -\frac{f_1}{\pi} & 0 & \frac{1}{\pi}&\ddots & \vdots \\
+    \vdots & \vdots & \ddots & \ddots & 0\\
+    -\frac{f_{m-1}}{\pi}& 0 &\ldots& 0 & \frac{1}{\pi}
+\end{pmatrix}\]
+Then, following the deltamethod, the following CLT holds
+\[\sqrt{n}(\hat{\boldsymbol{f}^*}-\boldsymbol{f})\xrightarrow[n\rightarrow\infty]{d} \mathcal{N}(\boldsymbol{0}, \boldsymbol{\Sigma}_{\hat{\boldsymbol{f}^*}}),\] 
+where
+\begin{align*}
+    \boldsymbol{\Sigma}_{\hat{\boldsymbol{f}^*}} &= \boldsymbol{G} \boldsymbol{\Sigma}_{\boldsymbol{Z}^*} \boldsymbol{G}^\top  
+\end{align*}
 \end{document}
