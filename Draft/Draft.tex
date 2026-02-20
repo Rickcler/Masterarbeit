@@ -539,7 +539,8 @@ The individudal elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$ are given b
         &\quad = \pi f_{\min\{i,j\}} - \pi f_if_j -\pi(1-\pi)f_if_j \\
         &\quad + \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h)+f_{ji}(h)) - 2 \pi(h)f_if_j + 2(\pi(h)-\pi^2)f_if_j \\
         &\quad = f_if_j\pi + \pi(f_{\min\{i,j\}} - f_if_j) + \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h)+f_{ji}(h)- 2f_if_j) + 2(\pi(h)-\pi^2)f_if_j \\
-        &\quad = f_if_j\sigma_{\boldsymbol{Z}^*;-1, -1} +\pi (f_{\min\{i,j\}} - f_if_j) + \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h)+f_{ji}(h)- 2f_if_j) 
+        &\quad = f_if_j\sigma_{\boldsymbol{Z}^*;-1, -1} +\underbrace{\pi (f_{\min\{i,j\}} - f_if_j) + \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h)+f_{ji}(h)- 2f_if_j)}_{:= \Gamma_{i,j}, \quad i, j = 0, \ldots, m-1 } \\
+        &\quad=  f_if_j\sigma_{\boldsymbol{Z}^*;-1, -1} + \Gamma_{i,j}
     \end{aligned}
 \end{cases}
 \]
@@ -565,6 +566,17 @@ Then, following the deltamethod, the following CLT holds
 \[\sqrt{n}(\hat{\boldsymbol{f}^*}-\boldsymbol{f})\xrightarrow[n\rightarrow\infty]{d} \mathcal{N}(\boldsymbol{0}, \boldsymbol{\Sigma}_{\hat{\boldsymbol{f}^*}}),\] 
 where
 \begin{align*}
-    \boldsymbol{\Sigma}_{\hat{\boldsymbol{f}^*}} &= \boldsymbol{G} \boldsymbol{\Sigma}_{\boldsymbol{Z}^*} \boldsymbol{G}^\top  
+    \boldsymbol{\Sigma}_{\hat{\boldsymbol{f}^*}} &= \boldsymbol{G} \boldsymbol{\Sigma}_{\boldsymbol{Z}^*} \boldsymbol{G}^\top \\ 
+        &=\begin{pmatrix}
+            -\frac{f_0}{\pi} &  \frac{1}{\pi} & 0 & \ldots & 0\\
+            -\frac{f_1}{\pi} & 0 & \frac{1}{\pi}&\ddots & \vdots \\
+            \vdots & \vdots & \ddots & \ddots & 0\\
+            -\frac{f_{m-1}}{\pi}& 0 &\ldots& 0 & \frac{1}{\pi}
+            \end{pmatrix}
+        \begin{pmatrix}
+            \sigma_{\boldsymbol{Z}^*; -1,-1} & f_0 \sigma_{\boldsymbol{Z}^*; -1,-1} & \ldots  f_{m-1} \sigma_{\boldsymbol{Z}^*; -1,-1} \\
+            f_0 \sigma_{\boldsymbol{Z}^*; -1,-1} & f_0f_0 \sigma_{\boldsymbol{Z}^*;-1, -1} + \Gamma_{0,0}
+        \end{pmatrix}    
 \end{align*}
+
 \end{document}
