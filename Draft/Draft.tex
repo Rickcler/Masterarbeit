@@ -486,7 +486,7 @@ To assess the performance of this naive estimator we compute its expectation
 \[E[\hat{\mathfrak{f}}] = \frac{1}{n} \sum_{t = 1}^{n} E[O_t\boldsymbol{Z_t}] = \frac{1}{n} \sum_{t = 1}^{n} E[\boldsymbol{Z_t} E[O_t|\boldsymbol{Z}_t]],\]
 where the last equality follows from the law of iterated expectations.\\
 The dependendce structure between $(O_t)_t$ and $(\boldsymbol{Z}_t)_t$ (or equivalently $(X_t)_t$) is crucial. Under the assumption of independence, the expression simplifies to
-\[\frac{1}{n} \sum_{t = 1}^{n} E[\boldsymbol{Z_t} E[O_t|\boldsymbol{Z}_t]] \overset{i.i.d.}{=} \frac{1}{n}\sum_{t=1}^{n} E[\boldsymbol{Z}_t]  E[O_t] = \left(\frac{1}{n} \sum_{t=1}^{n} E[O_t]\right) \boldsymbol{f} \]
+\[\frac{1}{n} \sum_{t = 1}^{n} E[\boldsymbol{Z_t} E[O_t|\boldsymbol{Z}_t]] = \frac{1}{n}\sum_{t=1}^{n} E[\boldsymbol{Z}_t]  E[O_t] = \left(\frac{1}{n} \sum_{t=1}^{n} E[O_t]\right) \boldsymbol{f} \]
 Since $E[\hat{\mathfrak{f}}]$ deviates from $\boldsymbol{f}$ by the factor $\frac{1}{n}\sum_{t=1}^{n}E[O_t]$, it implies that $\boldsymbol{f}$ should be estimated using the corrected estimator:
 \[\hat{\boldsymbol{f^*}} := \frac{\frac{1}{n} \sum_{t=1}^{n}O_t \boldsymbol{Z}_t}{\frac{1}{n}\sum_{t=1}^{n} O_t}=: \frac{\hat{\mathfrak{f}}}{\bar{O}}\]
 Under the assumption of the independence of $(O_t)$ and $(X_t)$, the stochastic properties of the corrected estimator $\hat{\boldsymbol{f^*}}$ can be studied. If $(O_t)$ is deterministic, then $E[O_t] = o_t \in \{0,1\}$ for any given $t$. It follows that
