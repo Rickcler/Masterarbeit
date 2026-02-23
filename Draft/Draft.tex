@@ -388,7 +388,7 @@ and hence all higher order moments exist. Consequently, for all $i \in 0,\ldots,
 \]
 and analogously for $Y_{t,i}$.
 
-According to the Cramér-Wold device, $\boldsymbol{Z}_T$ converges in distribution to a multivariate normal distribution $\mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})$ if and only if for every fixed non-zero vector $\boldsymbol{a} \in \mathbb{R}^{m+1}\setminus{\boldsymbol{0}}$, the scalar projections
+According to the Cramér-Wold device, $(\boldsymbol{Z}_t)_t$ converges in distribution to a multivariate normal distribution $\mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})$ if and only if for every fixed non-zero vector $\boldsymbol{a} \in \mathbb{R}^{m+1}\setminus{\boldsymbol{0}}$, the scalar projections
 \[U_t := \boldsymbol{a}^{\top}\boldsymbol{Z}_t = \sum_{i=0}^{m}a_i Z_{t,i}\]
 converge in distribution to a univariate normal distribution $\mathcal{N}(\boldsymbol{a}^\top\boldsymbol{\mu}, \boldsymbol{a}^\top\boldsymbol{\Sigma}\boldsymbol{a})$.\\
 Since each $\boldsymbol{Z}_t$ is the binarization vector of  $X_t$, it can only take values in the finite set
@@ -401,10 +401,10 @@ Consequently, for any fixed $\boldsymbol{a}$, the projection $U_t$ takes values 
 Equivalently, $U_t$ can be directly expressed as a deterministic function $h: S \to \mathcal{A}_a$ of the original state $s_i$ of $X_t$:
 \[h_{\boldsymbol{a}}(s_j) := \sum_{i=0}^{j} a_i\quad \forall j = 0, \ldots, m,\]
 so that $U_t = h_{\boldsymbol{a}}(X_t)$. Since $S$ is finite and equipped with the discrete $\sigma$-algebra $2^S$ (the power set), any function from $S$ to $\mathcal{A}_{\boldsymbol{a}} \subset \mathbb{R}$ is measurable. In particular, for any subset $E\subset \mathcal{A}_{\boldsymbol{a}}$ the preimage
-\[h^{-1}(E):= \{s_i\in S: h_{\boldsymbol{a}}(s_i) \in E \}\] 
+\[h^{-1}_a(E):= \{s_i\in S: h_{\boldsymbol{a}}(s_i) \in E \}\] 
 is a subset of $S$ and therefor belongs to $2^{S}$.
 
-Since $U_t$ is a measurable function of $X_t$, it remains it's properties of strict stationarity and $\alpha$-mixing with exponentially decaying coefficients. 
+Since $U_t$ is a measurable function of $X_t$, it remains its properties of strict stationarity and $\alpha$-mixing with exponentially decaying coefficients. 
 
 Accordingly, the summability condition is satisfied (follows from the $\alpha$-mixing with exponentially decaying coefficients) and since $U_t$ is in the discrete, finite set $\mathcal{A}_a$, there exists  
 \[M := \max_{j=0,\dots, m}  |\sum_{i=0}^{j} a_i|   < \infty\]  %Argument reicht an der Stelle nicht aus; es geht um 
@@ -417,33 +417,33 @@ satisfies the CLT:
 \[\sqrt{n}(\bar{U}_t - \mu_{U_t}) \xrightarrow[n \to \infty]{d} \mathcal{N}(0, \sigma_{\boldsymbol{a}}),\] 
 where 
 \begin{align*}
-    \mu_{U_{t}} = E[U_t] \quad \text{ and } \quad\sigma_{\boldsymbol{a}} &= Var(U_t) + 2 \sum_{h = 1}^{\infty} Cov(U_t, U_{t+h})\\
-    &= \sum_{i,j} a_i a_j \left[Cov(Z_{t,i}, Z_{t,j}) + 2 \sum_{h=1}^{\infty} Cov(Z_{t,i}, Z_{t+h, j})\right]
+    \mu_{U_{t}} = E[U_t] \quad \text{ and } \quad\sigma_{\boldsymbol{a}} &= Var(U_t) +  \sum_{h = 1}^{\infty} Cov(U_t, U_{t+h})\\
+    &= \sum_{i,j} a_i a_j \left[Cov(Z_{t,i}, Z_{t,j}) +  \sum_{h=1}^{\infty} Cov(Z_{t,i}, Z_{t+h, j}) + Cov(Z_{t,j}, Z_{t+h, i})\right]
 \end{align*}
 Hence, according to the Cramer-Wold device, the sample mean
 \[\bar{\boldsymbol{Z}_n}:= \frac{1}{n} \sum_{t=1}^{n} \boldsymbol{Z}_t = \boldsymbol{\hat{f}}\]
 satisfies the following multivariat CLT: 
 \[\sqrt{n}\bigl(\bar{\boldsymbol{Z}_n}- \boldsymbol{f}\bigr) \xrightarrow[n \to \infty]{d} \mathcal{N}\bigl(\boldsymbol{0}, \boldsymbol{\Sigma}_Z\bigr), \quad \text{with } \boldsymbol{\Sigma_{Z}} = (\sigma_{\boldsymbol{Z}; i,j})_{i,j = 0, \ldots, m-1}\]
 where $\boldsymbol{\Sigma}_{Z}$ must satisfy that for all $\boldsymbol{a} \in \mathbb{R}^{m}$
-\[\boldsymbol{a^T\Sigma_{Z}a} = \sigma_{\boldsymbol{a}} = \sum_{i,j} a_i a_j \left[Cov(Z_{t,i}, Z_{t,j}) + 2 \sum_{h=1}^{\infty} Cov(Z_{t,i}, Z_{t+h, j})\right],\]
+\[\boldsymbol{a^T\Sigma_{Z}a} = \sigma_{\boldsymbol{a}} = \sum_{i,j} a_i a_j \left[Cov(Z_{t,i}, Z_{t,j}) +  \sum_{h=1}^{\infty} Cov(Z_{t,i}, Z_{t+h, j}) + Cov(Z_{t,j}, Z_{t+h, i})\right],\]
 which implies
-\[\sigma_{\boldsymbol{Z}; i,j} = Cov(Z_{t,i}, Z_{t,j}) + 2 \sum_{h= 1}^{\infty}Cov(Z_{t,i}, Z_{t+h,j }).\]
+\[\sigma_{\boldsymbol{Z}; i,j} = Cov(Z_{t,i}, Z_{t,j}) + \sum_{h=1}^{\infty} Cov(Z_{t,i}, Z_{t+h, j}) + Cov(Z_{t,j}, Z_{t+h, i}).\]
 Since 
 \[Cov(Z_{t,i}, Z_{t,j}) = E[Z_{t,i}Z_{t,j}] - E[Z_{t,i}]E[Z_{t,j}] = f_{\min\{i,j\}} - f_i f_j\]
 and 
 \[Cov(Z_{t,i}, Z_{t+h, j}) = E[Z_{t,i}Z_{t+h, j}] - E[Z_{t,i}]E[Z_{t+h,j}] = f_{ij}(h) - f_i f_j\]
 we can also write the elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}}$ as 
-\[\sigma_{\boldsymbol{Z}; i,j } = \left(f_{\min\{i,j\}} - f_if_j\right) + 2 \sum_{h=1}^{\infty} \left[ f_{ij}(h) -f_i f_j \right]\]
-According to the multivariate delta-method a random variable $G^* := g^*(\boldsymbol{\Theta^*})$, where $\boldsymbol{\Theta^*} \in \mathbb{R}^{m}$, $\boldsymbol{\Theta^*}\overset{asy.}{\sim} \mathcal{N}(\boldsymbol{\Theta}, \boldsymbol{\Sigma^*})$ and  $g: \mathbb{R}^m\rightarrow \mathbb{R}$ is a continously diffentiable function, satisfies 
-\[G^* \overset{asy.}{\sim} \mathcal{N}(g^*(\boldsymbol{\Theta}), n^{-1}\boldsymbol{j\Sigma j^{\top}} )\]   
-where $\boldsymbol{j}$ is the one-dimensional Jakobi-matrix (i.e. vector) and where $j_i =  \frac{\partial g^*(\boldsymbol{\Theta})}{\partial \theta_i}$. \\
-Since we've shown that $\boldsymbol{\hat{f}}$ is assymptotically normal we can use this to derive the asymptotic properties of sample measures like the IOV. The respective jacobian is given by:
+\[\sigma_{\boldsymbol{Z}; i,j } = \left(f_{\min\{i,j\}} - f_if_j\right) + \sum_{h=1}^{\infty} f_{ij}(h) + f_{ji}(h)-2f_i f_j  \]
+We can now now use this information of the asymptotic distribution of $\hat{\boldsymbol{f}}$ to compute the asymptotic properties of sample measures that are based on $\hat{\boldsymbol{f}}$. According to the multivariate delta-method a random variable $G^* := g^*(\boldsymbol{\Theta^*})$, where $\boldsymbol{\Theta^*} \in \mathbb{R}^{m}$, $\boldsymbol{\Theta^*}\overset{asy.}{\sim} \mathcal{N}(\boldsymbol{\Theta}, \boldsymbol{ n^{-1}\Sigma^*})$ and  $g: \mathbb{R}^m\rightarrow \mathbb{R}$ is a continously diffentiable function, satisfies 
+\[G^* \overset{asy.}{\sim} \mathcal{N}(g^*(\boldsymbol{\Theta}), n^{-1}\boldsymbol{j\Sigma^* j^{\top}} )\]   
+where $\boldsymbol{j}$ is the one-dimensional Jacobian-matrix (i.e. vector) and where $j_i =  \frac{\partial g^*(\boldsymbol{\Theta})}{\partial \theta_i}$. \\
+Since we have shown that $\boldsymbol{\hat{f}}$ is assymptotically normal we can use this to derive the asymptotic properties of sample measures like the IOV. The respective Jacobian is given by:
 \begin{align*}
     \boldsymbol{j}_{IOV} &= \left(\frac{\partial IOV(\boldsymbol{f})}{\partial f_0 }, \ldots, \frac{\partial IOV(\boldsymbol{f})}{\partial f_{m-1} }\right) = \frac{4}{m}\left((1- 2 f_0), \ldots,(1-2f_{m-1}) \right)
 \end{align*}
 which leads to an asymptotic variance of the IOV:
 \begin{align*}
-    Var(\widehat{IOV(\boldsymbol{f})}) &= \boldsymbol{j}_{IOV} \boldsymbol{\Sigma}_Z \boldsymbol{j}_{IOV}^{\top} = \sum_{i=0}^{m-1} \sum_{j=0}^{m-1} \frac{4(1- 2 f_i)}{m} \frac{4(1- 2 f_j)}{m} \sigma_{\boldsymbol{Z}; i,j}\\
+    Var(\widehat{IOV(\boldsymbol{f})}) &\overset{asy.}{=} \boldsymbol{j}_{IOV} \boldsymbol{\Sigma}_Z \boldsymbol{j}_{IOV}^{\top} = \sum_{i=0}^{m-1} \sum_{j=0}^{m-1} \frac{4(1- 2 f_i)}{m} \frac{4(1- 2 f_j)}{m} \sigma_{\boldsymbol{Z}; i,j}\\
     &=  \frac{16}{m^2} \sum_{i,j = 0}^{m-1} (1-2f_i)(1- 2 f_j) \sigma_{\boldsymbol{Z}; i,j}
 \end{align*}
 and since $\boldsymbol{\hat{f}}$ has $\boldsymbol{f}$ as its asymptotic expectation, it follows
@@ -454,8 +454,8 @@ The jacobian for the skew is given by
 \[\boldsymbol{j}_{skew} = \left(\frac{\partial skew(\boldsymbol{f})}{\partial f_0}, \ldots, \frac{\partial skew(\boldsymbol{f})}{\partial f_{m-1}}\right) = \left(\frac{2}{m}, \ldots, \frac{2}{m}\right)\]
 such that we end up with assymptotic expectation and variance: 
 \begin{align*}
-    Var(\widehat{\text{skew}(\boldsymbol{f})}) &= n^{-1}\boldsymbol{j}_{skew}\Sigma_{\boldsymbol{Z}}\boldsymbol{j}_{skew}^{\top} = \frac{1}{n}\frac{4}{m^2}\sum_{0}^{m-1}\sigma_{\boldsymbol{Z}; ij} \\
-    E(\widehat{\text{skew}(\boldsymbol{f})}) &= \text{skew}(E(\hat{\boldsymbol{f}})) = \text{skew}(\boldsymbol{f})
+    Var(\widehat{\text{skew}(\boldsymbol{f})}) &\overset{asy.}{=} n^{-1}\boldsymbol{j}_{skew}\Sigma_{\boldsymbol{Z}}\boldsymbol{j}_{skew}^{\top} = \frac{1}{n}\frac{4}{m^2}\sum_{i,j = 0}^{m-1}\sigma_{\boldsymbol{Z}; ij} \\
+    E(\widehat{\text{skew}(\boldsymbol{f})}) &\overset{asy.}{=} \text{skew}(E(\hat{\boldsymbol{f}})) = \text{skew}(\boldsymbol{f})
 \end{align*}
 The derivations for other dispersion metrics are analogous.
 
@@ -539,8 +539,7 @@ The individudal elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$ are given b
         &\quad = \pi f_{\min\{i,j\}} - \pi f_if_j -\pi(1-\pi)f_if_j \\
         &\quad + \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h)+f_{ji}(h)) - 2 \pi(h)f_if_j + 2(\pi(h)-\pi^2)f_if_j \\
         &\quad = f_if_j\pi + \pi(f_{\min\{i,j\}} - f_if_j) + \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h)+f_{ji}(h)- 2f_if_j) + 2(\pi(h)-\pi^2)f_if_j \\
-        &\quad = f_if_j\sigma_{\boldsymbol{Z}^*;-1, -1} +\underbrace{\pi (f_{\min\{i,j\}} - f_if_j) + \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h)+f_{ji}(h)- 2f_if_j)}_{:= \Gamma_{i,j}, \quad i, j = 0, \ldots, m-1 } \\
-        &\quad=  f_if_j\sigma_{\boldsymbol{Z}^*;-1, -1} + \Gamma_{i,j}
+        &\quad = f_if_j\sigma_{\boldsymbol{Z}^*;-1, -1} +\pi (f_{\min\{i,j\}} - f_if_j) + \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h)+f_{ji}(h)- 2f_if_j)
     \end{aligned}
 \end{cases}
 \]
@@ -584,8 +583,13 @@ where
         \vdots & \ddots &\vdots \\
         -\frac{f_{m-1}}{\pi}\sigma_{\boldsymbol{Z}^*; -1, -1} + \frac{1}{\pi}\sigma_{\boldsymbol{Z}^*; m-1, -1} &\ldots&-\frac{f_{m-1}}{\pi}\sigma_{\boldsymbol{Z}^*; -1, m-1} + \frac{1}{\pi}\sigma_{\boldsymbol{Z}^*; m-1, m-1} \\  
     \end{pmatrix}\boldsymbol{G}^\top\\
-    \Rightarrow & \sigma_{\hat{\boldsymbol{f}}^*; i, j}  = (-\frac{f_j}{\pi}) (\frac{f_i}{\pi}\sigma_{\boldsymbol{Z}^*; -1, -1} + \frac{1}{\pi} \sigma_{\boldsymbol{Z}^*; i, -1}) + \frac{1}{\pi}(-\frac{f_{j}}{\pi}\sigma_{\boldsymbol{Z}^*; -1, -1}+ \frac{1}{\pi} \sigma_{\boldsymbol{Z}^*; i, j})
+    \Rightarrow  \sigma_{\hat{\boldsymbol{f}}^*; i, j}  &= (-\frac{f_j}{\pi}) (-\frac{f_i}{\pi}\sigma_{\boldsymbol{Z}^*; -1, -1} + \frac{1}{\pi} \sigma_{\boldsymbol{Z}^*; i, -1}) + \frac{1}{\pi}(-\frac{f_{i}}{\pi}\sigma_{\boldsymbol{Z}^*; -1, j}+ \frac{1}{\pi} \sigma_{\boldsymbol{Z}^*; i, j}) \\
+    &= \frac{f_j f_i }{\pi^2} \sigma_{\boldsymbol{Z}^*; -1, -1} - \frac{f_j}{\pi^2} \sigma_{\boldsymbol{Z}^*; i, -1} - \frac{f_i}{\pi^2}\sigma_{\boldsymbol{Z}^*; -1, j} + \frac{1}{\pi^2} \sigma_{\boldsymbol{Z}^*; i, j} \\  
+    &= \frac{1}{\pi^2}\left(f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} - f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} - f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} + \sigma_{\boldsymbol{Z}^*; i, j}\right) = \frac{1}{\pi^2}(\sigma_{\boldsymbol{Z}^*; i, j}-f_if_j \sigma_{\boldsymbol{Z}^*; -1, -1}) \\
+    &= \frac{1}{\pi^2}\left(\left[f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} + \pi(f_{\min \{i,j\}}- f_if_j) + \sum_{h=1}^{\infty}\pi(h)f_{ij}(h)+f_{ji}(h)-2f_if_j\right]- f_if_j \sigma_{\boldsymbol{Z}^*; -1, -1}\right) \\
+    &= \frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j) + \frac{1}{\pi^2} \sum_{h=1}^{\infty}\pi(h)f_{ij}(h)+f_{ji}(h)-2f_if_j
 \end{align*}
-such that the elements of $\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}}^*}$ are given by
+To study this asymtpotic distribution, we look at a couple more specifc scenarios. For example if we say $\pi = 1$ then
+\[\sigma_{\hat{\boldsymbol{f}}^*; i, j} = (f_{\min \{i,j\}}- f_if_j) + \sum_{h=1} f_{ij}(h) + f_{ji}(h) - 2 f_if_j = \sigma_{\boldsymbol{Z}; i, j} .\]
 
 \end{document}

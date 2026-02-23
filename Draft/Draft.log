@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.8.21)  20 FEB 2026 14:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.8.21)  23 FEB 2026 11:46
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -529,6 +529,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 109--110
 [7]
 
 [8]
+Overfull \hbox (20.68234pt too wide) detected at line 422
+[]
+ []
+
+
 
 [9]
 
@@ -541,7 +546,7 @@ File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
 [11]
 
 [12]
-Overfull \hbox (122.32256pt too wide) detected at line 546
+Overfull \hbox (122.32256pt too wide) detected at line 545
 \OML/lmm/m/it/12 ^^[[] \OT1/lmr/m/n/12 = []
  []
 
@@ -550,6 +555,11 @@ Overfull \hbox (122.32256pt too wide) detected at line 546
 [13]
 
 [14]
+Overfull \hbox (68.47113pt too wide) detected at line 591
+[]
+ []
+
+
 
 [15] (Draft.aux)
  ***********
@@ -562,13 +572,13 @@ Package rerunfilecheck Info: File `Draft.out' has not changed.
 Here is how much of TeX's memory you used:
  13820 strings out of 473898
  240639 string characters out of 5726007
- 1951960 words of memory out of 5000000
+ 1958960 words of memory out of 5000000
  36459 multiletter control sequences out of 15000+600000
  631486 words of font info for 94 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,21n,107p,10970b,531s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,19n,107p,10970b,531s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eufm10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbsy10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx8.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi6.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmib10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr6.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy6.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Draft.pdf (15 pages, 300966 bytes).
+Output written on Draft.pdf (15 pages, 308797 bytes).
 PDF statistics:
  201 PDF objects out of 1000 (max. 8388607)
  36 named destinations out of 1000 (max. 500000)
