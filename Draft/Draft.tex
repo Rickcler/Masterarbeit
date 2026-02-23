@@ -434,7 +434,7 @@ and
 \[Cov(Z_{t,i}, Z_{t+h, j}) = E[Z_{t,i}Z_{t+h, j}] - E[Z_{t,i}]E[Z_{t+h,j}] = f_{ij}(h) - f_i f_j\]
 we can also write the elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}}$ as 
 \[\sigma_{\boldsymbol{Z}; i,j } = \left(f_{\min\{i,j\}} - f_if_j\right) + \sum_{h=1}^{\infty} f_{ij}(h) + f_{ji}(h)-2f_i f_j  \]
-We can now now use this information of the asymptotic distribution of $\hat{\boldsymbol{f}}$ to compute the asymptotic properties of sample measures that are based on $\hat{\boldsymbol{f}}$. According to the multivariate delta-method a random variable $G^* := g^*(\boldsymbol{\Theta^*})$, where $\boldsymbol{\Theta^*} \in \mathbb{R}^{m}$, $\boldsymbol{\Theta^*}\overset{asy.}{\sim} \mathcal{N}(\boldsymbol{\Theta}, \boldsymbol{ n^{-1}\Sigma^*})$ and  $g: \mathbb{R}^m\rightarrow \mathbb{R}$ is a continously diffentiable function, satisfies 
+We can now now use this information of the asymptotic distribution of $\hat{\boldsymbol{f}}$ to compute the asymptotic properties of sample measures that are based on $\hat{\boldsymbol{f}}$. According to the multivariate delta-method a random variable $G^* := g^*(\boldsymbol{\Theta^*})$, where $\boldsymbol{\Theta^*} \in \mathbb{R}^{m}$, $\boldsymbol{\Theta^*}\overset{asy.}{\sim} \mathcal{N}(\boldsymbol{\Theta}, \boldsymbol{ n^{-1}\Sigma^*})$ and  $g: \mathbb{R}^m\rightarrow \mathbb{R}$ is a continously differentiable function, satisfies 
 \[G^* \overset{asy.}{\sim} \mathcal{N}(g^*(\boldsymbol{\Theta}), n^{-1}\boldsymbol{j\Sigma^* j^{\top}} )\]   
 where $\boldsymbol{j}$ is the one-dimensional Jacobian-matrix (i.e. vector) and where $j_i =  \frac{\partial g^*(\boldsymbol{\Theta})}{\partial \theta_i}$. \\
 Since we have shown that $\boldsymbol{\hat{f}}$ is assymptotically normal we can use this to derive the asymptotic properties of sample measures like the IOV. The respective Jacobian is given by:
@@ -446,8 +446,15 @@ which leads to an asymptotic variance of the IOV:
     Var(\widehat{IOV(\boldsymbol{f})}) &\overset{asy.}{=} \boldsymbol{j}_{IOV} \boldsymbol{\Sigma}_Z \boldsymbol{j}_{IOV}^{\top} = \sum_{i=0}^{m-1} \sum_{j=0}^{m-1} \frac{4(1- 2 f_i)}{m} \frac{4(1- 2 f_j)}{m} \sigma_{\boldsymbol{Z}; i,j}\\
     &=  \frac{16}{m^2} \sum_{i,j = 0}^{m-1} (1-2f_i)(1- 2 f_j) \sigma_{\boldsymbol{Z}; i,j}
 \end{align*}
-and since $\boldsymbol{\hat{f}}$ has $\boldsymbol{f}$ as its asymptotic expectation, it follows
-\[E[\widehat{IOV(\boldsymbol{f})}] \overset{asy.}{=} IOV(E[\boldsymbol{\hat{f}}]) = IOV(\boldsymbol{f}).\]
+However, the first-order delta method only provides information about the asymptotic distribution and variance, not on the finite-sample bias of nonlinear functionals:
+\[(\widehat{IOV} \overset{p}{\rightarrow} IOV(\boldsymbol{f})) \not\Rightarrow (E[\widehat{IOV}] = IOV(\boldsymbol{f})).\]
+For non linear transformations, the curvature induces a bias of order $n^{-1}$. To quantify this additional second-order effect, we expand $IOV(\hat{\boldsymbol{f}})$ in a Taylor series up to second order:
+\[IOV(\hat{\boldsymbol{f}}) =  IOV(\boldsymbol{f}) + \frac{1}{2}(\hat{\boldsymbol{f}}- \boldsymbol{f})^\top \boldsymbol{H}_{IOV}(\boldsymbol{f})(\hat{\boldsymbol{f}}- \boldsymbol{f}) + o_p(n^{-1}),\]
+where $\boldsymbol{H}_{IOV}(\boldsymbol{f})$ is the Hessian matrix such that 
+\[\boldsymbol{H}_{IOV}(\boldsymbol{f}) = \left(\frac{\partial^2 IOV(\boldsymbol{f})}{\partial f_i f_j}\right)_{i,j = 0, \ldots, m-1} = \begin{cases}
+    -\frac{8}{m} & \text{if } i = j\\
+    0 & \text{else} 
+\end{cases} = -\frac{8}{m} \boldsymbol{I}_m\]
 In a similiar way the asymptotic properties of other dispersion metrics such as the skew can be analyzed. A simple measure for the skew of an ordinal process is given by:
 \[\text{skew}(\boldsymbol{f}) = \frac{2}{m} \sum_{i=0}^{m-1}f_i - 1.\]
 The jacobian for the skew is given by
@@ -587,9 +594,16 @@ where
     &= \frac{f_j f_i }{\pi^2} \sigma_{\boldsymbol{Z}^*; -1, -1} - \frac{f_j}{\pi^2} \sigma_{\boldsymbol{Z}^*; i, -1} - \frac{f_i}{\pi^2}\sigma_{\boldsymbol{Z}^*; -1, j} + \frac{1}{\pi^2} \sigma_{\boldsymbol{Z}^*; i, j} \\  
     &= \frac{1}{\pi^2}\left(f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} - f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} - f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} + \sigma_{\boldsymbol{Z}^*; i, j}\right) = \frac{1}{\pi^2}(\sigma_{\boldsymbol{Z}^*; i, j}-f_if_j \sigma_{\boldsymbol{Z}^*; -1, -1}) \\
     &= \frac{1}{\pi^2}\left(\left[f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} + \pi(f_{\min \{i,j\}}- f_if_j) + \sum_{h=1}^{\infty}\pi(h)f_{ij}(h)+f_{ji}(h)-2f_if_j\right]- f_if_j \sigma_{\boldsymbol{Z}^*; -1, -1}\right) \\
-    &= \frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j) + \frac{1}{\pi^2} \sum_{h=1}^{\infty}\pi(h)f_{ij}(h)+f_{ji}(h)-2f_if_j
+    &= \frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j) + \frac{1}{\pi^2} \sum_{h=1}^{\infty}\pi(h)(f_{ij}(h)+f_{ji}(h)-2f_if_j)
 \end{align*}
-To study this asymtpotic distribution, we look at a couple more specifc scenarios. For example if we say $\pi = 1$ then
-\[\sigma_{\hat{\boldsymbol{f}}^*; i, j} = (f_{\min \{i,j\}}- f_if_j) + \sum_{h=1} f_{ij}(h) + f_{ji}(h) - 2 f_if_j = \sigma_{\boldsymbol{Z}; i, j} .\]
+To study this asymtpotic distribution, we look at a couple more specifc scenarios. For example if the process is fully observed, such that $\pi = 1$. Then
+\[\sigma_{\hat{\boldsymbol{f}}^*; i, j} = (f_{\min \{i,j\}}- f_if_j) + \sum_{h=1}^\infty f_{ij}(h) + f_{ji}(h) - 2 f_if_j = \sigma_{\boldsymbol{Z}; i, j} .\]
+If $O_t$ is i.i.d., then $\pi(h) = \pi^2$ such that
+\[\sigma_{\hat{\boldsymbol{f}}^*; i, j} = \frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j) + \sum_{h=1}^{\infty} f_{ij}(h) + f_{ji}(h) - 2 f_if_j.\]
+By contrast, if $X_t$ is i.i.d., then $f_{ij}(h) = f_if_j$ für alle $i, j = 0, \ldots, m-1$ and 
+\[\sigma_{\hat{\boldsymbol{f}}^*; i, j} = \frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j) + \frac{1}{\pi^2}\sum_{h=1}^{\infty} \pi(h)\overbrace{(f_{ij}(h) + f_{ji}(h) - 2 f_if_j)}^{=0} =\frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j).\]
+
+\subsection*{Asymptotic marginal properties}
+In the same way as for $\hat{\boldsymbol{f}}$ wen can now use the delta method, to learn more about the asymptotic distribution of marginal metrics that are based on $\hat{\boldsymbol{f}}^*$ such as the IOV.
 
 \end{document}
