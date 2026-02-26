@@ -1,0 +1,594 @@
+\documentclass[12pt,a4paper]{scrreprt}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage{natbib}
+\usepackage{hyperref}
+\bibliographystyle{apalike}
+
+% ---------------------------------------------------------------
+% Operator declarations (consistent naming throughout)
+% ---------------------------------------------------------------
+\DeclareMathOperator{\Mod}{Mod}
+\DeclareMathOperator{\Med}{Med}
+\DeclareMathOperator{\IOV}{IOV}
+\DeclareMathOperator{\IQV}{IQV}
+\DeclareMathOperator{\Bias}{Bias}
+
+% ---------------------------------------------------------------
+% TODO / open items:
+%   - Bradley (2005) Fernleihe: Kapitel 5 (strong mixing conditions)
+%   - Klenke, Bauer, Georgii (Maßtheorie), Brockwell, Shao (Math. Stats)
+%   - Cramer-Wold justification for multivariate CLT
+%   - Examples of categorical time series with exponential structure
+%   - Oberwolfach reports
+%   - Fokianos & Tjostheim (Paper)
+%   - Section "Measures of Temporal Dependence" still empty
+% ---------------------------------------------------------------
+
+\begin{document}
+
+% ================================================================
+\chapter*{Categorical Time-Series Analysis}
+% ================================================================
+
+% ----------------------------------------------------------------
+\section{General Setup}
+% ----------------------------------------------------------------
+
+\subsection{Notation}
+
+Let $(X_t)_{t \in \mathbb{Z}}$ be a \textit{categorical} time series process, where each $X_t$
+takes values in
+\[
+    S := \{s_0, \dots, s_m\}, \qquad m \in \mathbb{N}.
+\]
+$(X_t)$ may be \textit{nominal}, in which case the ordering of the elements of $S$ is arbitrary
+and used solely for notational consistency, or \textit{ordinal}, in which case the ordering of
+the elements of $S$ reflects an inherent order of the categories.
+
+\subsection{Stationarity}
+
+Two forms of stationarity are distinguished.
+A process is called \emph{weakly stationary} if
+\[
+    \begin{aligned}
+        \mathbb{E}(X_t)             &= \mu_X         &&\forall\, t,  \\
+        \mathbb{E}(X_t^2)           &< \infty         &&\forall\, t,  \\
+        \mathrm{Cov}(X_t, X_{t+h}) &= \gamma(h)      &&\forall\, t, h.
+    \end{aligned}
+\]
+It is called \emph{strictly stationary} if all finite-dimensional distributions are invariant
+under time shifts, i.e.,
+\[
+    F_{X_t, \ldots, X_{t+j}} = F_{X_{t+h}, \ldots, X_{t+h+j}}
+    \qquad \forall\, t, j, h.
+\]
+
+% ----------------------------------------------------------------
+\section{Marginal Distributions}
+% ----------------------------------------------------------------
+
+Regardless of whether one considers a simple categorical process with few categories or a
+complex temporally evolving system, the analysis of categorical processes always rests on the
+examination of the marginal probabilities. Because ordinal and nominal data encode different
+types of information, their marginals are represented in different ways.
+
+\paragraph{Ordinal data.}
+Most analytical tools for ordinal processes exploit the natural ordering of the elements of $S$.
+For this reason, the marginal distribution is represented by the cumulative distribution
+function~(CDF), which accumulates probabilities in accordance with the ordering of the
+categories:
+\[
+    \mathbf{f} = (f_0, \dots, f_{m-1})^{\top},
+    \qquad
+    f_i := P(X_t \leq s_i).
+\]
+It suffices to consider the cumulative probabilities of categories $s_0, \ldots, s_{m-1}$,
+since $P(X_t \leq s_m) = 1$ by definition. Although one could equivalently estimate the PMF
+and derive the CDF from it, the CDF representation is often more convenient because it is
+directly used to compute location and dispersion measures.
+
+\paragraph{Nominal data.}
+Since nominal categories do not possess a meaningful order, statistical procedures cannot
+exploit cumulative structure. The marginal distribution is therefore represented by the
+probability mass function~(PMF):
+\[
+    \mathbf{p} = (p_0, \dots, p_{m})^{\top},
+    \qquad
+    p_i := P(X_t = s_i).
+\]
+
+% ----------------------------------------------------------------
+\section{Population Measures}
+% ----------------------------------------------------------------
+
+\subsection{Location}
+
+For a \textit{nominal} process any measure that relies on ordering is inappropriate. The
+\emph{mode}, defined as the most probable category,
+\[
+    \Mod(X_t) = \arg\max_{s_i \in S}\, P(X_t = s_i),
+\]
+is therefore the natural choice, providing a meaningful summary by identifying the most
+frequent category.
+
+For an \textit{ordinal} process the natural ordering permits additional measures of central
+tendency. While the mode remains informative, the \emph{median} respects the ordering and is
+often more useful for describing the central location:
+\[
+    \Med(X_t) = \min\bigl\{\, s_i \in S : F(s_i) \geq \tfrac{1}{2} \,\bigr\}.
+\]
+In summary, the mode identifies the most typical category, whereas the median indicates the
+midpoint on the ordered scale.
+
+\subsection{Dispersion}
+
+The concept of dispersion differs between ordinal and nominal processes. Two separate indices
+are used: the \emph{Index of Ordinal Variation}~(IOV) for ordinal data and the \emph{Index of
+Qualitative Variation}~(IQV) for nominal data. Both are scaled to $[0,1]$, where $0$ denotes
+minimal dispersion and $1$ denotes maximal dispersion:
+\[
+    \IOV(\mathbf{f})
+    = \frac{4}{m}\sum_{i=0}^{m-1} f_i (1 - f_i),
+    \qquad
+    \IQV(\mathbf{p})
+    = \frac{m+1}{m}\!\left(1 - \sum_{i=0}^{m} p_i^2\right).
+\]
+
+\subsubsection{Minimal Dispersion}
+
+Both measures attain the value $0$ if and only if the distribution is degenerate, i.e., all
+probability mass is concentrated in a single category.
+
+\paragraph{Ordinal case.}
+A one-point distribution assigns all mass to a single category $s_j \in S$, corresponding to
+a CDF vector of the form
+\[
+    \mathbf{f} \in
+    \left\{
+    \begin{pmatrix} 1 \\ 1 \\ \vdots \\ 1 \end{pmatrix},
+    \begin{pmatrix} 0 \\ 1 \\ \vdots \\ 1 \end{pmatrix},
+    \ldots,
+    \begin{pmatrix} 0 \\ 0 \\ \vdots \\ 1 \end{pmatrix}
+    \right\}
+    =: \{\mathbf{c}_0,\ldots,\mathbf{c}_m\} \subset [0,1]^{m+1}.
+\]
+In each case every component satisfies $f_i \in \{0,1\}$, so $f_i(1-f_i) = 0$ for all $i$,
+and hence $\IOV = 0$.
+
+Conversely, $\IOV = 0$ implies $\sum_{i=0}^{m-1} f_i(1-f_i) = 0$. Since each term is
+nonnegative, $f_i(1-f_i) = 0$ for all~$i$, which forces $f_i \in \{0,1\}$ for all~$i$.
+Hence $\IOV = 0$ holds \emph{exactly} for one-point distributions.
+
+\paragraph{Nominal case.}
+A one-point distribution corresponds to a PMF vector of the form
+\[
+    \mathbf{p} \in
+    \left\{
+    \begin{pmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{pmatrix},
+    \begin{pmatrix} 0 \\ 1 \\ \vdots \\ 0 \end{pmatrix},
+    \ldots,
+    \begin{pmatrix} 0 \\ 0 \\ \vdots \\ 1 \end{pmatrix}
+    \right\}
+    =: \{\mathbf{e}_0,\ldots,\mathbf{e}_m\} \subset [0,1]^{m+1}.
+\]
+In each case $\sum_{i=0}^m p_i^2 = 1$, so $\IQV = 0$.
+
+Conversely, $\IQV = 0$ implies $\sum_{i=0}^m p_i^2 = 1$. Since $0 \leq p_i \leq 1$, we have
+$p_i^2 \leq p_i$ with equality if and only if $p_i \in \{0,1\}$. Combined with
+$\sum_{i=0}^m p_i = 1$, exactly one component equals~$1$ and all others equal~$0$, i.e.,
+$\mathbf{p} \in \{\mathbf{e}_0,\ldots,\mathbf{e}_m\}$.
+
+\subsubsection{Maximal Dispersion}
+
+\paragraph{Ordinal case.}
+Dispersion is maximal when half the probability mass lies in the lowest category and half in
+the highest, with all intermediate categories having probability zero. This yields
+\[
+    \mathbf{f} = \bigl(\tfrac{1}{2}, \tfrac{1}{2}, \ldots, \tfrac{1}{2}\bigr)^{\top},
+\]
+for which $f_i(1-f_i) = \tfrac{1}{4}$ for all $i$, giving $\IOV = 1$.
+
+To confirm this is the unique maximiser, note that $g(f_i) := f_i(1-f_i)$ is strictly concave
+with $g(0) = g(1) = 0$ and unique maximum at
+\[
+    \frac{\partial g}{\partial f_i} = 1 - 2f_i \overset{!}{=} 0
+    \quad \Longrightarrow \quad
+    f_i = \tfrac{1}{2}.
+\]
+Hence $\IOV(\mathbf{f}) = 1 \Leftrightarrow \mathbf{f} = \bigl(\tfrac{1}{2}, \ldots,
+\tfrac{1}{2}\bigr)^{\top}$.
+
+\paragraph{Nominal case.}
+Dispersion is maximal when the probability mass is distributed uniformly across all $m+1$
+categories:
+\[
+    p_i = \frac{1}{m+1}, \qquad i = 0,\ldots,m.
+\]
+Then $\sum_{i=0}^m p_i^2 = \tfrac{1}{m+1}$, so $\IQV = 1$.
+
+The uniqueness of this maximiser follows from minimising $f(\mathbf{p}) := \sum_{i=0}^m p_i^2$
+subject to $\sum_{i=0}^m p_i = 1$. The Lagrangian
+\[
+    \mathcal{L}(\mathbf{p},\lambda)
+    := \sum_{i=0}^m p_i^2 - \lambda\!\left(\sum_{i=0}^m p_i - 1\right)
+\]
+yields first-order conditions $2p_j = \lambda$ for all $j$, so all components are equal. The
+constraint then gives $p_j = \tfrac{1}{m+1}$ for all $j \in \{0,\ldots,m\}$.
+
+\subsection{Skewness}
+
+A simple measure for the skewness of an ordinal process is
+\[
+    \operatorname{skew}(\mathbf{f}) = \frac{2}{m} \sum_{i=0}^{m-1} f_i - 1.
+\]
+
+% ----------------------------------------------------------------
+\section{Bivariate Lag Probabilities}
+% ----------------------------------------------------------------
+
+Temporal dependence in categorical time series can be quantified through bivariate
+lag-$h$ probabilities, representing the joint probability that the process takes a specific
+category at time~$t$ and another category at time~$t+h$.
+
+\paragraph{Ordinal series (cumulative).}
+\[
+    f_{ij}(h) := P(X_t \leq s_i,\, X_{t+h} \leq s_j),
+    \qquad i,j < m.
+\]
+
+\paragraph{Nominal series (joint).}
+\[
+    p_{ij}(h) := P(X_t = s_i,\, X_{t+h} = s_j),
+    \qquad i,j \leq m.
+\]
+
+These quantities serve as input for dependence measures such as the ordinal and nominal
+Cohen's~$\kappa$.
+
+% ----------------------------------------------------------------
+\section{Measures of Temporal Dependence}
+% ----------------------------------------------------------------
+
+% TODO: fill in this section (Cohen's kappa, ACF analogues, etc.)
+
+% ================================================================
+\chapter*{Sample Estimation}
+% ================================================================
+
+% ----------------------------------------------------------------
+\section{Estimators under Complete Observation}
+% ----------------------------------------------------------------
+
+To estimate the marginal (cumulative) probabilities, the relative frequencies are expressed
+through a binarisation of the original process $(X_t)$. For ordinal data, define the indicator
+vector
+\[
+    \mathbf{Z}_t := (Z_{t,0}, \ldots, Z_{t,m-1})^{\top},
+    \qquad
+    Z_{t,i} := \mathbb{I}\{X_t \leq s_i\},
+\]
+and for nominal data analogously
+\[
+    \mathbf{Y}_t := (Y_{t,0}, \ldots, Y_{t,m})^{\top},
+    \qquad
+    Y_{t,i} := \mathbb{I}\{X_t = s_i\}.
+\]
+The marginal CDF and PMF vectors are then estimated by the corresponding sample means:
+\[
+    \hat{\mathbf{f}} := \frac{1}{n} \sum_{t=1}^n \mathbf{Z}_t,
+    \qquad
+    \hat{\mathbf{p}} := \frac{1}{n} \sum_{t=1}^n \mathbf{Y}_t.
+\]
+
+\subsection{Weak Dependence Assumptions}
+
+To derive the asymptotic distribution of $\hat{\mathbf{f}}$ and $\hat{\mathbf{p}}$, a CLT for
+dependent data is required. Following \citet{Bradley2005}, let
+\[
+    \mathcal{F}_J^L := \sigma(X_t : J \leq t \leq L)
+\]
+denote the $\sigma$-field generated by $\{X_t : J \leq t \leq L\}$. The $\alpha$-mixing
+coefficients of $(X_t)$, given strict stationarity, are
+\[
+    \alpha_{X_t}(n)
+    := \sup_{A \in \mathcal{F}_{-\infty}^0,\; B \in \mathcal{F}_{n}^{\infty}}
+    \bigl| P(A \cap B) - P(A)P(B) \bigr|.
+\]
+The process is called $\alpha$-mixing if $\alpha(n) \to 0$ as $n \to \infty$. We additionally
+assume \emph{exponentially decaying} mixing coefficients: there exist constants $C > 0$ and
+$\rho \in (0,1)$ such that
+\[
+    \alpha(n) \leq C\rho^n \qquad \forall\, n \in \mathbb{N}.
+\]
+
+\subsection{Asymptotic Distribution of \texorpdfstring{$\hat{\mathbf{f}}$}{f-hat}}
+
+The indicator mappings $g_i(X_t) := \mathbb{I}\{X_t \leq s_i\}$ and
+$h_i(X_t) := \mathbb{I}\{X_t = s_i\}$ are measurable functions of $X_t$
+(see \citealt{Klenke2005}, p.~34). Measurability preserves strict stationarity, so the
+binarised processes $(g_i(X_t))$ and $(h_i(X_t))$ inherit strict stationarity from $(X_t)$.
+Moreover,
+\[
+    \sigma(Z_{t,i} : J \leq t \leq L) \subset \sigma(X_t : J \leq t \leq L),
+    \qquad J \leq L,
+\]
+so $\alpha_{Z_{t,i}}(n) \leq \alpha_{X_t}(n)$ for all $i$ and $n$, and hence $\mathbf{Z}_t$
+and $\mathbf{Y}_t$ are also $\alpha$-mixing with exponentially decaying coefficients.
+
+The applicable CLT is due to \citet{Ibragimov1962}, which requires strict stationarity,
+$\alpha$-mixing, and the summability condition
+\[
+    \sum_{n=1}^{\infty} \alpha(n)^{\lambda/(2+\lambda)} < \infty
+    \quad \text{for some } \lambda > 0.
+\]
+Under exponential decay this is satisfied:
+\[
+    \sum_{n=1}^{\infty} \alpha(n)^{\lambda/(2+\lambda)}
+    \leq C^{\lambda/(2+\lambda)} \sum_{n=1}^{\infty} \rho^{\,n\lambda/(2+\lambda)}
+    = C^{\lambda/(2+\lambda)} \frac{\rho^{\lambda/(2+\lambda)}}{1-\rho^{\lambda/(2+\lambda)}}
+    < \infty.
+\]
+The moment condition $\mathbb{E}|Z_{t,i}|^{2+\lambda} < \infty$ is trivially satisfied since
+$|Z_{t,i}|^{2+\lambda} \in \{0,1\}$.
+
+\paragraph{Cramér–Wold argument.}
+By the Cramér–Wold device, $(\mathbf{Z}_t)_t$ converges in distribution to a multivariate
+normal if and only if every scalar projection
+\[
+    U_t := \mathbf{a}^{\top}\mathbf{Z}_t, \qquad \mathbf{a} \in \mathbb{R}^{m} \setminus \{\mathbf{0}\},
+\]
+converges to a univariate normal. Since $U_t = (\mathbf{a}^{\top} \circ g)(X_t)$ is a
+measurable function of $X_t$, it inherits strict stationarity and $\alpha$-mixing. Moreover,
+$|U_t| \leq M := \max_{j}\bigl|\sum_{i=0}^{j}a_i\bigr| < \infty$, so
+$\mathbb{E}|U_t|^{2+\lambda} \leq M^{2+\lambda} < \infty$. Ibragimov's CLT is therefore
+applicable to $U_t$, yielding
+\[
+    \sqrt{n}(\bar{U}_n - \mu_{U}) \xrightarrow{d} \mathcal{N}(0, \sigma_{\mathbf{a}}),
+\]
+where $\mu_U = \mathbb{E}[U_t]$ and
+\[
+    \sigma_{\mathbf{a}} = \sum_{i,j} a_i a_j \left[
+        \mathrm{Cov}(Z_{t,i}, Z_{t,j})
+        + \sum_{h=1}^{\infty}
+        \Bigl(\mathrm{Cov}(Z_{t,i}, Z_{t+h,j}) + \mathrm{Cov}(Z_{t,j}, Z_{t+h,i})\Bigr)
+    \right].
+\]
+By the Cramér–Wold device, the sample mean $\hat{\mathbf{f}} = \bar{\mathbf{Z}}_n$ satisfies
+\[
+    \sqrt{n}\bigl(\hat{\mathbf{f}} - \mathbf{f}\bigr)
+    \xrightarrow{d} \mathcal{N}\bigl(\mathbf{0}, \boldsymbol{\Sigma}_Z\bigr),
+\]
+where the $(i,j)$-entry of $\boldsymbol{\Sigma}_Z$ is
+\[
+    \sigma_{Z;i,j}
+    = \mathrm{Cov}(Z_{t,i}, Z_{t,j})
+    + \sum_{h=1}^{\infty}
+    \Bigl(\mathrm{Cov}(Z_{t,i}, Z_{t+h,j}) + \mathrm{Cov}(Z_{t,j}, Z_{t+h,i})\Bigr).
+\]
+Using $\mathrm{Cov}(Z_{t,i}, Z_{t,j}) = f_{\min\{i,j\}} - f_i f_j$ and
+$\mathrm{Cov}(Z_{t,i}, Z_{t+h,j}) = f_{ij}(h) - f_i f_j$, this becomes
+\[
+    \sigma_{Z;i,j}
+    = \bigl(f_{\min\{i,j\}} - f_i f_j\bigr)
+    + \sum_{h=1}^{\infty} \bigl(f_{ij}(h) + f_{ji}(h) - 2f_i f_j\bigr).
+\]
+
+\subsection{Asymptotic Distribution of Sample Measures}
+
+Given the asymptotic normality of $\hat{\mathbf{f}}$, the delta method can be applied to
+derive the asymptotic properties of sample measures that are smooth functions of $\hat{\mathbf{f}}$.
+
+\paragraph{IOV.}
+The Jacobian of $\IOV(\mathbf{f})$ with respect to $\mathbf{f}$ is
+\[
+    \mathbf{j}_{\IOV}
+    = \frac{4}{m}\bigl(1-2f_0,\, \ldots,\, 1-2f_{m-1}\bigr),
+\]
+giving asymptotic variance
+\[
+    \mathrm{Var}\bigl(\widehat{\IOV}\bigr)
+    \overset{\mathrm{asy.}}{=}
+    \mathbf{j}_{\IOV}\,\boldsymbol{\Sigma}_Z\,\mathbf{j}_{\IOV}^{\top}
+    = \frac{16}{m^2} \sum_{i,j=0}^{m-1}(1-2f_i)(1-2f_j)\,\sigma_{Z;i,j}.
+\]
+Since $\IOV$ is nonlinear, the delta method only characterises the asymptotic distribution; a
+finite-sample bias of order $n^{-1}$ is present. The Hessian is
+\[
+    \mathbf{H}_{\IOV}(\mathbf{f})
+    = \left(\frac{\partial^2 \IOV}{\partial f_i \partial f_j}\right)_{i,j}
+    = -\frac{8}{m}\,\mathbf{I}_m,
+\]
+and a second-order Taylor expansion yields
+\[
+    \Bias\bigl(\widehat{\IOV}\bigr)
+    = \frac{1}{2}\operatorname{tr}\bigl(\mathbf{H}_{\IOV}\,\mathrm{Cov}(\hat{\mathbf{f}})\bigr)
+    = -\frac{4}{m}\sum_{i=0}^{m-1}\sigma_{Z;i,i}.
+\]
+The bias is strictly negative and depends only on the marginal variances $\sigma_{Z;i,i}$.
+
+\paragraph{Skewness.}
+The Jacobian of $\operatorname{skew}(\mathbf{f})$ is
+\[
+    \mathbf{j}_{\mathrm{skew}}
+    = \left(\frac{2}{m},\, \ldots,\, \frac{2}{m}\right),
+\]
+giving
+\[
+    \mathrm{Var}\bigl(\widehat{\operatorname{skew}}\bigr)
+    \overset{\mathrm{asy.}}{=}
+    \frac{4}{m^2}\sum_{i,j=0}^{m-1}\sigma_{Z;ij},
+    \qquad
+    \mathbb{E}\bigl[\widehat{\operatorname{skew}}\bigr]
+    \overset{\mathrm{asy.}}{=} \operatorname{skew}(\mathbf{f}).
+\]
+Since skewness is linear in $\mathbf{f}$, the Hessian vanishes and the estimator is exactly
+unbiased for all~$n$.
+
+% ----------------------------------------------------------------
+\section{Estimation under Missingness}
+% ----------------------------------------------------------------
+
+\subsection{Amplitude Modulation Model}
+
+Missingness is modelled via \emph{amplitude modulation}. A binary stochastic process
+$(O_t)_{t \in \mathbb{Z}}$ runs concurrently with $(X_t)$ and modulates observations:
+\[
+    O_t \in \{0,1\}, \qquad O_t = 1 \;\Leftrightarrow\; X_t \text{ is observed}.
+\]
+The amplitude-modulating process $(O_t)$ may be deterministic ($O_t = o_t$, known) or
+stochastic with $\pi_t := P(O_t = 1)$, possibly depending on the history of $(X_t)$, $(O_t)$,
+or external factors.
+
+The observable process is $(O_t\mathbf{Z}_t)$, and the \emph{naive estimator} of $\mathbf{f}$ is
+\[
+    \hat{\mathfrak{f}} := \frac{1}{n}\sum_{t=1}^{n} O_t\mathbf{Z}_t.
+\]
+Its expectation, by the law of iterated expectations, satisfies
+\[
+    \mathbb{E}[\hat{\mathfrak{f}}]
+    = \frac{1}{n}\sum_{t=1}^{n} \mathbb{E}\bigl[\mathbf{Z}_t\,\mathbb{E}[O_t \mid \mathbf{Z}_t]\bigr].
+\]
+Under the assumption that $(O_t)$ and $(X_t)$ are independent, this simplifies to
+\[
+    \mathbb{E}[\hat{\mathfrak{f}}]
+    = \left(\frac{1}{n}\sum_{t=1}^{n}\mathbb{E}[O_t]\right)\mathbf{f}.
+\]
+The naive estimator is therefore biased towards zero by the factor
+$\bar{\pi} := \tfrac{1}{n}\sum_{t=1}^n \mathbb{E}[O_t]$. This motivates the \emph{corrected
+estimator}
+\[
+    \hat{\mathbf{f}}^{*} := \frac{\hat{\mathfrak{f}}}{\bar{O}}
+    = \frac{\tfrac{1}{n}\sum_{t=1}^{n} O_t\mathbf{Z}_t}{\tfrac{1}{n}\sum_{t=1}^{n}O_t}.
+\]
+
+If $(O_t)$ is deterministic then $\bar{O} = \bar{\pi}$ and $\hat{\mathbf{f}}^{*}$ is exactly
+unbiased. If $(O_t)$ is stochastic then $\bar{O} \neq \bar{\pi}$ in general, and
+$\hat{\mathbf{f}}^{*}$ carries a finite-sample bias studied below.
+
+\subsection{Asymptotic Distribution of \texorpdfstring{$\hat{\mathbf{f}}^{*}$}{f*-hat}}
+
+Assume $(O_t)$ and $(X_t)$ are independent, stationary, and $\alpha$-mixing with exponentially
+decaying coefficients. Write $\mathbb{E}[O_t] = \pi$, $\gamma_O(h) := \mathrm{Cov}(O_h, O_0)$,
+and $\pi(h) := \mathbb{E}[O_h O_0] = \gamma_O(h) + \pi^2$.
+
+Introduce the extended binary vector
+\[
+    \mathbf{Z}_t^{*} := O_t(1, \mathbf{Z}_t^{\top})^{\top}
+    = (Z_{t,-1}^{*}, Z_{t,0}^{*}, \ldots, Z_{t,m-1}^{*})^{\top},
+\]
+with expectation
+\[
+    \mathbb{E}[\mathbf{Z}_t^{*}]
+    = \pi(1, \mathbf{f}^{\top})^{\top}
+    =: \boldsymbol{\mu}_{\mathbf{Z}^{*}}.
+\]
+By the same Cramér–Wold argument as before, the sample mean
+$\bar{\mathbf{Z}}_n^{*} := \tfrac{1}{n}\sum_{t=1}^n \mathbf{Z}_t^{*}$ satisfies
+\[
+    \sqrt{n}\bigl(\bar{\mathbf{Z}}_n^{*} - \boldsymbol{\mu}_{\mathbf{Z}^{*}}\bigr)
+    \xrightarrow{d} \mathcal{N}\bigl(\mathbf{0}, \boldsymbol{\Sigma}_{\mathbf{Z}^{*}}\bigr),
+\]
+where $\boldsymbol{\Sigma}_{\mathbf{Z}^{*}} = \mathrm{Var}(\mathbf{Z}_t^{*}) + 2\sum_{h=1}^{\infty}\mathrm{Cov}(\mathbf{Z}_t^{*}, \mathbf{Z}_{t+h}^{*})$. The individual entries are:
+
+\medskip
+\noindent\textbf{(i)} $i = j = -1$:
+\[
+    \sigma_{\mathbf{Z}^{*};-1,-1}
+    = \pi(1-\pi) + 2\sum_{h=1}^{\infty}\gamma_O(h).
+\]
+
+\noindent\textbf{(ii)} $j \geq 0,\; i = -1$ (by independence of $(O_t)$ and $(X_t)$):
+\[
+    \sigma_{\mathbf{Z}^{*};-1,j}
+    = f_j\,\sigma_{\mathbf{Z}^{*};-1,-1}.
+\]
+
+\noindent\textbf{(iii)} $i, j \geq 0$:
+\[
+    \sigma_{\mathbf{Z}^{*};i,j}
+    = f_i f_j\,\sigma_{\mathbf{Z}^{*};-1,-1}
+    + \pi\bigl(f_{\min\{i,j\}} - f_i f_j\bigr)
+    + \sum_{h=1}^{\infty}\pi(h)\bigl(f_{ij}(h) + f_{ji}(h) - 2f_i f_j\bigr).
+\]
+
+\paragraph{Delta method for $\hat{\mathbf{f}}^{*}$.}
+The corrected estimator is $\hat{\mathbf{f}}^{*} = \mathbf{g}(\bar{\mathbf{Z}}_n^{*})$ where
+$g_j(x_{-1}, x_0, \ldots, x_{m-1}) = x_j / x_{-1}$. The Jacobian of $\mathbf{g}$ evaluated
+at $\boldsymbol{\mu}_{\mathbf{Z}^{*}}$ is
+\[
+    \mathbf{G} =
+    \begin{pmatrix}
+        -f_0/\pi    & 1/\pi  & 0      & \cdots & 0      \\
+        -f_1/\pi    & 0      & 1/\pi  & \ddots & \vdots \\
+        \vdots      & \vdots & \ddots & \ddots & 0      \\
+        -f_{m-1}/\pi& 0      & \cdots & 0      & 1/\pi
+    \end{pmatrix}
+    \in \mathbb{R}^{m \times (m+1)}.
+\]
+By the multivariate delta method,
+\[
+    \sqrt{n}\bigl(\hat{\mathbf{f}}^{*} - \mathbf{f}\bigr)
+    \xrightarrow{d} \mathcal{N}\bigl(\mathbf{0}, \boldsymbol{\Sigma}_{\hat{\mathbf{f}}^{*}}\bigr),
+    \qquad
+    \boldsymbol{\Sigma}_{\hat{\mathbf{f}}^{*}} = \mathbf{G}\,\boldsymbol{\Sigma}_{\mathbf{Z}^{*}}\,\mathbf{G}^{\top}.
+\]
+Carrying out the matrix multiplication, the $(i,j)$-entry simplifies to
+\[
+    \sigma_{\hat{\mathbf{f}}^{*};i,j}
+    = \frac{1}{\pi}\bigl(f_{\min\{i,j\}} - f_i f_j\bigr)
+    + \frac{1}{\pi^2}\sum_{h=1}^{\infty}\pi(h)
+    \bigl(f_{ij}(h) + f_{ji}(h) - 2f_i f_j\bigr).
+\]
+
+\paragraph{Bias of $\hat{\mathbf{f}}^{*}$.}
+The Hessian of $g_j$ at $\boldsymbol{\mu}_{\mathbf{Z}^{*}}$ has only two nonzero entries:
+\[
+    H_{g_j;-1,-1} = \frac{2f_j}{\pi^2}, \qquad
+    H_{g_j;-1,j} = H_{g_j;j,-1} = -\frac{1}{\pi^2}.
+\]
+The second-order bias is then
+\[
+    \Bias(\hat{f}_j^{*})
+    = \frac{1}{2}\operatorname{tr}\bigl(\mathbf{H}_{g_j}\,\boldsymbol{\Sigma}_{\mathbf{Z}^{*}}\bigr)
+    = \frac{f_j}{\pi^2}\,\sigma_{\mathbf{Z}^{*};-1,-1}
+    - \frac{1}{\pi^2}\cdot f_j\,\sigma_{\mathbf{Z}^{*};-1,-1}
+    = 0,
+\]
+using $\sigma_{\mathbf{Z}^{*};-1,j} = f_j\,\sigma_{\mathbf{Z}^{*};-1,-1}$ from entry~(ii) above.
+Hence $\hat{\mathbf{f}}^{*}$ is asymptotically unbiased to second order.
+
+\paragraph{Special cases.}
+Three illuminating special cases are worth noting:
+
+\begin{enumerate}
+    \item \textit{Full observation} ($\pi = 1$): $\sigma_{\hat{\mathbf{f}}^{*};i,j} = \sigma_{Z;i,j}$,
+    recovering the complete-data asymptotic variance.
+
+    \item \textit{i.i.d.\ missingness} ($\pi(h) = \pi^2$ for all $h \geq 1$):
+    \[
+        \sigma_{\hat{\mathbf{f}}^{*};i,j}
+        = \frac{1}{\pi}\bigl(f_{\min\{i,j\}} - f_i f_j\bigr)
+        + \sum_{h=1}^{\infty}\bigl(f_{ij}(h) + f_{ji}(h) - 2f_i f_j\bigr).
+    \]
+
+    \item \textit{i.i.d.\ process} ($f_{ij}(h) = f_i f_j$ for all $h \geq 1$):
+    \[
+        \sigma_{\hat{\mathbf{f}}^{*};i,j}
+        = \frac{1}{\pi}\bigl(f_{\min\{i,j\}} - f_i f_j\bigr).
+    \]
+\end{enumerate}
+
+\subsection{Asymptotic Properties of Marginal Measures under Missingness}
+
+The delta method can be applied to $\hat{\mathbf{f}}^{*}$ in the same way as to $\hat{\mathbf{f}}$,
+yielding the asymptotic distribution of measures such as $\widehat{\IOV}^{*}$. The corresponding
+Jacobians and Hessians are identical to those computed in Section~3, with $\boldsymbol{\Sigma}_Z$
+replaced by $\boldsymbol{\Sigma}_{\hat{\mathbf{f}}^{*}}$.
+
+\bibliography{references}
+
+\end{document}

@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.8.21)  23 FEB 2026 15:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (MiKTeX 24.4) (preloaded format=pdflatex 2024.8.21)  26 FEB 2026 14:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**c:/Users/Victor/Desktop/Masterarbeit/Draft/Draft.tex
-(c:/Users/Victor/Desktop/Masterarbeit/Draft/Draft.tex
+**c:/Users/Victor/Desktop/Masterarbeit/Draft/Draft_revised.tex
+(c:/Users/Victor/Desktop/Masterarbeit/Draft/Draft_revised.tex
 LaTeX2e <2024-06-01> patch level 2
 L3 programming layer <2024-07-20>
 (C:\Users\Victor\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\scrreprt.cls
@@ -370,45 +370,45 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 )
 \Hy@SectionHShift=\skip71
 )
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 11.
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 31.
  (C:\Users\Victor\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) (C:\Users\Victor\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count295
 \l__pdf_internal_box=\box56
-) (Draft.aux)
-\openout1 = `Draft.aux'.
+) (c:\Users\Victor\Desktop\Masterarbeit\Draft\%OUTDIR%\Draft_revised.aux)
+\openout1 = `Draft_revised.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 11.
-LaTeX Font Info:    ... okay on input line 11.
-Package scrbase Info: activating english \abstractname on input line 11.
-Package scrbase Info: activating english \partname on input line 11.
-Package scrbase Info: activating english \chaptername on input line 11.
-Package scrbase Info: activating english \appendixname on input line 11.
-Package scrbase Info: activating english \figurename on input line 11.
-Package scrbase Info: activating english \tablename on input line 11.
-Package scrbase Info: activating english \contentsname on input line 11.
-Package scrbase Info: activating english \listfigurename on input line 11.
-Package scrbase Info: activating english \listtablename on input line 11.
-Package scrbase Info: activating english \bibname on input line 11.
-Package scrbase Info: activating english \indexname on input line 11.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 31.
+LaTeX Font Info:    ... okay on input line 31.
+Package scrbase Info: activating english \abstractname on input line 31.
+Package scrbase Info: activating english \partname on input line 31.
+Package scrbase Info: activating english \chaptername on input line 31.
+Package scrbase Info: activating english \appendixname on input line 31.
+Package scrbase Info: activating english \figurename on input line 31.
+Package scrbase Info: activating english \tablename on input line 31.
+Package scrbase Info: activating english \contentsname on input line 31.
+Package scrbase Info: activating english \listfigurename on input line 31.
+Package scrbase Info: activating english \listtablename on input line 31.
+Package scrbase Info: activating english \bibname on input line 31.
+Package scrbase Info: activating english \indexname on input line 31.
  (C:\Users\Victor\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count296
@@ -428,10 +428,10 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (C:\Users\Victor\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package hyperref Info: Link coloring OFF on input line 11.
- (Draft.out) (Draft.out)
+Package hyperref Info: Link coloring OFF on input line 31.
+ (c:\Users\Victor\Desktop\Masterarbeit\Draft\%OUTDIR%\Draft_revised.out) (c:\Users\Victor\Desktop\Masterarbeit\Draft\%OUTDIR%\Draft_revised.out)
 \@outlinefile=\write3
-\openout3 = `Draft.out'.
+\openout3 = `Draft_revised.out'.
 
 Class scrreprt Info: loading recommended package `bookmark'.
 (scrreprt)           Using `bookmark' together with `hyperref' is recommended,
@@ -440,81 +440,57 @@ Class scrreprt Info: loading recommended package `bookmark'.
 (scrreprt)           `bookmarkpackage=false' before \begin{document} and
 (scrreprt)           you can avoid this message adding:
 (scrreprt)             \usepackage{bookmark}
-(scrreprt)           before \begin{document} on input line 11.
+(scrreprt)           before \begin{document} on input line 31.
  (C:\Users\Victor\AppData\Local\Programs\MiKTeX\tex/latex/bookmark\bookmark.sty
 Package: bookmark 2023-12-10 v1.31 PDF bookmarks (HO)
  (C:\Users\Victor\AppData\Local\Programs\MiKTeX\tex/latex/bookmark\bkm-pdftex.def
 File: bkm-pdftex.def 2023-12-10 v1.31 bookmark driver for pdfTeX and luaTeX (HO)
 \BKM@id=\count302
 ))
-LaTeX Font Info:    Trying to load font information for T1+lmss on input line 13.
+LaTeX Font Info:    Trying to load font information for T1+lmss on input line 34.
  (C:\Users\Victor\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmss.fd
 File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 25.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 43.
  (C:\Users\Victor\AppData\Local\Programs\MiKTeX\tex/latex/lm\ot1lmr.fd
 File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 25.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 43.
  (C:\Users\Victor\AppData\Local\Programs\MiKTeX\tex/latex/lm\omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 25.
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 43.
  (C:\Users\Victor\AppData\Local\Programs\MiKTeX\tex/latex/lm\omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 25.
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 43.
  (C:\Users\Victor\AppData\Local\Programs\MiKTeX\tex/latex/lm\omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 25.
+(Font)              <12> on input line 43.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 25.
+(Font)              <8> on input line 43.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 25.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 25.
+(Font)              <6> on input line 43.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 43.
  (C:\Users\Victor\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 25.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 43.
  (C:\Users\Victor\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 31--32
-
- []
-
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 49.
-(C:\Users\Victor\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd
-File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-Underfull \hbox (badness 10000) in paragraph at lines 57--58
-
- []
-
-
-Overfull \hbox (0.47821pt too wide) in paragraph at lines 61--64
-\T1/lmr/m/n/12 ing-ful or-der, sta-tis-ti-cal pro-ce-dures can-not make use of cu-mu-la-tive struc-ture. There-
+Overfull \hbox (2.20728pt too wide) in paragraph at lines 88--93
+\T1/lmr/m/n/12 It suf-fices to con-sider the cu-mu-la-tive prob-a-bil-i-ties of cat-e-gories $\OML/lmm/m/it/12 s[]; [] ; s[]$\T1/lmr/m/n/12 , since $\OML/lmm/m/it/12 P\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 X[] \OMS/lmsy/m/n/12 ^^T
  []
 
 
 
 [1
 
-{C:/Users/Victor/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}]
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 72.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 72.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 72.
 
-Underfull \hbox (badness 10000) in paragraph at lines 109--110
-
- []
-
-
+{C:/Users/Victor/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}]
 
 [2{C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathex.enc}]
 
@@ -522,67 +498,76 @@ Underfull \hbox (badness 10000) in paragraph at lines 109--110
 
 [4]
 
-[5]
+Package natbib Warning: Citation `Bradley2005' on page 5 undefined on input line 290.
+
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <14.4> on input line 308.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 308.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 308.
+
+Package natbib Warning: Citation `Klenke2005' on page 5 undefined on input line 312.
+
+
+
+[5
+
+]
+
+Package natbib Warning: Citation `Ibragimov1962' on page 6 undefined on input line 322.
+
+
 
 [6]
-
-[7]
-
-[8]
-Overfull \hbox (20.68234pt too wide) detected at line 422
-[]
- []
-
-
-
-[9]
-
-[10]
-LaTeX Font Info:    Trying to load font information for U+euf on input line 484.
+LaTeX Font Info:    Trying to load font information for U+euf on input line 448.
  (C:\Users\Victor\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\ueuf.fd
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
 )
 
-[11]
+[7]
 
-[12]
-Overfull \hbox (122.32256pt too wide) detected at line 552
-\OML/lmm/m/it/12 ^^[[] \OT1/lmr/m/n/12 = []
+[8]
+Overfull \hbox (15.97705pt too wide) in paragraph at lines 519--522
+ []\T1/lmss/bx/n/12 Delta method for $[]$.[] \T1/lmr/m/n/12 The cor-rected es-ti-ma-tor is $[] \OT1/lmr/m/n/12 = \OT1/lmr/bx/n/12 g\OT1/lmr/m/n/12 ([])$ \T1/lmr/m/n/12 where $\OML/lmm/m/it/12 g[]\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 x[]; x[]; [] ; x[]\OT1/lmr/m/n/12 ) =
  []
 
 
 
-[13]
+[9] (c:\Users\Victor\Desktop\Masterarbeit\Draft\%OUTDIR%\Draft_revised.bbl
 
-[14]
-Overfull \hbox (68.47113pt too wide) detected at line 598
-[]
- []
+[10]
+
+Package natbib Warning: Empty `thebibliography' environment on input line 3.
+
+)
+
+Package natbib Warning: There were undefined citations.
 
 
 
-[15]
+[11
 
-[16] (Draft.aux)
+] (c:\Users\Victor\Desktop\Masterarbeit\Draft\%OUTDIR%\Draft_revised.aux)
  ***********
 LaTeX2e <2024-06-01> patch level 2
 L3 programming layer <2024-07-20>
  ***********
-Package rerunfilecheck Info: File `Draft.out' has not changed.
+Package rerunfilecheck Info: File `Draft_revised.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 13822 strings out of 473898
- 240657 string characters out of 5726007
- 1962960 words of memory out of 5000000
- 36459 multiletter control sequences out of 15000+600000
- 631486 words of font info for 94 fonts, out of 8000000 for 9000
+ 13869 strings out of 473898
+ 241524 string characters out of 5726007
+ 1945960 words of memory out of 5000000
+ 36478 multiletter control sequences out of 15000+600000
+ 634587 words of font info for 97 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,19n,107p,10970b,531s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eufm10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbsy10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx8.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi6.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmib10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr6.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy6.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Draft.pdf (16 pages, 313793 bytes).
+ 108i,11n,107p,10978b,458s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eufm10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx8.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi6.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmib10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr6.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy6.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/Victor/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on c:\Users\Victor\Desktop\Masterarbeit\Draft\%OUTDIR%\Draft_revised.pdf (11 pages, 299311 bytes).
 PDF statistics:
- 209 PDF objects out of 1000 (max. 8388607)
- 38 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 274 PDF objects out of 1000 (max. 8388607)
+ 68 named destinations out of 1000 (max. 500000)
+ 145 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -10,7 +10,7 @@
 
 \begin{document}
 
-\section*{Categorical Time-Series Analysis}
+\chapter{Distributional Properties of Categorical Processes}
 % Bradley Buch - Introduction to strong mixing conditions (Fernleihe; Kapitel 5)
 % Zu Messbarenfunktionen: Klenke, Bauer (Maßtheorie; Wahrscheinlichkeitstheorie; Messbare Abbildungen S. 52 Indikatorfunktion), Georgii, Maß und Wahrscheinlichkeitstheorie, Brockwell: Theory and Methodes, Shao Mathematical statistics 
 % Cramer Wolt Methode um zu begründen warum sich CLT auf Mehrdimensionalität überträgt. 
@@ -20,7 +20,7 @@
 % Fokianos Tjostheim (Paper) 
 
 
-\subsection*{General Notation}
+\section{General Notation}
 
 Let $(X_t)$ be a \textit{categorical}  time series process, where each $X_t$ takes values in
 
@@ -41,7 +41,7 @@ E(X_t^2) &< \infty \quad &&\forall t, \\
 
 In contrast, strong stationarity requires that all finite-dimensional distributions are invariant under time shifts, i.e.,
 \[F_{X_t, \ldots, X_{t + j}} = F_{X_{t+h}, \ldots, X_{t+h + j}} \quad \forall t, j, h\]
-\subsection*{Marginal Distributions}
+\section{Marginal Distributions}
 
 Regardless of whether we consider a simple categorical process with few categories or attempt to describe a complex, temporally evolving process using moments and measures of serial dependence, the analysis of categorical processes is always built on the examination of the marginal probabilities. However, because ordinal and nominal data encode different types of information, their marginals are typically represented in different ways:
 
@@ -69,7 +69,7 @@ Regardless of whether we consider a simple categorical process with few categori
 \end{itemize}
 
 
-\subsection*{Bivariate Probabilities at Lag $h$}
+\section{Bivariate Probabilities at Lag $h$}
 
 Temporal dependence in categorical time series can be quantified through bivariate lag-$h$ probabilities. These represent the joint probability that the process takes a specific category at time $t$ and another category at time $t+h$
 
@@ -86,7 +86,7 @@ Temporal dependence in categorical time series can be quantified through bivaria
 \end{itemize}
 
 These quantities serve as input for dependence measures such as the ordinal/ nominal Cohen's K.
-\subsection*{Location}
+\section{Location}
 
 For a nominal process, any measure that relies on ordering is inappropriate. 
 Instead, a location measure must depend only on the category probabilities. 
@@ -104,7 +104,7 @@ While the mode can still be informative as the most frequent category, the media
 \min \bigl\{\, s_i \in S : F(s_i) \ge \tfrac{1}{2} \,\bigr\}.
 \]
 Thus, for ordinal data, both the mode and the median carry information, but they capture slightly different aspects of location: the mode identifies the most typical category, whereas the median indicates the midpoint in the ordered scale.
-\subsection*{Measures of Dispersion}
+\section{Measures of Dispersion}
 
 The concept of dispersion differs between ordinal and nominal processes. Therefore, two separate measures are used: the \emph{Index of Ordinal Variation} (IOV) for ordinal data and the \emph{Index of Qualitative Variation} (IQV) for nominal data. Both indices are scaled to the interval $[0,1]$, where a value of $0$ represents minimal dispersion and a value of $1$ represents maximal dispersion.\\
 
@@ -283,10 +283,10 @@ Hence, $f(\boldsymbol p)$ is uniquely minimized at
 \]
 and therefore $\mathrm{IQV}$ attains its maximal value at the uniform distribution.
 
-\section*{Measures of temporal dependence}
+\section{Measures of temporal dependence}
 
-\section*{Samples Measures}
-
+\chapter{Samples Measures}
+\section{Estimation of Marginal Distributions}
 To estimate the marginal (cumulative) probabilities, we express the
 relative frequencies through a binarization of the original process
 $(X_t)$. For ordinal data, define the indicator vector
@@ -308,6 +308,7 @@ sample means,
 \qquad
 \hat{\boldsymbol{p}} := \frac{1}{n} \sum_{t=1}^n \boldsymbol{Y}_t.
 \]
+\section{Asymptotics of the marginal estimator}
 To derive the asymptotic distribution of $\hat{\boldsymbol{f}}$ and
 $\hat{\boldsymbol{p}}$, a central limit theorem for dependent data is
 required. Since independence is not assumed, we impose weak dependence
@@ -391,23 +392,27 @@ and analogously for $Y_{t,i}$.
 According to the Cramér-Wold device, $(\boldsymbol{Z}_t)_t$ converges in distribution to a multivariate normal distribution $\mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})$ if and only if for every fixed non-zero vector $\boldsymbol{a} \in \mathbb{R}^{m+1}\setminus{\boldsymbol{0}}$, the scalar projections
 \[U_t := \boldsymbol{a}^{\top}\boldsymbol{Z}_t = \sum_{i=0}^{m}a_i Z_{t,i}\]
 converge in distribution to a univariate normal distribution $\mathcal{N}(\boldsymbol{a}^\top\boldsymbol{\mu}, \boldsymbol{a}^\top\boldsymbol{\Sigma}\boldsymbol{a})$.\\
-Since each $\boldsymbol{Z}_t$ is the binarization vector of  $X_t$, it can only take values in the finite set
-\[\{\boldsymbol{c}_0, \ldots, \boldsymbol{c}_m\}\] 
-where 
-\[\boldsymbol{c}_j := (1, \ldots, 1, 0, \ldots, 0)^\top\] 
-has exactly $j+1$ ones followed by $m-j$ zeros.
-Consequently, for any fixed $\boldsymbol{a}$, the projection $U_t$ takes values in the finite set 
-\[\mathcal{A}_a := \{\boldsymbol{a}^{\top}\boldsymbol{c}_j\mid j = 0, \ldots,m\} = \left\{\sum_{i=0}^{j}a_i \mid j = 0, \ldots, m \right\}\] 
-Equivalently, $U_t$ can be directly expressed as a deterministic function $h: S \to \mathcal{A}_a$ of the original state $s_i$ of $X_t$:
-\[h_{\boldsymbol{a}}(s_j) := \sum_{i=0}^{j} a_i\quad \forall j = 0, \ldots, m,\]
-so that $U_t = h_{\boldsymbol{a}}(X_t)$. Since $S$ is finite and equipped with the discrete $\sigma$-algebra $2^S$ (the power set), any function from $S$ to $\mathcal{A}_{\boldsymbol{a}} \subset \mathbb{R}$ is measurable. In particular, for any subset $E\subset \mathcal{A}_{\boldsymbol{a}}$ the preimage
-\[h^{-1}_a(E):= \{s_i\in S: h_{\boldsymbol{a}}(s_i) \in E \}\] 
-is a subset of $S$ and therefor belongs to $2^{S}$.
-
-Since $U_t$ is a measurable function of $X_t$, it remains its properties of strict stationarity and $\alpha$-mixing with exponentially decaying coefficients. 
-
-Accordingly, the summability condition is satisfied (follows from the $\alpha$-mixing with exponentially decaying coefficients) and since $U_t$ is in the discrete, finite set $\mathcal{A}_a$, there exists  
-\[M := \max_{j=0,\dots, m}  |\sum_{i=0}^{j} a_i|   < \infty\]  %Argument reicht an der Stelle nicht aus; es geht um 
+Let 
+\[L: \mathbb{R}^{m+1} \rightarrow \mathbb{R}, \quad L(z) = \boldsymbol{a}^\top.\]
+Since $L$ is linear on a finite dimensional space, it is continuous, and therefore (Borel-) measurable.\\
+The vector-valued function $g(X_t) = \boldsymbol{Z}_t$ is measurable due to the measurability of its components. Therefore, the composition
+\[U_t = L \circ g  \circ X_t\]
+is also measurable.\\
+% Since each $\boldsymbol{Z}_t$ is the binarization vector of  $X_t$, it can only take values in the finite set
+% \[\{\boldsymbol{c}_0, \ldots, \boldsymbol{c}_m\}\] 
+% where 
+% \[\boldsymbol{c}_j := (1, \ldots, 1, 0, \ldots, 0)^\top\] 
+% has exactly $j+1$ ones followed by $m-j$ zeros.
+% Consequently, for any fixed $\boldsymbol{a}$, the projection $U_t$ takes values in the finite set 
+% \[\mathcal{A}_a := \{\boldsymbol{a}^{\top}\boldsymbol{c}_j\mid j = 0, \ldots,m\} = \left\{\sum_{i=0}^{j}a_i \mid j = 0, \ldots, m \right\}\] 
+% Equivalently, $U_t$ can be directly expressed as a deterministic function $h: S \to \mathcal{A}_a$ of the original state $s_i$ of $X_t$:
+% \[h_{\boldsymbol{a}}(s_j) := \sum_{i=0}^{j} a_i\quad \forall j = 0, \ldots, m,\]
+% so that $U_t = h_{\boldsymbol{a}}(X_t)$. Since $S$ is finite and equipped with the discrete $\sigma$-algebra $2^S$ (the power set), any function from $S$ to $\mathcal{A}_{\boldsymbol{a}} \subset \mathbb{R}$ is measurable. In particular, for any subset $E\subset \mathcal{A}_{\boldsymbol{a}}$ the preimage
+% \[h^{-1}_a(E):= \{s_i\in S: h_{\boldsymbol{a}}(s_i) \in E \}\] 
+% is a subset of $S$ and therefor belongs to $2^{S}$.
+Since $U_t$ is a measurable function of $X_t$, it remains its properties of strict stationarity and $\alpha$-mixing with exponentially decaying coefficients. \\
+Accordingly, the summability condition is satisfied (follows from the $\alpha$-mixing with exponentially decaying coefficients). Additionally, there will also be a value $M$ such that  
+\[M \geq \max_{j=0,\dots, m}  |\sum_{i=0}^{j} a_i Z_i| < \infty\]  %Argument reicht an der Stelle nicht aus; es geht um 
 Since $|U_t| \leq M$, we have $|U_t|^{2 + \lambda}\leq M^{2+\lambda}$ for every $\lambda > 0$  , and therefore
 \[E|U_t|^{2 + \lambda} < |M|^{2+\lambda} < \infty \quad \forall \lambda > 0\]
 
@@ -434,6 +439,8 @@ and
 \[Cov(Z_{t,i}, Z_{t+h, j}) = E[Z_{t,i}Z_{t+h, j}] - E[Z_{t,i}]E[Z_{t+h,j}] = f_{ij}(h) - f_i f_j\]
 we can also write the elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}}$ as 
 \[\sigma_{\boldsymbol{Z}; i,j } = \left(f_{\min\{i,j\}} - f_if_j\right) + \sum_{h=1}^{\infty} f_{ij}(h) + f_{ji}(h)-2f_i f_j  \]
+\section{Asymptotic Properties of Sample Dispersion Measures}
+\subsection*{IOV}
 We can now now use this information of the asymptotic distribution of $\hat{\boldsymbol{f}}$ to compute the asymptotic properties of sample measures that are based on $\hat{\boldsymbol{f}}$. According to the multivariate delta-method a random variable $G^* := g^*(\boldsymbol{\Theta^*})$, where $\boldsymbol{\Theta^*} \in \mathbb{R}^{m}$, $\boldsymbol{\Theta^*}\overset{asy.}{\sim} \mathcal{N}(\boldsymbol{\Theta}, \boldsymbol{ n^{-1}\Sigma^*})$ and  $g: \mathbb{R}^m\rightarrow \mathbb{R}$ is a continously differentiable function, satisfies 
 \[G^* \overset{asy.}{\sim} \mathcal{N}(g^*(\boldsymbol{\Theta}), n^{-1}\boldsymbol{j\Sigma^* j^{\top}} )\]   
 where $\boldsymbol{j}$ is the one-dimensional Jacobian-matrix (i.e. vector) and where $j_i =  \frac{\partial g^*(\boldsymbol{\Theta})}{\partial \theta_i}$. \\
@@ -446,27 +453,37 @@ which leads to an asymptotic variance of the IOV:
     Var(\widehat{IOV(\boldsymbol{f})}) &\overset{asy.}{=} \boldsymbol{j}_{IOV} \boldsymbol{\Sigma}_Z \boldsymbol{j}_{IOV}^{\top} = \sum_{i=0}^{m-1} \sum_{j=0}^{m-1} \frac{4(1- 2 f_i)}{m} \frac{4(1- 2 f_j)}{m} \sigma_{\boldsymbol{Z}; i,j}\\
     &=  \frac{16}{m^2} \sum_{i,j = 0}^{m-1} (1-2f_i)(1- 2 f_j) \sigma_{\boldsymbol{Z}; i,j}
 \end{align*}
-However, the first-order delta method only provides information about the asymptotic distribution and variance, not on the finite-sample bias of nonlinear functionals:
+However, since $IOV$ is not a linear function, the first-order delta method only provides information about the asymptotic distribution and variance, not on the finite-sample bias:
 \[(\widehat{IOV} \overset{p}{\rightarrow} IOV(\boldsymbol{f})) \not\Rightarrow (E[\widehat{IOV}] = IOV(\boldsymbol{f})).\]
-For non linear transformations, the curvature induces a bias of order $n^{-1}$. To quantify this additional second-order effect, we expand $IOV(\hat{\boldsymbol{f}})$ in a Taylor series up to second order:
-\[IOV(\hat{\boldsymbol{f}}) =  IOV(\boldsymbol{f}) + \frac{1}{2}(\hat{\boldsymbol{f}}- \boldsymbol{f})^\top \boldsymbol{H}_{IOV}(\boldsymbol{f})(\hat{\boldsymbol{f}}- \boldsymbol{f}) + o_p(n^{-1}),\]
+For non linear transformations, the curvature induces a bias of order $n^{-1}$. Since the IOV-function is continouosly differentiable twice, we can quantify this additional second-order effect by expanding $IOV(\hat{\boldsymbol{f}})$ in a Taylor series up to second order:
+\[IOV(\hat{\boldsymbol{f}}) =  IOV(\boldsymbol{f}) + \boldsymbol{j}_{IOV} (\hat{\boldsymbol{f}} - \boldsymbol{f}) + \frac{1}{2}(\hat{\boldsymbol{f}}- \boldsymbol{f})^\top \boldsymbol{H}_{IOV}(\boldsymbol{f})(\hat{\boldsymbol{f}}- \boldsymbol{f}) + o_p(n^{-1}),\]
 where $\boldsymbol{H}_{IOV}(\boldsymbol{f})$ is the Hessian matrix such that 
 \[\boldsymbol{H}_{IOV}(\boldsymbol{f}) = \left(\frac{\partial^2 IOV(\boldsymbol{f})}{\partial f_i f_j}\right)_{i,j = 0, \ldots, m-1} = \begin{cases}
     -\frac{8}{m} & \text{if } i = j\\
     0 & \text{else} 
 \end{cases} = -\frac{8}{m} \boldsymbol{I}_m\]
+Since
+\[E(\boldsymbol{j}_{IOV} (\hat{\boldsymbol{f}} - \boldsymbol{f})) = 0,\]
+the finite sample bias is given by 
+\begin{align*}
+    Bias(IOV(\hat{\boldsymbol{f}})) &= E[\frac{1}{2}(\hat{\boldsymbol{f}}- \boldsymbol{f})^\top \boldsymbol{H}_{IOV}(\boldsymbol{f})(\hat{\boldsymbol{f}}- \boldsymbol{f})] = \frac{1}{2}tr(\boldsymbol{H}_{IOV}Cov(\hat{\boldsymbol{f}})) \\
+    &= - \frac{4}{m} \sum_{i=0}^{m-1} \sigma_{\boldsymbol{Z};i,i}.
+\end{align*}
+This implies that the bias is strictly negative and only depends on the marginal variances $\sigma_{\boldsymbol{Z}; i,i}$ of the indivdual estimators $f_i$,  not on the covariances. \\
+\subsection*{Skew}
 In a similiar way the asymptotic properties of other dispersion metrics such as the skew can be analyzed. A simple measure for the skew of an ordinal process is given by:
 \[\text{skew}(\boldsymbol{f}) = \frac{2}{m} \sum_{i=0}^{m-1}f_i - 1.\]
-The jacobian for the skew is given by
+The jacobian for the skew is given by       
 \[\boldsymbol{j}_{skew} = \left(\frac{\partial skew(\boldsymbol{f})}{\partial f_0}, \ldots, \frac{\partial skew(\boldsymbol{f})}{\partial f_{m-1}}\right) = \left(\frac{2}{m}, \ldots, \frac{2}{m}\right)\]
 such that we end up with assymptotic expectation and variance: 
 \begin{align*}
     Var(\widehat{\text{skew}(\boldsymbol{f})}) &\overset{asy.}{=} n^{-1}\boldsymbol{j}_{skew}\Sigma_{\boldsymbol{Z}}\boldsymbol{j}_{skew}^{\top} = \frac{1}{n}\frac{4}{m^2}\sum_{i,j = 0}^{m-1}\sigma_{\boldsymbol{Z}; ij} \\
-    E(\widehat{\text{skew}(\boldsymbol{f})}) &\overset{asy.}{=} \text{skew}(E(\hat{\boldsymbol{f}})) = \text{skew}(\boldsymbol{f})
+    E(\widehat{\text{skew}(\boldsymbol{f})}) &\overset{asy.}{=} \text{skew}(E(\hat{\boldsymbol{f}})) = \text{skew}(\boldsymbol{f}).
 \end{align*}
+Since the skew is linear in $\boldsymbol{f}$, the Hessian vanishes ($\boldsymbol{H}_{skew} = 0$). It follows that the estimator is exactly unbiased for all sample sizes $n$, not only asymptotically. \\
 The derivations for other dispersion metrics are analogous.
 
-\section*{Modelling Missingness}
+\chapter{Introducing Missingness}
 
 To model the missingness, the concept of \textbf{amplitude modulation} is employed. This approach models missingness through a binary stochastic process $(O_t)_t$ that runs concurrently with the main process $(X_t)_t$ and modulates its "amplitude"  in a binary manner:
 
@@ -527,19 +544,22 @@ The individudal elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$ are given b
 \[
 \sigma_{\boldsymbol{Z}^*; i,j} = 
 \begin{cases}
+    \text{(i) } i = j = -1: \\
     \begin{aligned}
-        &Var(O_t) + 2 \sum_{h = 1}^\infty Cov(O_t, O_{t+h})  \\
+        &~Var(O_t) + 2 \sum_{h = 1}^\infty Cov(O_t, O_{t+h})  \\
         &\quad = \pi (1-\pi) + 2 \sum_{h=1}^{\infty} \gamma_O(h) 
-    \end{aligned} & \text{ if } i = j = -1 \\[2ex]
+    \end{aligned}\\[2ex]
+    \text{(ii) } j > i = -1: \\
     \begin{aligned}
-        &Cov(O_t, O_tZ_{t, j}) + 2 \sum_{h = 1}^\infty Cov(O_t , O_{t+h}Z_{t+h, j}) \\
+        &~Cov(O_t, O_tZ_{t, j}) + 2 \sum_{h = 1}^\infty Cov(O_t , O_{t+h}Z_{t+h, j}) \\
         &\quad = (E[O_t^2]E[Z_{t, j}] - E[O_t]E[O_t]E[Z_{t, j}]) \\
         &\quad + 2\sum_{h=1}^{\infty} (E[O_t O_{t+h}]E[Z_{t, j}] - E[O_t]E[O_{t+h}]E[Z_{t,j}]) \\
         &\quad =(\pi(1-\pi) + \pi^2)f_j - \pi^2f_j + 2 \sum_{h=1}^\infty (\gamma_O(h) + \pi^2)f_j - \pi^2 f_j \\
         &\quad = f_j (\pi(1-\pi) + 2\sum_{h=1}^{\infty}\gamma_O(h)) = f_j\sigma_{\boldsymbol{Z}*; -1, -1}  
-    \end{aligned} & \text{if }j > i = -1 \\[2ex]
+    \end{aligned}\\[2ex]
+    \text{(iii) } i,j \geq 0: \\
     \begin{aligned}
-        &Cov(O_t Z_{t, j}, O_t Z_{t, i}) +  \sum_{h= 1}^{\infty}Cov(O_{t}Z_{t, j}, O_{t+h} Z_{t+h, i}) + Cov(O_{t+h}Z_{t+h, j}, O_t Z_{t, i}) \\
+        &~Cov(O_t Z_{t, j}, O_t Z_{t, i}) +  \sum_{h= 1}^{\infty}Cov(O_{t}Z_{t, j}, O_{t+h} Z_{t+h, i}) + Cov(O_{t+h}Z_{t+h, j}, O_t Z_{t, i}) \\
         &\quad = (E[O_t^2] E[Z_{t,i} Z_{t,j}] - \pi^2f_if_j) \\
         &\quad +  \sum_{h=1}^{\infty} (E[O_tO_{t+h}]E[Z_{t,j}Z_{t+h,i}] - \pi^2f_i f_j)+ (E[O_tO_{t+h}]E[Z_{t+h,j}Z_{t,i}] - \pi^2f_i f_j) \\
         &\quad = \pi f_{\min\{i,j\}} - \pi^2f_if_j+ \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h)+f_{ji}(h)) - 2\pi^2 f_i f_j\\
@@ -551,11 +571,11 @@ The individudal elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$ are given b
 \end{cases}
 \]
 
-To now derive the asymptotic properties of $\hat{\boldsymbol{f}}*$ we define the function $\boldsymbol{g}:= [0,1]^{m+1} \rightarrow [0,1]^{m}$ as 
+To now derive the asymptotic properties of $\hat{\boldsymbol{f}}^*$ we define the function $\boldsymbol{g}:= [0,1]^{m+1} \rightarrow [0,1]^{m}$ as 
 \[g_j(x_{-1}, x_{0}, \ldots, x_{m-1}) = x_j / x_{-1}, \quad \text{for } j = 0 \ldots, m-1,\]
 such that
 \[g(\bar{\boldsymbol{Z}^*_t}) = \hat{\boldsymbol{f}}^* \text{ and } g(\bar{\boldsymbol{\mu}}_{\boldsymbol{Z}^*}^*) = \boldsymbol{f}.\]
-The Jacobiana matrix of $\boldsymbol{g}(\boldsymbol{x})$ evaluated at $\boldsymbol{x} = \boldsymbol{\mu}_{\boldsymbol{Z}^*}$ is given by 
+The Jacobian matrix of $\boldsymbol{g}(\boldsymbol{x})$ evaluated at $\boldsymbol{x} = \boldsymbol{\mu}_{\boldsymbol{Z}^*}$ is given by 
 \[\boldsymbol{G}_{(m+1)\times m} = 
 \begin{pmatrix}
     \frac{\partial g_0(\boldsymbol{x})}{\partial Z^*_{-1}}& \ldots & \frac{\partial g_0(\boldsymbol{x})}{\partial Z^*_{m-1}}\\
@@ -596,11 +616,35 @@ where
     &= \frac{1}{\pi^2}\left(\left[f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} + \pi(f_{\min \{i,j\}}- f_if_j) + \sum_{h=1}^{\infty}\pi(h)f_{ij}(h)+f_{ji}(h)-2f_if_j\right]- f_if_j \sigma_{\boldsymbol{Z}^*; -1, -1}\right) \\
     &= \frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j) + \frac{1}{\pi^2} \sum_{h=1}^{\infty}\pi(h)(f_{ij}(h)+f_{ji}(h)-2f_if_j)
 \end{align*}
-To study this asymtpotic distribution, we look at a couple more specifc scenarios. For example if the process is fully observed, such that $\pi = 1$. Then
+Since $g_j$ is not a linear function of $\boldsymbol{Z}_t^*$, the bias of order 
+$O(n^{-1})$ is computable using a second-order Taylor expansion. The Hessian of $g_j$ evaluated in $\boldsymbol{\mu}_{\boldsymbol{Z}^*}$ is given by
+\[
+\boldsymbol{H}_{g_j} = \left(\frac{\partial^2 g_j(\boldsymbol{Z}_t^*)}{\partial x_i \partial x_k}\right)_{i,k=-1,\ldots,m-1} = 
+\begin{cases}
+    \frac{2f_j}{\pi^2}  & \text{if } i = k = -1 \\
+    -\frac{1}{\pi^2}    & \text{if } i = -1,\ k = j \\
+    0                   & \text{else.}
+\end{cases}
+\]
+Since only two entries of $\boldsymbol{H}_{g_j}$ are nonzero, and using the symmetry 
+$\sigma_{\boldsymbol{Z}^*;-1,j} = \sigma_{\boldsymbol{Z}^*;j,-1}$, the bias reduces to
+\begin{align*}
+    \mathrm{Bias}(\hat{f}_j) 
+    &= \frac{1}{2}\mathrm{tr}(\boldsymbol{H}_{g_j}\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}) \\
+    &= \frac{1}{2}h_{g_j;-1,-1}\,\sigma_{\boldsymbol{Z}^*;-1,-1} 
+       + h_{g_j;-1,j}\,\sigma_{\boldsymbol{Z}^*;-1,j} \\
+    &= \frac{1}{2}\cdot\frac{2f_j}{\pi^2}\,\sigma_{\boldsymbol{Z}^*;-1,-1} 
+       - \frac{1}{\pi^2}\cdot f_j\,\sigma_{\boldsymbol{Z}^*;-1,-1} \\
+    &= \frac{f_j}{\pi^2}\,\sigma_{\boldsymbol{Z}^*;-1,-1} 
+       - \frac{f_j}{\pi^2}\,\sigma_{\boldsymbol{Z}^*;-1,-1} = 0,
+\end{align*}
+where the last step uses $\sigma_{\boldsymbol{Z}^*;-1,j} = f_j\,\sigma_{\boldsymbol{Z}^*;-1,-1}$ 
+from case (ii) of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$.\\
+To further study the asymtpotic distribution of $\hat{\boldsymbol{f}}^*$, we look at a couple more specifc scenarios. For example if the process is fully observed, such that $\pi = 1$. Then
 \[\sigma_{\hat{\boldsymbol{f}}^*; i, j} = (f_{\min \{i,j\}}- f_if_j) + \sum_{h=1}^\infty f_{ij}(h) + f_{ji}(h) - 2 f_if_j = \sigma_{\boldsymbol{Z}; i, j} .\]
 If $O_t$ is i.i.d., then $\pi(h) = \pi^2$ such that
 \[\sigma_{\hat{\boldsymbol{f}}^*; i, j} = \frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j) + \sum_{h=1}^{\infty} f_{ij}(h) + f_{ji}(h) - 2 f_if_j.\]
-By contrast, if $X_t$ is i.i.d., then $f_{ij}(h) = f_if_j$ für alle $i, j = 0, \ldots, m-1$ and 
+By contrast, if $X_t$ is i.i.d., then $f_{ij}(h) = f_if_j$ for all $i, j = 0, \ldots, m-1$ and 
 \[\sigma_{\hat{\boldsymbol{f}}^*; i, j} = \frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j) + \frac{1}{\pi^2}\sum_{h=1}^{\infty} \pi(h)\overbrace{(f_{ij}(h) + f_{ji}(h) - 2 f_if_j)}^{=0} =\frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j).\]
 
 \subsection*{Asymptotic marginal properties}
