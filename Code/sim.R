@@ -92,6 +92,43 @@ simulation <- function(n, m, p, r, pi, n_reps = 100) {
   return(rbind(colMeans(results, na.rm= T), apply(results, 2, sd)))
 }
 
+true_IOV <- function(m, p) {
+  F <- pbinom(0:(m-1), m, p)
+  return((4/m) * sum(F * (1 - F)))
+}
+
+simulation_raw <- function(n, m, p, r, pi, n_reps = 1000) {
+
+  results <- data.frame(
+    rep = 1:n_reps,
+    IOV = NA,
+    Skew = NA
+  )
+
+  for (rep in 1:n_reps) {
+
+    count_process <- generate_binar1(n, m, p, r)
+    Missing_process <- generate_O(n, pi)
+    observed_counts <- count_process[Missing_process == 1]
+
+    CDF <- marginal_probs_e(m, observed_counts, length(observed_counts))
+
+    results$IOV[rep] <- (4/m) * sum(CDF * (1 - CDF))
+    results$Skew[rep] <- (2/m) * sum(CDF - 1)
+  }
+
+  results$n <- n
+  results$m <- m
+  results$p <- p
+  results$r <- r
+  results$pi <- pi
+
+  return(results)
+}
+
+
+
+
 # Alle Szenarien generieren
 scenarios <- expand.grid(
   n = c(50, 100, 250, 500, 1000),
@@ -107,6 +144,20 @@ scenarios <- scenarios[
 
 # Index reset
 rownames(scenarios) <- NULL
+
+sim_50  <- simulation_raw(50, 10, 0.3, 0.2, 0.75, 2000)
+sim_1000 <- simulation_raw(1000, 10, 0.3, 0.2, 0.75, 2000)
+sim_5000 <- simulation_raw(5000, 10, 0.3, 0.2, 0.75, 2000)
+
+sim_data <- rbind(sim_50, sim_1000, sim_5000)
+
+true_val <- true_IOV(m = 10, p = 0.3)
+
+sim_data$true_IOV <- true_val
+sim_data$diff <- sim_data$IOV - true_val
+sim_data$scaled_CLT <- sqrt(sim_data$n) * sim_data$diff
+sim_data$scaled_bias <- sim_data$n * sim_data$diff
+
 
 results <- apply(scenarios, 1, function(row) {
   simulation(

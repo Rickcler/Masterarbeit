@@ -3,6 +3,35 @@ library(dplyr)
 library(plyr)
 library(tidyr)
 
+ggplot(sim_data, aes(x = scaled_CLT, fill = factor(n))) +
+  geom_density(alpha = 0.4) +
+  stat_function(fun = dnorm,
+      args = list(mean = mean(sim_data$scaled_CLT),
+                  sd = sd(sim_data$scaled_CLT)),
+      linetype = "dashed") +
+  labs(fill = "n",
+       title = "√n (IOV_hat - IOV)") +
+  theme_minimal()
+
+mean_df <- aggregate(diff ~ n, data = sim_data, mean)
+
+ggplot(mean_df, aes(x = n, y = diff)) +
+  geom_point() +
+  geom_line() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_minimal() +
+  labs(y = "Mean(IOV_hat - IOV)")
+
+
+ggplot(sim_data, aes(x = scaled_bias, fill = factor(n))) +
+  geom_density(alpha = 0.4) +
+  stat_function(fun = dnorm,
+      args = list(mean = mean(sim_data$scaled_bias),
+                  sd = sd(sim_data$scaled_bias)),
+      linetype = "dashed") +
+  labs(fill = "n",
+       title = "n (IOV_hat - IOV)") +
+  theme_minimal()
 
 
 combined_df <- rbind(asymp_df, sim_df)

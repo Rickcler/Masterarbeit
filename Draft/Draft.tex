@@ -441,8 +441,8 @@ we can also write the elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}}$ as
 \[\sigma_{\boldsymbol{Z}; i,j } = \left(f_{\min\{i,j\}} - f_if_j\right) + \sum_{h=1}^{\infty} f_{ij}(h) + f_{ji}(h)-2f_i f_j  \]
 \section{Asymptotic Properties of Sample Dispersion Measures}
 \subsection*{IOV}
-We can now now use this information of the asymptotic distribution of $\hat{\boldsymbol{f}}$ to compute the asymptotic properties of sample measures that are based on $\hat{\boldsymbol{f}}$. According to the multivariate delta-method a random variable $G^* := g^*(\boldsymbol{\Theta^*})$, where $\boldsymbol{\Theta^*} \in \mathbb{R}^{m}$, $\boldsymbol{\Theta^*}\overset{asy.}{\sim} \mathcal{N}(\boldsymbol{\Theta}, \boldsymbol{ n^{-1}\Sigma^*})$ and  $g: \mathbb{R}^m\rightarrow \mathbb{R}$ is a continously differentiable function, satisfies 
-\[G^* \overset{asy.}{\sim} \mathcal{N}(g^*(\boldsymbol{\Theta}), n^{-1}\boldsymbol{j\Sigma^* j^{\top}} )\]   
+We can now now use this information of the asymptotic distribution of $\hat{\boldsymbol{f}}$ to compute the asymptotic properties of sample measures that are based on $\hat{\boldsymbol{f}}$. According to the multivariate delta-method a random variable $G^* := g^*(\boldsymbol{\Theta^*})$, where $\boldsymbol{\Theta^*} \in \mathbb{R}^{m}$, $\sqrt{n}(\boldsymbol{\Theta^*} - \boldsymbol{\Theta})\overset{asy.}{\sim} \mathcal{N}(0, \boldsymbol{\Sigma^*})$ and  $g^*: \mathbb{R}^m\rightarrow \mathbb{R}$ is a continously differentiable function, satisfies 
+\[\sqrt{n}(G^* - g^*(\boldsymbol{\Theta})) \overset{asy.}{\sim} \mathcal{N}(0, \boldsymbol{j\Sigma^* j^{\top}} )\]   
 where $\boldsymbol{j}$ is the one-dimensional Jacobian-matrix (i.e. vector) and where $j_i =  \frac{\partial g^*(\boldsymbol{\Theta})}{\partial \theta_i}$. \\
 Since we have shown that $\boldsymbol{\hat{f}}$ is assymptotically normal we can use this to derive the asymptotic properties of sample measures like the IOV. The respective Jacobian is given by:
 \begin{align*}
@@ -461,14 +461,15 @@ where $\boldsymbol{H}_{IOV}(\boldsymbol{f})$ is the Hessian matrix such that
 \[\boldsymbol{H}_{IOV}(\boldsymbol{f}) = \left(\frac{\partial^2 IOV(\boldsymbol{f})}{\partial f_i f_j}\right)_{i,j = 0, \ldots, m-1} = \begin{cases}
     -\frac{8}{m} & \text{if } i = j\\
     0 & \text{else} 
-\end{cases} = -\frac{8}{m} \boldsymbol{I}_m\]
+\end{cases} = -\frac{8}{m} \boldsymbol{I}_m.\]
 Since
-\[E(\boldsymbol{j}_{IOV} (\hat{\boldsymbol{f}} - \boldsymbol{f})) = 0,\]
+\[E(\boldsymbol{j}_{IOV} (\hat{\boldsymbol{f}} - \boldsymbol{f})) = 0\]
 the finite sample bias is given by 
 \begin{align*}
     Bias(IOV(\hat{\boldsymbol{f}})) &= E[\frac{1}{2}(\hat{\boldsymbol{f}}- \boldsymbol{f})^\top \boldsymbol{H}_{IOV}(\boldsymbol{f})(\hat{\boldsymbol{f}}- \boldsymbol{f})] = \frac{1}{2}tr(\boldsymbol{H}_{IOV}Cov(\hat{\boldsymbol{f}})) \\
     &= - \frac{4}{m} \sum_{i=0}^{m-1} \sigma_{\boldsymbol{Z};i,i}.
 \end{align*}
+
 This implies that the bias is strictly negative and only depends on the marginal variances $\sigma_{\boldsymbol{Z}; i,i}$ of the indivdual estimators $f_i$,  not on the covariances. \\
 \subsection*{Skew}
 In a similiar way the asymptotic properties of other dispersion metrics such as the skew can be analyzed. A simple measure for the skew of an ordinal process is given by:
@@ -532,7 +533,7 @@ where $\mu_{U_t^*} = E(U_t) = \boldsymbol{a}^\top \boldsymbol{\mu}_{\boldsymbol{
     \text{and} \quad Cov(U_t^*, U_{t+h}^*) &= \boldsymbol{a}^\top Cov(\boldsymbol{Z}^*_t, \boldsymbol{Z}^{*\top}_{t+h}) \boldsymbol{a} \\
     \text{such that } \quad \sigma^*_{a} &= \boldsymbol{a}^\top (Var(\boldsymbol{Z}^*_t) + 2 \sum_{h = 1 }^{\infty} Cov(\boldsymbol{Z}^*_t, \boldsymbol{Z}^{*}_{t+h})) \boldsymbol{a}.
 \end{align*}
-According to Cramer-Wold we can follow, that since every linear projection $U_t^*$ in asymptotitcally normal we can follow that the sample mean
+Since every linear projection $U_t^*$ is asymptotically normal we can follow that the sample mean
 \[\bar{\boldsymbol{Z}}^*_n := \frac{1}{n} \sum_{t=1}^{n} \boldsymbol{Z}^*_t\]
 satisfies the multivariat CLT 
 \[\sqrt{n} \left( \bar{\boldsymbol{Z}}^*_n - \boldsymbol{\mu}_{\boldsymbol{Z}_t^*} \right) \xrightarrow[n \to \infty]{d} \mathcal{N}\left( \boldsymbol{0}, \boldsymbol{\Sigma}_{\boldsymbol{Z}^*} \right)\]
@@ -570,11 +571,17 @@ The individudal elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$ are given b
     \end{aligned}
 \end{cases}
 \]
-
 To now derive the asymptotic properties of $\hat{\boldsymbol{f}}^*$ we define the function $\boldsymbol{g}:= [0,1]^{m+1} \rightarrow [0,1]^{m}$ as 
 \[g_j(x_{-1}, x_{0}, \ldots, x_{m-1}) = x_j / x_{-1}, \quad \text{for } j = 0 \ldots, m-1,\]
 such that
-\[g(\bar{\boldsymbol{Z}^*_t}) = \hat{\boldsymbol{f}}^* \text{ and } g(\bar{\boldsymbol{\mu}}_{\boldsymbol{Z}^*}^*) = \boldsymbol{f}.\]
+\begin{align*}    
+    \boldsymbol{g}(\bar{\boldsymbol{Z}^*_t}) &= (g_0(\bar{\boldsymbol{Z}}^*_t), \ldots, g_{m-1}(\bar{\boldsymbol{Z}}^*_t))^\top  =  (\hat{f}_0 O_t/O_t, \ldots, \hat{f}_{m-1} O_t/O_t)^\top\\
+    &= \hat{\boldsymbol{f}}^* 
+\end{align*}
+and  
+\begin{align*}
+    g(\bar{\boldsymbol{\mu}}_{\boldsymbol{Z}^*}^*) = \boldsymbol{f}.
+\end{align*}
 The Jacobian matrix of $\boldsymbol{g}(\boldsymbol{x})$ evaluated at $\boldsymbol{x} = \boldsymbol{\mu}_{\boldsymbol{Z}^*}$ is given by 
 \[\boldsymbol{G}_{(m+1)\times m} = 
 \begin{pmatrix}
