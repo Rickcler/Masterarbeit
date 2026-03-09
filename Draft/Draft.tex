@@ -516,7 +516,7 @@ Under the assumptions of Theorem~\ref{thm:clt_fhat}:
 In a similiar way the asymptotic properties of other dispersion metrics such as the skew can be analyzed. A simple measure for the skew of an ordinal process is given by:
 \[\text{skew}(\boldsymbol{f}) = \frac{2}{m} \sum_{i=0}^{m-1}f_i - 1.\]
 The jacobian for the skew is given by
-\[\boldsymbol{j}_{skew} = \left(\frac{\partial skew(\boldsymbol{f})}{\partial f_0}, \ldots, \frac{\partial skew(\boldsymbol{f})}{\partial f_{m-1}}\right) = \left(\frac{2}{m}, \ldots, \frac{2}{m}\right)\]
+\[\boldsymbol{j}_{skew} = \left(\frac{\partial ~ \mathrm{skew}(\boldsymbol{f})}{\partial f_0}, \ldots, \frac{\partial ~\mathrm{skew}(\boldsymbol{f})}{\partial f_{m-1}}\right) = \left(\frac{2}{m}, \ldots, \frac{2}{m}\right)\]
 such that we end up with the following results:
 \begin{proposition}[Asymptotic Properties of $\widehat{\mathrm{skew}}$]\label{prop:skew}
 Under the assumptions of Theorem~\ref{thm:clt_fhat}:
@@ -657,7 +657,7 @@ The Jacobian matrix of $\boldsymbol{g}(\boldsymbol{x})$ evaluated at $\boldsymbo
     -\frac{f_{m-1}}{\pi}& 0 &\ldots& 0 & \frac{1}{\pi}
 \end{pmatrix}\]
 Then, following the deltamethod, we have the following result
-\begin{theorem}[Asymptotic Normality of $\hat{\boldsymbol{f}}^*$]\label{thm:clt_fstarthat}
+\begin{theorem}[Asymptotic Normality of $\hat{\boldsymbol{f}}^*$]\label{thm:clt_fstarhat}
 Let $(X_t)$ be a strictly stationary, ordinal process that is $\alpha$-mixing with exponentially decaying
 coefficients. Let the modulating process $(O_t)$ also be strictily stationary and $\alpha$-mixing with exponentially decaying coefficients, with moments $\mathrm{E}[O_t] = \pi > 0$ and $\mathrm{E}[O_h O_0] = \pi(h) > 0$. Furthermore, let $(O_t)$ and $(X_t)$ be independent, where $X_t$ is observed if $O_t = 1$. Then the corrected estimator from definition~\ref{def:correctedest} satisfies the following multivariate CLT:
 \begin{equation}\label{eq:clt_fstarhat}
@@ -760,21 +760,38 @@ covariance reduces to
 \]
 \end{corollary}
 \section{Asymptotic marginal properties}
-In the same way as for $\hat{\boldsymbol{f}}$ wen can now use the delta method, to learn more about the asymptotic distribution of marginal metrics that are based on $\hat{\boldsymbol{f}}^*$.
-
-\subsection*{IOV under missingness}
-The asymptotic distribution of $\mathrm{IOV}(\hat{\boldsymbol{f}}^*)$ follows by the same delta-method argument as in the complete-data case (Theorem~\ref{thm:clt_fhat}), with the Jacobian
-$\boldsymbol{j}_{\mathrm{IOV}}$ unchanged. The only difference is that $\boldsymbol{\Sigma}_Z$
-is replaced by $\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}}^*}$, yielding
+The asymptotic properties of marginal statistics based on $\hat{\boldsymbol{f}}^*$
+follow directly from the delta method, in exact analogy to the complete-data case.
+The following corollaries state the results for the IOV and the Skew. However, the derivations for other marginal statistics are 
+\begin{corollary}[Asymptotic distribution of $\mathrm{IOV}(\hat{\boldsymbol{f}}^*)$]
+\label{cor:iov_missing}
+Under the conditions of Theorem~\ref{thm:clt_fstarhat}, the delta-method argument from Theorem~\ref{thm:iov_asymp} 
+carries over to the missing-data case with $\boldsymbol{\Sigma}_Z$ replaced by
+$\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}}^*}$, yielding
 \[
-    \mathrm{Var}(\mathrm{IOV}(\hat{\boldsymbol{f}}^*)) \overset{asy.}{=}
+    \mathrm{Var}\bigl(\mathrm{IOV}(\hat{\boldsymbol{f}}^*)\bigr)
+    \overset{\mathrm{asy.}}{=}
     \frac{16}{m^2} \sum_{i,j=0}^{m-1}(1-2f_i)(1-2f_j)\,\sigma_{\hat{\boldsymbol{f}}^*;\,i,j}.
 \]
-Similarly, the bias argument carries over directly: since $\boldsymbol{H}_{IOV} =
--\frac{8}{m}\boldsymbol{I}_m$ remains diagonal, the bias depends only on the marginal
-variances of the individual estimators $\hat{f}^*_j$,
+Moreover, since $\boldsymbol{H}_{\mathrm{IOV}} = -\frac{8}{m}\boldsymbol{I}_m$ remains
+diagonal, the bias to order $n^{-1}$ depends only on the marginal variances of
+$\hat{\boldsymbol{f}}^*$:
 \[
-    \mathrm{Bias}(IOV(\hat{\boldsymbol{f}}^*)) = -\frac{4}{m}\sum_{i=0}^{m-1}
-    \sigma_{\hat{\boldsymbol{f}}^*;\,i,i}.
+    \mathrm{Bias}\bigl(\mathrm{IOV}(\hat{\boldsymbol{f}}^*)\bigr)
+    = -\frac{4}{mn}\sum_{i=0}^{m-1}\sigma_{\hat{\boldsymbol{f}}^*;\,i,i}
+    + o(n^{-1}).
 \]
+\end{corollary} 
+\begin{remark}[Skew under missingness]
+The analogous result for the skew follows immediately, since the skew is linear in
+$\boldsymbol{f}$ and hence $\boldsymbol{H}_{\mathrm{skew}} = 0$. In particular, the
+estimator is asymptotically unbiased and its variance is given by
+\[
+    \mathrm{Var}\bigl(\mathrm{skew}(\hat{\boldsymbol{f}}^*)\bigr)
+    \overset{\mathrm{asy.}}{=}
+    \frac{4}{m^2 n}\sum_{i,j=0}^{m-1}\sigma_{\hat{\boldsymbol{f}}^*;\,i,j}.
+\]
+\end{remark}
+
+
 \end{document}

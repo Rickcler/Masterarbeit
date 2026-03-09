@@ -142,13 +142,10 @@ ggplot(mean_df, aes(x = n, y = diff)) +
                         labels = c("1/50", "1/1000", "1/5000"))
   ) +
 labs(
-  fill     = "n", color = "n",
-  x        = NULL,
-  title    = "Convergence at different rates",
-  subtitle = expression(atop(
-  BinAR(1) ~ ":" ~ m == 10 ~ "," ~ p == 0.3 ~ "," ~ r == 0.2 ~ "," ~ pi == 0.75,
-  "Dashed line: theoretical bias  -4/(mn) · tr(Σ)"
-  ))
+  title    = "Mean bias as a function of n",
+  subtitle = "Dashed line: theoretical bias  -4/(mn) · tr(Σ)~ Dots are sample means for different n\nBinAR(1): m = 10, p = 0.3, r = 0.2, π = 0.75",
+  x = "n",
+  y = expression(Mean(hat(IOV) - IOV))
 ) +
   theme_minimal()
 
