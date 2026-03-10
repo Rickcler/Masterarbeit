@@ -231,8 +231,6 @@ INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\enc\dvips\lm\lm-ts1.en
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\enc\dvips\lm\lm-mathex.enc
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmr8.tfm
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmr6.tfm
-INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmri8.tfm
-INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmri7.tfm
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmssbx10.tfm
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmbxi10.tfm
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\tex\latex\amsfonts\ueuf.fd
@@ -254,6 +252,21 @@ INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\sy
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam7.tfm
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm7.tfm
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmr10.tfm
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\rm-lmr10.tfm
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmmi10.tfm
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmsy10.tfm
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\rm-lmbx10.tfm
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam10.tfm
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm10.tfm
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmbx10.tfm
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmbx8.tfm
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmbx6.tfm
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmmib10.tfm
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmbsy10.tfm
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\euler\eufb10.tfm
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmri8.tfm
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmri7.tfm
 INPUT Draft.aux
 INPUT .\Draft.out
 INPUT .\Draft.out
@@ -263,6 +276,8 @@ INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbsy1
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbsy10.pfb
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbsy7.pfb
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbsy7.pfb
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx10.pfb
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx10.pfb
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx12.pfb
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx12.pfb
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbx8.pfb
@@ -271,6 +286,8 @@ INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbxi1
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmbxi10.pfb
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmex10.pfb
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmex10.pfb
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmi10.pfb
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmi10.pfb
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmi12.pfb
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmi12.pfb
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmi6.pfb
@@ -281,6 +298,8 @@ INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmib1
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmib10.pfb
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmib7.pfb
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmmib7.pfb
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmr10.pfb
+INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmr10.pfb
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmr12.pfb
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmr12.pfb
 INPUT C:\Users\Victor\AppData\Local\Programs\MiKTeX\fonts\type1\public\lm\lmr6.pfb

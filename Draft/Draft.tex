@@ -357,115 +357,99 @@ are measurable functions of $X_t$ (see Klenke, 2005, p.~34).
 Since measurability preserves strict stationarity, the binarized processes
 $(g_i(X_t))$ and $(h_i(X_t))$ are strictly stationary whenever $(X_t)$ is
 strictly stationary (see Kallenberg, 2002, p.~558).
-Consequently, the vector-valued processes $\boldsymbol Z_t$ and $\boldsymbol Y_t$
+Consequently, the vector-valued processes $\boldsymbol{Z}_t$ and $\boldsymbol{Y}_t$
 are strictly stationary as well.\\
-Moreover, each indicator variable $Z_{t,i}$ (or $Y_{t,i}$) is defined on the same
-probability space as $X_t$, and the $\sigma$-field it generates is a sub-$\sigma$-field
-of $\sigma(X_t)$, i.e.
+Moreover, each indicator variable $Z_{t,i}$ is defined on the same probability space
+as $X_t$, and the $\sigma$-field it generates satisfies
 \[
-\sigma(Z_{t,i}) \subset \sigma(X_t).
+\sigma(Z_{t,i} : J \le t \le L) \subset \sigma(X_t : J \le t \le L), \qquad J \le L,
 \]
-The same inclusion holds for time-indexed $\sigma$-fields, namely
+which implies $\alpha_{Z_{t,i}}(n) \le \alpha_{X_t}(n)$ for all $i$ and $n$. Hence,
+$\boldsymbol{Z}_t$ and $\boldsymbol{Y}_t$ are also $\alpha$-mixing with exponentially
+decaying coefficients.\\
+To derive the asymptotic distribution of $\hat{\boldsymbol{f}}$, we apply the
+Cramér--Wold device: $\hat{\boldsymbol{f}}$ converges in distribution to a multivariate
+normal if and only if every scalar projection
 \[
-\sigma(Z_{t,i} : J \le t \le L) \subset \sigma(X_t : J \le t \le L),
-\qquad J \le L.
+U_t := \boldsymbol{a}^{\top}\boldsymbol{Z}_t, \qquad 
+\boldsymbol{a} \in \mathbb{R}^{m}\setminus\{\boldsymbol{0}\},
 \]
-It therefore follows that, for all $i = 0,\ldots,m$ and all $n \in \mathbb N$,
+satisfies a univariate CLT. To see that $U_t$ is measurable, let
 \[
-\alpha_{Z_{t,i}}(n) \le \alpha_{X_t}(n),
+L: \mathbb{R}^{m+1} \rightarrow \mathbb{R}, \quad L(\boldsymbol{z}) = \boldsymbol{a}^{\top}\boldsymbol{z}.
 \]
-and analogously for $Y_{t,i}$. Hence, the vector-valued processes
-$\boldsymbol Z_t$ and $\boldsymbol Y_t$ are also $\alpha$-mixing.
+Since $L$ is linear on a finite-dimensional space, it is continuous and therefore
+(Borel-)measurable. The vector-valued function $g(X_t) = \boldsymbol{Z}_t$ is measurable
+due to the measurability of its components, so the composition
+\[
+U_t = L \circ g \circ X_t
+\]
+is also measurable. Hence $U_t$ inherits strict stationarity and $\alpha$-mixing with
+$\alpha_{U_t}(n) \le \alpha_{X_t}(n) \le C\rho^n$ from $(X_t)$. We apply the CLT of
+Ibragimov (1962, Theorem~7), which requires four conditions:
+\begin{enumerate}
+    \item[\normalfont(i)] \textbf{Strict stationarity.} Verified above, as $U_t$ is
+    a measurable function of the strictly stationary process $(X_t)$.
+    
+    \item[\normalfont(ii)] \textbf{$\alpha$-mixing.} Verified above, with
+    $\alpha_{U_t}(n) \le C\rho^n$.
+    
+    \item[\normalfont(iii)] \textbf{Summability.} The mixing coefficients are required
+    to satisfy
+    \[
+    \sum_{n=1}^{\infty} \alpha(n)^{\lambda/(2+\lambda)} < \infty
+    \quad \text{for some } \lambda > 0.
+    \]
+    Under exponential decay $\alpha(n) \le C\rho^n$, this follows from
+    \begin{align*}
+    \sum_{n=1}^{\infty} \alpha(n)^{\lambda/(2+\lambda)}
+    &\le C^{\lambda/(2+\lambda)} \sum_{n=1}^{\infty} \rho^{\,n\lambda/(2+\lambda)} \\
+    &= C^{\lambda/(2+\lambda)} \frac{\rho^{\lambda/(2+\lambda)}}
+    {1-\rho^{\lambda/(2+\lambda)}} < \infty,
+    \end{align*}
+    since $0 < \rho^{\lambda/(2+\lambda)} < 1$ for all $\lambda > 0$.
+    
+    \item[\normalfont(iv)] \textbf{Moment condition.} The theorem requires
+    $\mathrm{E}|U_t|^{2+\lambda} < \infty$ for some $\lambda > 0$. Since each
+    $Z_{t,i} \in \{0,1\}$, the projection $U_t$ is bounded by
+    $M := \sum_{i=0}^{m-1}|a_i| < \infty$, and hence
+    $\mathrm{E}|U_t|^{2+\lambda} \le M^{2+\lambda} < \infty$ for all $\lambda > 0$.
+\end{enumerate}
+All four conditions being satisfied, Ibragimov's CLT applies to $(U_t)$, and by the 
+Cramér--Wold device, the asymptotic variance matrix $\boldsymbol{\Sigma}_Z = 
+(\sigma_{Z;i,j})$ is determined by
+\[
+\boldsymbol{a}^{\top}\boldsymbol{\Sigma}_Z\boldsymbol{a} = \mathrm{Var}(U_t)
++ 2\sum_{h=1}^{\infty}\mathrm{Cov}(U_t, U_{t+h}),
+\]
+which gives
+\[
+\sigma_{Z;i,j} = \mathrm{Cov}(Z_{t,i}, Z_{t,j})
++ \sum_{h=1}^{\infty}\bigl[\mathrm{Cov}(Z_{t,i}, Z_{t+h,j}) 
++ \mathrm{Cov}(Z_{t,j}, Z_{t+h,i})\bigr].
+\]
+Using $\mathrm{Cov}(Z_{t,i}, Z_{t,j}) = f_{\min\{i,j\}} - f_if_j$ and
+$\mathrm{Cov}(Z_{t,i}, Z_{t+h,j}) = f_{ij}(h) - f_if_j$, the elements of
+$\boldsymbol{\Sigma}_Z$ take the explicit form
+\[
+\sigma_{Z;i,j} = \bigl(f_{\min\{i,j\}} - f_if_j\bigr)
++ \sum_{h=1}^{\infty}\bigl(f_{ij}(h) + f_{ji}(h) - 2f_if_j\bigr).
+\]
 
-The central limit theorem applicable under these assumptions is due to
-Ibragimov (1962, Theorem~7), which requires strict stationarity and
-$\alpha$-mixing. In addition, the theorem assumes the summability condition
-\[
-\sum_{n=1}^{\infty} \alpha(n)^{\lambda/(2+\lambda)} < \infty
-\quad \text{for some } \lambda > 0.
-\]
-This condition is satisfied under exponentially decaying mixing coefficients.
-Indeed, if $\alpha(n) \le C \rho^n$ with constants $C>0$ and $\rho\in(0,1)$, then
-\begin{align*}
-\sum_{n=1}^{\infty} \alpha(n)^{\lambda/(2+\lambda)}
-&\le C^{\lambda/(2+\lambda)} \sum_{n=1}^{\infty} \rho^{\,n\lambda/(2+\lambda)} \\
-&= C^{\lambda/(2+\lambda)} \frac{\rho^{\lambda/(2+\lambda)}}{1-\rho^{\lambda/(2+\lambda)}}
-< \infty,
-\end{align*}
-since $0 < \rho^{\lambda/(2+\lambda)} < 1$ for all $\lambda > 0$.\\
-Moreover, the CLT additionally requires the existence of moments of order
-$2+\lambda$ for some $\lambda > 0$. This condition is trivially satisfied in our setting, since
-$\boldsymbol{Z}_t$ and $\boldsymbol{Y}_t$ are vectors of indicator variables. In particular, for any
-\[|Z_{t,i}|^{2+\lambda} \in \{0,1\},\]
-and hence all higher order moments exist. Consequently, for all $i \in 0,\ldots, m$ and $\lambda > 0$,
-\[
-\mathbb{E}\lvert Z_{t,i}\rvert^{2+\lambda} < \infty,
-\]
-and analogously for $Y_{t,i}$.
-
-According to the Cramer-Wold device, $(\boldsymbol{Z}_t)_t$ converges in distribution to a multivariate normal distribution $\mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma})$ if and only if for every fixed non-zero vector $\boldsymbol{a} \in \mathbb{R}^{m+1}\setminus{\boldsymbol{0}}$, the scalar projections
-\[U_t := \boldsymbol{a}^{\top}\boldsymbol{Z}_t = \sum_{i=0}^{m}a_i Z_{t,i}\]
-converge in distribution to a univariate normal distribution $\mathcal{N}(\boldsymbol{a}^\top\boldsymbol{\mu}, \boldsymbol{a}^\top\boldsymbol{\Sigma}\boldsymbol{a})$.\\
-Let
-\[L: \mathbb{R}^{m+1} \rightarrow \mathbb{R}, \quad L(z) = \boldsymbol{a}^\top.\]
-Since $L$ is linear on a finite dimensional space, it is continuous, and therefore (Borel-) measurable.\\
-The vector-valued function $g(X_t) = \boldsymbol{Z}_t$ is measurable due to the measurability of its components. Therefore, the composition
-\[U_t = L \circ g  \circ X_t\]
-is also measurable.\\
-% Since each $\boldsymbol{Z}_t$ is the binarization vector of  $X_t$, it can only take values in the finite set
-% \[\{\boldsymbol{c}_0, \ldots, \boldsymbol{c}_m\}\]
-% where
-% \[\boldsymbol{c}_j := (1, \ldots, 1, 0, \ldots, 0)^\top\]
-% has exactly $j+1$ ones followed by $m-j$ zeros.
-% Consequently, for any fixed $\boldsymbol{a}$, the projection $U_t$ takes values in the finite set
-% \[\mathcal{A}_a := \{\boldsymbol{a}^{\top}\boldsymbol{c}_j\mid j = 0, \ldots,m\} = \left\{\sum_{i=0}^{j}a_i \mid j = 0, \ldots, m \right\}\]
-% Equivalently, $U_t$ can be directly expressed as a deterministic function $h: S \to \mathcal{A}_a$ of the original state $s_i$ of $X_t$:
-% \[h_{\boldsymbol{a}}(s_j) := \sum_{i=0}^{j} a_i\quad \forall j = 0, \ldots, m,\]
-% so that $U_t = h_{\boldsymbol{a}}(X_t)$. Since $S$ is finite and equipped with the discrete $\sigma$-algebra $2^S$ (the power set), any function from $S$ to $\mathcal{A}_{\boldsymbol{a}} \subset \mathbb{R}$ is measurable. In particular, for any subset $E\subset \mathcal{A}_{\boldsymbol{a}}$ the preimage
-% \[h^{-1}_a(E):= \{s_i\in S: h_{\boldsymbol{a}}(s_i) \in E \}\]
-% is a subset of $S$ and therefor belongs to $2^{S}$.
-Since $U_t$ is a measurable function of $X_t$, it remains its properties of strict stationarity and $\alpha$-mixing with exponentially decaying coefficients. \\
-Accordingly, the summability condition is satisfied (follows from the $\alpha$-mixing with exponentially decaying coefficients). Additionally, there will also be a value $M$ such that
-\[M \geq \max_{j=0,\dots, m}  |\sum_{i=0}^{j} a_i Z_i| < \infty\]  %Argument reicht an der Stelle nicht aus; es geht um
-Since $|U_t| \leq M$, we have $|U_t|^{2 + \lambda}\leq M^{2+\lambda}$ for every $\lambda > 0$  , and therefore
-\[\mathrm{E}|U_t|^{2 + \lambda} < |M|^{2+\lambda} < \infty \quad \forall \lambda > 0\]
-
-Since $U_t$ is strictly stationary, $\alpha$-mixing and satsifying the summability aswell as the moment condition, the CLT from Ibragimov is applicable. It follows that the sample mean
-\[\bar{U}_t := \frac{1}{n}\sum_{t=1}^{n}U_t\]
-satisfies the CLT:
-\[\sqrt{n}(\bar{U}_t - \mu_{U_t}) \xrightarrow[n \to \infty]{d} \mathcal{N}(0, \sigma_{\boldsymbol{a}}),\]
-where
-\begin{align*}
-    \mu_{U_{t}} = \mathrm{E}[U_t] \quad \text{ and } \quad\sigma_{\boldsymbol{a}} &= \mathrm{Var}(U_t) +  \sum_{h = 1}^{\infty} \mathrm{Cov}(U_t, U_{t+h})\\
-    &= \sum_{i,j} a_i a_j \left[\mathrm{Cov}(Z_{t,i}, Z_{t,j}) +  \sum_{h=1}^{\infty} \mathrm{Cov}(Z_{t,i}, Z_{t+h, j}) + \mathrm{Cov}(Z_{t,j}, Z_{t+h, i})\right]
-\end{align*}
-Hence, we have the following theorem:
 \begin{theorem}[Asymptotic Normality of $\hat{\boldsymbol{f}}$]\label{thm:clt_fhat}
 Let $(X_t)$ be strictly stationary and $\alpha$-mixing with exponentially decaying
-coefficients. Then the sample mean
-\[\bar{\boldsymbol{Z}}_n := \frac{1}{n}\sum_{t=1}^n \boldsymbol{Z}_t = \hat{\boldsymbol{f}}\]
-satisfies the following multivariate CLT:
-\begin{equation}\label{eq:clt_fhat}
-    \sqrt{n}\bigl(\hat{\boldsymbol{f}} - \boldsymbol{f}\bigr)
-    \xrightarrow[n\to\infty]{d}
-    \mathcal{N}\bigl(\boldsymbol{0}, \boldsymbol{\Sigma}_Z\bigr),
-    \quad \text{with } \boldsymbol{\Sigma}_Z = (\sigma_{Z;i,j})_{i,j=0,\ldots,m-1},
-\end{equation}
-where
+coefficients. Then
+\[
+\sqrt{n}\bigl(\hat{\boldsymbol{f}} - \boldsymbol{f}\bigr)
+\xrightarrow[n\to\infty]{d}
+\mathcal{N}\bigl(\boldsymbol{0},\, \boldsymbol{\Sigma}_Z\bigr),
+\]
+where $\boldsymbol{\Sigma}_Z = (\sigma_{Z;i,j})_{i,j=0,\ldots,m-1}$ is given by
 \begin{equation}\label{eq:sigma_Z}
-    \sigma_{Z;i,j} = \bigl(f_{\min\{i,j\}} - f_if_j\bigr)
-    + \sum_{h=1}^{\infty}\bigl(f_{ij}(h) + f_{ji}(h) - 2f_if_j\bigr).
-\end{equation}\end{theorem}
-The structure of $\boldsymbol{\Sigma}_{Z}$ follows from the equation (for all $\boldsymbol{a} \in \mathbb{R}^{m}$):
-\[\boldsymbol{a^T\Sigma_{Z}a} = \sigma_{\boldsymbol{a}} = \sum_{i,j} a_i a_j \left[\mathrm{Cov}(Z_{t,i}, Z_{t,j}) +  \sum_{h=1}^{\infty} \mathrm{Cov}(Z_{t,i}, Z_{t+h, j}) + \mathrm{Cov}(Z_{t,j}, Z_{t+h, i})\right],\]
-which implies
-\[\sigma_{\boldsymbol{Z}; i,j} = \mathrm{Cov}(Z_{t,i}, Z_{t,j}) + \sum_{h=1}^{\infty} \mathrm{Cov}(Z_{t,i}, Z_{t+h, j}) + \mathrm{Cov}(Z_{t,j}, Z_{t+h, i}).\]
-Since
-\[\mathrm{Cov}(Z_{t,i}, Z_{t,j}) = \mathrm{E}[Z_{t,i}Z_{t,j}] - \mathrm{E}[Z_{t,i}]\mathrm{E}[Z_{t,j}] = f_{\min\{i,j\}} - f_i f_j\]
-and
-\[\mathrm{Cov}(Z_{t,i}, Z_{t+h, j}) = \mathrm{E}[Z_{t,i}Z_{t+h, j}] - \mathrm{E}[Z_{t,i}]\mathrm{E}[Z_{t+h,j}] = f_{ij}(h) - f_i f_j\]
-we can also write the elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}}$ as
-\[\sigma_{\boldsymbol{Z}; i,j } = \left(f_{\min\{i,j\}} - f_if_j\right) + \sum_{h=1}^{\infty} f_{ij}(h) + f_{ji}(h)-2f_i f_j  \]
+\sigma_{Z;i,j} = \bigl(f_{\min\{i,j\}} - f_if_j\bigr)
++ \sum_{h=1}^{\infty}\bigl(f_{ij}(h) + f_{ji}(h) - 2f_if_j\bigr).
+\end{equation}
+\end{theorem}
 \section{Asymptotic Properties of Sample Dispersion Measures}
 \subsection*{IOV}
 We can now now use this information of the asymptotic distribution of $\hat{\boldsymbol{f}}$ to compute the asymptotic properties of sample measures that are based on $\hat{\boldsymbol{f}}$. According to the multivariate delta-method a random variable $G^* := g^*(\boldsymbol{\Theta^*})$, where $\boldsymbol{\Theta^*} \in \mathbb{R}^{m}$, $\sqrt{n}(\boldsymbol{\Theta^*} - \boldsymbol{\Theta})\overset{asy.}{\sim} \mathcal{N}(0, \boldsymbol{\Sigma^*})$ and  $g^*: \mathbb{R}^m\rightarrow \mathbb{R}$ is a continously differentiable function, satisfies
@@ -572,7 +556,7 @@ to where $\hat{\boldsymbol{f^*}}$ is generally biased.
 \section{Asymptotic Theory for the corrected estimator}
 \subsection*{The extended process - stationarity and $\alpha$-mixing}
 To study this bias we assume $(O_t)$ and $(X_t)$ to be stationary and $\alpha$-mixing with exponetially decaying coefficients, with $\mathrm{E}[O_t] = \pi $ and a autocovariance function $\gamma_{O}(h) := \mathrm{Cov}[O_h, O_0]$ and joint expectations $\pi(h):= \mathrm{E}[O_h O_0] = \gamma_O(h) + \pi^2$. To study the joint asymptotic distribution of the estimator $\hat{\boldsymbol{f}}^*$, we introduce the extended binary vectors in order to derive the joint asymptotic distribution of all sample averages entering its definition:
-\[\boldsymbol{Z}^*_t:= (O_t, O_t Z_{t,0}, \ldots, O_t Z_{t,0})^\top =  O_t (1, \boldsymbol{Z}^\top_t)^\top,\]
+\[\boldsymbol{Z}^*_t:= (O_t, O_t Z_{t,0}, \ldots, O_t Z_{t,m-1})^\top =  O_t (1, \boldsymbol{Z}^\top_t)^\top,\]
 where the elements of $\boldsymbol{Z}_t^*$ are are numbered as $Z_{t,-1}^*, Z_{t,0}^*, \ldots, Z_{t,m-1}^*$The expectation of $\boldsymbol{Z}_t^*$ is given by
 \begin{align*}
     \mathrm{E}[\boldsymbol{Z}^{*}_t] &= (\mathrm{E}[O_t], \mathrm{E}[O_t Z_{t,0}], \ldots, \mathrm{E}[O_t Z_{t,m-1}])^\top \\
@@ -603,35 +587,54 @@ which indicates
 \[\boldsymbol{\Sigma}_{\boldsymbol{Z}^*} = \mathrm{Var}(\boldsymbol{Z}^*_t) + 2\sum_{h=1}^{\infty}\mathrm{Cov}(\boldsymbol{Z}_{t}^*, \boldsymbol{Z}_{t+h}^*).\]
 
 The individudal elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$ are given by
-\[
-\sigma_{\boldsymbol{Z}^*; i,j} =
-\begin{cases}
-    \text{(i) } i = j = -1: \\
-    \begin{aligned}
-        &~\mathrm{Var}(O_t) + 2 \sum_{h = 1}^\infty \mathrm{Cov}(O_t, O_{t+h})  \\
-        &\quad = \pi (1-\pi) + 2 \sum_{h=1}^{\infty} \gamma_O(h)
-    \end{aligned}\\[2ex]
-    \text{(ii) } j > i = -1: \\
-    \begin{aligned}
-        &~\mathrm{Cov}(O_t, O_tZ_{t, j}) + 2 \sum_{h = 1}^\infty \mathrm{Cov}(O_t , O_{t+h}Z_{t+h, j}) \\
-        &\quad = (\mathrm{E}[O_t^2]\mathrm{E}[Z_{t, j}] - \mathrm{E}[O_t]\mathrm{E}[O_t]\mathrm{E}[Z_{t, j}]) \\
-        &\quad + 2\sum_{h=1}^{\infty} (\mathrm{E}[O_t O_{t+h}]\mathrm{E}[Z_{t, j}] - \mathrm{E}[O_t]\mathrm{E}[O_{t+h}]\mathrm{E}[Z_{t,j}]) \\
-        &\quad =(\pi(1-\pi) + \pi^2)f_j - \pi^2f_j + 2 \sum_{h=1}^\infty (\gamma_O(h) + \pi^2)f_j - \pi^2 f_j \\
-        &\quad = f_j (\pi(1-\pi) + 2\sum_{h=1}^{\infty}\gamma_O(h)) = f_j\sigma_{\boldsymbol{Z}*; -1, -1}
-    \end{aligned}\\[2ex]
-    \text{(iii) } i,j \geq 0: \\
-    \begin{aligned}
-        &~\mathrm{Cov}(O_t Z_{t, j}, O_t Z_{t, i}) +  \sum_{h= 1}^{\infty}\mathrm{Cov}(O_{t}Z_{t, j}, O_{t+h} Z_{t+h, i}) + \mathrm{Cov}(O_{t+h}Z_{t+h, j}, O_t Z_{t, i}) \\
-        &\quad = (\mathrm{E}[O_t^2] \mathrm{E}[Z_{t,i} Z_{t,j}] - \pi^2f_if_j) \\
-        &\quad +  \sum_{h=1}^{\infty} (\mathrm{E}[O_tO_{t+h}]\mathrm{E}[Z_{t,j}Z_{t+h,i}] - \pi^2f_i f_j)+ (\mathrm{E}[O_tO_{t+h}]\mathrm{E}[Z_{t+h,j}Z_{t,i}] - \pi^2f_i f_j) \\
-        &\quad = \pi f_{\min\{i,j\}} - \pi^2f_if_j+ \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h)+f_{ji}(h)) - 2\pi^2 f_i f_j\\
-        &\quad = \pi f_{\min\{i,j\}} - \pi f_if_j -\pi(1-\pi)f_if_j \\
-        &\quad + \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h)+f_{ji}(h)) - 2 \pi(h)f_if_j + 2(\pi(h)-\pi^2)f_if_j \\
-        &\quad = f_if_j\pi + \pi(f_{\min\{i,j\}} - f_if_j) + \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h)+f_{ji}(h)- 2f_if_j) + 2(\pi(h)-\pi^2)f_if_j \\
-        &\quad = f_if_j\sigma_{\boldsymbol{Z}^*;-1, -1} +\pi (f_{\min\{i,j\}} - f_if_j) + \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h)+f_{ji}(h)- 2f_if_j)
-    \end{aligned}
-\end{cases}
-\]
+{\small
+\begin{align*}
+&\textbf{(i)}\ i = j = -1: \\
+&\quad \mathrm{Var}(O_t) + 2\sum_{h=1}^\infty \mathrm{Cov}(O_t, O_{t+h}) 
+= \pi(1-\pi) + 2\sum_{h=1}^{\infty}\gamma_O(h) \\[2ex]
+&\textbf{(ii)}\ j > i = -1: \\
+&\quad \mathrm{Cov}(O_t, O_tZ_{t,j}) 
++ 2\sum_{h=1}^\infty \mathrm{Cov}(O_t, O_{t+h}Z_{t+h,j}) \\
+&\quad \overset{\perp}{=} 
+\left(\mathrm{E}[O_t^2]\mathrm{E}[Z_{t,j}] - \mathrm{E}[O_t]^2\mathrm{E}[Z_{t,j}]\right) \\
+&\qquad + 2\sum_{h=1}^{\infty}
+\left(\mathrm{E}[O_tO_{t+h}]\mathrm{E}[Z_{t,j}] - \mathrm{E}[O_t]^2\mathrm{E}[Z_{t,j}]\right) \\
+&\quad \overset{O_t \in \{0,1\}}{=} 
+(\pi - \pi^2)f_j + 2\sum_{h=1}^{\infty}(\gamma_O(h) + \pi^2 - \pi^2)f_j \\
+&\quad = \pi(1-\pi)f_j + 2f_j\sum_{h=1}^{\infty}\gamma_O(h) 
+= f_j\!\left(\pi(1-\pi) + 2\sum_{h=1}^{\infty}\gamma_O(h)\right) 
+= f_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1} \\[2ex]
+&\textbf{(iii)}\ i,j \geq 0: \\
+&\quad \mathrm{Cov}(O_tZ_{t,i}, O_tZ_{t,j}) 
++ \sum_{h=1}^{\infty}\bigl[\mathrm{Cov}(O_tZ_{t,i}, O_{t+h}Z_{t+h,j}) 
++ \mathrm{Cov}(O_{t+h}Z_{t+h,i}, O_tZ_{t,j})\bigr] \\
+&\quad \overset{\perp}{=} 
+\bigl(\mathrm{E}[O_t^2]\mathrm{E}[Z_{t,i}Z_{t,j}] - \pi^2f_if_j\bigr) \\
+&\qquad + \sum_{h=1}^{\infty}\bigl[
+\mathrm{E}[O_tO_{t+h}]\mathrm{E}[Z_{t,i}Z_{t+h,j}] - \pi^2f_if_j
++ \mathrm{E}[O_tO_{t+h}]\mathrm{E}[Z_{t,j}Z_{t+h,i}] - \pi^2f_if_j
+\bigr] \\
+&\quad \overset{O_t \in \{0,1\}}{=} 
+\bigl(\pi f_{\min\{i,j\}} - \pi^2f_if_j\bigr) 
++ \sum_{h=1}^{\infty}\pi(h)\bigl(f_{ij}(h) + f_{ji}(h)\bigr) - 2\pi^2f_if_j \\
+&\quad = \pi\bigl(f_{\min\{i,j\}} - f_if_j\bigr) \\
+&\qquad + \sum_{h=1}^{\infty}\bigl[
+\pi(h)\bigl(f_{ij}(h) + f_{ji}(h) - 2f_if_j\bigr) + 2\pi(h)f_if_j
+\bigr] - 2\pi^2f_if_j \\
+&\quad = \pi\bigl(f_{\min\{i,j\}} - f_if_j\bigr) 
++ \sum_{h=1}^{\infty}\pi(h)\bigl(f_{ij}(h) + f_{ji}(h) - 2f_if_j\bigr)
++ 2f_if_j\sum_{h=1}^{\infty}\gamma_O(h) \\
+&\quad = f_if_j
+\underbrace{\bigl(\pi(1-\pi) + 2\sum_{h=1}^{\infty}\gamma_O(h)\bigr)}_{
+=\,\sigma_{\boldsymbol{Z}^*;\,-1,-1}}
+- \pi(1-\pi)f_if_j 
++ \pi\bigl(f_{\min\{i,j\}} - f_if_j\bigr) \\
+&\qquad + \sum_{h=1}^{\infty}\pi(h)\bigl(f_{ij}(h) + f_{ji}(h) - 2f_if_j\bigr) \\
+&\quad = f_if_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1} 
++ \pi\bigl(f_{\min\{i,j\}} - f_if_j\bigr) 
++ \sum_{h=1}^{\infty}\pi(h)\bigl(f_{ij}(h) + f_{ji}(h) - 2f_if_j\bigr)
+\end{align*}
+}
 To now derive the asymptotic properties of $\hat{\boldsymbol{f}}^*$ we define the function vector-valued function $\boldsymbol{g}:= [0,1]^{m+1} \rightarrow [0,1]^{m}$ as
 \[g_j(x_{-1}, x_{0}, \ldots, x_{m-1}) = x_j / x_{-1}, \quad \text{for } j = 0 \ldots, m-1,\]
 such that
@@ -689,8 +692,11 @@ The structure of $\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}^*}}$ can be computed 
         -\frac{f_0}{\pi}\sigma_{\boldsymbol{Z}^*; -1,-1} + \frac{1}{\pi}\sigma_{\boldsymbol{Z}^*; 0, -1} &\ldots&-\frac{f_0}{\pi}\sigma_{\boldsymbol{Z}^*; -1, m-1} + \frac{1}{\pi}\sigma_{\boldsymbol{Z}^*; 0, m-1} \\
         \vdots & \ddots &\vdots \\
         -\frac{f_{m-1}}{\pi}\sigma_{\boldsymbol{Z}^*; -1, -1} + \frac{1}{\pi}\sigma_{\boldsymbol{Z}^*; m-1, -1} &\ldots&-\frac{f_{m-1}}{\pi}\sigma_{\boldsymbol{Z}^*; -1, m-1} + \frac{1}{\pi}\sigma_{\boldsymbol{Z}^*; m-1, m-1} \\
-    \end{pmatrix}\boldsymbol{G}^\top\\
-    \Rightarrow  \sigma_{\hat{\boldsymbol{f}}^*; i, j}  &= (-\frac{f_j}{\pi}) (-\frac{f_i}{\pi}\sigma_{\boldsymbol{Z}^*; -1, -1} + \frac{1}{\pi} \sigma_{\boldsymbol{Z}^*; i, -1}) + \frac{1}{\pi}(-\frac{f_{i}}{\pi}\sigma_{\boldsymbol{Z}^*; -1, j}+ \frac{1}{\pi} \sigma_{\boldsymbol{Z}^*; i, j}) \\
+    \end{pmatrix}\boldsymbol{G}^\top.
+\end{align*}
+Such that the indivual lements look like this:
+\begin{align*}
+    \sigma_{\hat{\boldsymbol{f}}^*; i, j}  &= (-\frac{f_j}{\pi}) (-\frac{f_i}{\pi}\sigma_{\boldsymbol{Z}^*; -1, -1} + \frac{1}{\pi} \sigma_{\boldsymbol{Z}^*; i, -1}) + \frac{1}{\pi}(-\frac{f_{i}}{\pi}\sigma_{\boldsymbol{Z}^*; -1, j}+ \frac{1}{\pi} \sigma_{\boldsymbol{Z}^*; i, j}) \\
     &= \frac{f_j f_i }{\pi^2} \sigma_{\boldsymbol{Z}^*; -1, -1} - \frac{f_j}{\pi^2} \sigma_{\boldsymbol{Z}^*; i, -1} - \frac{f_i}{\pi^2}\sigma_{\boldsymbol{Z}^*; -1, j} + \frac{1}{\pi^2} \sigma_{\boldsymbol{Z}^*; i, j} \\
     &= \frac{1}{\pi^2}\left(f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} - f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} - f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} + \sigma_{\boldsymbol{Z}^*; i, j}\right) = \frac{1}{\pi^2}(\sigma_{\boldsymbol{Z}^*; i, j}-f_if_j \sigma_{\boldsymbol{Z}^*; -1, -1}) \\
     &= \frac{1}{\pi^2}\left(\left[f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} + \pi(f_{\min \{i,j\}}- f_if_j) + \sum_{h=1}^{\infty}\pi(h)f_{ij}(h)+f_{ji}(h)-2f_if_j\right]- f_if_j \sigma_{\boldsymbol{Z}^*; -1, -1}\right) \\
