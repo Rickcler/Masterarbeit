@@ -13,6 +13,7 @@
 \newtheorem{remark}[theorem]{Remark}
 \usepackage{natbib}
 \usepackage{hyperref}
+\usepackage{cleveref}
 \bibliographystyle{apalike}
 
 \begin{document}
@@ -84,20 +85,23 @@ Regardless of whether we consider a simple categorical process with few categori
 
 \section{Bivariate Probabilities at Lag $h$}
 
-Temporal dependence in categorical time series can be quantified through bivariate lag-$h$ probabilities. These represent the joint probability that the process takes a specific category at time $t$ and another category at time $t+h$
-
-\begin{itemize}
-    \item \textbf{Ordinal series (cumulative):}
+\begin{definition}[Bivariate lag-$h$ probabilities]
+\label{def:biv_probs}
+Let $(X_t)$ be a stationary categorical time series. The bivariate lag-$h$ 
+probabilities are defined as follows.
+\begin{enumerate}
+    \item[\normalfont(i)] \textbf{Ordinal series:}
     \[
-    f_{ij}(h) := P(X_t \le s_i,\, X_{t+h} \le s_j), \qquad i,j < m.
+    f_{ij}(h) := P(X_t \le s_i,\, X_{t+h} \le s_j), \qquad i,j = 0,\ldots, m-1.
     \]
-
-    \item \textbf{Nominal series (joint):}
+    \item[\normalfont(ii)] \textbf{Nominal series:}
     \[
-    p_{ij}(h) := P(X_t = s_i,\, X_{t+h} = s_j), \qquad i,j \le m.
+    p_{ij}(h) := P(X_t = s_i,\, X_{t+h} = s_j), \qquad i,j = 0,\ldots, m.
     \]
-\end{itemize}
-These quantities serve as input for dependence measures such as the ordinal/ nominal Cohen's K.
+\end{enumerate}
+Under serial independence, the bivariate probabilities factorize as 
+$f_{ij}(h) = f_i f_j$ and $p_{ij}(h) = p_ip_j$ respectively.
+\end{definition}
 \section{Location}
 
 For a nominal process, any measure that relies on ordering is inappropriate.
@@ -295,8 +299,65 @@ and therefore $\mathrm{IQV}$ attains its maximal value at the uniform distributi
 \end{proof}
 
 
-\section{Measures of temporal dependence}
+\section{Measures of serial dependence}
 
+The marginal distribution of a categorical time series captures the long-run 
+frequencies of the individual categories, but contains no information about the 
+temporal structure of the process. To describe how the process evolves over time, 
+measures of serial dependence are required.\\
+For continuous-valued processes, the autocorrelation function (ACF) is the standard 
+tool for quantifying temporal dependence. However, the ACF is not directly applicable 
+to categorical data, since it relies on the existence of meaningful arithmetic 
+operations on the observed values. For nominal data, such operations are undefined, 
+and for ordinal data, they are at best questionable.\\
+Instead, dependence measures for categorical time series are typically constructed 
+from the bivariate lag-$h$ probabilities introduced in defintion \ref{def:biv_probs}. 
+Under serial independence, these would factorize as $f_{ij}(h) = f_if_j$ and 
+$p_{ij}(h) = p_ip_j$ respectively. Measures for serial dependence are naturally 
+constructed by quantifying the deviation of the bivariate probabilities from this 
+independence benchmark.\\
+Natural and widely used measures in this context are the ordinal and nominal version 
+of Cohen's $\kappa$, which compare the joint probabilities to those expected 
+under independence. For a lag-$h$ process, they are defined as
+\[
+\kappa_{\mathrm{ord}}(h) 
+= \frac{\sum_{j=0}^{m-1}\bigl(f_{jj}(h) - f_j^2\bigr)}
+       {\sum_{i=0}^{m-1} f_i(1-f_i)},
+       \quad \text{and} \quad
+\kappa_{\mathrm{nom}}(h) 
+= \frac{\sum_{j =0}^{m}\bigl(p_{jj}(h) - p_j^2\bigr)}
+       {1-\sum_{i=0}^{m} p_i^2}.
+\]
+The numerator of each measure sums the diagonal deviations $f_{jj}(h) - f_j^2$
+(resp.\ $p_{jj}(h) - p_j^2$), which capture the excess probability of observing
+the same category at times $t$ and $t+h$ relative to what would be expected under
+independence. The denominator normalizes the numerator by a measure of marginal dispersion:
+for the ordinal version it equals $\frac{m}{4}\cdot\mathrm{IOV}$, and for the
+nominal version it is equal to $\frac{m}{m+1}$. This ensures that $\kappa(h)$ is invariant to
+the overall level of dispersion in the marginal distribution. For both measures, positive values indicate that the process tends to remain in the same
+category across lag $h$, while negative values indicate a tendency to switch
+categories.\\
+Under perfect positive dependence, i.e.\ $P(X_{t+h} = s_i \mid X_t = s_i) = 1$
+for all $s_i \in S$, we have $f_{jj}(h) = f_j$ and $p_{jj}(h) = p_j$, and both
+measures attain their upper bound:
+\begin{align*}
+    \kappa_{\mathrm{ord}}(h) 
+    &= \frac{\sum_{j=0}^{m-1}(f_j - f_j^2)}{\sum_{i=0}^{m-1}(f_i - f_i^2)} = 1, \\[1ex]
+    \kappa_{\mathrm{nom}}(h) 
+    &= \frac{\sum_{j=0}^{m}(p_j - p_j^2)}{1 - \sum_{i=0}^{m}p_i^2}
+    = \frac{1 - \sum_{j=0}^{m}p_j^2}{1 - \sum_{i=0}^{m}p_i^2} = 1.
+\end{align*}
+Under serial independence, $f_{jj}(h) = f_j^2$ and $p_{jj}(h) = p_jp_j$, so that
+the numerator vanishes and $\kappa(h) = 0$.\\
+For the nominal version, the lower bound is attained when $p_{jj}(h) = 0$ for all
+$j$, i.e.\ when the process never remains in the same category across lag $h$:
+\[
+\kappa_{\mathrm{nom}}(h) 
+= \frac{-\sum_{j=0}^{m}p_j^2}{1 - \sum_{i=0}^{m}p_i^2},
+\]
+which depends on the marginal distribution and equals $-1$ only in the special case
+of a uniform marginal. For the ordinal version, the lower bound takes an analogous
+form but involves the cumulative probabilities $f_j$.
 \chapter{Samples Measures}
 \section{Estimation of Marginal Distributions}
 To estimate the marginal (cumulative) probabilities, we express the
@@ -466,10 +527,18 @@ which leads to an asymptotic variance of the IOV:
 \end{align*}
 However, since $IOV$ is not a linear function, the first-order delta method only provides information about the asymptotic distribution and variance, not on the finite-sample bias:
 \[(\widehat{\mathrm{IOV}} \overset{p}{\rightarrow} \mathrm{IOV}(\boldsymbol{f})) \not\Rightarrow (\mathrm{E}[\widehat{\mathrm{IOV}}] = \mathrm{IOV}(\boldsymbol{f})).\]
-For non linear transformations, the curvature induces a bias of order $n^{-1}$. Since the IOV-function is continouosly differentiable twice, we can quantify this additional second-order effect by expanding $\mathrm{IOV}(\hat{\boldsymbol{f}})$ in a Taylor series up to second order:
-\[\mathrm{IOV}(\hat{\boldsymbol{f}}) =  \mathrm{IOV}(\boldsymbol{f}) + \boldsymbol{j}_{\mathrm{IOV}} (\hat{\boldsymbol{f}} - \boldsymbol{f}) + \frac{1}{2}(\hat{\boldsymbol{f}}- \boldsymbol{f})^\top \boldsymbol{H}_{\mathrm{IOV}}(\boldsymbol{f})(\hat{\boldsymbol{f}}- \boldsymbol{f}) + o_p(n^{-1}),\]
-where $\boldsymbol{H}_{IOV}(\boldsymbol{f})$ is the Hessian matrix such that
-\[\boldsymbol{H}_{\mathrm{IOV}}(\boldsymbol{f}) = \left(\frac{\partial^2 \mathrm{IOV}(\boldsymbol{f})}{\partial f_i f_j}\right)_{i,j = 0, \ldots, m-1} = \begin{cases}
+For nonlinear transformations, the curvature induces a bias of order $n^{-1}$. Since
+$\mathrm{IOV}(\boldsymbol{f}) = \frac{4}{m}\sum_{i=0}^{m-1}f_i(1-f_i)$ is quadratic in $\boldsymbol{f}$, all derivatives of order three and higher vanish
+identically. Consequently, the second-order Taylor expansion is not merely an
+approximation but exact:
+\[
+\mathrm{IOV}(\hat{\boldsymbol{f}}) = \mathrm{IOV}(\boldsymbol{f}) 
++ \boldsymbol{j}_{\mathrm{IOV}}(\hat{\boldsymbol{f}} - \boldsymbol{f}) 
++ \frac{1}{2}(\hat{\boldsymbol{f}}-\boldsymbol{f})^\top 
+\boldsymbol{H}_{\mathrm{IOV}}(\boldsymbol{f})(\hat{\boldsymbol{f}}-\boldsymbol{f}),
+\]
+with no remainder term. $\boldsymbol{H}_{\mathrm{IOV}}(\boldsymbol{f})$
+is the Hessian matrix such that\[\boldsymbol{H}_{\mathrm{IOV}}(\boldsymbol{f}) = \left(\frac{\partial^2 \mathrm{IOV}(\boldsymbol{f})}{\partial f_i f_j}\right)_{i,j = 0, \ldots, m-1} = \begin{cases}
     -\frac{8}{m} & \text{if } i = j\\
     0 & \text{else}
 \end{cases} = -\frac{8}{m} \boldsymbol{I}_m.\]
@@ -477,8 +546,9 @@ Since
 \[\mathrm{E}(\boldsymbol{j}_{\mathrm{IOV}} (\hat{\boldsymbol{f}} - \boldsymbol{f})) = 0\]
 the finite sample bias is given by
 \begin{align*}
-    \mathrm{Bias}(\mathrm{IOV}(\hat{\boldsymbol{f}})) &= \mathrm{E}[\frac{1}{2}(\hat{\boldsymbol{f}}- \boldsymbol{f})^\top \boldsymbol{H}_{\mathrm{IOV}}(\boldsymbol{f})(\hat{\boldsymbol{f}}- \boldsymbol{f})] = \frac{1}{2}tr(\boldsymbol{H}_{\mathrm{IOV}}\mathrm{Cov}(\hat{\boldsymbol{f}})) \\
-    &= - \frac{4}{m} \sum_{i=0}^{m-1} \sigma_{\boldsymbol{Z};i,i}.
+    \mathrm{Bias}(\mathrm{IOV}(\hat{\boldsymbol{f}})) &= \mathrm{E}\left[\frac{1}{2}(\hat{\boldsymbol{f}}- \boldsymbol{f})^\top \boldsymbol{H}_{\mathrm{IOV}}(\boldsymbol{f})(\hat{\boldsymbol{f}}- \boldsymbol{f})\right] \\
+    &= \frac{1}{2}\mathrm{tr}\left(\boldsymbol{H}_{\mathrm{IOV}}\mathrm{Cov}(\hat{\boldsymbol{f}})\right) \tag*{$\mathrm{E}(\boldsymbol{u^\top A u }) = \mathrm{tr}(\boldsymbol{A} \mathrm{Cov}(\boldsymbol{u}))$}\\
+    &= - \frac{1}{n}\frac{4}{m} \sum_{i=0}^{m-1} \sigma_{\boldsymbol{Z};i,i}.
 \end{align*}
 This implies that the bias is strictly negative and only depends on the marginal variances $\sigma_{\boldsymbol{Z}; i,i}$ of the indivdual estimators $f_i$,  not on the covariances. The results are summarized in the following theorem: \\
 \begin{theorem}[Asymptotic Distribution of $\widehat{\mathrm{IOV}}$]\label{thm:iov_asymp}
@@ -492,11 +562,11 @@ Under the assumptions of Theorem~\ref{thm:clt_fhat}:
     \item[\normalfont(ii)] \textbf{Bias to order $n^{-1}$:}
     \begin{equation}\label{eq:bias_iov}
         \mathrm{Bias}(\widehat{\mathrm{IOV}})
-        = -\frac{4}{m\,n}\sum_{i=0}^{m-1}\sigma_{Z;i,i} + o(n^{-1}).
+        = -\frac{4}{m\,n}\sum_{i=0}^{m-1}\sigma_{Z;i,i}.
     \end{equation}
 \end{enumerate}
 \end{theorem}
-\subsection*{Skew}
+\subsection*{Skewness}
 In a similiar way the asymptotic properties of other dispersion metrics such as the skew can be analyzed. A simple measure for the skew of an ordinal process is given by:
 \[\text{skew}(\boldsymbol{f}) = \frac{2}{m} \sum_{i=0}^{m-1}f_i - 1.\]
 The jacobian for the skew is given by
@@ -585,7 +655,6 @@ where $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$ must sastisfy for all $a \in \mat
 \[\boldsymbol{a}^\top\boldsymbol{\Sigma}_{\boldsymbol{Z}^*} \boldsymbol{a} = \sigma^*_a = \boldsymbol{a}^\top (\mathrm{Var}(\boldsymbol{Z}^*_t) + 2 \sum_{h = 1 }^{\infty} \mathrm{Cov}(\boldsymbol{Z}^*_t, \boldsymbol{Z}^{*}_{t+h})) \boldsymbol{a}\]
 which indicates
 \[\boldsymbol{\Sigma}_{\boldsymbol{Z}^*} = \mathrm{Var}(\boldsymbol{Z}^*_t) + 2\sum_{h=1}^{\infty}\mathrm{Cov}(\boldsymbol{Z}_{t}^*, \boldsymbol{Z}_{t+h}^*).\]
-
 The individudal elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$ are given by
 {\small
 \begin{align*}
@@ -611,31 +680,17 @@ The individudal elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$ are given b
 &\quad \overset{\perp}{=} 
 \bigl(\mathrm{E}[O_t^2]\mathrm{E}[Z_{t,i}Z_{t,j}] - \pi^2f_if_j\bigr) \\
 &\qquad + \sum_{h=1}^{\infty}\bigl[
-\mathrm{E}[O_tO_{t+h}]\mathrm{E}[Z_{t,i}Z_{t+h,j}] - \pi^2f_if_j
+\mathrm{E}[O_tO_{t+h}]\mathrm{E}[Z_{t,i}Z_{t+h,j}] - \pi^2f_if_j 
 + \mathrm{E}[O_tO_{t+h}]\mathrm{E}[Z_{t,j}Z_{t+h,i}] - \pi^2f_if_j
-\bigr] \\
-&\quad \overset{O_t \in \{0,1\}}{=} 
-\bigl(\pi f_{\min\{i,j\}} - \pi^2f_if_j\bigr) 
-+ \sum_{h=1}^{\infty}\pi(h)\bigl(f_{ij}(h) + f_{ji}(h)\bigr) - 2\pi^2f_if_j \\
-&\quad = \pi\bigl(f_{\min\{i,j\}} - f_if_j\bigr) \\
-&\qquad + \sum_{h=1}^{\infty}\bigl[
-\pi(h)\bigl(f_{ij}(h) + f_{ji}(h) - 2f_if_j\bigr) + 2\pi(h)f_if_j
-\bigr] - 2\pi^2f_if_j \\
-&\quad = \pi\bigl(f_{\min\{i,j\}} - f_if_j\bigr) 
-+ \sum_{h=1}^{\infty}\pi(h)\bigl(f_{ij}(h) + f_{ji}(h) - 2f_if_j\bigr)
-+ 2f_if_j\sum_{h=1}^{\infty}\gamma_O(h) \\
-&\quad = f_if_j
-\underbrace{\bigl(\pi(1-\pi) + 2\sum_{h=1}^{\infty}\gamma_O(h)\bigr)}_{
-=\,\sigma_{\boldsymbol{Z}^*;\,-1,-1}}
-- \pi(1-\pi)f_if_j 
-+ \pi\bigl(f_{\min\{i,j\}} - f_if_j\bigr) \\
-&\qquad + \sum_{h=1}^{\infty}\pi(h)\bigl(f_{ij}(h) + f_{ji}(h) - 2f_if_j\bigr) \\
-&\quad = f_if_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1} 
-+ \pi\bigl(f_{\min\{i,j\}} - f_if_j\bigr) 
-+ \sum_{h=1}^{\infty}\pi(h)\bigl(f_{ij}(h) + f_{ji}(h) - 2f_if_j\bigr)
+\bigr]\\
+&\quad = \pi f_{\mathrm{min} \{i,j\}} - \pi^2 f_if_j  + \sum_{h=1}^{\infty} \pi(h) f_{ij}(h) + \pi(h) f_{ji}(h) - 2\pi^2 f_if_j\\
+&\quad = \pi f_{\mathrm{min} \{i,j\}} - \pi^2 f_if_j  + \pi f_i f_j - \pi f_i f_j  \\
+&\qquad + \sum_{h=1}^{\infty} \pi(h) f_{ij}(h) + \pi(h) f_{ji}(h) - 2\pi^2 f_if_j -  2\gamma(h) f_if_j +  2\gamma(h) f_if_j \\
+&\quad = \pi (f_{\mathrm{min} \{i,j\}}- f_if_j) + \left(\pi(1-\pi)   + 2 \sum_{h=1}^{\infty}  \gamma(h)\right) f_if_j + \sum_{h=1}^{\infty} \pi(h) (f_{ij}(h) + f_{ji}(h) - 2f_if_j) \\
+&\quad = f_if_j \sigma_{\boldsymbol{Z}^*;-1, -1} +\pi (f_{\mathrm{min} \{i,j\}}- f_if_j)  + \sum_{h=1}^{\infty} \pi(h) (f_{ij}(h) + f_{ji}(h) - 2f_if_j)
 \end{align*}
 }
-To now derive the asymptotic properties of $\hat{\boldsymbol{f}}^*$ we define the function vector-valued function $\boldsymbol{g}:= [0,1]^{m+1} \rightarrow [0,1]^{m}$ as
+To now derive the asymptotic properties of $\hat{\boldsymbol{f}}^*$ we define the vector-valued function $\boldsymbol{g}:= [0,1]^{m+1} \rightarrow [0,1]^{m}$ as
 \[g_j(x_{-1}, x_{0}, \ldots, x_{m-1}) = x_j / x_{-1}, \quad \text{for } j = 0 \ldots, m-1,\]
 such that
 \begin{align*}

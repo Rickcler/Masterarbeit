@@ -2,7 +2,7 @@ m · R
 library(dplyr)
 library(plyr)
 library(tidyr)
-
+library(ggplot2)
 
 # ==============================================================================
 # Data Generating Processes
@@ -169,6 +169,7 @@ simulation_raw <- function(n, m, p, r, pi, n_reps = 1000) {
 }
 
 
+
 # ==============================================================================
 # Scenarios
 # ==============================================================================
@@ -202,9 +203,10 @@ results <- apply(scenarios, 1, function(row) {
 })
 
 # Raw replications for CLT / bias illustration
-sim_50   <- simulation_raw(50,   10, 0.3, 0.2, 0.75, 2000)
+sim_50   <- rbind(numeric(),sim_50)
 sim_1000 <- simulation_raw(1000, 10, 0.3, 0.2, 0.75, 2000)
 sim_5000 <- simulation_raw(5000, 10, 0.3, 0.2, 0.75, 2000)
+
 
 sim_data          <- rbind(sim_50, sim_1000, sim_5000)
 true_val          <- true_IOV(m = 10, p = 0.3)
@@ -213,7 +215,60 @@ sim_data$diff     <- sim_data$IOV - true_val
 sim_data$scaled_CLT  <- sqrt(sim_data$n) * sim_data$diff
 sim_data$scaled_bias <- sim_data$n       * sim_data$diff
 
+sim_data_2 <- numeric()
+for  (n in c(2, 3, 5, 10, 15, 25, 37 , 50,75, 100, 150, 200, 375, 500, 750, 1000)) {
+  sim_data_2 <- rbind(sim_data_2, simulation_raw(n, 10, 0.3, 0.2, 0.75, 1000))
+  }
+true_val          <- true_IOV(m = 10, p = 0.3)
+sim_data_2$true_IOV <- true_val
+sim_data_2$diff     <- sim_data_2$IOV - true_val
+sim_data_2$scaled_CLT  <- sqrt(sim_data_2$n) * sim_data_2$diff
+sim_data_2$scaled_bias <- sim_data_2$n       * sim_data_2$diff
 
+
+mean_df_2 <- sim_data_2 %>%
+  dplyr::group_by(n) %>%
+  dplyr::summarise(
+    mean_diff        = mean(diff,        na.rm = TRUE),
+    mean_scaled_bias = mean(scaled_bias, na.rm = TRUE),
+    .groups = "drop"
+  )
+Sigma_raw <- Sigma_Star(m = 10, p = 0.3, r = 0.2, pi = 0.75)
+# Theoretische Bias-Kurve
+theory_df_2 <- data.frame(
+  n    = seq(2, 1000, by = 1),
+  diff = sapply(seq(2, 1000, by = 1), function(n) -(4 / (10 * n)) * sum(diag(Sigma_raw)))
+)
+
+# Plot 1: Mittlerer Bias
+ggplot(mean_df_2, aes(x = n, y = mean_diff)) +
+  geom_line(data = theory_df_2, aes(x = n, y = diff),
+            color = "steelblue", linetype = "dashed", linewidth = 0.8) +
+  geom_line() +
+  geom_point(size = 2) +
+  labs(
+    title    = "Mean bias as a function of n",
+    subtitle = "Dashed line: theoretical bias  -4/(mn) · tr(Σ)\nBinAR(1): m = 10, p = 0.3, r = 0.2, π = 0.75",
+    x = "n",
+    y = expression(Mean(hat(IOV) - IOV))
+  ) +
+  theme_minimal()
+
+# Plot 2: Mit n normalisierter mittlerer Bias
+ggplot(mean_df_2, aes(x = n, y = mean_scaled_bias)) +
+  geom_hline(
+    yintercept = -(4 / 10) * sum(diag(Sigma_raw)),
+    color = "steelblue", linetype = "dashed", linewidth = 0.8
+  ) +
+  geom_line() +
+  geom_point(size = 2) +
+  labs(
+    title    = "n-scaled mean bias as a function of n",
+    subtitle = "Dashed line: theoretical limit  -4/m · tr(Σ)\nBinAR(1): m = 10, p = 0.3, r = 0.2, π = 0.75",
+    x = "n",
+    y = expression(n ~ Mean(hat(IOV) - IOV))
+  ) +
+  theme_minimal()
 
 # ==============================================================================
 # Extract Results
