@@ -309,8 +309,8 @@ For continuous-valued processes, the autocorrelation function (ACF) is the stand
 tool for quantifying temporal dependence. However, the ACF is not directly applicable 
 to categorical data, since it relies on the existence of meaningful arithmetic 
 operations on the observed values. For nominal data, such operations are undefined, 
-and for ordinal data, they are at best questionable.\\
-Instead, dependence measures for categorical time series are typically constructed 
+and for ordinal data they are quesitonable, as the categories carry no numerical meaning beyond their ordering.\\
+Dependence measures for categorical time series are typically constructed 
 from the bivariate lag-$h$ probabilities introduced in defintion \ref{def:biv_probs}. 
 Under serial independence, these would factorize as $f_{ij}(h) = f_if_j$ and 
 $p_{ij}(h) = p_ip_j$ respectively. Measures for serial dependence are naturally 
@@ -333,7 +333,7 @@ The numerator of each measure sums the diagonal deviations $f_{jj}(h) - f_j^2$
 the same category at times $t$ and $t+h$ relative to what would be expected under
 independence. The denominator normalizes the numerator by a measure of marginal dispersion:
 for the ordinal version it equals $\frac{m}{4}\cdot\mathrm{IOV}$, and for the
-nominal version it is equal to $\frac{m}{m+1}$. This ensures that $\kappa(h)$ is invariant to
+nominal version it is equal to $\frac{m}{m+1}\cdot \mathrm{IQV}$. This ensures that $\kappa(h)$ is invariant to
 the overall level of dispersion in the marginal distribution. For both measures, positive values indicate that the process tends to remain in the same
 category across lag $h$, while negative values indicate a tendency to switch
 categories.\\
@@ -374,13 +374,16 @@ and for nominal data analogously
 \qquad
 Y_{t,i} := \mathbb{I}\{X_t = s_i\}.
 \]
-The marginal CDF and PMF vectors are then estimated by the corresponding
-sample means,
+The marginal CDF and PMF vectors are estimated by the corresponding sample means:
+\begin{definition}[Empirical CDF and PMF estimators]
+\label{def:empirical_estimators}
 \[
 \hat{\boldsymbol{f}} := \frac{1}{n} \sum_{t=1}^n \boldsymbol{Z}_t,
 \qquad
 \hat{\boldsymbol{p}} := \frac{1}{n} \sum_{t=1}^n \boldsymbol{Y}_t.
 \]
+\end{definition}
+
 \section{Asymptotics of the marginal estimator}
 To derive the asymptotic distribution of $\hat{\boldsymbol{f}}$ and
 $\hat{\boldsymbol{p}}$, a central limit theorem for dependent data is
@@ -568,7 +571,22 @@ Under the assumptions of Theorem~\ref{thm:clt_fhat}:
 \end{theorem}
 \subsection*{Skewness}
 In a similiar way the asymptotic properties of other dispersion metrics such as the skew can be analyzed. A simple measure for the skew of an ordinal process is given by:
-\[\text{skew}(\boldsymbol{f}) = \frac{2}{m} \sum_{i=0}^{m-1}f_i - 1.\]
+\[\mathrm{skew}(\boldsymbol{f}) = \frac{2}{m} \left(\sum_{i=0}^{m-1}f_i\right) - 1.\]
+The measure captures asymmetry through the average level of the CDF: A symmetric
+distribution is taken as baseline and deviations 
+from this baseline reflect asymmetry in the distribution. The measure is scaled to
+$[-1, 1]$, and the three extreme cases illustrate its behavior clearly:
+\begin{itemize}
+    \item \textbf{Left-skewed} ($\mathrm{skew} = 1$): all probability mass is 
+    concentrated in the lowest category $s_0$, so $f_i = 1$ for all $i$ and
+    $\mathrm{skew} = \frac{2}{m} \cdot m - 1 = 1$.
+    \item \textbf{Symmetric} ($\mathrm{skew} = 0$): the distribution is symmetric
+    around the midpoint, which implies $f_i+ f_{m-1-i} = 1$ for all $i$. It follows that $\sum_{i=0}^{m-1} f_i = m/2$ and
+    $\mathrm{skew} = \frac{2}{m} \cdot \frac{m}{2} - 1 = 0$.
+    \item \textbf{Right-skewed} ($\mathrm{skew} = -1$): all probability mass is
+    concentrated in the highest category $s_m$, so $f_i = 0$ for all $i < m$ and
+    $\mathrm{skew} = \frac{2}{m} \cdot 0 - 1 = -1$.
+\end{itemize}
 The jacobian for the skew is given by
 \[\boldsymbol{j}_{skew} = \left(\frac{\partial ~ \mathrm{skew}(\boldsymbol{f})}{\partial f_0}, \ldots, \frac{\partial ~\mathrm{skew}(\boldsymbol{f})}{\partial f_{m-1}}\right) = \left(\frac{2}{m}, \ldots, \frac{2}{m}\right)\]
 such that we end up with the following results:
@@ -755,8 +773,11 @@ Such that the indivual lements look like this:
     &= \frac{f_j f_i }{\pi^2} \sigma_{\boldsymbol{Z}^*; -1, -1} - \frac{f_j}{\pi^2} \sigma_{\boldsymbol{Z}^*; i, -1} - \frac{f_i}{\pi^2}\sigma_{\boldsymbol{Z}^*; -1, j} + \frac{1}{\pi^2} \sigma_{\boldsymbol{Z}^*; i, j} \\
     &= \frac{1}{\pi^2}\left(f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} - f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} - f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} + \sigma_{\boldsymbol{Z}^*; i, j}\right) = \frac{1}{\pi^2}(\sigma_{\boldsymbol{Z}^*; i, j}-f_if_j \sigma_{\boldsymbol{Z}^*; -1, -1}) \\
     &= \frac{1}{\pi^2}\left(\left[f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} + \pi(f_{\min \{i,j\}}- f_if_j) + \sum_{h=1}^{\infty}\pi(h)f_{ij}(h)+f_{ji}(h)-2f_if_j\right]- f_if_j \sigma_{\boldsymbol{Z}^*; -1, -1}\right) \\
-    &= \frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j) + \frac{1}{\pi^2} \sum_{h=1}^{\infty}\pi(h)(f_{ij}(h)+f_{ji}(h)-2f_if_j)
+    &= \underbrace{\frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j) }_{\mathrm{lag}(0)}+ \underbrace{\sum_{h=1}^{\infty}\pi(h)(f_{ij}(h)+f_{ji}(h)-2f_if_j)}_{\mathrm{lag}(h)}
 \end{align*}
+Here, the lag-0 term captures the contemporaneous covariance structure of the
+observed process, while the lag-$h$ terms accumulate the serial dependence
+across all lags $h \geq 1$.
 \subsection*{Bias analysis}
 Since $g_j$ is not a linear function of $\boldsymbol{Z}_t^*$, the bias of order
 $O(n^{-1})$ is computable using a second-order Taylor expansion. The Hessian of $g_j$ evaluated in $\boldsymbol{\mu}_{\boldsymbol{Z}^*}$ is given by
@@ -794,9 +815,9 @@ If the process is fully observed, i.e.\ $\pi = 1$, then
     + \sum_{h=1}^{\infty} f_{ij}(h) + f_{ji}(h) - 2f_if_j
     = \sigma_{\boldsymbol{Z};\, i,j}.
 \]
-That is, the asymptotic covariance of $\hat{\boldsymbol{f}}^*$
-reduces to that of the complete-data estimator $\hat{\boldsymbol{f}}$.
 \end{corollary}
+That is, the asymptotic covariance of $\hat{\boldsymbol{f}}^*$ reduces to that of
+the complete-data estimator $\hat{\boldsymbol{f}}$, as one would expect.
 
 \begin{corollary}[i.i.d.\ Observation Process]
 If $(O_t)$ is i.i.d., then $\pi(h) = \pi^2$ for all $h \geq 1$,
@@ -807,6 +828,11 @@ and the asymptotic covariance simplifies to
     + \sum_{h=1}^{\infty} f_{ij}(h) + f_{ji}(h) - 2f_if_j.
 \]
 \end{corollary}
+Compared to the complete-data case, the lag-0 term is inflated by a factor of
+$1/\pi \geq 1$, reflecting the additional uncertainty introduced by the random
+missingness. The lag-$h$ terms for $h \geq 1$, however, are unaffected, since
+i.i.d.\ missingness introduces no additional serial dependence into the observation
+process.
 
 \begin{corollary}[i.i.d.\ Main Process]
 If $(X_t)$ is i.i.d., then $f_{ij}(h) = f_if_j$ for all
@@ -820,6 +846,9 @@ covariance reduces to
     = \frac{1}{\pi}\bigl(f_{\min\{i,j\}} - f_if_j\bigr).
 \]
 \end{corollary}
+When the main process is serially independent, all temporal dependence in
+$\hat{\boldsymbol{f}}^*$ vanishes and the asymptotic covariance only depends on the lag-$0$ term. 
+
 \section{Asymptotic marginal properties}
 The asymptotic properties of marginal statistics based on $\hat{\boldsymbol{f}}^*$
 follow directly from the delta method, in exact analogy to the complete-data case.
