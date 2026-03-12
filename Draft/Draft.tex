@@ -525,8 +525,8 @@ Since we have shown that $\boldsymbol{\hat{f}}$ is assymptotically normal we can
 \end{align*}
 which leads to an asymptotic variance of the IOV:
 \begin{align*}
-    \mathrm{Var}(\widehat{IOV(\boldsymbol{f})}) &\overset{asy.}{=} \boldsymbol{j}_{\mathrm{IOV}} \boldsymbol{\Sigma}_Z \boldsymbol{j}_{\mathrm{IOV}}^{\top} = \sum_{i=0}^{m-1} \sum_{j=0}^{m-1} \frac{4(1- 2 f_i)}{m} \frac{4(1- 2 f_j)}{m} \sigma_{\boldsymbol{Z}; i,j}\\
-    &=  \frac{16}{m^2} \sum_{i,j = 0}^{m-1} (1-2f_i)(1- 2 f_j) \sigma_{\boldsymbol{Z}; i,j}
+    \mathrm{Var}(\widehat{IOV(\boldsymbol{f})}) &\overset{asy.}{=} \frac{1}{n}\boldsymbol{j}_{\mathrm{IOV}} \boldsymbol{\Sigma}_Z \boldsymbol{j}_{\mathrm{IOV}}^{\top} = \sum_{i=0}^{m-1} \sum_{j=0}^{m-1} \frac{4(1- 2 f_i)}{m} \frac{4(1- 2 f_j)}{m} \sigma_{\boldsymbol{Z}; i,j}\\
+    &=  \frac{1}{n}\frac{16}{m^2} \sum_{i,j = 0}^{m-1} (1-2f_i)(1- 2 f_j) \sigma_{\boldsymbol{Z}; i,j}
 \end{align*}
 However, since $IOV$ is not a linear function, the first-order delta method only provides information about the asymptotic distribution and variance, not on the finite-sample bias:
 \[(\widehat{\mathrm{IOV}} \overset{p}{\rightarrow} \mathrm{IOV}(\boldsymbol{f})) \not\Rightarrow (\mathrm{E}[\widehat{\mathrm{IOV}}] = \mathrm{IOV}(\boldsymbol{f})).\]
@@ -549,9 +549,16 @@ Since
 \[\mathrm{E}(\boldsymbol{j}_{\mathrm{IOV}} (\hat{\boldsymbol{f}} - \boldsymbol{f})) = 0\]
 the finite sample bias is given by
 \begin{align*}
-    \mathrm{Bias}(\mathrm{IOV}(\hat{\boldsymbol{f}})) &= \mathrm{E}\left[\frac{1}{2}(\hat{\boldsymbol{f}}- \boldsymbol{f})^\top \boldsymbol{H}_{\mathrm{IOV}}(\boldsymbol{f})(\hat{\boldsymbol{f}}- \boldsymbol{f})\right] \\
-    &= \frac{1}{2}\mathrm{tr}\left(\boldsymbol{H}_{\mathrm{IOV}}\mathrm{Cov}(\hat{\boldsymbol{f}})\right) \tag*{$\mathrm{E}(\boldsymbol{u^\top A u }) = \mathrm{tr}(\boldsymbol{A} \mathrm{Cov}(\boldsymbol{u}))$}\\
-    &= - \frac{1}{n}\frac{4}{m} \sum_{i=0}^{m-1} \sigma_{\boldsymbol{Z};i,i}.
+    \mathrm{Bias}(\mathrm{IOV}(\hat{\boldsymbol{f}})) 
+    &= \mathrm{E}\!\left[\frac{1}{2}(\hat{\boldsymbol{f}}- \boldsymbol{f})^\top 
+    \boldsymbol{H}_{\mathrm{IOV}}(\boldsymbol{f})(\hat{\boldsymbol{f}}- \boldsymbol{f})\right] \\
+    &= \frac{1}{2}\,\mathrm{tr}\!\left(\boldsymbol{H}_{\mathrm{IOV}}\,
+    \mathrm{Cov}(\hat{\boldsymbol{f}})\right) 
+    \tag*{$\mathrm{E}[\boldsymbol{u}^\top \boldsymbol{A}\boldsymbol{u}] 
+    = \mathrm{tr}(\boldsymbol{A}\,\mathrm{Cov}(\boldsymbol{u}))$}\\
+    &= \frac{1}{2}\,\mathrm{tr}\!\left(-\frac{8}{m}\boldsymbol{I}_m \cdot 
+    \frac{1}{n}\boldsymbol{\Sigma}_Z\right) \\
+    &= -\frac{4}{mn} \sum_{i=0}^{m-1} \sigma_{\boldsymbol{Z};\,i,i}.
 \end{align*}
 This implies that the bias is strictly negative and only depends on the marginal variances $\sigma_{\boldsymbol{Z}; i,i}$ of the indivdual estimators $f_i$,  not on the covariances. The results are summarized in the following theorem: \\
 \begin{theorem}[Asymptotic Distribution of $\widehat{\mathrm{IOV}}$]\label{thm:iov_asymp}
@@ -560,7 +567,7 @@ Under the assumptions of Theorem~\ref{thm:clt_fhat}:
     \item[\normalfont(i)] \textbf{Asymptotic variance:}
     \begin{equation}\label{eq:var_iov}
         \mathrm{Var}(\widehat{\mathrm{IOV}}) \overset{asy.}{=}
-        \frac{16}{m^2}\sum_{i,j=0}^{m-1}(1-2f_i)(1-2f_j)\,\sigma_{Z;i,j}.
+        \frac{16}{n\,m^2}\sum_{i,j=0}^{m-1}(1-2f_i)(1-2f_j)\,\sigma_{Z;i,j}.
     \end{equation}
     \item[\normalfont(ii)] \textbf{Bias to order $n^{-1}$:}
     \begin{equation}\label{eq:bias_iov}
