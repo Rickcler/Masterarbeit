@@ -859,7 +859,7 @@ $\hat{\boldsymbol{f}}^*$ vanishes and the asymptotic covariance only depends on 
 \section{Asymptotic marginal properties}
 The asymptotic properties of marginal statistics based on $\hat{\boldsymbol{f}}^*$
 follow directly from the delta method, in exact analogy to the complete-data case.
-The following corollaries state the results for the IOV and the Skew. However, the derivations for other marginal statistics are 
+The following results are for the IOV and the skew. However, the derivations for other marginal statistics areanalogous- 
 \begin{corollary}[Asymptotic distribution of $\mathrm{IOV}(\hat{\boldsymbol{f}}^*)$]
 \label{cor:iov_missing}
 Under the conditions of Theorem~\ref{thm:clt_fstarhat}, the delta-method argument from Theorem~\ref{thm:iov_asymp} 
@@ -875,14 +875,13 @@ diagonal, the bias to order $n^{-1}$ depends only on the marginal variances of
 $\hat{\boldsymbol{f}}^*$:
 \[
     \mathrm{Bias}\bigl(\mathrm{IOV}(\hat{\boldsymbol{f}}^*)\bigr)
-    = -\frac{4}{mn}\sum_{i=0}^{m-1}\sigma_{\hat{\boldsymbol{f}}^*;\,i,i}
-    + o(n^{-1}).
+    = -\frac{4}{mn}\sum_{i=0}^{m-1}\sigma_{\hat{\boldsymbol{f}}^*;\,i,i}.
 \]
 \end{corollary} 
 \begin{remark}[Skew under missingness]
 The analogous result for the skew follows immediately, since the skew is linear in
 $\boldsymbol{f}$ and hence $\boldsymbol{H}_{\mathrm{skew}} = 0$. In particular, the
-estimator is asymptotically unbiased and its variance is given by
+estimator is unbiased and its asymptotic variance is given by
 \[
     \mathrm{Var}\bigl(\mathrm{skew}(\hat{\boldsymbol{f}}^*)\bigr)
     \overset{\mathrm{asy.}}{=}
