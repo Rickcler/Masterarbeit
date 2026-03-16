@@ -30,7 +30,7 @@
 
 \section{General Notation}
 
-Let $(X_t)$ be a \textit{categorical}  time series process, where each $X_t$ takes values in
+Let  $(X_t)$ be a \textit{categorical}  time series process, where each $X_t$ takes values in
 
 \[
 S := \{s_0, \dots, s_m\}, \qquad m \in \mathbb{N}.
@@ -525,8 +525,8 @@ Since we have shown that $\boldsymbol{\hat{f}}$ is assymptotically normal we can
 \end{align*}
 which leads to an asymptotic variance of the IOV:
 \begin{align*}
-    \mathrm{Var}(\widehat{IOV(\boldsymbol{f})}) &\overset{asy.}{=} \frac{1}{n}\boldsymbol{j}_{\mathrm{IOV}} \boldsymbol{\Sigma}_Z \boldsymbol{j}_{\mathrm{IOV}}^{\top} = \sum_{i=0}^{m-1} \sum_{j=0}^{m-1} \frac{4(1- 2 f_i)}{m} \frac{4(1- 2 f_j)}{m} \sigma_{\boldsymbol{Z}; i,j}\\
-    &=  \frac{1}{n}\frac{16}{m^2} \sum_{i,j = 0}^{m-1} (1-2f_i)(1- 2 f_j) \sigma_{\boldsymbol{Z}; i,j}
+    \sqrt{n}\mathrm{Var}(\widehat{IOV(\boldsymbol{f})}) &\overset{asy.}{=} \boldsymbol{j}_{\mathrm{IOV}} \boldsymbol{\Sigma}_Z \boldsymbol{j}_{\mathrm{IOV}}^{\top} = \sum_{i=0}^{m-1} \sum_{j=0}^{m-1} \frac{4(1- 2 f_i)}{m} \frac{4(1- 2 f_j)}{m} \sigma_{\boldsymbol{Z}; i,j}\\
+    &= \frac{16}{m^2} \sum_{i,j = 0}^{m-1} (1-2f_i)(1- 2 f_j) \sigma_{\boldsymbol{Z}; i,j}
 \end{align*}
 However, since $IOV$ is not a linear function, the first-order delta method only provides information about the asymptotic distribution and variance, not on the finite-sample bias:
 \[(\widehat{\mathrm{IOV}} \overset{p}{\rightarrow} \mathrm{IOV}(\boldsymbol{f})) \not\Rightarrow (\mathrm{E}[\widehat{\mathrm{IOV}}] = \mathrm{IOV}(\boldsymbol{f})).\]
@@ -566,8 +566,8 @@ Under the assumptions of Theorem~\ref{thm:clt_fhat}:
 \begin{enumerate}
     \item[\normalfont(i)] \textbf{Asymptotic variance:}
     \begin{equation}\label{eq:var_iov}
-        \mathrm{Var}(\widehat{\mathrm{IOV}}) \overset{asy.}{=}
-        \frac{16}{n\,m^2}\sum_{i,j=0}^{m-1}(1-2f_i)(1-2f_j)\,\sigma_{Z;i,j}.
+        \sqrt{n}\mathrm{Var}(\widehat{\mathrm{IOV}}) \overset{asy.}{=}
+        \frac{16}{m^2}\sum_{i,j=0}^{m-1}(1-2f_i)(1-2f_j)\,\sigma_{Z;i,j}.
     \end{equation}
     \item[\normalfont(ii)] \textbf{Bias to order $n^{-1}$:}
     \begin{equation}\label{eq:bias_iov}
@@ -600,8 +600,8 @@ such that we end up with the following results:
 \begin{proposition}[Asymptotic Properties of $\widehat{\mathrm{skew}}$]\label{prop:skew}
 Under the assumptions of Theorem~\ref{thm:clt_fhat}:
 \begin{equation}\label{eq:var_skew}
-    \mathrm{Var}(\widehat{\mathrm{skew}}) \overset{asy.}{=}
-    \frac{4}{n\,m^2}\sum_{i,j=0}^{m-1}\sigma_{Z;ij}.
+    \sqrt{n}\mathrm{Var}(\widehat{\mathrm{skew}}) \overset{asy.}{=}
+    \frac{4}{m^2}\sum_{i,j=0}^{m-1}\sigma_{Z;ij}.
 \end{equation}
 Since $\mathrm{skew}$ is linear in $\boldsymbol{f}$, the Hessian vanishes and the
 estimator is exactly unbiased for all $n$.
@@ -609,7 +609,7 @@ estimator is exactly unbiased for all $n$.
 \chapter{Introducing Missingness}
 \section{Motivation \& Missingness-Mechanisms}
 -
-\section{Amplitude Modulation}
+\section{Amplitude Modulation}\label{sec:Amp Mod}
 \subsection*{Definition of the observation process}
 To model the missingness, the concept of \textbf{amplitude modulation} is employed. This approach models missingness through a binary stochastic process $(O_t)_t$ that runs concurrently with the main process $(X_t)_t$ and modulates its "amplitude"  in a binary manner:
 
@@ -866,7 +866,7 @@ Under the conditions of Theorem~\ref{thm:clt_fstarhat}, the delta-method argumen
 carries over to the missing-data case with $\boldsymbol{\Sigma}_Z$ replaced by
 $\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}}^*}$, yielding
 \[
-    \mathrm{Var}\bigl(\mathrm{IOV}(\hat{\boldsymbol{f}}^*)\bigr)
+    \sqrt{n}\mathrm{Var}\bigl(\mathrm{IOV}(\hat{\boldsymbol{f}}^*)\bigr)
     \overset{\mathrm{asy.}}{=}
     \frac{16}{m^2} \sum_{i,j=0}^{m-1}(1-2f_i)(1-2f_j)\,\sigma_{\hat{\boldsymbol{f}}^*;\,i,j}.
 \]
@@ -883,11 +883,86 @@ The analogous result for the skew follows immediately, since the skew is linear 
 $\boldsymbol{f}$ and hence $\boldsymbol{H}_{\mathrm{skew}} = 0$. In particular, the
 estimator is unbiased and its asymptotic variance is given by
 \[
-    \mathrm{Var}\bigl(\mathrm{skew}(\hat{\boldsymbol{f}}^*)\bigr)
+    \sqrt{n}\mathrm{Var}\bigl(\mathrm{skew}(\hat{\boldsymbol{f}}^*)\bigr)
     \overset{\mathrm{asy.}}{=}
-    \frac{4}{m^2 n}\sum_{i,j=0}^{m-1}\sigma_{\hat{\boldsymbol{f}}^*;\,i,j}.
+    \frac{4}{m^2}\sum_{i,j=0}^{m-1}\sigma_{\hat{\boldsymbol{f}}^*;\,i,j}.
 \]
 \end{remark}
 
+\section{Serial Dependence}
+\label{sec:serial-dependence}
 
+So far, we have only examined aspects of the marginal distribution of 
+the categorical process $(X_t)$. However, an essential component of 
+time series analysis is the study of serial dependence. Recall that 
+the most widely used measures to describe such dependence are the 
+ordinal and nominal Cohen's $\kappa$. To estimate these measures, we 
+again rely on relative frequencies:
+\[
+    \hat{\kappa}(h) = \frac{\sum_{j=0}^{m-1}\left(\hat{f}_{jj}^*(h) 
+    - \bigl(\hat{f}^*_j\bigr)^2\right)}{\sum_{i=0}^{m-1}
+    \hat{f}^*_i\bigl(1-\hat{f}_i^*\bigr)}.
+\]
+Hence, it remains to define the estimator $\hat{f}^*_{ij}(h)$ for the 
+bivariate lag-$h$ probabilities $f_{ij}(h)$. As before, we begin with 
+the naive estimator given by the bivariate relative frequency of the 
+amplitude-modulated binarizations,
+\[
+    \hat{\mathfrak{f}}_{ij}(h) 
+    = \frac{1}{n-h}\sum_{t=h+1}^{n} O_t\, O_{t-h}\, Z_{t,i}\, Z_{t-h,j},
+\]
+and compute its expectation:
+\begin{align*}
+    \mathrm{E}\!\left[\hat{\mathfrak{f}}_{ij}(h)\right]
+    &= \frac{1}{n-h}\sum_{t=h+1}^{n}
+       \mathrm{E}\!\left[O_t O_{t-h} Z_{t,i} Z_{t-h,j}\right] \\
+    &= \frac{1}{n-h}\sum_{t=h+1}^{n}
+       \mathrm{E}\!\left[O_t O_{t-h}\right] \cdot 
+       \mathrm{E}\!\left[Z_{t,i} Z_{t-h,j}\right] \\
+    &= \frac{1}{n-h}\sum_{t=h+1}^{n}
+       \mathrm{E}\!\left[O_t O_{t-h}\right] \cdot f_{ij}(h) \\
+    &= \left(\frac{1}{n-h}\sum_{t=h+1}^{n}
+       \mathrm{E}\!\left[O_t O_{t-h}\right]\right) f_{ij}(h),
+\end{align*}
+where the second equality follows from the independence of $(O_t)$ 
+and $(X_t)$, and the third from the stationarity of $(X_t)$. This 
+motivates the corrected estimator
+\[
+    \hat{f}^*_{ij}(h)
+    = \frac{\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} 
+      O_t\, O_{t-h}\, Z_{t,i}\, Z_{t-h,j}}
+      {\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} O_t\, O_{t-h}}
+    =: \hat{\mathfrak{f}}_{ij}(h) \big/ \overline{O_t O_{t-h}}.
+\]
+As in Section~\ref{sec:Amp Mod}, the properties of this estimator 
+depend on whether $(O_t)$ is deterministic or stochastic. If $(O_t)$ 
+is deterministic, then $O_t$ and $O_{t-h}$ are known constants for 
+all $t$, and the expectation of the corrected estimator simplifies to
+\begin{align*}
+    \mathrm{E}\!\left[\hat{f}^*_{ij}(h)\right]
+    &= \frac{\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} 
+       O_t\, O_{t-h}\, \mathrm{E}\!\left[Z_{t,i}\, Z_{t-h,j}\right]}
+       {\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} O_t\, O_{t-h}} \\
+    &= \frac{\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} 
+       O_t\, O_{t-h}\, f_{ij}(h)}
+       {\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} O_t\, O_{t-h}}
+     = f_{ij}(h),
+\end{align*}
+so the corrected estimator is unbiased in the deterministic case. However, since in the stochastic case 
+\[E\left[\frac{\hat{\mathfrak{f}}_{ij}(h)}{\bar{O_t O_{t-h}}}\right] \neq \frac{\mathrm{E}\left[\hat{\mathfrak{f}}_{ij}(h)\right]}{\mathrm{E}\left[\bar{O_t O_{t-h}}\right]},\]
+here $\hat{f}^*_{ij}(h)$ is generally biased. To study this bias and the general asymptotic distribution of the $\hat{f}^*_{ij}(h)$ we define the $2(m+1)$ dimensional binary vectors:
+\begin{align*}
+    \boldsymbol{Z}^{(h)*}_t 
+    &= \left(
+        Z_{t,-2}^{(h)*},\;
+        Z_{t,-1}^{(h)*},\;
+        \overbrace{\ldots,\, Z_{t,i}^{(h)*},\, \ldots}^{i=0,\,\ldots,\,m-1},\;
+        \overbrace{\ldots,\, Z_{t,m+j}^{(h)*},\, \ldots}^{j=0,\,\ldots,\,m-1}
+       \right)^\top\\
+    &:= \left(
+        O_t O_{t-h},\;
+        \underbrace{O_t,\, \ldots,\, O_{t} Z_{t,i},\, \ldots}_{=\,\boldsymbol{Z}^*_t},\;
+        \ldots,\, O_t O_{t-h} Z_{t,j} Z_{t-h,j},\, \ldots
+        \right)^\top
+\end{align*}
 \end{document}
