@@ -1,5 +1,13 @@
 # Fdb version 4
-["pdflatex"] 1773659440.16916 "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" "Draft.pdf" "Draft" 1773659444.31307 0
+["bibtex Draft"] 1773670705.86948 "Draft.aux" "Draft.bbl" "Draft" 1773670711.22445 0
+  "./references.bib" 1773670693 514 dd51d5b3c5a15e307a0e29cfd917cde8 ""
+  "C:/Users/victo/AppData/Local/Programs/MiKTeX/bibtex/bst/bibtex/apalike.bst" 1291972791 24635 604dafcc79f521a11ea73e506e1fbd98 ""
+  "Draft.aux" 1773670709 13051 20ef3c1ce1f22725dc78f9a1992de5a8 "pdflatex"
+  (generated)
+  "Draft.bbl"
+  "Draft.blg"
+  (rewritten before read)
+["pdflatex"] 1773670706.59249 "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" "Draft.pdf" "Draft" 1773670711.22597 0
   "C:/Users/victo/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1773533238 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/victo/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1773650309 13333849 12741b35d044f71bab70047640433069 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc" 1256929440 2375 baa924870cfb487815765f9094cf3728 ""
@@ -157,9 +165,10 @@
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1751104012 9684 a33a14b82ce60d6e77cb9be689d79ee6 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/tex/latex/xpatch/xpatch.sty" 1585221260 8510 7803f78066c4f9d008405191a4b43073 ""
-  "Draft.aux" 1773659443 12796 c0874a6dbac7e1d0bbef578e1a4f05ef "pdflatex"
-  "Draft.tex" 1773659438 55400 d43725c51e8c730395d6b3f6b3cb3bfb ""
-  "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" 1773659438 55400 d43725c51e8c730395d6b3f6b3cb3bfb ""
+  "Draft.aux" 1773670709 13051 20ef3c1ce1f22725dc78f9a1992de5a8 "pdflatex"
+  "Draft.bbl" 1773670706 176 060ae302edf42b87bb60c738386017f9 "bibtex Draft"
+  "Draft.tex" 1773670693 57381 2aa55dbc1091ced5ee681f57f99c57b4 ""
+  "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" 1773670693 57381 2aa55dbc1091ced5ee681f57f99c57b4 ""
   (generated)
   "Draft.aux"
   "Draft.log"

@@ -316,18 +316,22 @@ Under serial independence, these would factorize as $f_{ij}(h) = f_if_j$ and
 $p_{ij}(h) = p_ip_j$ respectively. Measures for serial dependence are naturally 
 constructed by quantifying the deviation of the bivariate probabilities from this 
 independence benchmark.\\
-Natural and widely used measures in this context are the ordinal and nominal version 
-of Cohen's $\kappa$, which compare the joint probabilities to those expected 
-under independence. For a lag-$h$ process, they are defined as
+\begin{definition}[Cohen's $\kappa$]
+\label{def:cohens-kappa}
+Natural and widely used measures of serial dependence are the ordinal 
+and nominal versions of Cohen's $\kappa$, which compare the joint 
+probabilities to those expected under independence. For lag $h$, they 
+are defined as
 \[
-\kappa_{\mathrm{ord}}(h) 
-= \frac{\sum_{j=0}^{m-1}\bigl(f_{jj}(h) - f_j^2\bigr)}
-       {\sum_{i=0}^{m-1} f_i(1-f_i)},
-       \quad \text{and} \quad
-\kappa_{\mathrm{nom}}(h) 
-= \frac{\sum_{j =0}^{m}\bigl(p_{jj}(h) - p_j^2\bigr)}
-       {1-\sum_{i=0}^{m} p_i^2}.
+    \kappa_{\mathrm{ord}}(h) 
+    = \frac{\sum_{j=0}^{m-1}\bigl(f_{jj}(h) - f_j^2\bigr)}
+           {\sum_{i=0}^{m-1} f_i(1-f_i)}
+    \quad \text{and} \quad
+    \kappa_{\mathrm{nom}}(h) 
+    = \frac{\sum_{j=0}^{m}\bigl(p_{jj}(h) - p_j^2\bigr)}
+           {1-\sum_{i=0}^{m} p_i^2}.
 \]
+\end{definition}
 The numerator of each measure sums the diagonal deviations $f_{jj}(h) - f_j^2$
 (resp.\ $p_{jj}(h) - p_j^2$), which capture the excess probability of observing
 the same category at times $t$ and $t+h$ relative to what would be expected under
@@ -417,7 +421,7 @@ g_i(X_t) := \mathbb{I}\{X_t \le s_i\},
 \qquad
 h_i(X_t) := \mathbb{I}\{X_t = s_i\},
 \]
-are measurable functions of $X_t$ (see Klenke, 2005, p.~34).
+are measurable functions of $X_t$ (see Klenke, 2005, p.~36).
 Since measurability preserves strict stationarity, the binarized processes
 $(g_i(X_t))$ and $(h_i(X_t))$ are strictly stationary whenever $(X_t)$ is
 strictly stationary (see Kallenberg, 2002, p.~558).
@@ -442,13 +446,12 @@ satisfies a univariate CLT. To see that $U_t$ is measurable, let
 \[
 L: \mathbb{R}^{m+1} \rightarrow \mathbb{R}, \quad L(\boldsymbol{z}) = \boldsymbol{a}^{\top}\boldsymbol{z}.
 \]
-Since $L$ is linear on a finite-dimensional space, it is continuous and therefore
-(Borel-)measurable. The vector-valued function $g(X_t) = \boldsymbol{Z}_t$ is measurable
-due to the measurability of its components, so the composition
-\[
-U_t = L \circ g \circ X_t
-\]
-is also measurable. Hence $U_t$ inherits strict stationarity and $\alpha$-mixing with
+Since $L$ is linear on a finite-dimensional space, it is continuous 
+and hence Borel-measurable \citep[Theorem~1.88]{klenke2005}. 
+The measurability of $g(X_t) = \boldsymbol{Z}_t$ follows from the 
+measurability of its components, and the composition 
+$U_t = L \circ g \circ X_t$ is measurable by 
+\citet[Theorem~1.80]{klenke2005}. Hence $U_t$ inherits strict stationarity and $\alpha$-mixing with
 $\alpha_{U_t}(n) \le \alpha_{X_t}(n) \le C\rho^n$ from $(X_t)$. We apply the CLT of
 Ibragimov (1962, Theorem~7), which requires four conditions:
 \begin{enumerate}
@@ -896,7 +899,7 @@ So far, we have only examined aspects of the marginal distribution of
 the categorical process $(X_t)$. However, an essential component of 
 time series analysis is the study of serial dependence. Recall that 
 the most widely used measures to describe such dependence are the 
-ordinal and nominal Cohen's $\kappa$. To estimate these measures, we 
+ordinal and nominal Cohen's $\kappa$ (Definition \ref{def:cohens-kappa}). To estimate these measures, we 
 again rely on relative frequencies:
 \[
     \hat{\kappa}(h) = \frac{\sum_{j=0}^{m-1}\left(\hat{f}_{jj}^*(h) 
@@ -948,9 +951,19 @@ all $t$, and the expectation of the corrected estimator simplifies to
        {\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} O_t\, O_{t-h}}
      = f_{ij}(h),
 \end{align*}
-so the corrected estimator is unbiased in the deterministic case. However, since in the stochastic case 
-\[E\left[\frac{\hat{\mathfrak{f}}_{ij}(h)}{\bar{O_t O_{t-h}}}\right] \neq \frac{\mathrm{E}\left[\hat{\mathfrak{f}}_{ij}(h)\right]}{\mathrm{E}\left[\bar{O_t O_{t-h}}\right]},\]
-here $\hat{f}^*_{ij}(h)$ is generally biased. To study this bias and the general asymptotic distribution of the $\hat{f}^*_{ij}(h)$ we define the $2(m+1)$ dimensional binary vectors:
+so the corrected estimator is unbiased in the deterministic case. 
+In the stochastic case, however, since numerator and denominator are both 
+random, we have in general
+\[
+    \mathrm{E}\!\left[\frac{\hat{\mathfrak{f}}_{ij}(h)}
+    {\overline{O_t O_{t-h}}}\right] \neq 
+    \frac{\mathrm{E}\!\left[\hat{\mathfrak{f}}_{ij}(h)\right]}
+    {\mathrm{E}\!\left[\overline{O_t O_{t-h}}\right]},
+\]
+and hence $\hat{f}^*_{ij}(h)$ is generally biased. To derive the asymptotic distribution of $\hat{f}^*_{ij}(h)$, we 
+proceed analogously to Section~\ref{sec:Amp Mod} and apply the 
+Cram\'er--Wold device to the sample mean of a suitably defined 
+binary vector:
 \begin{align*}
     \boldsymbol{Z}^{(h)*}_t 
     &= \left(
@@ -963,6 +976,34 @@ here $\hat{f}^*_{ij}(h)$ is generally biased. To study this bias and the general
         O_t O_{t-h},\;
         \underbrace{O_t,\, \ldots,\, O_{t} Z_{t,i},\, \ldots}_{=\,\boldsymbol{Z}^*_t},\;
         \ldots,\, O_t O_{t-h} Z_{t,j} Z_{t-h,j},\, \ldots
-        \right)^\top
+        \right)^\top,
 \end{align*}
+The components of $\boldsymbol{Z}^{(h)^*}_t$ are indexed from $-2$ to $2m-1$: the component at 
+index $-2$ captures the product $O_tO_{t-h}$, the components at 
+indices $-1$ through $m-1$ coincide with $\boldsymbol{Z}_t^*$ from 
+Section~\ref{sec:Amp Mod}, and the remaining components at indices 
+$m$ through $2m-1$ capture the lag-$h$ interaction terms 
+$O_tO_{t-h}Z_{t,j}Z_{t-h,j}$. Since $\kappa_{\mathrm{ord}}$ depends 
+only on the diagonal frequencies $\hat{f}^*_{jj}(h)$, it suffices to 
+include the corresponding diagonal components in 
+$\boldsymbol{Z}_t^{(h)*}$. Should one wish to study a dependence 
+measure that also involves off-diagonal frequencies $\hat{f}^*_{ij}(h)$ 
+with $i \neq j$, the vector can straightforwardly be extended by the 
+additional components $O_t O_{t-h} Z_{t,i} Z_{t-h,j}$. \\
+Since $\boldsymbol{Z}^{(h)*}_t$ is a measurable function of 
+$(O_t, O_{t-h}, X_t, X_{t-h})$, it inherits strict stationarity 
+and $\alpha$-mixing with exponentially decaying coefficients from 
+the underlying processes (by the same argument as in 
+Section~\ref{sec:Amp Mod}), and all moment conditions are trivially 
+satisfied as its components are bounded indicator variables. 
+The Cram\'er--Wold device therefore yields
+\[
+    \sqrt{n}\!\left(\bar{\boldsymbol{Z}}^{(h)*}_n - 
+    \boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}\right) 
+    \xrightarrow{d} \mathcal{N}\!\left(\boldsymbol{0},\, 
+    \boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}\right),
+\]
+where $\bar{\boldsymbol{Z}}^{(h)*}_n := \frac{1}{n}\sum_{t=1}^{n} 
+\boldsymbol{Z}^{(h)*}_t$.
+\bibliography{references}
 \end{document}

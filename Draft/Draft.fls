@@ -263,6 +263,9 @@ INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmri7.
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\euler\eufm10.tfm
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\euler\eufm10.tfm
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\euler\eufm7.tfm
+INPUT .\Draft.bbl
+INPUT .\Draft.bbl
+INPUT Draft.bbl
 INPUT Draft.aux
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\euler\eufb10.pfb
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\type1\public\amsfonts\euler\eufb10.pfb
