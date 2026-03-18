@@ -5,4 +5,9 @@ Klenke, A. (2005).
 \newblock {\em Wahrscheinlichkeitstheorie}.
 \newblock Springer.
 
+\bibitem[Rubin, 1976]{Rubin1976}
+Rubin, D.~B. (1976).
+\newblock Inference and missing data.
+\newblock {\em Biometrika}, 63(3):581--592.
+
 \end{thebibliography}

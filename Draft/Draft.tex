@@ -610,8 +610,69 @@ Since $\mathrm{skew}$ is linear in $\boldsymbol{f}$, the Hessian vanishes and th
 estimator is exactly unbiased for all $n$.
 \end{proposition}
 \chapter{Introducing Missingness}
-\section{Motivation \& Missingness-Mechanisms}
--
+\section{Missingness Mechanisms}
+
+In many applied settings, categorical time series are not fully 
+observed. Individual time points may be missing due to sensor 
+failures, non-response in survey data, or dropout in longitudinal 
+studies. Before modelling the statistical consequences of 
+missingness, it is useful to distinguish between different 
+mechanisms that may give rise to it, as these have fundamentally 
+different implications for estimation.
+
+The classical taxonomy of missing data mechanisms goes back to 
+\citet{Rubin1976}, who distinguished between three types based on 
+the dependence structure between the missingness and the underlying 
+data. While Rubin's framework was originally developed for 
+multivariate cross-sectional data, the core concepts translate 
+naturally to the time series setting when conditioning is extended 
+to the full history of the process. Denoting by $O_t \in \{0,1\}$ 
+the indicator of whether $X_t$ is observed (to be formally 
+introduced in Section~\ref{sec:Amp Mod}), and by 
+$\mathcal{F}_{t-1} := \sigma(X_s, O_s : s < t)$ the history up 
+to time $t$, the three mechanisms are defined as follows.
+
+\begin{definition}[Missingness Mechanisms]
+\label{def:missingness}
+\begin{enumerate}[(i)]
+    \item \textbf{Missing Completely at Random (MCAR):} The 
+    observation probability does not depend on the current or 
+    past values of the process:
+    \[P(O_t = 1 \mid X_t,\, \mathcal{F}_{t-1}) = \pi.\]
+
+    \item \textbf{Missing at Random (MAR):} The observation 
+    probability depends on the observed history, but not on the 
+    current (possibly unobserved) value:
+    \[P(O_t = 1 \mid X_t,\, \mathcal{F}_{t-1}) 
+    = P(O_t = 1 \mid \mathcal{F}_{t-1}).\]
+
+    \item \textbf{Missing Not at Random (MNAR):} The observation 
+    probability depends on the current value $X_t$ itself, which 
+    may be unobserved:
+    \[P(O_t = 1 \mid X_t,\, \mathcal{F}_{t-1}) 
+    = P(O_t = 1 \mid X_t,\, \mathcal{F}_{t-1}).\]
+\end{enumerate}
+\end{definition}
+
+\begin{remark}
+    While Rubin's taxonomy was formulated for i.i.d.\ data, the 
+    adaptation to the time series setting is conceptually 
+    straightforward: the key distinction remains whether missingness 
+    depends on the unobserved current value $X_t$ (MNAR) or only 
+    on the observable past (MAR/MCAR). To the best of our 
+    knowledge, a formal systematic treatment of this adaptation 
+    for univariate categorical time series has not appeared in 
+    the literature.
+\end{remark}
+
+The assumption under which the subsequent results are derived is 
+that $(O_t)$ and $(X_t)$ are \emph{independent}, which corresponds 
+to the MCAR case. This is the strongest of the three assumptions 
+and implies in particular that the corrected estimator $\hat{f}^*$ 
+introduced in Section~\ref{sec:Amp Mod} is consistent. Under MAR 
+or MNAR, the independence assumption fails and the estimator may 
+be biased — a point we return to in Section~\ref{sec:mnar}.
+
 \section{Amplitude Modulation}\label{sec:Amp Mod}
 \subsection*{Definition of the observation process}
 To model the missingness, the concept of \textbf{amplitude modulation} is employed. This approach models missingness through a binary stochastic process $(O_t)_t$ that runs concurrently with the main process $(X_t)_t$ and modulates its "amplitude"  in a binary manner:
@@ -827,7 +888,7 @@ If the process is fully observed, i.e.\ $\pi = 1$, then
 \]
 \end{corollary}
 That is, the asymptotic covariance of $\hat{\boldsymbol{f}}^*$ reduces to that of
-the complete-data estimator $\hat{\boldsymbol{f}}$, as one would expect.
+the complete-data estimator $\hat{\boldsymbol{f}}$(\ref{thm:clt_fhat}), as one would expect.
 
 \begin{corollary}[i.i.d.\ Observation Process]
 If $(O_t)$ is i.i.d., then $\pi(h) = \pi^2$ for all $h \geq 1$,
@@ -902,7 +963,7 @@ the most widely used measures to describe such dependence are the
 ordinal and nominal Cohen's $\kappa$ (Definition \ref{def:cohens-kappa}). To estimate these measures, we 
 again rely on relative frequencies:
 \[
-    \hat{\kappa}(h) = \frac{\sum_{j=0}^{m-1}\left(\hat{f}_{jj}^*(h) 
+    \hat{\kappa}(h)_{ord} = \frac{\sum_{j=0}^{m-1}\left(\hat{f}_{jj}^*(h) 
     - \bigl(\hat{f}^*_j\bigr)^2\right)}{\sum_{i=0}^{m-1}
     \hat{f}^*_i\bigl(1-\hat{f}_i^*\bigr)}.
 \]
@@ -1004,6 +1065,41 @@ The Cram\'er--Wold device therefore yields
     \boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}\right),
 \]
 where $\bar{\boldsymbol{Z}}^{(h)*}_n := \frac{1}{n}\sum_{t=1}^{n} 
-\boldsymbol{Z}^{(h)*}_t$.
+\boldsymbol{Z}^{(h)*}_t$ and
+\[\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}} = E\left[\boldsymbol{Z}^{(h)*}\right] = \left( \pi(h), \pi , \pi \boldsymbol{f}^\top, \pi(h)f_{00}(h), \ldots, \pi(h)f_{m-1m-1}(h)  \right)^\top .\]
+The indivdual elements $\sigma^{(h)}_{ij}$ of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$ are calculated as follows: 
+{\small
+\begin{align*}
+&\textbf{(i)}\ i = j = -2: \\
+&\quad \mathrm{Var}(O_t O_{t-h}) + 2\sum_{k=1}^\infty \mathrm{Cov}(O_t O_{t-h}, O_{t-k}O_{t-h-k}) \\
+&\quad = \pi(h)(1-\pi(h)) + 2\sum_{k=1}^{\infty}\left(\mathrm{E}\left[O_t O_{t-h} O_{t-h-k}O_{t-k}\right]-\pi(h)^2 \right) \\[2ex]
+&\textbf{(ii)}\ j = -2,  i = -1: \\
+&\quad \mathrm{Cov}(O_t, O_t O_{t-h}) + \sum_{k=1}^\infty \mathrm{Cov}(O_t, O_{t-k}O_{t-k-h})+ \mathrm{Cov}(O_{t-k}, O_t O_{t-h}) \\
+&\quad = (1-\pi)\pi(h) + \sum_{i=1}^{\infty} \mathrm{E}[O_t O_{t-k}O_{t-k-h}] + \mathrm{E}[O_{t-k}O_t O_{t-h}]\\
+&\textbf{(iii)}\ j = -2, i = 0, \ldots,  m-1: \\
+&\quad \mathrm{Cov}(O_t O_{t-h}, O_tZ_{t,i}) 
++ \sum_{k=1}^{\infty}\bigl[\mathrm{Cov}(O_tO_{t-h}, O_{t-k}Z_{t-k,i}) 
++ \mathrm{Cov}(O_{t-k}O_{t-h-k}, O_t Z_{t,i})\bigr] \\
+&\quad = 
+\mathrm{E}[O_tO_tO_{t-h}]\mathrm{E}[Z_{t,i}] - \mathrm{E}[O_t O_{t-h}]\mathrm{E}[O_t]\mathrm{E}[Z_{t,i}]\\
+&\qquad + \sum_{h=1}^{\infty}\bigl[
+\mathrm{E}[O_tO_{t-h}O_{t-k}]\mathrm{E}[Z_{t-k,i }] +\mathrm{E}[O_tO_{t-k}O_{t-h-k}]\mathrm{E}[Z_{t, i}] \\
+&\qquad - \mathrm{E}[O_{t}O_{t-k}]\mathrm{E}[O_{t-k}]\mathrm{E}[Z_{t-k,i }] - \mathrm{E}[O_{t-k}O_{t-h-k}]\mathrm{E}[O_{t}]\mathrm{E}[Z_{t,i }]\bigr]\\
+&\quad = (1-\pi)\pi(h)f_i + f_i (\sum_{k=1}^{\infty}\mathrm{E}[O_tO_{t-k}O_{t-h}]+ \mathrm{E}[O_tO_{t-k}O_{t-h-k}]- 2\pi\pi(h))
+= f_i \sigma^{(h)}_{-1, -2}\\
+&\textbf{(iv)}\ j = -2, i = m, \ldots,  2m-1: \\
+&\quad \mathrm{Cov}(O_t O_{t-h}, O_t O_{t-h}Z_{t,i}Z_{t-h,i})\\ 
+&\qquad + \sum_{k=1}^{\infty}\bigl[\mathrm{Cov}(O_tO_{t-h}, O_{t-k}O_{t-h-k}Z_{t-k,i}Z_{t-h-k,i}) 
++ \mathrm{Cov}(O_{t-k}O_{t-h-k}, O_t O_{t-h}Z_{t,i}Z_{t-h,i})\bigr] \\
+&\quad = 
+\mathrm{E}[O_tO_{t-h}O_{t}O_{t-h}]\mathrm{E}[Z_{t,i}Z_{t-h,i}] - \mathrm{E}[O_t O_{t-h}]\mathrm{E}[O_tO_{t-h}]\mathrm{E}[Z_{t,i}Z_{t-h,i}]\\
+&\qquad + \sum_{h=1}^{\infty}\bigl[
+\mathrm{E}[O_tO_{t-h}O_{t-k}O_{t-h-k}]\mathrm{E}[Z_{t-k,i }Z_{t-h-k,i }] +\mathrm{E}[O_tO_{t-h}O_{t-k}O_{t-h-k}]\mathrm{E}[Z_{t,i }Z_{t-h,i }] \\
+&\qquad - \mathrm{E}[O_{t}O_{t-h}]\mathrm{E}[O_{t-k}O_{t-h-k}]\mathrm{E}[Z_{t-k,i }Z_{t-h-k,i }] - \mathrm{E}[O_{t-k}O_{t-h-k}]\mathrm{E}[O_{t}O_{t-h}]\mathrm{E}[Z_{t,i }Z_{t-h,i }]\bigr]\\
+&\quad = (1-\pi)\pi(h)f_i + f_i (\sum_{k=1}^{\infty}\mathrm{E}[O_tO_{t-k}O_{t-h}]+ \mathrm{E}[O_tO_{t-k}O_{t-h-k}]- 2\pi\pi(h))
+= f_i \sigma^{(h)}_{-1, -2}
+\end{align*}
+}
+
 \bibliography{references}
 \end{document}
