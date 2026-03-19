@@ -1067,39 +1067,145 @@ The Cram\'er--Wold device therefore yields
 where $\bar{\boldsymbol{Z}}^{(h)*}_n := \frac{1}{n}\sum_{t=1}^{n} 
 \boldsymbol{Z}^{(h)*}_t$ and
 \[\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}} = E\left[\boldsymbol{Z}^{(h)*}\right] = \left( \pi(h), \pi , \pi \boldsymbol{f}^\top, \pi(h)f_{00}(h), \ldots, \pi(h)f_{m-1m-1}(h)  \right)^\top .\]
-The indivdual elements $\sigma^{(h)}_{ij}$ of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$ are calculated as follows: 
+To derive the asymptotic null distribtuion of $\hat{\kappa}(h)$, we evaluate $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)^*}}$ under the null hypthesis that $(X_t)$ is i.i.d. Under this assumption $f_{ij}(h) = f_jf_j$ for all $h\geq1$ which considerably simplifies the higher-order moments of $\boldsymbol{Z}^{(h)^*}$. The indivdual elements $\sigma^{(h)}_{ij}$ of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$ are calculated as follows: 
+
+To derive the asymptotic null distribution of $\hat{\kappa}(h)$, we 
+evaluate $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$ under the null 
+hypothesis that $(X_t)$ is i.i.d. Under this assumption, 
+$f_{ij}(h) = f_if_j$ for all $h \geq 1$, which considerably simplifies 
+the higher-order moments of $\boldsymbol{Z}^{(h)*}_t$. Before computing 
+the individual elements $\sigma^{(h)}_{ij}$ of 
+$\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$, we collect the relevant 
+higher-order moments of $\boldsymbol{Z}^{(h)*}_t$ under $H_0$, which 
+will be used repeatedly in the calculations below:
+\begin{align*}
+    &\mathrm{E}[Z_{t,i}Z_{t-h,i}Z_{t-k,}Z_{t-k-h,j}]-f_{ii}(h)f_{jj}(h) = \begin{cases}
+        f^2_{\mathrm{min}\{i,j\}} -f_i^2f_j^2& \text{ if } k = 0\\
+        f_i f_j f_{\min\{i,j\}}-f_i f_j^2 & \text{ if } k-h = 0\\
+        0 & \text{else.}
+    \end{cases}\\
+    &\mathrm{E}[Z_{t+k,i} Z_{t,j}Z_{t-h,j}]-f_i f_{jj}(h) = \begin{cases}
+        f_j f_{\min\{i,j\}} -f_i f_j^2 &\text{ if } k = 0 \\
+        0 & \text{ else.}
+    \end{cases}\\
+    &\mathrm{E}[Z_{t,i} Z_{t+k,j}Z_{t+k-h,j}] - f_i f_{jj}(h)
+         = \begin{cases}
+        f_j f_{\min\{i,j\}} -f_i f_j^2 &\text{ if } k, k-h = 0 \\
+        0 & \text{ else.}
+    \end{cases}.
+\end{align*}
+With these simplifications in hand, the individual elements 
+$\sigma^{(h)}_{ij}$ of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$ 
+are calculated as follows:
 {\small
+\allowdisplaybreaks
 \begin{align*}
 &\textbf{(i)}\ i = j = -2: \\
-&\quad \mathrm{Var}(O_t O_{t-h}) + 2\sum_{k=1}^\infty \mathrm{Cov}(O_t O_{t-h}, O_{t-k}O_{t-h-k}) \\
-&\quad = \pi(h)(1-\pi(h)) + 2\sum_{k=1}^{\infty}\left(\mathrm{E}\left[O_t O_{t-h} O_{t-h-k}O_{t-k}\right]-\pi(h)^2 \right) \\[2ex]
-&\textbf{(ii)}\ j = -2,  i = -1: \\
-&\quad \mathrm{Cov}(O_t, O_t O_{t-h}) + \sum_{k=1}^\infty \mathrm{Cov}(O_t, O_{t-k}O_{t-k-h})+ \mathrm{Cov}(O_{t-k}, O_t O_{t-h}) \\
-&\quad = (1-\pi)\pi(h) + \sum_{i=1}^{\infty} \mathrm{E}[O_t O_{t-k}O_{t-k-h}] + \mathrm{E}[O_{t-k}O_t O_{t-h}]\\
-&\textbf{(iii)}\ j = -2, i = 0, \ldots,  m-1: \\
-&\quad \mathrm{Cov}(O_t O_{t-h}, O_tZ_{t,i}) 
-+ \sum_{k=1}^{\infty}\bigl[\mathrm{Cov}(O_tO_{t-h}, O_{t-k}Z_{t-k,i}) 
-+ \mathrm{Cov}(O_{t-k}O_{t-h-k}, O_t Z_{t,i})\bigr] \\
-&\quad = 
-\mathrm{E}[O_tO_tO_{t-h}]\mathrm{E}[Z_{t,i}] - \mathrm{E}[O_t O_{t-h}]\mathrm{E}[O_t]\mathrm{E}[Z_{t,i}]\\
-&\qquad + \sum_{h=1}^{\infty}\bigl[
-\mathrm{E}[O_tO_{t-h}O_{t-k}]\mathrm{E}[Z_{t-k,i }] +\mathrm{E}[O_tO_{t-k}O_{t-h-k}]\mathrm{E}[Z_{t, i}] \\
-&\qquad - \mathrm{E}[O_{t}O_{t-k}]\mathrm{E}[O_{t-k}]\mathrm{E}[Z_{t-k,i }] - \mathrm{E}[O_{t-k}O_{t-h-k}]\mathrm{E}[O_{t}]\mathrm{E}[Z_{t,i }]\bigr]\\
-&\quad = (1-\pi)\pi(h)f_i + f_i (\sum_{k=1}^{\infty}\mathrm{E}[O_tO_{t-k}O_{t-h}]+ \mathrm{E}[O_tO_{t-k}O_{t-h-k}]- 2\pi\pi(h))
-= f_i \sigma^{(h)}_{-1, -2}\\
-&\textbf{(iv)}\ j = -2, i = m, \ldots,  2m-1: \\
-&\quad \mathrm{Cov}(O_t O_{t-h}, O_t O_{t-h}Z_{t,i}Z_{t-h,i})\\ 
-&\qquad + \sum_{k=1}^{\infty}\bigl[\mathrm{Cov}(O_tO_{t-h}, O_{t-k}O_{t-h-k}Z_{t-k,i}Z_{t-h-k,i}) 
-+ \mathrm{Cov}(O_{t-k}O_{t-h-k}, O_t O_{t-h}Z_{t,i}Z_{t-h,i})\bigr] \\
-&\quad = 
-\mathrm{E}[O_tO_{t-h}O_{t}O_{t-h}]\mathrm{E}[Z_{t,i}Z_{t-h,i}] - \mathrm{E}[O_t O_{t-h}]\mathrm{E}[O_tO_{t-h}]\mathrm{E}[Z_{t,i}Z_{t-h,i}]\\
-&\qquad + \sum_{h=1}^{\infty}\bigl[
-\mathrm{E}[O_tO_{t-h}O_{t-k}O_{t-h-k}]\mathrm{E}[Z_{t-k,i }Z_{t-h-k,i }] +\mathrm{E}[O_tO_{t-h}O_{t-k}O_{t-h-k}]\mathrm{E}[Z_{t,i }Z_{t-h,i }] \\
-&\qquad - \mathrm{E}[O_{t}O_{t-h}]\mathrm{E}[O_{t-k}O_{t-h-k}]\mathrm{E}[Z_{t-k,i }Z_{t-h-k,i }] - \mathrm{E}[O_{t-k}O_{t-h-k}]\mathrm{E}[O_{t}O_{t-h}]\mathrm{E}[Z_{t,i }Z_{t-h,i }]\bigr]\\
-&\quad = (1-\pi)\pi(h)f_i + f_i (\sum_{k=1}^{\infty}\mathrm{E}[O_tO_{t-k}O_{t-h}]+ \mathrm{E}[O_tO_{t-k}O_{t-h-k}]- 2\pi\pi(h))
-= f_i \sigma^{(h)}_{-1, -2}
+&\quad \mathrm{Var}(O_t O_{t-h}) + 2\sum_{k=1}^\infty \mathrm{Cov}(O_t O_{t-h}, O_{t+k}O_{t+k-h}) \\
+&\quad = \pi(h)(1-\pi(h)) + 2\sum_{k=1}^{\infty}\bigl(\mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}]-\pi(h)^2 \bigr) \\[2ex]
+%
+&\textbf{(ii)}\ i = -2,\ j = -1: \\
+&\quad \mathrm{Cov}(O_t O_{t-h}, O_t) 
++ \sum_{k=1}^\infty \bigl[\mathrm{Cov}(O_t O_{t-h}, O_{t+k})
++ \mathrm{Cov}(O_{t+k} O_{t+k-h}, O_t)\bigr] \\
+&\quad = (1-\pi)\pi(h) 
++ \sum_{k=1}^{\infty} \bigl[\mathrm{E}[O_t O_{t-h} O_{t+k}] 
++ \mathrm{E}[O_{t+k}O_{t+k-h} O_t] - 2\pi\pi(h)\bigr] \\[2ex]
+%
+&\textbf{(iii)}\ i = -2,\ j = 0, \ldots, m-1: \\
+&\quad \mathrm{Cov}(O_t O_{t-h}, O_t Z_{t,j}) 
++ \sum_{k=1}^{\infty}\bigl[\mathrm{Cov}(O_t O_{t-h}, O_{t+k}Z_{t+k,j}) 
++ \mathrm{Cov}(O_{t+k}O_{t+k-h}, O_t Z_{t,j})\bigr] \\
+&\quad = \mathrm{E}[O_t^2 O_{t-h}]\,\mathrm{E}[Z_{t,j}] 
+- \mathrm{E}[O_t O_{t-h}]\,\mathrm{E}[O_t]\,\mathrm{E}[Z_{t,j}]\\
+&\qquad + \sum_{k=1}^{\infty}\bigl[
+\mathrm{E}[O_t O_{t-h} O_{t+k}]\,\mathrm{E}[Z_{t+k,j}] 
++ \mathrm{E}[O_{t+k}O_{t+k-h} O_t]\,\mathrm{E}[Z_{t,j}] \\
+&\qquad - \mathrm{E}[O_t O_{t+k}]\,\mathrm{E}[O_{t+k}]\,\mathrm{E}[Z_{t+k,j}] 
+- \mathrm{E}[O_{t+k}O_{t+k-h}]\,\mathrm{E}[O_t]\,\mathrm{E}[Z_{t,j}]\bigr]\\
+&\quad = f_j\Bigl((1-\pi)\pi(h) 
++ \sum_{k=1}^{\infty}\bigl[\mathrm{E}[O_t O_{t-h} O_{t+k}]
++ \mathrm{E}[O_t O_{t+k} O_{t+k-h}]- 2\pi\pi(h)\bigr]\Bigr)
+=: f_j\, \sigma^{(h)}_{-2,-1} \\[2ex]
+%
+&\textbf{(iv)}\ i = -2,\ j = m, \ldots, 2m-1: \\
+&\quad \mathrm{Cov}(O_t O_{t-h},\, O_t O_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)})\\ 
+&\qquad + \sum_{k=1}^{\infty}\bigl[
+\mathrm{Cov}(O_t O_{t-h},\, O_{t+k}O_{t+k-h}Z_{t+k,(j-m)}Z_{t+k-h,(j-m)}) \\
+&\qquad + \mathrm{Cov}(O_{t+k}O_{t+k-h},\, O_t O_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)})\bigr] \\
+&\quad = \mathrm{E}[O_t^2 O_{t-h}^2]\,\mathrm{E}[Z_{t,(j-m)}Z_{t-h,(j-m)}] 
+- \pi(h)^2\, f_{(j-m),(j-m)}(h)\\
+&\qquad + \sum_{k=1}^{\infty}\bigl[
+\mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}]\,\mathrm{E}[Z_{t+k,(j-m)}Z_{t+k-h,(j-m)}] \\
+&\qquad + \mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}]\,\mathrm{E}[Z_{t,(j-m)}Z_{t-h,(j-m)}]
+- 2\pi(h)^2\, f_{(j-m),(j-m)}(h)\bigr]\\
+&\quad = f_{(j-m),(j-m)}(h)\Bigl(\pi(h)(1-\pi(h)) 
++ 2\sum_{k=1}^{\infty}\bigl[\mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}]
+- \pi(h)^2\bigr]\Bigr)
+=: f_{(j-m),(j-m)}(h)\,\sigma^{(h)}_{-2,-2} \\[2ex]
+%
+&\textbf{(v)}\ i = -1,\ j = -1: \\
+&\quad \mathrm{Cov}(O_t, O_t) + 2\sum_{k=1}^\infty \mathrm{Cov}(O_t, O_{t+k}) 
+= \sigma_{\boldsymbol{Z}^*;-1,-1}\\[2ex]
+%
+&\textbf{(vi)}\ i = -1,\ j = 0, \ldots, m-1: \\
+&\quad \mathrm{Cov}(O_t, O_t Z_{t,j}) 
++ \sum_{k=1}^\infty \bigl[\mathrm{Cov}(O_t, O_{t+k}Z_{t+k,j}) 
++ \mathrm{Cov}(O_{t+k}, O_t Z_{t,j})\bigr]
+= f_j\,\sigma_{\boldsymbol{Z}^*;-1,-1} \\[2ex]
+%
+&\textbf{(vii)}\ i = -1,\ j = m, \ldots, 2m-1: \\
+&\quad \mathrm{Cov}(O_t,\, O_t O_{t-h} Z_{t,(j-m)}Z_{t-h,(j-m)}) \\
+&\qquad + \sum_{k=1}^\infty \bigl[
+\mathrm{Cov}(O_t,\, O_{t+k}O_{t+k-h}Z_{t+k,(j-m)}Z_{t+k-h,(j-m)})
++ \mathrm{Cov}(O_{t+k},\, O_t O_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)})\bigr] \\
+&\quad = f_{(j-m),(j-m)}(h)\Bigl((1-\pi)\pi(h)
++ \sum_{k=1}^\infty \bigl[\mathrm{E}[O_t O_{t+k} O_{t+k-h}] 
++ \mathrm{E}[O_t O_{t+k} O_{t-h}] - 2\pi\pi(h)\bigr]\Bigr)\\
+&\quad = f_{(j-m),(j-m)}(h)\,\sigma^{(h)}_{-2,-1} \\[2ex]
+%
+&\textbf{(viii)}\ i = 0, \ldots, m-1,\ j = 0, \ldots, m-1: \\
+&\quad \mathrm{Cov}(O_t Z_{t,i}, O_t Z_{t,j}) 
++ \sum_{k=1}^{\infty}\bigl[\mathrm{Cov}(O_t Z_{t,i}, O_{t+k}Z_{t+k,j}) 
++ \mathrm{Cov}(O_{t+k}Z_{t+k,i}, O_t Z_{t,j})\bigr] \\
+&\quad = \sigma_{\boldsymbol{Z}^*;i,j} 
+= f_i f_j\,\sigma_{\boldsymbol{Z}^*;-1,-1} 
++\pi(f_{\min\{i,j\}}- f_i f_j)  
++ \sum_{k=1}^{\infty} \pi(k)\bigl(f_{ij}(k) + f_{ji}(k) - 2f_i f_j\bigr) \\[2ex]
+%
+&\textbf{(ix)}\ i = 0, \ldots, m-1,\ j = m, \ldots, 2m-1: \\
+&\quad \mathrm{Cov}(O_t Z_{t,i},\, O_t O_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)}) 
++ \sum_{k=1}^{\infty}\bigl[
+\mathrm{Cov}(O_t Z_{t,i},\, O_{t+k} O_{t+k-h}Z_{t+k,(j-m)}Z_{t+k-h,(j-m)}) \\
+&\qquad + \mathrm{Cov}(O_{t+k} Z_{t+k,i},\, O_t O_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)})\bigr] \\
+&\quad = \pi(h)\,\mathrm{E}[Z_{t,i}Z_{t,(j-m)}Z_{t-h,(j-m)}] 
+- \pi\pi(h)\, f_i\, f_{(j-m),(j-m)}(h) \\
+&\qquad + \sum_{k=1}^{\infty} \bigl[
+\mathrm{E}[O_t O_{t+k} O_{t+k-h}]\,\mathrm{E}[Z_{t,i}Z_{t+k,(j-m)}Z_{t+k-h,(j-m)}] \\
+&\qquad + \mathrm{E}[O_{t+k} O_t O_{t-h}]\,\mathrm{E}[Z_{t+k,i}Z_{t,(j-m)}Z_{t-h,(j-m)}] 
+- 2\pi\pi(h)\,f_i\,f_{(j-m),(j-m)}(h)\bigr]\\
+&\quad \overset{H_0}{=} \pi(h)f_i f_{\min\{i,j\}} - f_i fJ^2
+%
+&\textbf{(x)}\ i = m, \ldots, 2m-1,\ j = m, \ldots, 2m-1: \\
+&\quad \mathrm{Cov}(O_t O_{t-h}Z_{t,(i-m)}Z_{t-h,(i-m)},\, O_t O_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)}) \\
+&\qquad + \sum_{k=1}^{\infty}\bigl[
+\mathrm{Cov}(O_t O_{t-h}Z_{t,(i-m)}Z_{t-h,(i-m)},\, O_{t+k} O_{t+k-h}Z_{t+k,(j-m)}Z_{t+k-h,(j-m)}) \\
+&\qquad + \mathrm{Cov}(O_{t+k} O_{t+k-h}Z_{t+k,(i-m)}Z_{t+k-h,(i-m)},\, O_t O_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)})\bigr] \\
+&\quad = \pi(h)\,\mathrm{E}[Z_{t,(i-m)}Z_{t-h,(i-m)}Z_{t,(j-m)}Z_{t-h,(j-m)}] 
+- \pi(h)^2\,f_{(i-m),(i-m)}(h)\,f_{(j-m),(j-m)}(h)\\
+&\qquad + \sum_{k=1}^{\infty} \bigl[
+\mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}]\,
+\mathrm{E}[Z_{t,(i-m)}Z_{t-h,(i-m)}Z_{t+k,(j-m)}Z_{t+k-h,(j-m)}] \\
+&\qquad + \mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}]\,
+\mathrm{E}[Z_{t+k,(i-m)}Z_{t+k-h,(i-m)}Z_{t,(j-m)}Z_{t-h,(j-m)}]\\
+&\qquad - 2\pi(h)^2\,f_{(i-m),(i-m)}(h)\,f_{(j-m),(j-m)}(h)\bigr]\\
+&\quad \overset{H_0}{=} 
+f_{(i-m),(i-m)}(h)\,f_{(j-m),(j-m)}(h)\Bigl(\pi(h)(1-\pi(h)) 
++ 2\sum_{k=1}^{\infty}\bigl[
+\mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}]
+- \pi(h)^2\bigr]\Bigr)\\
+&\quad = f_{(i-m),(i-m)}(h)\,f_{(j-m),(j-m)}(h)\,\sigma^{(h)}_{-2,-2}
 \end{align*}
 }
-
 \bibliography{references}
 \end{document}
