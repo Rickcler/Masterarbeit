@@ -1184,7 +1184,20 @@ are calculated as follows:
 \mathrm{E}[O_t O_{t+k} O_{t+k-h}]\,\mathrm{E}[Z_{t,i}Z_{t+k,(j-m)}Z_{t+k-h,(j-m)}] \\
 &\qquad + \mathrm{E}[O_{t+k} O_t O_{t-h}]\,\mathrm{E}[Z_{t+k,i}Z_{t,(j-m)}Z_{t-h,(j-m)}] 
 - 2\pi\pi(h)\,f_i\,f_{(j-m),(j-m)}(h)\bigr]\\
-&\quad \overset{H_0}{=} \pi(h)f_i f_{\min\{i,j\}} - f_i fJ^2
+&\quad \overset{H_0}{=} 
+\pi(h)\,f_{j-m}f_{\min\{i,j-m\}} - \pi\pi(h)f_i f_{j-m}^2 \\
+&\qquad + \underbrace{\mathrm{E}[O_t^2 O_{t+h}]\,f_{j-m}f_{\min\{i,j-m\}} 
++ \mathrm{E}[O_{t+h} O_t O_{t-h}]\,f_i f_{j-m}^2 - 2 \pi \pi(h)f_i f_{j-m}^2}_{k=h} \\
+&\qquad + f_i f_{(j-m)}^2 \mathrm{E}[O_t^2 O_{t-h}] - f_i f_{(j-m)}^2\mathrm{E}[O_t^2 O_{t-h}] \\
+&\qquad + \sum_{\substack{k=1\\k\neq h}}^{\infty} \bigl[
+\mathrm{E}[O_t O_{t+k} O_{t+k-h}] + \mathrm{E}[O_{t+k} O_t O_{t-h}]
+- 2\pi\pi(h)\bigr] f_i f_{j-m}^2 \\
+&\quad =2\pi(h)f_{j-m}f_{\min\{i,j-m\}} - \pi \pi(h)f_i f_{j-m}^2 - \pi(h)f_i f_{j-m}^2\\
+&\qquad + (1-\pi)\pi(h)f_i f_{j-m}^2 - (1-\pi)\pi(h)f_i f_{j-m}^2\\ 
+&\qquad + f_{i}f_{j-m}^2 \sum_{k=1}^{\infty} \bigl[
+\mathrm{E}[O_t O_{t+k} O_{t+k-h}] + \mathrm{E}[O_{t+k} O_t O_{t-h}]
+- 2\pi\pi(h)\bigr] \\
+&\quad = 2\pi(h)(f_{(j-m)}f_{\min\{i,j-m\}} - f_i f_{j-m}^2) + f_i f_{j-m}^2 \sigma^{(h)_{-1, -2}}\\
 %
 &\textbf{(x)}\ i = m, \ldots, 2m-1,\ j = m, \ldots, 2m-1: \\
 &\quad \mathrm{Cov}(O_t O_{t-h}Z_{t,(i-m)}Z_{t-h,(i-m)},\, O_t O_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)}) \\
@@ -1203,7 +1216,7 @@ are calculated as follows:
 f_{(i-m),(i-m)}(h)\,f_{(j-m),(j-m)}(h)\Bigl(\pi(h)(1-\pi(h)) 
 + 2\sum_{k=1}^{\infty}\bigl[
 \mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}]
-- \pi(h)^2\bigr]\Bigr)\\
+- \pi(h)^2 \bigr]\Bigr)\\
 &\quad = f_{(i-m),(i-m)}(h)\,f_{(j-m),(j-m)}(h)\,\sigma^{(h)}_{-2,-2}
 \end{align*}
 }
