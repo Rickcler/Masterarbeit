@@ -1212,13 +1212,43 @@ are calculated as follows:
 &\qquad + \mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}]\,
 \mathrm{E}[Z_{t+k,(i-m)}Z_{t+k-h,(i-m)}Z_{t,(j-m)}Z_{t-h,(j-m)}]\\
 &\qquad - 2\pi(h)^2\,f_{(i-m),(i-m)}(h)\,f_{(j-m),(j-m)}(h)\bigr]\\
-&\quad \overset{H_0}{=} 
-f_{(i-m),(i-m)}(h)\,f_{(j-m),(j-m)}(h)\Bigl(\pi(h)(1-\pi(h)) 
-+ 2\sum_{k=1}^{\infty}\bigl[
-\mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}]
-- \pi(h)^2 \bigr]\Bigr)\\
-&\quad = f_{(i-m),(i-m)}(h)\,f_{(j-m),(j-m)}(h)\,\sigma^{(h)}_{-2,-2}
+&\quad \overset{H_0}{=} \pi(h)f_{\min\{i,j\}}^2 - \pi(h)^2 f_{(i-m)}^2f_{(j-m)}^2 
++ 2 \mathrm{E}[O_t O_{t+h} O_{t-h}] f_i f_j f_{\min\{i,j\}} - 2 \pi(h)^2 f_{i-m}^2 f_{j-m}^2 \\
+&\qquad + \sum_{\substack{k=1\\k\neq h}}^{\infty} 2 f_{i}^2 f_{j}^2 \left[  \mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}] - \pi(h)^2\right] \\
+&\quad = \pi(h)f_{\min\{i-m,j-m\}}^2 - \pi(h)^2 f_{(i-m)}^2f_{(j-m)}^2 
++ 2 \mathrm{E}[O_t O_{t+h} O_{t-h}] f_{i-m} f_{j-m} f_{\min\{i-m,j-m\}}\\
+&\qquad - 2f_{i-m}^2f_{j-m}^2 E[O_{t}O_{t+h}O_{t-h}] 
++ \pi(h)f_{i-m}^2f_{j-m}^2 - \pi(h)f_{i-m}^2f_{j-m}^2 + \\
+&\qquad +2 f_{i-m}^2f_{j-m}^2 \sum_{k=1}^{\infty}  \left[  \mathrm{E}[O_t O_{t-h} O_{t+k} O_{t+k-h}] - \pi(h)^2\right] \\
+&\quad = \pi(h) (f_{\min\{i-m,j-m\}}^2- f_{i-m}^2f_{j-m}^2)) + 2\pi(h, 2h)f_{i-m}f_{j-m}(f_{\min\{i-m,j-m\}}- f_{i-m}f_{j-m})\\
+&\qquad + f_{i-m}^2f_{j-m}^2\sigma^{(h)}_{-2,-2},
 \end{align*}
 }
+where
+\[\pi(h, 2h):= E[O_t O_{t+h}O_{t-h}].\]
+To now obtain the joint distribution of the $\hat{f}^*_{i}$ and $\hat{f}^*_{jj}(h)$ for all $j, i = 0, \ldots,~ m-1$ we define vector valued function $\boldsymbol{g}: [0;1]^{2(m+1)}\rightarrow [0;1]^{2m}$, where
+\[g_j(\boldsymbol{x}) = \begin{cases}
+    x_j/x_{-1}& \text{ for } j = 0, \ldots, ~ m-1 \\
+    x_j/x_{-2}& \text{ for } j = m, \ldots, ~ 2m-1 \\
+\end{cases}\]
+such that 
+\[g_j(\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}) = f_j \quad \text{and} \quad g_{j+m}(\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}) = f_{jj}(h) \quad \text{for } j = 0, \ldots, ~m-1  .\]
+Once again, we need the Jacobian of $\boldsymbol{g}$ evaluated at $\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}$:
+\begin{align*}
+    &\boldsymbol{G}_{2m \times 2(m+1)} = \begin{pmatrix}
+        \frac{g_0(\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}})}{\delta x_{-2}}& \cdots & \frac{g_0(\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}})}{\delta x_{2m - 1}}\\
+        \vdots& \ddots &\vdots \\
+        \frac{g_{j+m-1}(\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}})}{\delta x_{-2}}& \cdots & \frac{g_{j+m-1}\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}})}{\delta x_{2m - 1}} 
+    \end{pmatrix} \\
+    &= 
+    \begin{pmatrix}
+    0 & \frac{-f_0}{\pi^2} & \frac{1}{\pi}& 0 &\cdots&&\cdots & 0 \\
+    \vdots &\vdots & 0 &\ddots & \ddots &&& \vdots \\
+    0 & \frac{-f_{m-1}}{\pi^2}& \vdots & \ddots & \frac{1}{\pi} \\
+    \frac{f_{00}(h)}{\pi(h)} & 0 & & & & \frac{1}{\pi(h)}&\ddots&\vdots\\
+    \vdots & \vdots & \vdots & & & \ddots & \ddots&0\\
+    \frac{f_{m-1, m-1}(h)}{\pi(h)} & 0 & 0 & \cdots& &\cdots & 0&\frac{1}{\pi(h)}      
+    \end{pmatrix}
+\end{align*}
 \bibliography{references}
 \end{document}
