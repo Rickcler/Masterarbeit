@@ -72,6 +72,8 @@ INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\tex\latex\l3packages\xparse\x
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\tex\latex\l3packages\xparse\xparse.sty
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\tex\latex\etoolbox\etoolbox.sty
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\tex\latex\etoolbox\etoolbox.sty
+INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\tex\latex\appendix\appendix.sty
+INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\tex\latex\appendix\appendix.sty
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\tex\latex\natbib\natbib.sty
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\tex\latex\natbib\natbib.sty
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\hyperref.sty
@@ -264,6 +266,9 @@ INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\eul
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\euler\eufm10.tfm
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\euler\eufm7.tfm
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\euler\eufm10.tfm
+INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\euler\eufm10.tfm
+INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\euler\eufm10.tfm
+INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\euler\eufm7.tfm
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\rm-lmr5.tfm
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmmi5.tfm
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmsy5.tfm
@@ -271,6 +276,8 @@ INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\rm-lmbx5.
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msam5.tfm
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm5.tfm
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\euler\eufm5.tfm
+INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmss8.tfm
+INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\ec-lmssbx10.tfm
 INPUT .\Draft.bbl
 INPUT .\Draft.bbl
 INPUT Draft.bbl

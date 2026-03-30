@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{amsmath, amssymb}
 \usepackage{amsthm}
+\usepackage{appendix}
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
@@ -1357,29 +1358,17 @@ Plugging  the derivates and the elements of $\boldsymbol{\Sigma}_{\boldsymbol{f}
     &\quad = \frac{1}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \frac{1}{\pi(h)}\sum_{i,j =0}^{m-1} \Bigl(-4 f_i f_j \frac{\pi(h)}{\pi} (f_{\min\{i,j\}}-f_i f_j) \\
     &\qquad +(f_{\min\{i,j\}}-f_i f_j)^2+  (f_{\min\{i,j\}}-f_i f_j) \frac{2\pi(h, 2h)}{\pi(h)}f_i f_j \Bigr) \\
     &\quad= \frac{1}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \frac{1}{\pi(h)}\sum_{i,j =0}^{m-1} \Bigl(f_{\min\{i,j\}}-f_i f_j\Bigr)\Bigl(f_{\min\{i,j\}} + (1+ 2\frac{\pi(h, 2h)}{\pi(h)} - 4\frac{\pi(h)}{\pi})f_i f_j\Bigr)
-\end{align*}}
-To estimate the finite sample bias we once again use a second-order Taylor expansion. The elements $h_{i,i}, ~ i = 0 \ldots, 2m-1$ of the corresponding Hessian $\boldsymbol{H}_{ord}$ are given by
-{\tiny
+\end{align*}
+}
+To estimate the finite sample bias we once again use a second-order Taylor expansion.\\
+The elements $h_{i,i}, ~ i = 0 \ldots, 2m-1$ of the corresponding Hessian $\boldsymbol{H}_{ord}$ are given by
+
 \begin{align*}
     & \frac{\partial d_{1,i}}{\partial f_j} 
-    =  \frac{\partial }{\partial f_j} \left(\frac{-2f_i }{\sum_{k=0}^{m-1}f_k(1-f_k)} - \frac{\left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} + \frac{2f_i\left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\right)\\
-    &\quad = 
-        \frac{-2 \left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)- 2f_i(1- 2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{-2f_i \left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2 - \left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(\sum_{k=0}^{m-1}f_k(1-f_k))(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^4}\\
-    &\qquad  + \frac{\left(2\left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right) - 4f_i f_i \right)(\sum_{k=0}^{m-1}f_k(1-f_k))^2 - 2f_i\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(\sum_{k=0}^{m-1}f_k(1-f_k))(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^4} \\
-    &\quad = \frac{-2}{\sum_{k=0}^{m-1}f_k(1-f_k)} - \frac{2f_i(1- 2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} + \frac{2f_i}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} + \frac{2f_i\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^3} \\
-    &\qquad + \frac{2\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right) - 4f_i f_i}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^3} \\
-    &\quad = \frac{-2f_i(1-2f_i )+ 2f_i + 2f_i\kappa(h)2(1-2f_i) - 4f_i^2 - \kappa(h)2(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{2(1- \kappa(h))}{\sum_{k=0}^{m-1}f_k(1-f_k)}\\
-    &\quad = \frac{-2f_i+ 4f_i^2 + 2f_i + 2f_i\kappa(h)2(1-2f_i) - 4f_i^2 - \kappa(h)2(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{2(1- \kappa(h))}{\sum_{k=0}^{m-1}f_k(1-f_k)} \\
-    &\quad = \frac{\kappa (h)(2(3f_i -1 -2 f_i^2))}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{2(1- \kappa(h))}{\sum_{k=0}^{m-1}f_k(1-f_k)}\\
-    &\quad \overset{H_0}{=} -\frac{2}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2}\\
-    & \frac{\partial d_{1,i}}{\partial f_j} 
-    =  \frac{\partial }{\partial f_j} \left(\frac{-2f_i }{\sum_{k=0}^{m-1}f_k(1-f_k)} - \frac{\left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} + \frac{2f_i\left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\right)\\
-    &\quad = \frac{2f_i(1-2f_j)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2}-  \frac{-2f_j \left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2 - \left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(\sum_{k=0}^{m-1}f_k(1-f_k))(1-2f_j)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^4} \\
-    &\qquad + 2f_i \frac{-2f_j(\sum_{k=0}^{m-1}f_k(1-f_k))^2- \left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right) 2(\sum_{k=0}^{m-1}f_k(1-f_k))(1-2f_j)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^4}\\ 
-    &\quad = \frac{2f_i(1-2f_j)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} + \frac{2f_j}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} + \frac{(1-2f_j)\kappa(h)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} \\
-    &\qquad - \frac{4 f_i f_j}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{4f_i(1-2 f_j)\kappa(h)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} \\
-    &\quad = \frac{2f_i -4f_i f_j + 2f_j + \kappa(h) - 4 f_i- 2f_j \kappa(h) - 4f_if_j + 8f_i f_j \kappa(h)    }{(\sum_{k=0}^{m-1}f_k(1-f_k))^2}\\
-    &\quad \overset{H_0}{=} 2\frac{f_i+f_j -4f_if_j}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} \\
+    =  \begin{cases}
+        2\left(\frac{2f_i 4 f_i^2}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{1}{\sum_{k=0}^{m-1}f_k(1-f_k)}\right) &\text{ if } i=j \\
+        2\frac{f_i+ f_j - 4f_i f_j}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} & \text{ if } i \neq j
+    \end{cases} \\
     &\frac{\partial d_{1,i}}{\partial f_{jj}(h)} 
     = \frac{-(1-2f_i)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
     &\frac{\partial d_{2,i}}{\partial f_{j}} 
@@ -1387,7 +1376,7 @@ To estimate the finite sample bias we once again use a second-order Taylor expan
     &\frac{\partial d_{2,i}}{\partial f_{jj}(h)} 
     = 0.
 \end{align*}
-}
+Detailed derivations of the partial derivatives of $d_{1,i}$ can be found in Appendix~\ref{app:derivations}.
 We can conclude that the bias of $\kappa_{ord}$ under the $H_0$ is given by 
 \begin{align*}
     Bias(\kappa_{\mathrm{ord}}) &= \frac{1}{2}\mathrm{tr}(\boldsymbol{H}_{\mathrm{ord}} \boldsymbol{\Sigma}_{\boldsymbol{f}}^{(h)*})
@@ -1405,13 +1394,19 @@ which can be distinguished into the two cases:
     &\textbf{(i)}\, i = 0, \ldots, m-1:\\
     &\left[\boldsymbol{H}_{\kappa}
     \boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}\right]_{ii} 
-    = \frac{-2}
-           {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\, \sigma_{ii}^{(h)*} \\
+    = 2 \left(\frac{2f_i -4f_i^2}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} -\frac{1}{\sum_{k=0}^{m-1}f_k(1-f_k)}\right) \sigma_{ii}^{(h)*} \\
     &\qquad + \sum_{\substack{l=0\\ l \neq i}}^{m-1} 
-        1\frac{f_i + f_j - 4f_i f_j}
+        2\frac{f_i + f_l - 4f_i f_l}
              {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\, 
         \sigma_{l,i}^{(h)*} 
     + \sum_{l=m}^{2m-1}  
+        \frac{-(1-2f_i)}
+             {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\, 
+        \sigma_{l,i}^{(h)*}\\
+    &\quad = 2\left(-\frac{1}{\sum_{k=0}^{m-1}f_k(1-f_k)}\sigma_{i,i}^{(h)*} + \sum_{l=0}^{m-1} 
+        \frac{f_i + f_l - 4f_i f_l}
+             {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\sigma_{l,i}^{(h)*}\right) \\
+    &\qquad + \sum_{l=m}^{2m-1}  
         \frac{-(1-2f_i)}
              {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\, 
         \sigma_{l,i}^{(h)*}\\[1ex]
@@ -1428,47 +1423,62 @@ such that we end up with a finite sample bias of:
     &= \frac{1}{2}\mathrm{tr}(\boldsymbol{H}_{\kappa}\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}})
     = \frac{1}{2}\sum_{i=0}^{2m-1}\left[\boldsymbol{H}_{\kappa}
     \boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}\right]_{ii} \\
-    %
-    &= \frac{1}{2}\sum_{i=0}^{m-1}\Biggl[
-        \frac{-2\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right) + 2f_i(1-2f_i)}
-             {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\,\sigma_{ii}^{(h)*}
-      + \sum_{\substack{l=0\\l\neq i}}^{m-1}
-        \frac{2f_i(1-2f_l)}
-             {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\,\sigma_{l,i}^{(h)*} \\
-    &\qquad   + \sum_{l=m}^{2m-1}
+    &= \frac{1}{2} \sum_{i=0}^{m-1}\Bigl[2\Bigl(-\frac{1}{\sum_{k=0}^{m-1}f_k(1-f_k)}\sigma_{i,i}^{(h)*} + \sum_{l=0}^{m-1} 
+        \frac{f_i + f_l - 4f_i f_l}
+             {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\sigma_{l,i}^{(h)*}\Bigr) \\
+    &\qquad + \sum_{l=m}^{2m-1}  
         \frac{-(1-2f_i)}
-             {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\,\sigma_{l,i}^{(h)*}
-     + \sum_{l=0}^{m-1}
-        \frac{-(1-2f_l)}
-             {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\,\sigma_{l,i+m}^{(h)*}\Biggr] \\
-    %
-    &= \frac{1}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}
-    \Biggl[
-        \sum_{i=0}^{m-1}-\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)
-        +f_i(1-2f_i)\,\sigma_{ii}^{(h)*} \\
-    &\qquad
-      + \sum_{\substack{i,l=0\\l\neq i}}^{m-1} f_i(1-2f_l)\,\sigma_{l,i}^{(h)*}
-      + \sum_{i=0}^{m-1}\sum_{l=m}^{2m-1}
-        \frac{-(1-2f_i)}{2}\,\sigma_{l,i}^{(h)*}
-      + \sum_{i=m}^{2m-1}\sum_{l=0}^{m-1}
-        \frac{-(1-2f_l)}{2}\,\sigma_{l,i}^{(h)*}
-    \Biggr] \\
-    %
-    &= \frac{1}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}
-    \Biggl[
-        -\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)\sum_{i=0}^{m-1}\sigma_{ii}^{(h)*}
-      + \sum_{i=0}^{m-1} f_i(1-2f_i)\,\sigma_{ii}^{(h)*} \\
-    &\qquad
-      + \sum_{\substack{i,l=0\\l\neq i}}^{m-1} f_i(1-2f_l)\,\sigma_{l,i}^{(h)*}
-      - \sum_{i,j=0}^{m-1}(1-2f_i)\,\sigma_{m+j,\,i}^{(h)*}
-    \Biggr] \\
-    %
-    &= -\frac{\sum_{i=0}^{m-1}\sigma_{i,i}^{(h)*}}{\sum_{k=0}^{m-1}f_k(1-f_k)}
-      + \frac{\sum_{i,j=0}^{m-1}(f_i + f_j - 4f_if_j)\,\sigma_{i,j}^{(h)*}}
-             {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}
-      - \frac{\sum_{i,j=0}^{m-1}(1-2f_i)\,\sigma_{i,\,m+j}^{(h)*}}
-             {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}
+             {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\, 
+        \sigma_{l,i}^{(h)*}\Bigr] + \frac{1}{2} \sum_{i=m}^{2m-1}\Bigl[\sum_{l=0}^{m-1}  
+        \frac{-(1-2f_i)}
+             {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\, 
+        \sigma_{i,l}^{(h)*}\Bigr]\\
+    &= -\frac{\sum_{i=0}^{m-1}\sigma_{ii}^{(h*)}}{\sum_{k=0}^{m-1}f_k(1-f_k)} + \frac{\sum_{i,l = 0}^{m-1}(f_i + f_l - 4f_i f_l)\sigma_{l,i}^{(h)*}}
+             {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} 
+        - \frac{\sum_{i,l=0}^{m-1}(1-2f_i)\sigma_{i, m+l}^{(h)*}}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
+    &= -\frac{\frac{1}{\pi}\sum_{i=0}^{m-1}(f_i- f_i^2)}{\sum_{k=0}^{m-1}f_k(1-f_k)} +  \frac{\sum_{i,l = 0}^{m-1}(f_i + f_l - 4f_i f_l)\sigma_{l,i}^{(h)*}- \sum_{i,l=0}^{m-1}(1-2f_i)2f_l\sigma^{(h)*}_{l,i}}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
+    &= -\frac{1}{\pi} + \frac{\sum_{i,l = 0}^{m-1}\left(f_i + f_l - 4f_i f_l - 2f_l+ 4 f_j f_l \right)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}
+    = -\frac{1}{\pi} + \frac{\overbrace{\sum_{i,l = 0}^{m-1}\left(f_i - f_l \right)}^{=0}}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
+    &= -\frac{1}{\pi}
 \end{align*}
+
+\begin{appendices}
+
+\renewcommand{\thesection}{\Alph{section}}
+
+\section{Derivations}
+\label{app:derivations}
+
+In this section, we derive the partial derivatives of $d_{1,i}$ with respect to $f_j$.
+
+\subsection*{Case $i = j$}
+{\allowdisplaybreaks \tiny
+\begin{align*}
+ & \frac{\partial d_{1,i}}{\partial f_i} 
+    =  \frac{\partial }{\partial f_i} \left(\frac{-2f_i }{\sum_{k=0}^{m-1}f_k(1-f_k)} - \frac{\left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} + \frac{2f_i\left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\right)\\
+    &\quad = 
+        \frac{-2 \left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)+ 2f_i(1- 2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{-2f_i \left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2 - \left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(\sum_{k=0}^{m-1}f_k(1-f_k))(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^4}\\
+    &\qquad  + \frac{\left(2\left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right) - 4f_i f_i \right)(\sum_{k=0}^{m-1}f_k(1-f_k))^2 - 2f_i\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(\sum_{k=0}^{m-1}f_k(1-f_k))(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^4} \\
+    &\quad = \frac{-2}{\sum_{k=0}^{m-1}f_k(1-f_k)} + \frac{2f_i(1- 2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} + \frac{2f_i}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} + \frac{2f_i\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^3} \\
+    &\qquad + \frac{2\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right) - 4f_i f_i}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^3} \\
+    &\quad = \frac{2f_i - 4f_i^2 + 2f_i + 2f_i\kappa(h)2(1-2f_i) - 4f_i^2 - \kappa(h)2(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{2(1- \kappa(h))}{\sum_{k=0}^{m-1}f_k(1-f_k)} \\
+    &\quad = \frac{4f_i -8f_i^2+ \kappa (h)(2(3f_i -1 -2 f_i^2))}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{2(1- \kappa(h))}{\sum_{k=0}^{m-1}f_k(1-f_k)}\\
+    &\quad \overset{H_0}{=} 2 \left(\frac{2f_i -4f_i^2}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} -\frac{1}{\sum_{k=0}^{m-1}f_k(1-f_k)}\right)
+\end{align*}
+
+\subsection*{Case $i \neq j$}
+
+\begin{align*}
+    & \frac{\partial d_{1,i}}{\partial f_j} 
+    =  \frac{\partial }{\partial f_j} \left(\frac{-2f_i }{\sum_{k=0}^{m-1}f_k(1-f_k)} - \frac{\left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} + \frac{2f_i\left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\right)\\
+    &\quad = \frac{2f_i(1-2f_j)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2}-  \frac{-2f_j \left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2 - \left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(\sum_{k=0}^{m-1}f_k(1-f_k))(1-2f_j)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^4} \\
+    &\qquad + 2f_i \frac{-2f_j(\sum_{k=0}^{m-1}f_k(1-f_k))^2- \left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right) 2(\sum_{k=0}^{m-1}f_k(1-f_k))(1-2f_j)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^4}\\ 
+    &\quad = \frac{2f_i(1-2f_j)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} + \frac{2f_j}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} + \frac{(1-2f_j)\kappa(h)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} \\
+    &\qquad - \frac{4 f_i f_j}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{4f_i(1-2 f_j)\kappa(h)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} \\
+    &\quad = \frac{2f_i -4f_i f_j + 2f_j + \kappa(h) - 4 f_i- 2f_j \kappa(h) - 4f_if_j + 8f_i f_j \kappa(h)    }{(\sum_{k=0}^{m-1}f_k(1-f_k))^2}\\
+    &\quad \overset{H_0}{=} 2\frac{f_i+f_j -4f_if_j}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2}
+\end{align*}}
+\end{appendices}
 \bibliography{references}
 
 
