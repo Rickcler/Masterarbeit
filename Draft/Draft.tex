@@ -173,7 +173,7 @@ f_i(1 - f_i) \overset{!}{=} 0 \quad \forall i.
 \]
 This is only possible if $f_i \in \{0,1\}$ for all $i$, which implies
 $\mathbf{f} \in \{\boldsymbol{e}_0,\ldots,\boldsymbol{e}_m\}$.
-Hence, $\mathrm{IOV}=0$ holds \emph{exactly} for a degenerate oneâ€“point distributions.\\
+Hence, $\mathrm{IOV}=0$ holds \emph{exactly} for a degenerate one-point distribution.\\
 \textit{Part (i), nominal case.} % dein bestehender Beweis fÃ¼r IQV=0
 A degenerate (one--point) distribution assigns all probability mass to a single
 category $s_j \in S$, which corresponds to a PMF vector of the form
@@ -728,7 +728,7 @@ Since the processes $(O_t)$ and $(\boldsymbol{Z}_t)$ are independent and station
 \subsection*{Multivariate CLT}
 To study the asymptotic properties of $\boldsymbol{Z}^*_t$ we once again use Cramer-Wold. Let
 \[U_t^* = \boldsymbol{a}^\top\boldsymbol{Z}^*_t, \quad \boldsymbol{a}\in \mathbb{R}^{m+1}.\]
-The argument for why $U_t^*$ satisfies the conditions of Ibragimovs CLT isthe same as in the argument for why the linear projections of the non-missing estimator $\hat{\boldsymbol{f}}_t$ converge: Since $U_t^* = \boldsymbol{a}^\top \boldsymbol{Z}_t^*$ is a measurable function of the strictly stationary and $\alpha$-mixing process $\boldsymbol{Z}_t^*$, it inherits both properties, with $\alpha_{U_t^*}(n) \leq \alpha_{\boldsymbol{Z}_t^*}(n) \leq C\rho^n$ following from the inclusion $\sigma(U_t^*) \subset \sigma(\boldsymbol{Z}_t^*)$. The summability condition therefore holds by the same geometric series argument as before. Finally, since each $Z_{t,i}^* \in \{0,1\}$, the projection $U_t^*$ is bounded and all moments are finite. It follows that. It follows that
+The argument for why $U_t^*$ satisfies the conditions of Ibragimovs CLT isthe same as in the argument for why the linear projections of the non-missing estimator $\hat{\boldsymbol{f}}_t$ converge: Since $U_t^* = \boldsymbol{a}^\top \boldsymbol{Z}_t^*$ is a measurable function of the strictly stationary and $\alpha$-mixing process $\boldsymbol{Z}_t^*$, it inherits both properties, with $\alpha_{U_t^*}(n) \leq \alpha_{\boldsymbol{Z}_t^*}(n) \leq C\rho^n$ following from the inclusion $\sigma(U_t^*) \subset \sigma(\boldsymbol{Z}_t^*)$. The summability condition therefore holds by the same geometric series argument as before. Finally, since each $Z_{t,i}^* \in \{0,1\}$, the projection $U_t^*$ is bounded and all moments are finite. It follows that
 \[\sqrt{n}(\bar{U}^*_t- \mu_{U^*_t}) \xrightarrow[n \rightarrow \infty]{d} \mathcal{N}(0, \sigma_{a}^*)\]
 where $\mu_{U_t^*} = \mathrm{E}(U_t) = \boldsymbol{a}^\top \boldsymbol{\mu}_{\boldsymbol{Z}_t^*}$ and
 \begin{align*}
@@ -1267,7 +1267,7 @@ of $\boldsymbol{g}$ evaluated at $\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}$:
     \frac{-f_{m-1, m-1}(h)}{\pi(h)} & 0 & 0 & \cdots& &\cdots & 0&\frac{1}{\pi(h)}      
     \end{pmatrix}.
 \end{align*}
-By the multivariate delta method, the asymptotic covariance matrix of $\sqrt{n}(\hat{\boldsymbol{f}}^{(h)*}- \mu)$ is given by $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}} = \boldsymbol{G}\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}} \boldsymbol{G}^\top$. Carrying ozt the matrix multiplication row by row yields:
+By the multivariate delta method, the asymptotic covariance matrix of $\sqrt{n}(\hat{\boldsymbol{f}}^{(h)*}- \mu)$ is given by $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}} = \boldsymbol{G}\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}} \boldsymbol{G}^\top$. Carrying out the matrix multiplication row by row yields:
 \begin{align*}
     \boldsymbol{G}\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}} \boldsymbol{G}^\top &= \begin{pmatrix}
         \frac{- f_0}{\pi} \sigma^{(h)}_{-1, -2} + \frac{1}{\pi} \sigma^{(h)}_{0, -2} & \cdots & \frac{-f_0}{\pi} \sigma^{(h)}_{-1, 2m-1} +  \frac{1}{\pi} \sigma^{(h)}_{0, 2m-1} \\
@@ -1357,16 +1357,15 @@ Plugging  the derivates and the elements of $\boldsymbol{\Sigma}_{\boldsymbol{f}
     &\qquad + \frac{1}{\pi(h)^2}(f_{\min\{i', j'\}}- f_{i'} f_{j'}) \Bigl[\pi(h)(f_{\min\{i', j'\}}- f_{i'} f_{j'})+ 2\pi(h, 2h)f_{i'}f_{j'}\Bigr] \Bigr) \\
     &\quad = \frac{1}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \frac{1}{\pi(h)}\sum_{i,j =0}^{m-1} \Bigl(-4 f_i f_j \frac{\pi(h)}{\pi} (f_{\min\{i,j\}}-f_i f_j) \\
     &\qquad +(f_{\min\{i,j\}}-f_i f_j)^2+  (f_{\min\{i,j\}}-f_i f_j) \frac{2\pi(h, 2h)}{\pi(h)}f_i f_j \Bigr) \\
-    &\quad= \frac{1}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \frac{1}{\pi(h)}\sum_{i,j =0}^{m-1} \Bigl(f_{\min\{i,j\}}-f_i f_j\Bigr)\Bigl(f_{\min\{i,j\}} + (1+ 2\frac{\pi(h, 2h)}{\pi(h)} - 4\frac{\pi(h)}{\pi})f_i f_j\Bigr)
-\end{align*}
-}
-To estimate the finite sample bias we once again use a second-order Taylor expansion.\\
-The elements $h_{i,i}, ~ i = 0 \ldots, 2m-1$ of the corresponding Hessian $\boldsymbol{H}_{ord}$ are given by
+    &\quad= \frac{\frac{1}{\pi(h)}\sum_{i,j =0}^{m-1} \Bigl(f_{\min\{i,j\}}-f_i f_j\Bigr)\Bigl(f_{\min\{i,j\}} + (1+ 2\frac{\pi(h, 2h)}{\pi(h)} - 4\frac{\pi(h)}{\pi})f_i f_j\Bigr)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} 
+\end{align*}}
+Building on the variance derivation above, we now investigate the finite-sample bias by means of a second-order Taylor expansion.\\
+The elements $h_{i,i}, ~ i = 0 \ldots, 2m-1$ of the corresponding Hessian $\boldsymbol{H}_{\kappa}$ are given by
 
 \begin{align*}
     & \frac{\partial d_{1,i}}{\partial f_j} 
     =  \begin{cases}
-        2\left(\frac{2f_i 4 f_i^2}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{1}{\sum_{k=0}^{m-1}f_k(1-f_k)}\right) &\text{ if } i=j \\
+        2\left(\frac{2f_i - 4 f_i^2}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{1}{\sum_{k=0}^{m-1}f_k(1-f_k)}\right) &\text{ if } i=j \\
         2\frac{f_i+ f_j - 4f_i f_j}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} & \text{ if } i \neq j
     \end{cases} \\
     &\frac{\partial d_{1,i}}{\partial f_{jj}(h)} 
@@ -1376,10 +1375,10 @@ The elements $h_{i,i}, ~ i = 0 \ldots, 2m-1$ of the corresponding Hessian $\bold
     &\frac{\partial d_{2,i}}{\partial f_{jj}(h)} 
     = 0.
 \end{align*}
-Detailed derivations of the partial derivatives of $d_{1,i}$ can be found in Appendix~\ref{app:derivations}.
+Detailed derivations of $\frac{\partial d_{1,i}}{\partial f_j}$ can be found in Appendix~\ref{app:Hessian}.
 We can conclude that the bias of $\kappa_{ord}$ under the $H_0$ is given by 
 \begin{align*}
-    Bias(\kappa_{\mathrm{ord}}) &= \frac{1}{2}\mathrm{tr}(\boldsymbol{H}_{\mathrm{ord}} \boldsymbol{\Sigma}_{\boldsymbol{f}}^{(h)*})
+    \mathrm{Bias}(\kappa_{\mathrm{ord}}) &= \frac{1}{2}\mathrm{tr}(\boldsymbol{H}_{\kappa} \boldsymbol{\Sigma}_{\boldsymbol{f}}^{(h)*})
 \end{align*}
 where the $i$-th diagonal element of 
 $\boldsymbol{H}_{\kappa}\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ 
@@ -1437,19 +1436,69 @@ such that we end up with a finite sample bias of:
              {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} 
         - \frac{\sum_{i,l=0}^{m-1}(1-2f_i)\sigma_{i, m+l}^{(h)*}}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
     &= -\frac{\frac{1}{\pi}\sum_{i=0}^{m-1}(f_i- f_i^2)}{\sum_{k=0}^{m-1}f_k(1-f_k)} +  \frac{\sum_{i,l = 0}^{m-1}(f_i + f_l - 4f_i f_l)\sigma_{l,i}^{(h)*}- \sum_{i,l=0}^{m-1}(1-2f_i)2f_l\sigma^{(h)*}_{l,i}}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
-    &= -\frac{1}{\pi} + \frac{\sum_{i,l = 0}^{m-1}\left(f_i + f_l - 4f_i f_l - 2f_l+ 4 f_j f_l \right)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}
-    = -\frac{1}{\pi} + \frac{\overbrace{\sum_{i,l = 0}^{m-1}\left(f_i - f_l \right)}^{=0}}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
+    &= -\frac{1}{\pi} + \frac{\sum_{i,l = 0}^{m-1}\left(f_i + f_l - 4f_i f_l - 2f_l+ 4 f_j f_l \right)\sigma^{(h)*}_{l,i}}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}
+    = -\frac{1}{\pi} + \frac{\overbrace{\sum_{i,l = 0}^{m-1}\left(f_i - f_l \right)}^{=0}\sigma^{(h)*}_{l,i}}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
     &= -\frac{1}{\pi}
 \end{align*}
+Note that we substituted $\sigma^{(h)*}_{i, m+l} = 2f_l\sigma_{i,l}^{(h*)}$ from case \textbf{(ii)} of $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ and used its symmetry by substituting $\sigma_{i,l}^{(h)*}= \sigma_{l,i}^{(h)*}$. \\
+The results of the previous derivations are summarized in the following theorem
+\begin{theorem}[Asymptotic distribution and bias of $\hat{\kappa}_{\mathrm{ord}}(h)$]
+\label{thm:kappa-asymp}
+Let the assumptions of theorem \ref{thm:clt_fstarhat} hold and denote
+\[\pi(h_1, \ldots, h_r):= \mathrm{E}[O_0\cdot O_{h_1}\ldots O_{h_r}].\] Then, under the null hypothesis $H_0$ 
+that $(X_t)$ is i.i.d., the following hold as $n \to \infty$:
+
+\begin{enumerate}
+    \item \textbf{Asymptotic normality.} The estimator 
+    $\hat{\kappa}_{\mathrm{ord}}(h)$ satisfies
+    \[
+        \sqrt{n}\,\hat{\kappa}_{\mathrm{ord}}(h) 
+        \xrightarrow{d} \mathcal{N}(0, \sigma^2_\kappa),
+    \]
+    where
+    \[
+        \sigma^2_\kappa =
+        \frac{
+            \frac{1}{\pi(h)} \sum_{i,j=0}^{m-1}
+            \bigl(f_{\min\{i,j\}} - f_i f_j\bigr)
+            \Bigl(
+                f_{\min\{i,j\}} 
+                + \Bigl(
+                    1 + \frac{2\pi(h,2h)}{\pi(h)} 
+                    - \frac{4\pi(h)}{\pi}
+                \Bigr) f_i f_j
+            \Bigr)
+        }{
+            \left(
+                \sum_{k=0}^{m-1} f_k (1 - f_k)
+            \right)^2
+        }.
+    \]
+
+    \item \textbf{Finite-sample bias.} The approximate bias of 
+    $n \hat{\kappa}_{\mathrm{ord}}(h)$ under $H_0$ is
+    \[
+        \mathrm{Bias}\bigl(n \hat{\kappa}_{\mathrm{ord}}(h)\bigr) 
+        \approx -\frac{1}{\pi},
+    \]
+    so that the bias-corrected estimator is given by
+    \[
+        \hat{\kappa}^{\mathrm{bc}}_{\mathrm{ord}}(h) 
+        := \hat{\kappa}_{\mathrm{ord}}(h) + \frac{1}{n\pi}.
+    \]
+\end{enumerate}
+\end{theorem}
 
 \begin{appendices}
 
-\renewcommand{\thesection}{\Alph{section}}
+% \renewcommand{\thesection}{\Alph{section}}
 
-\section{Derivations}
-\label{app:derivations}
+\chapter{Appendix}
 
-In this section, we derive the partial derivatives of $d_{1,i}$ with respect to $f_j$.
+
+\section{Hessian $\kappa(h)$}
+\label{app:Hessian}
+In this section, we derive the partial derivatives of $d_{1,i}$ with respect to $f_j$. 
 
 \subsection*{Case $i = j$}
 {\allowdisplaybreaks \tiny
@@ -1460,7 +1509,7 @@ In this section, we derive the partial derivatives of $d_{1,i}$ with respect to 
         \frac{-2 \left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)+ 2f_i(1- 2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{-2f_i \left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2 - \left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(\sum_{k=0}^{m-1}f_k(1-f_k))(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^4}\\
     &\qquad  + \frac{\left(2\left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right) - 4f_i f_i \right)(\sum_{k=0}^{m-1}f_k(1-f_k))^2 - 2f_i\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(\sum_{k=0}^{m-1}f_k(1-f_k))(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^4} \\
     &\quad = \frac{-2}{\sum_{k=0}^{m-1}f_k(1-f_k)} + \frac{2f_i(1- 2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} + \frac{2f_i}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} + \frac{2f_i\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^3} \\
-    &\qquad + \frac{2\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right) - 4f_i f_i}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^3} \\
+    &\qquad + \frac{2\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right) - 4f_i f_i}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^3}  \\
     &\quad = \frac{2f_i - 4f_i^2 + 2f_i + 2f_i\kappa(h)2(1-2f_i) - 4f_i^2 - \kappa(h)2(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{2(1- \kappa(h))}{\sum_{k=0}^{m-1}f_k(1-f_k)} \\
     &\quad = \frac{4f_i -8f_i^2+ \kappa (h)(2(3f_i -1 -2 f_i^2))}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{2(1- \kappa(h))}{\sum_{k=0}^{m-1}f_k(1-f_k)}\\
     &\quad \overset{H_0}{=} 2 \left(\frac{2f_i -4f_i^2}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} -\frac{1}{\sum_{k=0}^{m-1}f_k(1-f_k)}\right)

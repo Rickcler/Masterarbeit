@@ -1,6 +1,5 @@
-m · R
+install.packages("tidyr")
 library(dplyr)
-library(plyr)
 library(tidyr)
 library(ggplot2)
 
@@ -233,6 +232,7 @@ mean_df_2 <- sim_data_2 %>%
     mean_scaled_bias = mean(scaled_bias, na.rm = TRUE),
     .groups = "drop"
   )
+
 Sigma_raw <- Sigma_Star(m = 10, p = 0.3, r = 0.2, pi = 0.75)
 # Theoretische Bias-Kurve
 theory_df_2 <- data.frame(
