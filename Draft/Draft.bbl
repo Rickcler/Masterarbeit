@@ -1,5 +1,42 @@
 \begin{thebibliography}{}
 
+\bibitem[Banerjee and Roy, 2014]{Banerjee2014}
+Banerjee, S. and Roy, A. (2014).
+\newblock {\em Linear Algebra and Matrix Analysis for Statistics}.
+\newblock Texts in Statistical Science. CRC Press.
+
+\bibitem[Bradley, 2005]{bradley_2005}
+Bradley, R.~C. (2005).
+\newblock Basic properties of strong mixing conditions: A survey and some open
+  questions.
+\newblock {\em Probability Surveys}, 2:107--144.
+\newblock Received April 2005.
+
+\bibitem[Brockwell and Davis, 2016]{brockwell_davis_2016}
+Brockwell, P.~J. and Davis, R.~A. (2016).
+\newblock {\em Time Series: Theory and Methods}.
+\newblock Springer, New York, NY, USA, 3 edition.
+
+\bibitem[Diggle et~al., 2002]{diggle_2002}
+Diggle, P.~J., Heagerty, P., Liang, K.-Y., and Zeger, S.~L. (2002).
+\newblock {\em Analysis of Longitudinal Data}.
+\newblock Oxford University Press, 2 edition.
+
+\bibitem[Ibragimov, 1962]{Ibragimov1962}
+Ibragimov, I.~A. (1962).
+\newblock Some limit theorems for stationary processes.
+\newblock {\em Theory of Probability and its Applications}, 7(4):349--382.
+
+\bibitem[Kallenberg, 2021]{kallenberg_2021}
+Kallenberg, O. (2021).
+\newblock {\em Foundations of Modern Probability}.
+\newblock Springer, Cham, Switzerland, 1 edition.
+
+\bibitem[Klein and Doll, 2021]{klein_doll_2020}
+Klein, I. and Doll, M. (2021).
+\newblock Tests on asymmetry for ordered categorical variables.
+\newblock {\em Journal of Applied Statistics}, 48(7):1180--1198.
+
 \bibitem[Klenke, 2005]{klenke2005}
 Klenke, A. (2005).
 \newblock {\em Wahrscheinlichkeitstheorie}.
@@ -9,5 +46,16 @@ Klenke, A. (2005).
 Rubin, D.~B. (1976).
 \newblock Inference and missing data.
 \newblock {\em Biometrika}, 63(3):581--592.
+
+\bibitem[van~der Vaart, 1998]{VanderVaart1998}
+van~der Vaart, A.~W. (1998).
+\newblock {\em Asymptotic Statistics}.
+\newblock Cambridge Series in Statistical and Probabilistic Mathematics.
+  Cambridge University Press.
+
+\bibitem[Weiß, 2018]{Weiss2018}
+Weiß, C.~H. (2018).
+\newblock {\em An Introduction to Discrete-Valued Time Series}.
+\newblock Wiley.
 
 \end{thebibliography}

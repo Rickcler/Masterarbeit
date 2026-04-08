@@ -6,15 +6,29 @@
 \usepackage{amsmath, amssymb}
 \usepackage{amsthm}
 \usepackage{appendix}
+
+% Theorem-Definitionen
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 \newtheorem{remark}[theorem]{Remark}
+\newtheorem{lemma}[theorem]{Lemma}
+
 \usepackage{natbib}
 \usepackage{hyperref}
 \usepackage{cleveref}
+
+% Kein Einzug nach amsthm-Umgebungen
+\usepackage{etoolbox}
+\AtEndEnvironment{theorem}{\noindent}
+\AtEndEnvironment{proposition}{\noindent}
+\AtEndEnvironment{corollary}{\noindent}
+\AtEndEnvironment{definition}{\noindent}
+\AtEndEnvironment{remark}{\noindent}
+\AtEndEnvironment{lemma}{\noindent}
+
 \bibliographystyle{apalike}
 
 \begin{document}
@@ -50,7 +64,7 @@ Furthermore, $(X_t)$ is assumed to be stationary. A distinction can be made betw
         \]
 \end{definition}
 
-\begin{definition}[Strong/ Strict Stationarity]
+\begin{definition}[Strong/ Strict Stationarity]\label{def:Stationarity}
     Strong/ Strict stationarity requires that all finite-dimensional distributions are invariant under time shifts, i.e.,
         \begin{equation}
             F_{X_t,\ldots,X_{t+j}} = F_{X_{t+h},\ldots,X_{t+h+j}} \quad \forall\,t,j,h.
@@ -306,23 +320,24 @@ The marginal distribution of a categorical time series captures the long-run
 frequencies of the individual categories, but contains no information about the 
 temporal structure of the process. To describe how the process evolves over time, 
 measures of serial dependence are required.\\
-For continuous-valued processes, the autocorrelation function (ACF) is the standard 
-tool for quantifying temporal dependence. However, the ACF is not directly applicable 
+For real-valued processes, the autocorrelation function (ACF) is the standard 
+tool for quantifying temporal dependence \citep[see Section 1.4]{brockwell_davis_2016}. However, the ACF is not directly applicable 
 to categorical data, since it relies on the existence of meaningful arithmetic 
 operations on the observed values. For nominal data, such operations are undefined, 
-and for ordinal data they are quesitonable, as the categories carry no numerical meaning beyond their ordering.\\
+and for ordinal data they are questionable, as the categories carry no numerical meaning beyond their ordering.\\
 Dependence measures for categorical time series are typically constructed 
 from the bivariate lag-$h$ probabilities introduced in defintion \ref{def:biv_probs}. 
 Under serial independence, these would factorize as $f_{ij}(h) = f_if_j$ and 
 $p_{ij}(h) = p_ip_j$ respectively. Measures for serial dependence are naturally 
 constructed by quantifying the deviation of the bivariate probabilities from this 
 independence benchmark.\\
-\begin{definition}[Cohen's $\kappa$]
-\label{def:cohens-kappa}
 Natural and widely used measures of serial dependence are the ordinal 
-and nominal versions of Cohen's $\kappa$, which compare the joint 
+and nominal versions of Cohen's $\kappa$ \citep[p. 130]{Weiss2018}, which compare the joint 
 probabilities to those expected under independence. For lag $h$, they 
 are defined as
+\begin{definition}[Cohen's $\kappa$]
+\label{def:cohens-kappa}
+
 \[
     \kappa_{\mathrm{ord}}(h) 
     = \frac{\sum_{j=0}^{m-1}\bigl(f_{jj}(h) - f_j^2\bigr)}
@@ -352,6 +367,7 @@ measures attain their upper bound:
     &= \frac{\sum_{j=0}^{m}(p_j - p_j^2)}{1 - \sum_{i=0}^{m}p_i^2}
     = \frac{1 - \sum_{j=0}^{m}p_j^2}{1 - \sum_{i=0}^{m}p_i^2} = 1.
 \end{align*}
+where we used that $\sum_{j=0}^{m} p_j = 1$, so that $\sum_{j=0}^{m}(p_j - p_j^2) = 1 - \sum_{j=0}^{m} p_j^2$. 
 Under serial independence, $f_{jj}(h) = f_j^2$ and $p_{jj}(h) = p_jp_j$, so that
 the numerator vanishes and $\kappa(h) = 0$.\\
 For the nominal version, the lower bound is attained when $p_{jj}(h) = 0$ for all
@@ -379,6 +395,7 @@ and for nominal data analogously
 \qquad
 Y_{t,i} := \mathbb{I}\{X_t = s_i\}.
 \]
+Here, $\mathbb{I}\{A\}$ denotes the indicator function, which equals 1 if the event $A$ is true and 0 otherwise.
 The marginal CDF and PMF vectors are estimated by the corresponding sample means:
 \begin{definition}[Empirical CDF and PMF estimators]
 \label{def:empirical_estimators}
@@ -395,9 +412,9 @@ $\hat{\boldsymbol{p}}$, a central limit theorem for dependent data is
 required. Since independence is not assumed, we impose weak dependence
 conditions on the original process $(X_t)$.\\
 Specifically, $(X_t)_{t \in \mathbb{Z}}$ is assumed to be strictly
-stationary and $\alpha$-mixing with exponentially decaying coefficients.\\
+stationary (recall Definition \ref{def:Stationarity}) and $\alpha$-mixing with exponentially decaying coefficients.\\
 \begin{definition}[$\alpha$-Mixing with Exponential Decay]\label{def:mixing}
-Following Bradley (2005), let
+Following \citet[Section 1.2.]{bradley_2005}, let
 \[
 \mathcal{F}_J^L := \sigma(X_t : J \le t \le L)
 \]
@@ -414,18 +431,18 @@ i.e., there exist constants $C > 0$ and $\rho \in (0,1)$ such that
 \begin{equation}\label{eq:exp_mixing}
 \alpha(n) \le C \rho^n \qquad \text{for all } n \in \mathbb{N}.
 \end{equation}
-
 \end{definition}
+\noindent
 The indicator mappings
 \[
 g_i(X_t) := \mathbb{I}\{X_t \le s_i\},
 \qquad
 h_i(X_t) := \mathbb{I}\{X_t = s_i\},
 \]
-are measurable functions of $X_t$ (see Klenke, 2005, p.~36).
+are measurable functions of $X_t$ \citep[p. 36]{klenke2005}.
 Since measurability preserves strict stationarity, the binarized processes
 $(g_i(X_t))$ and $(h_i(X_t))$ are strictly stationary whenever $(X_t)$ is
-strictly stationary (see Kallenberg, 2002, p.~558).
+strictly stationary \citep[p. 157]{kallenberg_2021}.
 Consequently, the vector-valued processes $\boldsymbol{Z}_t$ and $\boldsymbol{Y}_t$
 are strictly stationary as well.\\
 Moreover, each indicator variable $Z_{t,i}$ is defined on the same probability space
@@ -436,14 +453,15 @@ as $X_t$, and the $\sigma$-field it generates satisfies
 which implies $\alpha_{Z_{t,i}}(n) \le \alpha_{X_t}(n)$ for all $i$ and $n$. Hence,
 $\boldsymbol{Z}_t$ and $\boldsymbol{Y}_t$ are also $\alpha$-mixing with exponentially
 decaying coefficients.\\
-To derive the asymptotic distribution of $\hat{\boldsymbol{f}}$, we apply the
-Cramér--Wold device: $\hat{\boldsymbol{f}}$ converges in distribution to a multivariate
-normal if and only if every scalar projection
+To derive the asymptotic distribution of $\hat{\boldsymbol{f}}$, we
+apply the Cramér–Wold theorem \citep[Corollary 4.5]{kallenberg_2021}. 
+Specifically, $\hat{\boldsymbol{f}}$ converges in distribution to a 
+multivariate normal vector if and only if the univariate central limit theorem holds for all linear combinations of $\boldsymbol{Z}_t$ with nonzero coefficients, that is,
 \[
 U_t := \boldsymbol{a}^{\top}\boldsymbol{Z}_t, \qquad 
-\boldsymbol{a} \in \mathbb{R}^{m}\setminus\{\boldsymbol{0}\},
+\boldsymbol{a} \in \mathbb{R}^{m}\setminus\{\boldsymbol{0}\}.
 \]
-satisfies a univariate CLT. To see that $U_t$ is measurable, let
+To see that $U_t$ is measurable, let
 \[
 L: \mathbb{R}^{m+1} \rightarrow \mathbb{R}, \quad L(\boldsymbol{z}) = \boldsymbol{a}^{\top}\boldsymbol{z}.
 \]
@@ -454,7 +472,7 @@ measurability of its components, and the composition
 $U_t = L \circ g \circ X_t$ is measurable by 
 \citet[Theorem~1.80]{klenke2005}. Hence $U_t$ inherits strict stationarity and $\alpha$-mixing with
 $\alpha_{U_t}(n) \le \alpha_{X_t}(n) \le C\rho^n$ from $(X_t)$. We apply the CLT of
-Ibragimov (1962, Theorem~7), which requires four conditions:
+\citet[Theorem 7]{Ibragimov1962}, which requires four conditions:
 \begin{enumerate}
     \item[\normalfont(i)] \textbf{Strict stationarity.} Verified above, as $U_t$ is
     a measurable function of the strictly stationary process $(X_t)$.
@@ -520,9 +538,9 @@ where $\boldsymbol{\Sigma}_Z = (\sigma_{Z;i,j})_{i,j=0,\ldots,m-1}$ is given by
 \end{theorem}
 \section{Asymptotic Properties of Sample Dispersion Measures}
 \subsection*{IOV}
-We can now now use this information of the asymptotic distribution of $\hat{\boldsymbol{f}}$ to compute the asymptotic properties of sample measures that are based on $\hat{\boldsymbol{f}}$. According to the multivariate delta-method a random variable $G^* := g^*(\boldsymbol{\Theta^*})$, where $\boldsymbol{\Theta^*} \in \mathbb{R}^{m}$, $\sqrt{n}(\boldsymbol{\Theta^*} - \boldsymbol{\Theta})\overset{asy.}{\sim} \mathcal{N}(0, \boldsymbol{\Sigma^*})$ and  $g^*: \mathbb{R}^m\rightarrow \mathbb{R}$ is a continously differentiable function, satisfies
+We can now now use this information of the asymptotic distribution of $\hat{\boldsymbol{f}}$ to compute the asymptotic properties of sample measures that are based on $\hat{\boldsymbol{f}}$. According to the multivariate delta method \citep[Chapter~3]{VanderVaart1998} a random variable $G^* := g^*(\boldsymbol{\Theta^*})$, where $\boldsymbol{\Theta^*} \in \mathbb{R}^{m}$, $\sqrt{n}(\boldsymbol{\Theta^*} - \boldsymbol{\Theta})\overset{asy.}{\sim} \mathcal{N}(0, \boldsymbol{\Sigma^*})$ and  $g^*: \mathbb{R}^m\rightarrow \mathbb{R}$ is a continously differentiable function, satisfies
 \[\sqrt{n}(G^* - g^*(\boldsymbol{\Theta})) \overset{asy.}{\sim} \mathcal{N}(0, \boldsymbol{j\Sigma^* j^{\top}} )\]
-where $\boldsymbol{j}$ is the one-dimensional Jacobian-matrix (i.e. vector) and where $j_i =  \frac{\partial g^*(\boldsymbol{\Theta})}{\partial \theta_i}$. \\
+where $\boldsymbol{j}$ is the Jacobian and where $j_i =  \frac{\partial g^*(\boldsymbol{\Theta})}{\partial \theta_i}$. \\
 Since we have shown that $\boldsymbol{\hat{f}}$ is assymptotically normal we can use this to derive the asymptotic properties of sample measures like the IOV. The respective Jacobian is given by:
 \begin{align*}
 \boldsymbol{j}_{\mathrm{IOV}} &= \left(\frac{\partial \mathrm{IOV}(\boldsymbol{f})}{\partial f_0 }, \ldots, \frac{\partial \mathrm{IOV}(\boldsymbol{f})}{\partial f_{m-1} }\right) = \frac{4}{m}\left((1- 2 f_0), \ldots,(1-2f_{m-1}) \right)
@@ -535,8 +553,7 @@ which leads to an asymptotic variance of the IOV:
 However, since $IOV$ is not a linear function, the first-order delta method only provides information about the asymptotic distribution and variance, not on the finite-sample bias:
 \[(\widehat{\mathrm{IOV}} \overset{p}{\rightarrow} \mathrm{IOV}(\boldsymbol{f})) \not\Rightarrow (\mathrm{E}[\widehat{\mathrm{IOV}}] = \mathrm{IOV}(\boldsymbol{f})).\]
 For nonlinear transformations, the curvature induces a bias of order $n^{-1}$. Since
-$\mathrm{IOV}(\boldsymbol{f}) = \frac{4}{m}\sum_{i=0}^{m-1}f_i(1-f_i)$ is quadratic in $\boldsymbol{f}$, all derivatives of order three and higher vanish
-identically. Consequently, the second-order Taylor expansion is not merely an
+$\mathrm{IOV}(\boldsymbol{f}) = \frac{4}{m}\sum_{i=0}^{m-1}f_i(1-f_i)$ is quadratic in $\boldsymbol{f}$, all derivatives of order three and higher are eual to 0. Consequently, the second-order Taylor expansion is not merely an
 approximation but exact:
 \[
 \mathrm{IOV}(\hat{\boldsymbol{f}}) = \mathrm{IOV}(\boldsymbol{f}) 
@@ -549,21 +566,45 @@ is the Hessian matrix such that\[\boldsymbol{H}_{\mathrm{IOV}}(\boldsymbol{f}) =
     -\frac{8}{m} & \text{if } i = j\\
     0 & \text{else}
 \end{cases} = -\frac{8}{m} \boldsymbol{I}_m.\]
-Since
-\[\mathrm{E}(\boldsymbol{j}_{\mathrm{IOV}} (\hat{\boldsymbol{f}} - \boldsymbol{f})) = 0\]
-the finite sample bias is given by
+To take the expectation of the quadratic term, we use the following lemma: 
+\begin{lemma}\label{lem:quadform}
+Let $\boldsymbol{u} \in \mathbb{R}^m$ be a random vector with
+$\mathrm{E}[\boldsymbol{u}] = \boldsymbol{0}$ and let  
+$\boldsymbol{A} \in \mathbb{R}^{m \times m}$ be deterministic. Then
+\[
+\mathrm{E}[\boldsymbol{u}^\top \boldsymbol{A}\boldsymbol{u}] 
+= \mathrm{tr}(\boldsymbol{A}\,\mathrm{Cov}(\boldsymbol{u})).
+\]
+\end{lemma}
+\begin{proof}
+Since $\boldsymbol{u}^\top \boldsymbol{A}\boldsymbol{u}$ is a scalar, 
+it follows from the cyclic property of the trace 
+\citep[Theorem~1.5]{Banerjee2014} that
+$\boldsymbol{u}^\top \boldsymbol{A}\boldsymbol{u} 
+= \mathrm{tr}(\boldsymbol{A}\boldsymbol{u}\boldsymbol{u}^\top)$.
+Because expectation and trace are both linear and 
+$\mathrm{E}[\boldsymbol{u}] = \boldsymbol{0}$, it follows that
+\[
+\mathrm{E}[\boldsymbol{u}^\top \boldsymbol{A}\boldsymbol{u}]
+= \mathrm{tr}\bigl(\boldsymbol{A}\,\mathrm{E}[\boldsymbol{u}\boldsymbol{u}^\top]\bigr)
+= \mathrm{tr}(\boldsymbol{A}\,\mathrm{Cov}(\boldsymbol{u})). \qedhere
+\]
+\end{proof}
+
+Since $\mathrm{E}(\boldsymbol{j}_{\mathrm{IOV}} (\hat{\boldsymbol{f}} - \boldsymbol{f})) = 0$,
+the finite-sample bias is given by
 \begin{align*}
     \mathrm{Bias}(\mathrm{IOV}(\hat{\boldsymbol{f}})) 
     &= \mathrm{E}\!\left[\frac{1}{2}(\hat{\boldsymbol{f}}- \boldsymbol{f})^\top 
-    \boldsymbol{H}_{\mathrm{IOV}}(\boldsymbol{f})(\hat{\boldsymbol{f}}- \boldsymbol{f})\right] \\
+    \boldsymbol{H}_{\mathrm{IOV}}(\boldsymbol{f})(\hat{\boldsymbol{f}}- \boldsymbol{f})\right] \tag{Lemma $\ref{lem:quadform}$} \\
     &= \frac{1}{2}\,\mathrm{tr}\!\left(\boldsymbol{H}_{\mathrm{IOV}}\,
-    \mathrm{Cov}(\hat{\boldsymbol{f}})\right) 
-    \tag*{$\mathrm{E}[\boldsymbol{u}^\top \boldsymbol{A}\boldsymbol{u}] 
-    = \mathrm{tr}(\boldsymbol{A}\,\mathrm{Cov}(\boldsymbol{u}))$}\\
+    \mathrm{Cov}(\hat{\boldsymbol{f}})\right) \\
     &= \frac{1}{2}\,\mathrm{tr}\!\left(-\frac{8}{m}\boldsymbol{I}_m \cdot 
     \frac{1}{n}\boldsymbol{\Sigma}_Z\right) \\
     &= -\frac{4}{mn} \sum_{i=0}^{m-1} \sigma_{\boldsymbol{Z};\,i,i}.
 \end{align*}
+
+
 This implies that the bias is strictly negative and only depends on the marginal variances $\sigma_{\boldsymbol{Z}; i,i}$ of the indivdual estimators $f_i$,  not on the covariances. The results are summarized in the following theorem: \\
 \begin{theorem}[Asymptotic Distribution of $\widehat{\mathrm{IOV}}$]\label{thm:iov_asymp}
 Under the assumptions of Theorem~\ref{thm:clt_fhat}:
@@ -583,10 +624,12 @@ Under the assumptions of Theorem~\ref{thm:clt_fhat}:
 \subsection*{Skewness}
 In a similiar way the asymptotic properties of other dispersion metrics such as the skew can be analyzed. A simple measure for the skew of an ordinal process is given by:
 \[\mathrm{skew}(\boldsymbol{f}) = \frac{2}{m} \left(\sum_{i=0}^{m-1}f_i\right) - 1.\]
-The measure captures asymmetry through the average level of the CDF: A symmetric
-distribution is taken as baseline and deviations 
-from this baseline reflect asymmetry in the distribution. The measure is scaled to
-$[-1, 1]$, and the three extreme cases illustrate its behavior clearly:
+This measure captures asymmetry through the average level of the CDF.
+A symmetric distribution is taken as a baseline, and deviations from this
+baseline reflect asymmetry in the distribution. The measure is scaled to
+$[-1,1]$. For a more detailed discussion of skewness measures for ordinal
+data, see \citet{klein_doll_2020}. The three extreme cases illustrate its
+behavior clearly:
 \begin{itemize}
     \item \textbf{Left-skewed} ($\mathrm{skew} = 1$): all probability mass is 
     concentrated in the lowest category $s_0$, so $f_i = 1$ for all $i$ and
@@ -598,7 +641,7 @@ $[-1, 1]$, and the three extreme cases illustrate its behavior clearly:
     concentrated in the highest category $s_m$, so $f_i = 0$ for all $i < m$ and
     $\mathrm{skew} = \frac{2}{m} \cdot 0 - 1 = -1$.
 \end{itemize}
-The jacobian for the skew is given by
+The Jacobian for the skew is given by
 \[\boldsymbol{j}_{skew} = \left(\frac{\partial ~ \mathrm{skew}(\boldsymbol{f})}{\partial f_0}, \ldots, \frac{\partial ~\mathrm{skew}(\boldsymbol{f})}{\partial f_{m-1}}\right) = \left(\frac{2}{m}, \ldots, \frac{2}{m}\right)\]
 such that we end up with the following results:
 \begin{proposition}[Asymptotic Properties of $\widehat{\mathrm{skew}}$]\label{prop:skew}
@@ -636,7 +679,7 @@ to time $t$, the three mechanisms are defined as follows.
 \begin{definition}[Missingness Mechanisms]
 \label{def:missingness}
 \begin{enumerate}[(i)]
-    \item \textbf{Missing Completely at Random (MCAR):} The 
+    \item \textbf{Missing Completely at Random (MCAR):}\label{def:mcar} The 
     observation probability does not depend on the current or 
     past values of the process:
     \[P(O_t = 1 \mid X_t,\, \mathcal{F}_{t-1}) = \pi.\]
@@ -648,22 +691,20 @@ to time $t$, the three mechanisms are defined as follows.
     = P(O_t = 1 \mid \mathcal{F}_{t-1}).\]
 
     \item \textbf{Missing Not at Random (MNAR):} The observation 
-    probability depends on the current value $X_t$ itself, which 
-    may be unobserved:
-    \[P(O_t = 1 \mid X_t,\, \mathcal{F}_{t-1}) 
-    = P(O_t = 1 \mid X_t,\, \mathcal{F}_{t-1}).\]
+    probability depends on the current value $X_t$, even after 
+    conditioning on the past:
+    \[
+    P(O_t = 1 \mid X_t,\, \mathcal{F}_{t-1}) 
+    \neq P(O_t = 1 \mid \mathcal{F}_{t-1}).
+    \]
 \end{enumerate}
 \end{definition}
 
 \begin{remark}
-    While Rubin's taxonomy was formulated for i.i.d.\ data, the 
-    adaptation to the time series setting is conceptually 
-    straightforward: the key distinction remains whether missingness 
-    depends on the unobserved current value $X_t$ (MNAR) or only 
-    on the observable past (MAR/MCAR). To the best of our 
-    knowledge, a formal systematic treatment of this adaptation 
-    for univariate categorical time series has not appeared in 
-    the literature.
+    While Rubin's framework was originally developed for i.i.d.\ data,
+    similar concepts have been considered in longitudinal and time series
+    settings (see, e.g., \citealp{diggle_2002}). The formulation adopted
+    here extends the conditioning to the full history of the process.
 \end{remark}
 
 The assumption under which the subsequent results are derived is 
@@ -681,8 +722,7 @@ To model the missingness, the concept of \textbf{amplitude modulation} is employ
 \[
 O_t \in \{0,1\} \quad \forall t
 \]
-where $O_t = 1$ indicates that $X_t$ is fully observed (amplitude = 1), and $O_t = 0$ indicates that $X_t$ is missing (amplitude = 0).
-
+where $O_t = 1$ indicates that $X_t$ is fully observed (amplitude = 1), and $O_t = 0$ indicates that $X_t$ is missing (amplitude = 0).\\
 The amplitude modulating process $O_t$ can be:
 \begin{itemize}
     \item \textbf{Deterministic}: For each $t$, $O_t = o_t$ where $o_t \in \{0,1\}$ is a known, fixed value.
@@ -694,7 +734,7 @@ The amplitude modulation is applied to the binarization vector $\boldsymbol{Z}_t
 To assess the performance of this naive estimator we compute its expectation
 \[\mathrm{E}[\hat{\boldsymbol{\mathfrak{f}}}] = \frac{1}{n} \sum_{t = 1}^{n} \mathrm{E}[O_t\boldsymbol{Z_t}] = \frac{1}{n} \sum_{t = 1}^{n} \mathrm{E}[\boldsymbol{Z_t} \mathrm{E}[O_t|\boldsymbol{Z}_t]],\]
 where the last equality follows from the law of iterated expectations.\\
-The dependendce structure between $(O_t)_t$ and $(\boldsymbol{Z}_t)_t$ (or equivalently $(X_t)_t$) is crucial. Under the assumption of independence, the expression simplifies to
+The dependendce structure between $(O_t)_t$ and $(\boldsymbol{Z}_t)_t$ (or equivalently $(X_t)_t$) is crucial. Under the assumption of independence (see Definition~\ref{def:missingness}, part MCAR), the expression simplifies to
 \[\frac{1}{n} \sum_{t = 1}^{n} \mathrm{E}[\boldsymbol{Z_t} \mathrm{E}[O_t|\boldsymbol{Z}_t]] = \frac{1}{n}\sum_{t=1}^{n} \mathrm{E}[\boldsymbol{Z}_t]  \mathrm{E}[O_t] = \left(\frac{1}{n} \sum_{t=1}^{n} \mathrm{E}[O_t]\right) \boldsymbol{f} \]
 \subsection*{The missingness corrected estimator}
 \begin{definition}[Corrected Estimator of $\boldsymbol{f}$]\label{def:correctedest}
@@ -706,18 +746,17 @@ of $\boldsymbol{f}$ is defined as
     := \frac{\frac{1}{n} \sum_{t=1}^{n}O_t \boldsymbol{Z}_t}
             {\frac{1}{n}\sum_{t=1}^{n} O_t}
     =: \frac{\hat{\boldsymbol{\mathfrak{f}}}}{\bar{O}}.
-\]
-\end{definition}
-Under the assumption of the independence of $(O_t)$ and $(X_t)$, the stochastic properties of the corrected estimator $\hat{\boldsymbol{f^*}}$ can be studied. If $(O_t)$ is deterministic, then $\mathrm{E}[O_t] = o_t \in \{0,1\}$ for any given $t$. It follows that
+\]\end{definition}
+\noindent Under the assumption of the independence of $(O_t)$ and $(X_t)$, the stochastic properties of the corrected estimator $\hat{\boldsymbol{f^*}}$ can be studied. If $(O_t)$ is deterministic, then $\mathrm{E}[O_t] = o_t \in \{0,1\}$ for any given $t$. It follows that
 \[\frac{1}{n}\sum_{t=1}^{n} \mathrm{E}[O_t] = \frac{1}{n}\sum_{t=1}^{n} O_t = \bar{O},\]
 and therefore, here $\hat{\boldsymbol{f}^*} = \hat{\boldsymbol{\mathfrak{f}}}/\bar{O}$ is a perfectly unbiased estimator of $\boldsymbol{f}$. However, if $O_t$ is a stochastic process then $\mathrm{E}[O_t] = \pi_t \in (0; 1]$ and
 \[\frac{1}{n}\sum_{t=1}^{n} \mathrm{E}[O_t]= \frac{1}{n}\sum_{t=1}^{n} \pi_t \neq \frac{1}{n}\sum_{t=1}^{n} O_t = \bar{O},\]
 to where $\hat{\boldsymbol{f^*}}$ is generally biased.
 \section{Asymptotic Theory for the corrected estimator}
 \subsection*{The extended process - stationarity and $\alpha$-mixing}
-To study this bias we assume $(O_t)$ and $(X_t)$ to be stationary and $\alpha$-mixing with exponetially decaying coefficients, with $\mathrm{E}[O_t] = \pi $ and a autocovariance function $\gamma_{O}(h) := \mathrm{Cov}[O_h, O_0]$ and joint expectations $\pi(h):= \mathrm{E}[O_h O_0] = \gamma_O(h) + \pi^2$. To study the joint asymptotic distribution of the estimator $\hat{\boldsymbol{f}}^*$, we introduce the extended binary vectors in order to derive the joint asymptotic distribution of all sample averages entering its definition:
+To study this bias we assume $(O_t)$ and $(X_t)$ to be stationary and $\alpha$-mixing with exponetially decaying coefficients (see Definition \ref{def:mixing}), with $\mathrm{E}[O_t] = \pi $, a autocovariance function $\gamma_{O}(h) := \mathrm{Cov}[O_h, O_0]$ and joint expectations $\pi(h):= \mathrm{E}[O_h O_0] = \gamma_O(h) + \pi^2$. To study the joint asymptotic distribution of the estimator $\hat{\boldsymbol{f}}^*$, we introduce the extended binary vectors in order to derive the joint asymptotic distribution of all sample averages entering its definition:
 \[\boldsymbol{Z}^*_t:= (O_t, O_t Z_{t,0}, \ldots, O_t Z_{t,m-1})^\top =  O_t (1, \boldsymbol{Z}^\top_t)^\top,\]
-where the elements of $\boldsymbol{Z}_t^*$ are are numbered as $Z_{t,-1}^*, Z_{t,0}^*, \ldots, Z_{t,m-1}^*$The expectation of $\boldsymbol{Z}_t^*$ is given by
+where the elements of $\boldsymbol{Z}_t^*$ are are numbered as $Z_{t,-1}^*, Z_{t,0}^*, \ldots, Z_{t,m-1}^*$. The expectation of $\boldsymbol{Z}_t^*$ is given by
 \begin{align*}
     \mathrm{E}[\boldsymbol{Z}^{*}_t] &= (\mathrm{E}[O_t], \mathrm{E}[O_t Z_{t,0}], \ldots, \mathrm{E}[O_t Z_{t,m-1}])^\top \\
     &= (\mathrm{E}[O_t], \mathrm{E}[O_t] \mathrm{E}[Z_{t,0}], \ldots, \mathrm{E}[O_t] \mathrm{E}[Z_{t,m-1}])^\top \tag{Independence}\\
@@ -726,26 +765,52 @@ where the elements of $\boldsymbol{Z}_t^*$ are are numbered as $Z_{t,-1}^*, Z_{t
 \end{align*}
 Since the processes $(O_t)$ and $(\boldsymbol{Z}_t)$ are independent and stationary, the joint process $((O_t, \boldsymbol{Z}_t)^{\top})$ is also stationary. Moreover, if both processes are $\alpha$-mixing, then the joint process is $\alpha$-mixing. As $\boldsymbol{Z}_t^*$ is a measurable function of $(O_t, \boldsymbol{Z})^\top$ it follows that $\boldsymbol{Z}^*_t$ is stationary and $\alpha$-mixing (with exponentially decaying coefficients). \\
 \subsection*{Multivariate CLT}
-To study the asymptotic properties of $\boldsymbol{Z}^*_t$ we once again use Cramer-Wold. Let
-\[U_t^* = \boldsymbol{a}^\top\boldsymbol{Z}^*_t, \quad \boldsymbol{a}\in \mathbb{R}^{m+1}.\]
-The argument for why $U_t^*$ satisfies the conditions of Ibragimovs CLT isthe same as in the argument for why the linear projections of the non-missing estimator $\hat{\boldsymbol{f}}_t$ converge: Since $U_t^* = \boldsymbol{a}^\top \boldsymbol{Z}_t^*$ is a measurable function of the strictly stationary and $\alpha$-mixing process $\boldsymbol{Z}_t^*$, it inherits both properties, with $\alpha_{U_t^*}(n) \leq \alpha_{\boldsymbol{Z}_t^*}(n) \leq C\rho^n$ following from the inclusion $\sigma(U_t^*) \subset \sigma(\boldsymbol{Z}_t^*)$. The summability condition therefore holds by the same geometric series argument as before. Finally, since each $Z_{t,i}^* \in \{0,1\}$, the projection $U_t^*$ is bounded and all moments are finite. It follows that
-\[\sqrt{n}(\bar{U}^*_t- \mu_{U^*_t}) \xrightarrow[n \rightarrow \infty]{d} \mathcal{N}(0, \sigma_{a}^*)\]
-where $\mu_{U_t^*} = \mathrm{E}(U_t) = \boldsymbol{a}^\top \boldsymbol{\mu}_{\boldsymbol{Z}_t^*}$ and
-\begin{align*}
-    \sigma^*_{a} &= \mathrm{Var}(U_t^*) + 2\sum_{h=1}^{\infty}\mathrm{Cov}(U_t, U_{t+h}) \\
-    \text{where}\quad \mathrm{Var}(U_t^*) &= \boldsymbol{a}^\top \mathrm{Var}(\boldsymbol{Z}^*_t) \boldsymbol{a} = \sum_{i, j = - 1}^{m-1} a_{i+1} a_{j+1} \mathrm{Cov}(Z^*_{t, i}, Z^*_{t, j})\\
-    \text{and} \quad \mathrm{Cov}(U_t^*, U_{t+h}^*) &= \boldsymbol{a}^\top \mathrm{Cov}(\boldsymbol{Z}^*_t, \boldsymbol{Z}^{*\top}_{t+h}) \boldsymbol{a} \\
-    \text{such that } \quad \sigma^*_{a} &= \boldsymbol{a}^\top (\mathrm{Var}(\boldsymbol{Z}^*_t) + 2 \sum_{h = 1 }^{\infty} \mathrm{Cov}(\boldsymbol{Z}^*_t, \boldsymbol{Z}^{*}_{t+h})) \boldsymbol{a}.
-\end{align*}
-Since every linear projection $U_t^*$ is asymptotically normal we can follow that the sample mean
-\[\bar{\boldsymbol{Z}}^*_n := \frac{1}{n} \sum_{t=1}^{n} \boldsymbol{Z}^*_t\]
-satisfies the multivariat CLT
-\[\sqrt{n} \left( \bar{\boldsymbol{Z}}^*_n - \boldsymbol{\mu}_{\boldsymbol{Z}_t^*} \right) \xrightarrow[n \to \infty]{d} \mathcal{N}\left( \boldsymbol{0}, \boldsymbol{\Sigma}_{\boldsymbol{Z}^*} \right)\]
-where $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$ must sastisfy for all $a \in \mathbb{R}^{m+1}$
-\[\boldsymbol{a}^\top\boldsymbol{\Sigma}_{\boldsymbol{Z}^*} \boldsymbol{a} = \sigma^*_a = \boldsymbol{a}^\top (\mathrm{Var}(\boldsymbol{Z}^*_t) + 2 \sum_{h = 1 }^{\infty} \mathrm{Cov}(\boldsymbol{Z}^*_t, \boldsymbol{Z}^{*}_{t+h})) \boldsymbol{a}\]
-which indicates
-\[\boldsymbol{\Sigma}_{\boldsymbol{Z}^*} = \mathrm{Var}(\boldsymbol{Z}^*_t) + 2\sum_{h=1}^{\infty}\mathrm{Cov}(\boldsymbol{Z}_{t}^*, \boldsymbol{Z}_{t+h}^*).\]
-The individudal elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$ are given by
+
+\begin{proposition}[Asymptotic distribution of $\bar{\boldsymbol{Z}}^*_n$]
+\label{prop:clt_zstar}
+Let $(X_t)$ and $(O_t)$ be independent, strictly stationary and $\alpha$-mixing 
+with exponentially decaying coefficients, with $\mathrm{E}[O_t] = \pi \in (0,1]$. 
+Define the extended process
+\[
+    \boldsymbol{Z}^*_t := O_t(1, \boldsymbol{Z}_t^\top)^\top \in \mathbb{R}^{m+1},
+\]
+with sample mean $\bar{\boldsymbol{Z}}^*_n := \frac{1}{n}\sum_{t=1}^{n} 
+\boldsymbol{Z}^*_t$. Then
+\[
+    \sqrt{n}\!\left(\bar{\boldsymbol{Z}}^*_n 
+    - \boldsymbol{\mu}_{\boldsymbol{Z}^*}\right) 
+    \xrightarrow{d} \mathcal{N}\!\left(\boldsymbol{0},\, 
+    \boldsymbol{\Sigma}_{\boldsymbol{Z}^*}\right),
+\]
+where $\boldsymbol{\mu}_{\boldsymbol{Z}^*} = \pi(1, \boldsymbol{f}^\top)^\top$ 
+and 
+\[
+    \boldsymbol{\Sigma}_{\boldsymbol{Z}^*} = \mathrm{Var}(\boldsymbol{Z}^*_t) 
+    + 2\sum_{h=1}^{\infty}\mathrm{Cov}(\boldsymbol{Z}^*_t, \boldsymbol{Z}^*_{t+h}),
+\]
+with elements $\sigma_{\boldsymbol{Z}^*;\,i,j}$ as given in 
+cases \textnormal{(i)--(iii)} below.
+\end{proposition}
+
+\begin{proof}
+Since $U_t^* = \boldsymbol{a}^\top \boldsymbol{Z}_t^*$ is a measurable function 
+of the strictly stationary and $\alpha$-mixing process $\boldsymbol{Z}_t^*$, it 
+inherits both properties, with $\alpha_{U_t^*}(n) \leq \alpha_{\boldsymbol{Z}_t^*}(n) 
+\leq C\rho^n$ following from the inclusion $\sigma(U_t^*) \subset \sigma(\boldsymbol{Z}_t^*)$. 
+The summability condition therefore holds by the same geometric series argument as 
+in Theorem \ref{thm:clt_fhat}. Since each $Z_{t,i}^* \in \{0,1\}$, the projection $U_t^*$ 
+is bounded and all moments are finite. Ibragimov's CLT \citep[Theorem~7]{Ibragimov1962} 
+therefore applies to $U_t^*$, and the Cramér--Wold theorem 
+\citep[Corollary~4.5]{kallenberg_2021} yields the multivariate result.
+\end{proof}
+\begin{remark}[Elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$]
+\label{rem:sigma_zstar}
+\noindent Note that since $O_t \in \{0,1\}$ with $\mathrm{P}(O_t = 1) = \pi$, 
+it follows that $O_t \sim \mathrm{Bernoulli}(\pi)$, so that $\mathrm{E}[O_t] = \pi$, 
+$\mathrm{Var}(O_t) = \pi(1-\pi)$, and $\mathrm{E}[O_t^2] = \pi$. Recall also 
+that $\mathrm{E}[O_t O_{t+h}] = \pi(h) = \gamma_O(h) + \pi^2$ for all 
+$h \in \mathbb{N}$. The individual elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$ 
+are then given by
 {\small
 \begin{align*}
 &\textbf{(i)}\ i = j = -1: \\
@@ -757,9 +822,9 @@ The individudal elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$ are given b
 &\quad \overset{\perp}{=} 
 \left(\mathrm{E}[O_t^2]\mathrm{E}[Z_{t,j}] - \mathrm{E}[O_t]^2\mathrm{E}[Z_{t,j}]\right) \\
 &\qquad + 2\sum_{h=1}^{\infty}
-\left(\mathrm{E}[O_tO_{t+h}]\mathrm{E}[Z_{t,j}] - \mathrm{E}[O_t]^2\mathrm{E}[Z_{t,j}]\right) \\
-&\quad \overset{O_t \in \{0,1\}}{=} 
-(\pi - \pi^2)f_j + 2\sum_{h=1}^{\infty}(\gamma_O(h) + \pi^2 - \pi^2)f_j \\
+\left(\mathrm{E}[O_tO_{t+h}]\mathrm{E}[Z_{t,j}] 
+- \mathrm{E}[O_t]^2\mathrm{E}[Z_{t,j}]\right) \\
+&\quad = (\pi - \pi^2)f_j + 2\sum_{h=1}^{\infty}(\gamma_O(h) + \pi^2 - \pi^2)f_j \\
 &\quad = \pi(1-\pi)f_j + 2f_j\sum_{h=1}^{\infty}\gamma_O(h) 
 = f_j\!\left(\pi(1-\pi) + 2\sum_{h=1}^{\infty}\gamma_O(h)\right) 
 = f_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1} \\[2ex]
@@ -773,14 +838,14 @@ The individudal elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$ are given b
 \mathrm{E}[O_tO_{t+h}]\mathrm{E}[Z_{t,i}Z_{t+h,j}] - \pi^2f_if_j 
 + \mathrm{E}[O_tO_{t+h}]\mathrm{E}[Z_{t,j}Z_{t+h,i}] - \pi^2f_if_j
 \bigr]\\
-&\quad = \pi f_{\mathrm{min} \{i,j\}} - \pi^2 f_if_j  + \sum_{h=1}^{\infty} \pi(h) f_{ij}(h) + \pi(h) f_{ji}(h) - 2\pi^2 f_if_j\\
-&\quad = \pi f_{\mathrm{min} \{i,j\}} - \pi^2 f_if_j  + \pi f_i f_j - \pi f_i f_j  \\
-&\qquad + \sum_{h=1}^{\infty} \pi(h) f_{ij}(h) + \pi(h) f_{ji}(h) - 2\pi^2 f_if_j -  2\gamma(h) f_if_j +  2\gamma(h) f_if_j \\
-&\quad = \pi (f_{\mathrm{min} \{i,j\}}- f_if_j) + \left(\pi(1-\pi)   + 2 \sum_{h=1}^{\infty}  \gamma(h)\right) f_if_j + \sum_{h=1}^{\infty} \pi(h) (f_{ij}(h) + f_{ji}(h) - 2f_if_j) \\
-&\quad = f_if_j \sigma_{\boldsymbol{Z}^*;-1, -1} +\pi (f_{\mathrm{min} \{i,j\}}- f_if_j)  + \sum_{h=1}^{\infty} \pi(h) (f_{ij}(h) + f_{ji}(h) - 2f_if_j)
-\end{align*}
-}
-To now derive the asymptotic properties of $\hat{\boldsymbol{f}}^*$ we define the vector-valued function $\boldsymbol{g}:= [0,1]^{m+1} \rightarrow [0,1]^{m}$ as
+&\quad = \pi f_{\mathrm{min}\{i,j\}} - \pi^2 f_if_j  
++ \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h) + f_{ji}(h) - 2\pi^2 f_if_j)\\
+&\quad = f_if_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1} 
++ \pi(f_{\mathrm{min}\{i,j\}} - f_if_j)  
++ \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h) + f_{ji}(h) - 2f_if_j)
+\end{align*}}
+\end{remark}
+\noindent To now derive the asymptotic properties of $\hat{\boldsymbol{f}}^*$ we define the vector-valued function $\boldsymbol{g}:= [0,1]^{m+1} \rightarrow [0,1]^{m}$ as
 \[g_j(x_{-1}, x_{0}, \ldots, x_{m-1}) = x_j / x_{-1}, \quad \text{for } j = 0 \ldots, m-1,\]
 such that
 \begin{align*}
@@ -791,7 +856,7 @@ and  accordingly
 \begin{align*}
     g(\bar{\boldsymbol{\mu}}_{\boldsymbol{Z}^*}^*) = \boldsymbol{f}.
 \end{align*}
-The Jacobian matrix of $\boldsymbol{g}(\boldsymbol{x})$ evaluated at $\boldsymbol{x} = \boldsymbol{\mu}_{\boldsymbol{Z}^*}$ is given by
+The Jacobian of $\boldsymbol{g}(\boldsymbol{x})$ evaluated at $\boldsymbol{x} = \boldsymbol{\mu}_{\boldsymbol{Z}^*}$ is given by
 \[\boldsymbol{G}_{(m+1)\times m} =
 \begin{pmatrix}
     \frac{\partial g_0(\boldsymbol{\mu}_{\boldsymbol{Z}^*})}{\partial x_{-1}}& \ldots & \frac{\partial g_0(\boldsymbol{\mu}_{\boldsymbol{Z}^*})}{\partial x_{m-1}}\\
@@ -804,7 +869,7 @@ The Jacobian matrix of $\boldsymbol{g}(\boldsymbol{x})$ evaluated at $\boldsymbo
     \vdots & \vdots & \ddots & \ddots & 0\\
     -\frac{f_{m-1}}{\pi}& 0 &\ldots& 0 & \frac{1}{\pi}
 \end{pmatrix}\]
-Then, following the deltamethod, we have the following result
+Then, following the delta method, we have the following result
 \begin{theorem}[Asymptotic Normality of $\hat{\boldsymbol{f}}^*$]\label{thm:clt_fstarhat}
 Let $(X_t)$ be a strictly stationary, ordinal process that is $\alpha$-mixing with exponentially decaying
 coefficients. Let the modulating process $(O_t)$ also be strictily stationary and $\alpha$-mixing with exponentially decaying coefficients, with moments $\mathrm{E}[O_t] = \pi > 0$ and $\mathrm{E}[O_h O_0] = \pi(h) > 0$. Furthermore, let $(O_t)$ and $(X_t)$ be independent, where $X_t$ is observed if $O_t = 1$. Then the corrected estimator from definition~\ref{def:correctedest} satisfies the following multivariate CLT:
@@ -818,7 +883,7 @@ where
 \begin{equation}\label{eq:sigma_fstar}
     \sigma_{\hat{\boldsymbol{f}}^*;i,j} = \frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j) + \frac{1}{\pi^2} \sum_{h=1}^{\infty}\pi(h)(f_{ij}(h)+f_{ji}(h)-2f_if_j).
 \end{equation}\end{theorem}
-The structure of $\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}^*}}$ can be computed as follows
+\noindent The structure of $\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}^*}}$ can be computed as follows
 \begin{align*}
     \boldsymbol{\Sigma}_{\hat{\boldsymbol{f}^*}} &= \boldsymbol{G} \boldsymbol{\Sigma}_{\boldsymbol{Z}^*} \boldsymbol{G}^\top \\
     &= \begin{pmatrix}
@@ -839,13 +904,13 @@ The structure of $\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}^*}}$ can be computed 
         -\frac{f_{m-1}}{\pi}\sigma_{\boldsymbol{Z}^*; -1, -1} + \frac{1}{\pi}\sigma_{\boldsymbol{Z}^*; m-1, -1} &\ldots&-\frac{f_{m-1}}{\pi}\sigma_{\boldsymbol{Z}^*; -1, m-1} + \frac{1}{\pi}\sigma_{\boldsymbol{Z}^*; m-1, m-1} \\
     \end{pmatrix}\boldsymbol{G}^\top.
 \end{align*}
-Such that the indivual lements look like this:
+\noindent Such that the indivual lements look like this:
 \begin{align*}
     \sigma_{\hat{\boldsymbol{f}}^*; i, j}  &= (-\frac{f_j}{\pi}) (-\frac{f_i}{\pi}\sigma_{\boldsymbol{Z}^*; -1, -1} + \frac{1}{\pi} \sigma_{\boldsymbol{Z}^*; i, -1}) + \frac{1}{\pi}(-\frac{f_{i}}{\pi}\sigma_{\boldsymbol{Z}^*; -1, j}+ \frac{1}{\pi} \sigma_{\boldsymbol{Z}^*; i, j}) \\
     &= \frac{f_j f_i }{\pi^2} \sigma_{\boldsymbol{Z}^*; -1, -1} - \frac{f_j}{\pi^2} \sigma_{\boldsymbol{Z}^*; i, -1} - \frac{f_i}{\pi^2}\sigma_{\boldsymbol{Z}^*; -1, j} + \frac{1}{\pi^2} \sigma_{\boldsymbol{Z}^*; i, j} \\
     &= \frac{1}{\pi^2}\left(f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} - f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} - f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} + \sigma_{\boldsymbol{Z}^*; i, j}\right) = \frac{1}{\pi^2}(\sigma_{\boldsymbol{Z}^*; i, j}-f_if_j \sigma_{\boldsymbol{Z}^*; -1, -1}) \\
     &= \frac{1}{\pi^2}\left(\left[f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} + \pi(f_{\min \{i,j\}}- f_if_j) + \sum_{h=1}^{\infty}\pi(h)f_{ij}(h)+f_{ji}(h)-2f_if_j\right]- f_if_j \sigma_{\boldsymbol{Z}^*; -1, -1}\right) \\
-    &= \underbrace{\frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j) }_{\mathrm{lag}(0)}+ \underbrace{\sum_{h=1}^{\infty}\pi(h)(f_{ij}(h)+f_{ji}(h)-2f_if_j)}_{\mathrm{lag}(h)}
+    &= \underbrace{\frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j) }_{\mathrm{lag}(0)}+ \sum_{h=1}^{\infty}\underbrace{\pi(h)(f_{ij}(h)+f_{ji}(h)-2f_if_j)}_{\mathrm{lag}(h)}
 \end{align*}
 Here, the lag-0 term captures the contemporaneous covariance structure of the
 observed process, while the lag-$h$ terms accumulate the serial dependence
@@ -861,8 +926,7 @@ $O(n^{-1})$ is computable using a second-order Taylor expansion. The Hessian of 
     0                   & \text{else.}
 \end{cases}
 \]
-Since only two entries of $\boldsymbol{H}_{g_j}$ are nonzero, and using the symmetry
-$\sigma_{\boldsymbol{Z}^*;-1,j} = \sigma_{\boldsymbol{Z}^*;j,-1}$, the bias reduces to
+Using the symmetry $\sigma_{\boldsymbol{Z}^*;-1,j} = \sigma_{\boldsymbol{Z}^*;j,-1}$ and the equality from Lemma \ref{lem:quadform} the bias simplifies to, the bias reduces to
 \begin{align*}
     \mathrm{Bias}(\hat{f}_j)
     &= \frac{1}{2}\mathrm{tr}(\boldsymbol{H}_{g_j}\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}) \\
@@ -873,8 +937,8 @@ $\sigma_{\boldsymbol{Z}^*;-1,j} = \sigma_{\boldsymbol{Z}^*;j,-1}$, the bias redu
     &= \frac{f_j}{\pi^2}\,\sigma_{\boldsymbol{Z}^*;-1,-1}
         - \frac{f_j}{\pi^2}\,\sigma_{\boldsymbol{Z}^*;-1,-1} = 0,
 \end{align*}
-where the last step uses $\sigma_{\boldsymbol{Z}^*;-1,j} = f_j\,\sigma_{\boldsymbol{Z}^*;-1,-1}$
-from case (ii) of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$.\\
+where the last step uses $\sigma_{\boldsymbol{Z}^*;-1,j} = f_j\,\sigma_{\boldsymbol{Z}^*;-1,-1}$ 
+from case~\textbf{(ii)} of \hyperref[rem:sigma_zstar]{$\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$}.\\
 \subsection*{Special Cases}
 To further study the asymptotic distribution of $\hat{\boldsymbol{f}}^*$,
 we consider three special cases of the general result.
@@ -889,7 +953,7 @@ If the process is fully observed, i.e.\ $\pi = 1$, then
 \]
 \end{corollary}
 That is, the asymptotic covariance of $\hat{\boldsymbol{f}}^*$ reduces to that of
-the complete-data estimator $\hat{\boldsymbol{f}}$(\ref{thm:clt_fhat}), as one would expect.
+the complete-data estimator \hyperref[thm:clt_fhat]{$\hat{\boldsymbol{f}}$}, as one would expect.
 
 \begin{corollary}[i.i.d.\ Observation Process]
 If $(O_t)$ is i.i.d., then $\pi(h) = \pi^2$ for all $h \geq 1$,
@@ -924,10 +988,10 @@ $\hat{\boldsymbol{f}}^*$ vanishes and the asymptotic covariance only depends on 
 \section{Asymptotic marginal properties}
 The asymptotic properties of marginal statistics based on $\hat{\boldsymbol{f}}^*$
 follow directly from the delta method, in exact analogy to the complete-data case.
-The following results are for the IOV and the skew. However, the derivations for other marginal statistics areanalogous- 
+The following results are for the IOV and the skew. However, the derivations for other marginal statistics are analogous. 
 \begin{corollary}[Asymptotic distribution of $\mathrm{IOV}(\hat{\boldsymbol{f}}^*)$]
 \label{cor:iov_missing}
-Under the conditions of Theorem~\ref{thm:clt_fstarhat}, the delta-method argument from Theorem~\ref{thm:iov_asymp} 
+Under the conditions of Theorem~\ref{thm:clt_fstarhat}, the delta method argument from Theorem~\ref{thm:iov_asymp} 
 carries over to the missing-data case with $\boldsymbol{\Sigma}_Z$ replaced by
 $\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}}^*}$, yielding
 \[
@@ -956,6 +1020,396 @@ estimator is unbiased and its asymptotic variance is given by
 
 \section{Serial Dependence}
 \label{sec:serial-dependence}
+
+
+So far, we have only examined aspects of the marginal distribution of 
+the categorical process $(X_t)$. However, an essential component of 
+time series analysis is the study of serial dependence. Recall that 
+the most widely used measures to describe such dependence are the 
+ordinal and nominal Cohen's $\kappa$ (Definition~\ref{def:cohens-kappa}). 
+To estimate these measures, we again rely on relative frequencies:
+\[
+    \hat{\kappa}_{\mathrm{ord}}(h) 
+    = \frac{\sum_{j=0}^{m-1}\left(\hat{f}_{jj}^*(h) 
+    - \bigl(\hat{f}^*_j\bigr)^2\right)}{\sum_{i=0}^{m-1}
+    \hat{f}^*_i\bigl(1-\hat{f}_i^*\bigr)}.
+\]
+Hence, it remains to define the estimator $\hat{f}^*_{ij}(h)$ for the 
+bivariate lag-$h$ probabilities $f_{ij}(h)$. As before, we begin with 
+the naive estimator given by the bivariate relative frequency of the 
+amplitude-modulated binarizations,
+\[
+    \hat{\mathfrak{f}}_{ij}(h) 
+    = \frac{1}{n-h}\sum_{t=h+1}^{n} O_t\, O_{t-h}\, Z_{t,i}\, Z_{t-h,j},
+\]
+and compute its expectation:
+\begin{align*}
+    \mathrm{E}\!\left[\hat{\mathfrak{f}}_{ij}(h)\right]
+    &= \frac{1}{n-h}\sum_{t=h+1}^{n}
+       \mathrm{E}\!\left[O_t O_{t-h} Z_{t,i} Z_{t-h,j}\right] \\
+    &= \frac{1}{n-h}\sum_{t=h+1}^{n}
+       \mathrm{E}\!\left[O_t O_{t-h}\right] \cdot 
+       \mathrm{E}\!\left[Z_{t,i} Z_{t-h,j}\right] \\
+    &= \left(\frac{1}{n-h}\sum_{t=h+1}^{n}
+       \mathrm{E}\!\left[O_t O_{t-h}\right]\right) f_{ij}(h),
+\end{align*}
+where the second equality follows from the independence of $(O_t)$ 
+and $(X_t)$, and the third from the stationarity of $(X_t)$. This 
+motivates the corrected estimator
+\[
+    \hat{f}^*_{ij}(h)
+    = \frac{\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} 
+      O_t\, O_{t-h}\, Z_{t,i}\, Z_{t-h,j}}
+      {\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} O_t\, O_{t-h}}
+    =: \hat{\mathfrak{f}}_{ij}(h) \big/ \overline{OO}_{\,h}.
+\]
+As in Section~\ref{sec:Amp Mod}, the properties of this estimator 
+depend on whether $(O_t)$ is deterministic or stochastic. If $(O_t)$ 
+is deterministic, then $O_t$ and $O_{t-h}$ are known constants for 
+all $t$, and the corrected estimator is exactly unbiased. In the 
+stochastic case, both numerator and denominator are random and depend 
+on the same process $(O_t)$, so that in general
+\[
+    \mathrm{E}\!\left[\frac{\hat{\mathfrak{f}}_{ij}(h)}
+    {\overline{OO}_{\,h}}\right] \neq 
+    \frac{\mathrm{E}\!\left[\hat{\mathfrak{f}}_{ij}(h)\right]}
+    {\mathrm{E}\!\left[\overline{OO}_{\,h}\right]},
+\]
+and hence $\hat{f}^*_{ij}(h)$ is generally biased.
+
+\subsection{Asymptotic distribution under the general model}
+\label{subsec:serial-general}
+
+To derive the asymptotic distribution of $\hat{f}^*_{ij}(h)$, we 
+proceed analogously to Section~\ref{sec:Amp Mod} and apply the 
+Cramér--Wold device to the sample mean of a suitably defined 
+binary vector:
+\begin{align*}
+    \boldsymbol{Z}^{(h)*}_t 
+    &= \left(
+        Z_{t,-2}^{(h)*},\;
+        Z_{t,-1}^{(h)*},\;
+        \overbrace{\ldots,\, Z_{t,i}^{(h)*},\, \ldots}^{i=0,\,\ldots,\,m-1},\;
+        \overbrace{\ldots,\, Z_{t,m+j}^{(h)*},\, \ldots}^{j=0,\,\ldots,\,m-1}
+       \right)^\top\\
+    &:= \left(
+        O_t O_{t-h},\;
+        \underbrace{O_t,\, \ldots,\, O_{t} Z_{t,i},\, \ldots}_{=\,\boldsymbol{Z}^*_t},\;
+        \ldots,\, O_t O_{t-h} Z_{t,j} Z_{t-h,j},\, \ldots
+        \right)^\top.
+\end{align*}
+The components of $\boldsymbol{Z}^{(h)*}_t$ are indexed from $-2$ to 
+$2m-1$: the component at index $-2$ captures the product $O_tO_{t-h}$, 
+the components at indices $-1$ through $m-1$ coincide with 
+$\boldsymbol{Z}_t^*$ from Section~\ref{sec:Amp Mod}, and the remaining 
+components at indices $m$ through $2m-1$ capture the lag-$h$ interaction 
+terms $O_tO_{t-h}Z_{t,j}Z_{t-h,j}$. Since $\kappa_{\mathrm{ord}}$ 
+depends only on the diagonal frequencies $\hat{f}^*_{jj}(h)$, it 
+suffices to include the corresponding diagonal components in 
+$\boldsymbol{Z}_t^{(h)*}$. Should one wish to study a dependence 
+measure that also involves off-diagonal frequencies $\hat{f}^*_{ij}(h)$ 
+with $i \neq j$, the vector can straightforwardly be extended by the 
+additional components $O_t O_{t-h} Z_{t,i} Z_{t-h,j}$.
+
+Since $\boldsymbol{Z}^{(h)*}_t$ is a measurable function of 
+$(O_t, O_{t-h}, X_t, X_{t-h})$, it inherits strict stationarity 
+and $\alpha$-mixing with exponentially decaying coefficients from 
+the underlying processes (by the same argument as in 
+Section~\ref{sec:Amp Mod}), and all moment conditions are trivially 
+satisfied as its components are bounded indicator variables. 
+The Cramér--Wold device therefore yields
+\[
+    \sqrt{n}\!\left(\bar{\boldsymbol{Z}}^{(h)*}_n - 
+    \boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}\right) 
+    \xrightarrow{d} \mathcal{N}\!\left(\boldsymbol{0},\, 
+    \boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}\right),
+\]
+where $\bar{\boldsymbol{Z}}^{(h)*}_n := \frac{1}{n}\sum_{t=1}^{n} 
+\boldsymbol{Z}^{(h)*}_t$ and
+\[
+    \boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}} 
+    = \bigl(\pi(h),\, \pi,\, \pi\boldsymbol{f}^\top,\, 
+      \pi(h)f_{00}(h),\, \ldots,\, 
+      \pi(h)f_{m-1,m-1}(h)\bigr)^\top.
+\]
+To obtain the joint asymptotic distribution of $\hat{f}^*_i$ and 
+$\hat{f}^*_{jj}(h)$ for all $i,j = 0,\ldots,m-1$, we define the 
+vector-valued function $\boldsymbol{g}\colon [0,1]^{2(m+1)} \to 
+[0,1]^{2m}$ by
+\[
+    g_j(\boldsymbol{x}) = \begin{cases}
+        x_j / x_{-1} & \text{for } j = 0,\ldots,m-1, \\
+        x_j / x_{-2} & \text{for } j = m,\ldots,2m-1,
+    \end{cases}
+\]
+so that $\hat{\boldsymbol{f}}^{(h)*} := \boldsymbol{g}(\bar{\boldsymbol{Z}}^{(h)*}_n)$ 
+and $\boldsymbol{\mu}^{(h)*} := \boldsymbol{g}(\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}) 
+= (f_0,\ldots,f_{m-1}, f_{00}(h),\ldots,f_{m-1,m-1}(h))^\top$.
+By the multivariate delta method \citep[Chapter~3]{VanderVaart1998}, 
+\[
+    \sqrt{n}\!\left(\hat{\boldsymbol{f}}^{(h)*} - \boldsymbol{\mu}^{(h)*}\right)
+    \xrightarrow{d} \mathcal{N}\!\left(\boldsymbol{0},\, 
+    \boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}\right),
+\]
+where $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}} = \boldsymbol{G} 
+\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}} \boldsymbol{G}^\top$ and 
+the Jacobian $\boldsymbol{G}$ evaluated at 
+$\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}$ is given by
+\begin{align*}
+    \boldsymbol{G}_{2m \times 2(m+1)} 
+    &= \begin{pmatrix}
+    0 & \frac{-f_0}{\pi} & \frac{1}{\pi}& 0 &\cdots&&\cdots & 0 \\
+    \vdots &\vdots & 0 &\ddots & \ddots &&& \vdots \\
+    0 & \frac{-f_{m-1}}{\pi}& \vdots & \ddots & \frac{1}{\pi} & & &\vdots\\
+    \frac{-f_{00}(h)}{\pi(h)} & 0 & & & & \frac{1}{\pi(h)}&\ddots&\vdots\\
+    \vdots & \vdots & \vdots & & & \ddots & \ddots&0\\
+    \frac{-f_{m-1,m-1}(h)}{\pi(h)} & 0 & 0 & \cdots& &\cdots & 0&\frac{1}{\pi(h)}      
+    \end{pmatrix}.
+\end{align*}
+The individual elements $\sigma^{(h)*}_{i,j}$ of 
+$\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ are obtained by carrying 
+out the matrix multiplication $\boldsymbol{G}\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}\boldsymbol{G}^\top$ 
+row by row, distinguishing three cases according to whether the indices 
+correspond to marginal or bivariate components:
+{\allowdisplaybreaks
+\begin{align*}
+    &\textbf{(i)}\ i,j = 0, \ldots, m-1: \\
+    &\quad \sigma^{(h)*}_{i,j} = \frac{1}{\pi}\left(f_{\min\{i,j\}} - f_i f_j\right) 
+           + \sum_{k=1}^{\infty} \pi(k) \left(f_{ij}(k) + f_{ji}(k) 
+           - 2f_i f_j\right) 
+           = \sigma_{\hat{\boldsymbol{f}}^*;\,i,j} \\[1ex]
+    &\textbf{(ii)}\ i = 0, \ldots, m-1,\ j = m, \ldots, 2m-1\ (j' = j-m): \\
+    &\quad \sigma^{(h)*}_{i,j} = \frac{1}{\pi(h)\,\pi} \left(
+            2\pi(h)\,f_{j'}\bigl(f_{\min\{i,j'\}} - f_i f_{j'}\bigr) 
+          + f_i f_{j'}^2\,\sigma^{(h)}_{-1,-2} 
+          - f_{j'j'}(h)\,f_i\,\sigma^{(h)}_{-1,-2}\right) \\[1ex]
+    &\textbf{(iii)}\ i,j = m, \ldots, 2m-1\ (i' = i-m,\ j' = j-m): \\
+    &\quad \sigma^{(h)*}_{i,j} = \frac{1}{\pi(h)^2}\Bigl(
+        f_{i'i'}(h)f_{j'j'}(h)\,\sigma^{(h)}_{-2,-2} 
+        - 2f_{i'i'}(h)f_{j'j'}(h)\,\sigma^{(h)}_{-2,-2} 
+        + \sigma^{(h)}_{i,j}\Bigr)
+\end{align*}}
+
+\subsection{Asymptotic null distribution under $H_0$}
+\label{subsec:serial-H0}
+
+To derive the asymptotic null distribution of $\hat{\kappa}_{\mathrm{ord}}(h)$, 
+we evaluate $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$ under the null 
+hypothesis that $(X_t)$ is i.i.d. Under $H_0$, $f_{ij}(h) = f_if_j$ 
+for all $h \geq 1$, which considerably simplifies the higher-order 
+moments of $\boldsymbol{Z}^{(h)*}_t$. Before computing the individual 
+elements $\sigma^{(h)}_{ij}$ of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$, 
+we collect the relevant higher-order moments under $H_0$, which will 
+be used repeatedly in the calculations below:
+\begin{align*}
+    &\mathrm{E}[Z_{t,i}Z_{t-h,i}Z_{t-k,j}Z_{t-k-h,j}]
+    -f_{ii}(h)f_{jj}(h) = \begin{cases}
+        f^2_{\min\{i,j\}} - f_i^2f_j^2 & \text{if } k = 0,\\
+        f_i f_j f_{\min\{i,j\}} - f_i f_j^2 & \text{if } k = h,\\
+        0 & \text{else.}
+    \end{cases}\\
+    &\mathrm{E}[Z_{t+k,i} Z_{t,j}Z_{t-h,j}] - f_i f_{jj}(h) = \begin{cases}
+        f_j f_{\min\{i,j\}} - f_i f_j^2 & \text{if } k = 0, \\
+        0 & \text{else.}
+    \end{cases}\\
+    &\mathrm{E}[Z_{t,i} Z_{t+k,j}Z_{t+k-h,j}] - f_i f_{jj}(h) = \begin{cases}
+        f_j f_{\min\{i,j\}} - f_i f_j^2 & \text{if } k = 0 \text{ or } k = h, \\
+        0 & \text{else.}
+    \end{cases}
+\end{align*}
+With these simplifications, the elements $\sigma^{(h)}_{ij}$ of 
+$\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$ under $H_0$ are as 
+follows:
+{\small\allowdisplaybreaks
+\begin{align*}
+&\textbf{(i)}\ i = j = -2: \\
+&\quad \pi(h)(1-\pi(h)) + 2\sum_{k=1}^{\infty}
+\bigl(\mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}]-\pi(h)^2\bigr) \\[2ex]
+&\textbf{(ii)}\ i = -2,\ j = -1: \\
+&\quad (1-\pi)\pi(h) 
++ \sum_{k=1}^{\infty} \bigl[\mathrm{E}[O_t O_{t-h} O_{t+k}] 
++ \mathrm{E}[O_{t+k}O_{t+k-h} O_t] - 2\pi\pi(h)\bigr] \\[2ex]
+&\textbf{(iii)}\ i = -2,\ j = 0, \ldots, m-1: \\
+&\quad f_j\Bigl((1-\pi)\pi(h) 
++ \sum_{k=1}^{\infty}\bigl[\mathrm{E}[O_t O_{t-h} O_{t+k}]
++ \mathrm{E}[O_t O_{t+k} O_{t+k-h}]- 2\pi\pi(h)\bigr]\Bigr)
+=: f_j\,\sigma^{(h)}_{-2,-1} \\[2ex]
+&\textbf{(iv)}\ i = -2,\ j = m, \ldots, 2m-1: \\
+&\quad f_{(j-m),(j-m)}(h)\Bigl(\pi(h)(1-\pi(h)) 
++ 2\sum_{k=1}^{\infty}\bigl[\mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}]
+- \pi(h)^2\bigr]\Bigr)
+=: f_{(j-m),(j-m)}(h)\,\sigma^{(h)}_{-2,-2} \\[2ex]
+&\textbf{(v)}\ i = j = -1: \\
+&\quad \sigma_{\boldsymbol{Z}^*;\,-1,-1}\\[2ex]
+&\textbf{(vi)}\ i = -1,\ j = 0, \ldots, m-1: \\
+&\quad f_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1} \\[2ex]
+&\textbf{(vii)}\ i = -1,\ j = m, \ldots, 2m-1: \\
+&\quad f_{(j-m),(j-m)}(h)\,\sigma^{(h)}_{-2,-1} \\[2ex]
+&\textbf{(viii)}\ i,j = 0, \ldots, m-1: \\
+&\quad \sigma_{\boldsymbol{Z}^*;\,i,j} 
+= f_i f_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1} 
++ \pi(f_{\min\{i,j\}}- f_i f_j)  
++ \sum_{k=1}^{\infty} \pi(k)\bigl(f_{ij}(k) + f_{ji}(k) - 2f_i f_j\bigr) \\[2ex]
+&\textbf{(ix)}\ i = 0, \ldots, m-1,\ j = m, \ldots, 2m-1: \\
+&\quad \overset{H_0}{=}\ 
+2\pi(h)\bigl(f_{(j-m)}f_{\min\{i,j-m\}} - f_i f_{j-m}^2\bigr) 
++ f_i f_{j-m}^2\,\sigma^{(h)}_{-1,-2}\\[2ex]
+&\textbf{(x)}\ i,j = m, \ldots, 2m-1: \\
+&\quad \overset{H_0}{=}\ 
+\pi(h)\bigl(f_{\min\{i-m,j-m\}}^2 - f_{i-m}^2 f_{j-m}^2\bigr) 
++ 2\pi(h,2h)f_{i-m}f_{j-m}\bigl(f_{\min\{i-m,j-m\}} 
+- f_{i-m}f_{j-m}\bigr)
++ f_{i-m}^2 f_{j-m}^2\,\sigma^{(h)}_{-2,-2},
+\end{align*}}
+where $\pi(h,2h) := \mathrm{E}[O_t O_{t+h} O_{t-h}]$.
+Substituting these into cases \textbf{(i)--(iii)} of 
+$\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ and evaluating under 
+$H_0$ yields:
+{\allowdisplaybreaks\begin{align*}
+    &\textbf{(i)}\ i,j = 0, \ldots, m-1: \\
+    &\quad \sigma^{(h)*}_{i,j} \overset{H_0}{=} 
+        \frac{1}{\pi}\left(f_{\min\{i,j\}} - f_i f_j\right) \\[1ex]
+    &\textbf{(ii)}\ i = 0,\ldots,m-1,\ j = m,\ldots,2m-1\ (j'=j-m):\\
+    &\quad \sigma^{(h)*}_{i,j} \overset{H_0}{=} 
+        \frac{2}{\pi}\,f_{j'}\!\left(f_{\min\{i,j'\}} - f_i f_{j'}\right)
+        = 2f_{j'}\,\sigma^{(h)*}_{i,j'} \\[1ex]
+    &\textbf{(iii)}\ i,j = m,\ldots,2m-1\ (i'=i-m,\ j'=j-m):\\
+    &\quad \sigma^{(h)*}_{i,j} \overset{H_0}{=} 
+        \frac{1}{\pi(h)^2}(f_{\min\{i',j'\}}-f_{i'}f_{j'})
+        \Bigl(\pi(h)(f_{\min\{i',j'\}}-f_{i'}f_{j'}) 
+        + 2\pi(h,2h)f_{i'}f_{j'}\Bigr)
+\end{align*}}
+Applying the delta method to 
+$\kappa_{\mathrm{ord}} = A/B$ where $A = \sum_{j=0}^{m-1}(f_{jj}(h)-f_j^2)$ 
+and $B = \sum_{j=0}^{m-1}f_j(1-f_j)$, the relevant Jacobian is
+\[\boldsymbol{D}_{\kappa} := \left(d_{1,0}, \ldots, d_{1,m-1}, 
+d_{2,0}, \ldots, d_{2,m-1}\right),\]
+where for $i = 0,\ldots,m-1$:
+\begin{align*}
+    \textbf{(i)}\ d_{1;i} 
+    &= \frac{\partial\kappa_{\mathrm{ord}}}{\partial f_i}
+    = \frac{-2f_i}{B} - \frac{(1-2f_i)A}{B^2}, \\
+    \textbf{(ii)}\ d_{2;i} 
+    &= \frac{\partial\kappa_{\mathrm{ord}}}{\partial f_{ii}(h)}
+    = \frac{1}{B}.
+\end{align*}
+Plugging the derivatives and the elements of 
+$\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ into the delta method 
+formula and evaluating under $H_0$ yields
+\begin{align*}
+    \sigma^2_\kappa 
+    &= \boldsymbol{D}_{\kappa}
+       \boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}
+       \boldsymbol{D}_{\kappa}^\top \\
+    &= \frac{\frac{1}{\pi(h)}\displaystyle\sum_{i,j=0}^{m-1} 
+      \bigl(f_{\min\{i,j\}}-f_if_j\bigr)
+      \Bigl(f_{\min\{i,j\}} 
+      + \Bigl(1 + \dfrac{2\pi(h,2h)}{\pi(h)} 
+      - \dfrac{4\pi(h)}{\pi}\Bigr)f_if_j\Bigr)}
+     {\left(\displaystyle\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}.
+\end{align*}
+Building on this, we now investigate the finite-sample bias by means 
+of a second-order Taylor expansion. Since the linear term 
+$\boldsymbol{D}_\kappa(\hat{\boldsymbol{f}}^{(h)*} - \boldsymbol{\mu}^{(h)*})$ 
+has expectation of order $o(n^{-1})$, it does not contribute to the 
+leading bias term, and the $O(n^{-1})$ bias reduces by 
+\cref{lem:quadform} to
+\[
+    \mathrm{Bias}(\hat{\kappa}_{\mathrm{ord}})
+    = \frac{1}{2}\,\mathrm{tr}\!\left(
+      \boldsymbol{H}_{\kappa}\,\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}
+      \right) + o(n^{-1}).
+\]
+The elements of the Hessian $\boldsymbol{H}_{\kappa}$ are given by
+\begin{align*}
+    \frac{\partial d_{1,i}}{\partial f_j} 
+    &= \begin{cases}
+        2\!\left(\dfrac{2f_i - 4f_i^2}{B^2} 
+        - \dfrac{1}{B}\right) & \text{if } i = j, \\[1ex]
+        2\,\dfrac{f_i + f_j - 4f_if_j}{B^2} & \text{if } i \neq j,
+    \end{cases} \\[1ex]
+    \frac{\partial d_{1,i}}{\partial f_{jj}(h)} 
+    &= \frac{-(1-2f_i)}{B^2}, \qquad
+    \frac{\partial d_{2,i}}{\partial f_j} 
+    = \frac{-(1-2f_j)}{B^2}, \qquad
+    \frac{\partial d_{2,i}}{\partial f_{jj}(h)} = 0,
+\end{align*}
+with detailed derivations given in Appendix~\ref{app:Hessian}.
+Evaluating $\frac{1}{2}\mathrm{tr}(\boldsymbol{H}_\kappa 
+\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}})$ under $H_0$ then yields
+\[
+    \mathrm{Bias}(\hat{\kappa}_{\mathrm{ord}}) 
+    \overset{H_0}{=} -\frac{1}{\pi},
+\]
+where we used $\sigma^{(h)*}_{i,m+l} = 2f_l\sigma^{(h)*}_{i,l}$ from 
+case \textbf{(ii)} of $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ 
+and symmetry $\sigma^{(h)*}_{i,l} = \sigma^{(h)*}_{l,i}$. The detailed 
+calculation is carried out in Appendix~\ref{app:Hessian}.
+The results are summarized in the following theorem.
+
+\begin{theorem}[Asymptotic distribution and bias of 
+$\hat{\kappa}_{\mathrm{ord}}(h)$]
+\label{thm:kappa-asymp}
+Let the assumptions of \cref{thm:clt_fstarhat} hold and denote
+\[
+    \pi(h_1,\ldots,h_r) := \mathrm{E}[O_0\cdot O_{h_1}\cdots O_{h_r}].
+\]
+Then, under the null hypothesis $H_0$ that $(X_t)$ is i.i.d., the 
+following hold as $n\to\infty$:
+\begin{enumerate}
+    \item \textbf{Asymptotic normality.} The estimator 
+    $\hat{\kappa}_{\mathrm{ord}}(h)$ satisfies
+    \[
+        \sqrt{n}\,\hat{\kappa}_{\mathrm{ord}}(h) 
+        \xrightarrow{d} \mathcal{N}(0, \sigma^2_\kappa),
+    \]
+    where
+    \[
+        \sigma^2_\kappa =
+        \frac{
+            \frac{1}{\pi(h)} \sum_{i,j=0}^{m-1}
+            \bigl(f_{\min\{i,j\}} - f_i f_j\bigr)
+            \Bigl(
+                f_{\min\{i,j\}} 
+                + \Bigl(
+                    1 + \frac{2\pi(h,2h)}{\pi(h)} 
+                    - \frac{4\pi(h)}{\pi}
+                \Bigr) f_i f_j
+            \Bigr)
+        }{
+            \left(\sum_{k=0}^{m-1} f_k(1-f_k)\right)^2
+        }.
+    \]
+    \item \textbf{Finite-sample bias.} The approximate bias of 
+    $n\hat{\kappa}_{\mathrm{ord}}(h)$ under $H_0$ is
+    \[
+        \mathrm{Bias}\bigl(n\hat{\kappa}_{\mathrm{ord}}(h)\bigr) 
+        \approx -\frac{1}{\pi},
+    \]
+    so that the bias-corrected estimator is
+    \[
+        \hat{\kappa}^{\mathrm{bc}}_{\mathrm{ord}}(h) 
+        := \hat{\kappa}_{\mathrm{ord}}(h) + \frac{1}{n\pi}.
+    \]
+\end{enumerate}
+\end{theorem}
+
+\subsection{Consistency under $H_A$}
+\label{subsec:serial-HA}
+
+Under the alternative hypothesis $H_A$ that $(X_t)$ is not i.i.d., 
+there exists at least one lag $h\geq 1$ such that 
+$\kappa_{\mathrm{ord}}(h) \neq 0$. Since $\hat{\kappa}_{\mathrm{ord}}(h)$ 
+is a continuous function of the sample frequencies $\hat{f}^*_i$ and 
+$\hat{f}^*_{ii}(h)$, which are consistent estimators of $f_i$ and 
+$f_{ii}(h)$ respectively, the continuous mapping theorem yields
+\[
+    \hat{\kappa}_{\mathrm{ord}}(h) \xrightarrow{p} 
+    \kappa_{\mathrm{ord}}(h) \neq 0.
+\]
+Consequently, the test statistic $\sqrt{n}\,\hat{\kappa}_{\mathrm{ord}}(h)$ 
+diverges in probability under $H_A$, which establishes consistency of 
+the test.
 
 So far, we have only examined aspects of the marginal distribution of 
 the categorical process $(X_t)$. However, an essential component of 
@@ -997,7 +1451,7 @@ motivates the corrected estimator
     = \frac{\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} 
       O_t\, O_{t-h}\, Z_{t,i}\, Z_{t-h,j}}
       {\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} O_t\, O_{t-h}}
-    =: \hat{\mathfrak{f}}_{ij}(h) \big/ \overline{O_t O_{t-h}}.
+    =: \hat{\mathfrak{f}}_{ij}(h) \big/ \overline{O O}_{\,h}.
 \]
 As in Section~\ref{sec:Amp Mod}, the properties of this estimator 
 depend on whether $(O_t)$ is deterministic or stochastic. If $(O_t)$ 
@@ -1014,15 +1468,14 @@ all $t$, and the expectation of the corrected estimator simplifies to
      = f_{ij}(h),
 \end{align*}
 so the corrected estimator is unbiased in the deterministic case. 
-In the stochastic case, however, since numerator and denominator are both 
-random, we have in general
+In the stochastic case, however, both numerator and denominator are random and, moreover, depend on the same process $(O_t)$. In particular, the terms $O_t O_{t-h}$ appear in both, so that numerator and denominator are generally dependent. As a consequence, the expectation of the ratio does not simplify, and in general
 \[
     \mathrm{E}\!\left[\frac{\hat{\mathfrak{f}}_{ij}(h)}
-    {\overline{O_t O_{t-h}}}\right] \neq 
+    {\overline{O O}_{\,h}}\right] \neq 
     \frac{\mathrm{E}\!\left[\hat{\mathfrak{f}}_{ij}(h)\right]}
-    {\mathrm{E}\!\left[\overline{O_t O_{t-h}}\right]},
+    {\mathrm{E}\!\left[\overline{O O}_{\,h}\right]}.
 \]
-and hence $\hat{f}^*_{ij}(h)$ is generally biased. To derive the asymptotic distribution of $\hat{f}^*_{ij}(h)$, we 
+Hence, $\hat{f}^*_{ij}(h)$ is generally biased. To derive the asymptotic distribution of $\hat{f}^*_{ij}(h)$, we 
 proceed analogously to Section~\ref{sec:Amp Mod} and apply the 
 Cram\'er--Wold device to the sample mean of a suitably defined 
 binary vector:
@@ -1253,9 +1706,9 @@ of $\boldsymbol{g}$ evaluated at $\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}$:
 
 \begin{align*}
     &\boldsymbol{G}_{2m \times 2(m+1)} = \begin{pmatrix}
-        \frac{g_0(\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}})}{\delta x_{-2}}& \cdots & \frac{g_0(\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}})}{\delta x_{2m - 1}}\\
+        \frac{\partial g_0(\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}})}{\partial x_{-2}}& \cdots & \frac{\partial g_0(\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}})}{\partial x_{2m - 1}}\\
         \vdots& \ddots &\vdots \\
-        \frac{g_{j+m-1}(\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}})}{\delta x_{-2}}& \cdots & \frac{g_{j+m-1}\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}})}{\delta x_{2m - 1}} 
+        \frac{\partial g_{j+m-1}(\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}})}{\partial x_{-2}}& \cdots & \frac{ \partial g_{j+m-1}\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}) }{\partial x_{2m - 1}} 
     \end{pmatrix} \\
     &= 
     \begin{pmatrix}
@@ -1275,7 +1728,7 @@ By the multivariate delta method, the asymptotic covariance matrix of $\sqrt{n}(
         \frac{-f_{m-1}}{\pi} \sigma^{(h)}_{-1, -2} + \frac{1}{\pi} \sigma^{(h)}_{m-1, -2} & \cdots & \frac{-f_{m-1}}{\pi} \sigma^{(h)}_{-1, 2m-1} +  \frac{1}{\pi} \sigma^{(h)}_{m-1, 2m-1} \\
         \frac{-f_{00}(h)}{\pi(h)} \sigma^{(h)}_{-2, -2} + \frac{1}{\pi(h)} \sigma^{(h)}_{m, -2} & \cdots & \frac{-f_{00}(h)}{\pi(h)} \sigma^{(h)}_{-2, 2m-1} +  \frac{1}{\pi(h)} \sigma^{(h)}_{m, 2m-1} \\
         \vdots &\ddots& \vdots \\
-        \frac{f_{m-1}(h)}{\pi(h)} \sigma^{(h)}_{-2, -2} + \frac{1}{\pi(h)} \sigma^{(h)}_{2m-1, -2} & \cdots & \frac{-f_{m-1, m-1}(h)}{\pi(h)} \sigma^{(h)}_{-2, 2m-1} +  \frac{1}{\pi(h)} \sigma^{(h)}_{2m-1, 2m-1}
+        \frac{f_{m-1, m-1}(h)}{\pi(h)} \sigma^{(h)}_{-2, -2} + \frac{1}{\pi(h)} \sigma^{(h)}_{2m-1, -2} & \cdots & \frac{-f_{m-1, m-1}(h)}{\pi(h)} \sigma^{(h)}_{-2, 2m-1} +  \frac{1}{\pi(h)} \sigma^{(h)}_{2m-1, 2m-1}
     \end{pmatrix} \boldsymbol{G}^\top.
 \end{align*}
 To obtain explicit expressions for the individual elements $\sigma_{i,j}^{(h)*}$, 
@@ -1283,7 +1736,7 @@ we distinguish three cases according to whether the indices correspond to margin
 {\allowdisplaybreaks
 \begin{align*}
     &\textbf{(i)}\ i = 0, \ldots, m-1,\ j = 0, \ldots, m-1: \\
-    &\quad \frac{-f_j}{\pi} \left(\frac{-f_i}{\pi} \sigma^{(h)}_{-1,-1} 
+    &\qquad \frac{-f_j}{\pi} \left(\frac{-f_i}{\pi} \sigma^{(h)}_{-1,-1} 
         + \frac{1}{\pi} \sigma^{(h)}_{i,-1}\right) 
       + \frac{1}{\pi} \left(\frac{-f_i}{\pi} \sigma^{(h)}_{-1,j} 
         + \frac{1}{\pi} \sigma^{(h)}_{i,j}\right) \\
@@ -1300,7 +1753,7 @@ we distinguish three cases according to whether the indices correspond to margin
     %
     &\textbf{(ii)}\ i = 0, \ldots, m-1,\ j = m, \ldots, 2m-1 
       \ (j' = j - m): \\
-    &\quad \frac{-f_{j'j'}(h)}{\pi(h)} 
+    &\qquad \frac{-f_{j'j'}(h)}{\pi(h)} 
         \left(\frac{-f_i}{\pi} \sigma^{(h)}_{-1,-2} 
             + \frac{1}{\pi} \sigma^{(h)}_{i,-2}\right) 
       + \frac{1}{\pi(h)} 
@@ -1321,7 +1774,7 @@ we distinguish three cases according to whether the indices correspond to margin
     %
     &\textbf{(iii)}\ i = m, \ldots, 2m-1,\ j = m, \ldots, 2m-1 
       \ (i' = i-m,\ j' = j-m): \\
-    &\quad \frac{-f_{j'j'}(h)}{\pi(h)}
+    &\qquad \frac{-f_{j'j'}(h)}{\pi(h)}
         \left(\frac{-f_{i'i'}(h)}{\pi(h)}\sigma_{-2,-2}^{(h)} 
             + \frac{1}{\pi(h)} \sigma^{(h)}_{i,-2}\right)
         + \frac{1}{\pi(h)}
@@ -1333,24 +1786,26 @@ we distinguish three cases according to whether the indices correspond to margin
     &\quad = \frac{1}{\pi(h)^2}(f_{\min\{i', j'\}}- f_{i'} f_{j'}) \Bigl(\pi(h)(f_{\min\{i', j'\}}- f_{i'} f_{j'})+ 2\pi(h, 2h)f_{i'}f_{j'}\Bigr)
 \end{align*}}
 To derive the asymptotic variance of $\hat{\kappa}$, we apply the delta method to $\kappa = \frac{\sum_{j=0}^{m-1}(f_{jj}(h)-f_j^2)}{\sum_{j=0}^{m-1}f_j(1-f_j)}$. 
-The required partial derivatives are, for each $i = 0, \ldots, m-1$:
+The relevant Jacobian is given by 
+\[\boldsymbol{D}_{\kappa} := \left(d_{1,0}, \ldots, d_{1,m-1}, d_{2,0}, \ldots, d_{2,m-1}\right),\]
+where for  $i = 0, \ldots, m-1$
 \begin{align*}
-    &\textbf{(i)}\ d_{1; i} = \frac{\partial }{\partial f_i} \frac{\sum_{j=0}^{m-1}(f_{jj}(h)-f_j^2)}{\sum_{j=0}^{m-1}f_j(1-f_j)} \\  
-    &\quad = \frac{-2f_i \left(\sum_{j=0}^{m-1}f_j(1-f_j)\right) - (1-2f_i)\left(\sum_{j=0}^{m-1}(f_{jj}(h)-f_j^2)\right)}{\left(\sum_{j=0}^{m-1}f_j(1-f_j)\right)^2} \\
-    &\quad =  \frac{-2f_i }{\sum_{j=0}^{m-1}f_j(1-f_j)} - \frac{(1-2f_i)\left(\sum_{j=0}^{m-1}(f_{jj}(h)-f_j^2)\right)}{\left(\sum_{j=0}^{m-1}f_j(1-f_j)\right)^2} \\
+    \textbf{(i)}\ d_{1; i} &= \frac{\partial }{\partial f_i} \frac{\sum_{j=0}^{m-1}(f_{jj}(h)-f_j^2)}{\sum_{j=0}^{m-1}f_j(1-f_j)} \\  
+    &= \frac{-2f_i \left(\sum_{j=0}^{m-1}f_j(1-f_j)\right) - (1-2f_i)\left(\sum_{j=0}^{m-1}(f_{jj}(h)-f_j^2)\right)}{\left(\sum_{j=0}^{m-1}f_j(1-f_j)\right)^2} \\
+    &=  \frac{-2f_i }{\sum_{j=0}^{m-1}f_j(1-f_j)} - \frac{(1-2f_i)\left(\sum_{j=0}^{m-1}(f_{jj}(h)-f_j^2)\right)}{\left(\sum_{j=0}^{m-1}f_j(1-f_j)\right)^2} \\
     % '&\quad \overset{H_0}{=} \frac{-2f_i }{\sum_{j=0}^{m-1}f_j(1-f_j)}\\'[1ex]
-    &\textbf{(ii)}\ d_{2 ; i} = \frac{\partial }{\partial f_{ii}(h)} \frac{\sum_{j=0}^{m-1}(f_{jj}(h)-f_j^2)}{\sum_{j=0}^{m-1}f_j(1-f_j)} \\
-    &\quad = \frac{1}{\sum_{j=0}^{m-1}f_j(1-f_j)}.
+    \textbf{(ii)}\ d_{2 ; i} &= \frac{\partial }{\partial f_{ii}(h)} \frac{\sum_{j=0}^{m-1}(f_{jj}(h)-f_j^2)}{\sum_{j=0}^{m-1}f_j(1-f_j)} \\
+    &= \frac{1}{\sum_{j=0}^{m-1}f_j(1-f_j)}.
 \end{align*}
 Plugging  the derivates and the elements of $\boldsymbol{\Sigma}_{\boldsymbol{f}(h)*}$ into the delta method formula and evaluating under $H_0$ yields
 
 {\allowdisplaybreaks\begin{align*}
     &\boldsymbol{D}_{\kappa}\boldsymbol{\Sigma}_{\boldsymbol{f}(h)^*}\boldsymbol{D}_{\kappa}^\top \\
     & \quad = \sum_{i,j=0}^{m-1} d_{1, i}\, d_{1, j}\, \sigma^{(h)*}_{i,j}
-    + 2\sum_{i=0}^{m-1}\sum_{j=0}^{m-1} d_{1, i}\, d_{2, j}\, \sigma^{(h)*}_{i,\,j+m}
+    + 2\sum_{i,j=0}^{m-1} d_{1, i}\, d_{2, j}\, \sigma^{(h)*}_{i,\,j+m}
     + \sum_{i,j=0}^{m-1} d_{2, i}\, d_{2,j}\, \sigma^{(h)*}_{i+m,\,j+m} \\
     &\quad = \sum_{i,j=0}^{m-1} \frac{4f_i f_j}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \sigma^{(h)*}_{i,j}
-    + 2\sum_{i=0}^{m-1}\sum_{j=0}^{m-1} \frac{-2 f_i }{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\, \sigma^{(h)*}_{i,\,j+m} \\
+    + 2\sum_{i,j=0}^{m-1} \frac{-2 f_i }{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\, \sigma^{(h)*}_{i,\,j+m} \\
     &\qquad+ \sum_{i,j=0}^{m-1} \frac{1}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\, \sigma^{(h)*}_{i+m,\,j+m} \\
     &\quad = \frac{1}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \sum_{i,j=0}^{m-1}  \left(4 f_i f_j \sigma^{(h)*}_{i,j} - 4 f_ i \sigma^{(h)*}_{i,j+m} + \sigma^{(h)*}_{i+m,j+m} \right) \\
     &\quad = \frac{1}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \sum_{i,j=0}^{m-1} \Bigl(4 f_i f_j \frac{1}{\pi} (f_{\min\{i,j\}}-f_i f_j) - 4f_i \frac{2}{\pi} f_j (f_{ \min\{i,j\} } -f_i f_j) \\
@@ -1359,36 +1814,44 @@ Plugging  the derivates and the elements of $\boldsymbol{\Sigma}_{\boldsymbol{f}
     &\qquad +(f_{\min\{i,j\}}-f_i f_j)^2+  (f_{\min\{i,j\}}-f_i f_j) \frac{2\pi(h, 2h)}{\pi(h)}f_i f_j \Bigr) \\
     &\quad= \frac{\frac{1}{\pi(h)}\sum_{i,j =0}^{m-1} \Bigl(f_{\min\{i,j\}}-f_i f_j\Bigr)\Bigl(f_{\min\{i,j\}} + (1+ 2\frac{\pi(h, 2h)}{\pi(h)} - 4\frac{\pi(h)}{\pi})f_i f_j\Bigr)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} 
 \end{align*}}
-Building on the variance derivation above, we now investigate the finite-sample bias by means of a second-order Taylor expansion.\\
-The elements $h_{i,i}, ~ i = 0 \ldots, 2m-1$ of the corresponding Hessian $\boldsymbol{H}_{\kappa}$ are given by
-
+Building on the variance derivation above, we now investigate the 
+finite-sample bias by means of a second-order Taylor expansion.
+Since the linear term $\boldsymbol{D}_\kappa(\hat{\boldsymbol{f}}^{(h)*} 
+- \boldsymbol{\mu}^{(h)*})$ has expectation of order $o(n^{-1})$, 
+it does not contribute to the leading bias term, and the 
+$O(n^{-1})$ bias reduces to
+\[
+    \mathrm{Bias}(\hat{\kappa}_{\mathrm{ord}})
+    = \frac{1}{2}\,\mathrm{tr}\!\left(
+      \boldsymbol{H}_{\kappa}\,\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}
+      \right) + o(n^{-1}),
+\]
+by lemma \ref{lem:quadform}.
+The elements $h_{i,i}$ for $i = 0,\ldots, 2m-1$ of the Hessian 
+$\boldsymbol{H}_{\kappa}$ are given by
 \begin{align*}
-    & \frac{\partial d_{1,i}}{\partial f_j} 
-    =  \begin{cases}
+     \frac{\partial d_{1,i}}{\partial f_j} 
+    &=  \begin{cases}
         2\left(\frac{2f_i - 4 f_i^2}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{1}{\sum_{k=0}^{m-1}f_k(1-f_k)}\right) &\text{ if } i=j \\
         2\frac{f_i+ f_j - 4f_i f_j}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} & \text{ if } i \neq j
     \end{cases} \\
-    &\frac{\partial d_{1,i}}{\partial f_{jj}(h)} 
-    = \frac{-(1-2f_i)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
-    &\frac{\partial d_{2,i}}{\partial f_{j}} 
-    = \frac{-(1-2f_j)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
-    &\frac{\partial d_{2,i}}{\partial f_{jj}(h)} 
-    = 0.
+    \frac{\partial d_{1,i}}{\partial f_{jj}(h)} 
+    &= \frac{-(1-2f_i)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
+    \frac{\partial d_{2,i}}{\partial f_{j}} 
+    &= \frac{-(1-2f_j)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
+    \frac{\partial d_{2,i}}{\partial f_{jj}(h)} 
+    &= 0.
 \end{align*}
 Detailed derivations of $\frac{\partial d_{1,i}}{\partial f_j}$ can be found in Appendix~\ref{app:Hessian}.
-We can conclude that the bias of $\kappa_{ord}$ under the $H_0$ is given by 
-\begin{align*}
-    \mathrm{Bias}(\kappa_{\mathrm{ord}}) &= \frac{1}{2}\mathrm{tr}(\boldsymbol{H}_{\kappa} \boldsymbol{\Sigma}_{\boldsymbol{f}}^{(h)*})
-\end{align*}
-where the $i$-th diagonal element of 
+The $i$-th diagonal element of 
 $\boldsymbol{H}_{\kappa}\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ 
-is given by
+is denoted by
 \[
     \left[\boldsymbol{H}_{\kappa}
     \boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}\right]_{ii}
-    = \sum_{j=0}^{2m-1} h_{\kappa;\, i,j}\, \sigma^{(h)*}_{j,i}
+    = \sum_{j=0}^{2m-1} h_{\kappa;\, i,j}\, \sigma^{(h)*}_{j,i}.
 \]
-which can be distinguished into the two cases:
+These diagonal elements can be distinguished into the two cases:
 \begin{align*}
     &\textbf{(i)}\, i = 0, \ldots, m-1:\\
     &\left[\boldsymbol{H}_{\kappa}
