@@ -30,6 +30,22 @@ generate_O <- function(n, pi) {
   rbinom(n, 1, pi)
 }
 
+#' Generate missingness process dependent on X_t (MAR)
+#' 
+#' The observation probability increases with X_t, so that higher
+#' values of the process are more likely to be observed. This induces
+#' dependence between (O_t) and (X_t), violating the MCAR assumption.
+#'
+#' @param x    The realized time series (X_t values)
+#' @param m    Binomial parameter (max value of X_t)
+#' @param pi_low   Observation probability when X_t = 0
+#' @param pi_high  Observation probability when X_t = m
+generate_O_MAR <- function(x, m, pi_low = 0.5, pi_high = 0.9) {
+  pi_t <- pi_low + (pi_high - pi_low) * (x / m)
+  rbinom(length(x), 1, pi_t)
+}
+
+
 #' Generate i.i.d. Binomial process
 #' @param p  Success probability
 #' @param m  Binomial parameter
@@ -137,6 +153,50 @@ simulation <- function(n, m, p, r, pi, n_reps = 1000) {
   )
 }
 
+#' Simulation under MAR (missingness depends on X_t)
+#' @param n        Time series length
+#' @param m        Binomial parameter
+#' @param p        Success probability
+#' @param r        Thinning parameter
+#' @param pi_low   Observation probability when X_t = 0
+#' @param pi_high  Observation probability when X_t = m
+#' @param n_reps   Number of replications
+simulation_MAR <- function(n, m, p, r, pi_low = 0.5, pi_high = 0.9,
+                            n_reps = 1000) {
+  results <- matrix(
+    NA, nrow = n_reps, ncol = 4,
+    dimnames = list(NULL, c("IOV", "Skew", "lag1_Cohen", "lag2_Cohen"))
+  )
+
+  for (rep in 1:n_reps) {
+    count_process   <- generate_binar1(n, m, p, r)
+    Missing_process <- generate_O_MAR(count_process, m, pi_low, pi_high)
+    observed_counts <- count_process[Missing_process == 1]
+    CDF             <- marginal_probs_e(m, observed_counts,
+                                        length(observed_counts))
+
+    iid_process         <- generate_iid(p, m, n)
+    Missing_iid         <- generate_O_MAR(iid_process, m, pi_low, pi_high)
+    observed_counts_iid <- iid_process[Missing_iid == 1]
+    CDF_iid             <- marginal_probs_e(m, observed_counts_iid,
+                                             length(observed_counts_iid))
+
+    results[rep, 1] <- (4 / m) * sum(CDF * (1 - CDF))
+    results[rep, 2] <- (2 / m) * sum(CDF - 1)
+    results[rep, 3] <- sum(
+      biv_probs_e(m, iid_process, Missing_iid, n, h = 1) - CDF_iid^2
+    ) / sum(CDF_iid * (1 - CDF_iid))
+    results[rep, 4] <- sum(
+      biv_probs_e(m, iid_process, Missing_iid, n, h = 2) - CDF_iid^2
+    ) / sum(CDF_iid * (1 - CDF_iid))
+  }
+
+  list(
+    summary = rbind(colMeans(results, na.rm = TRUE),
+                    apply(results, 2, sd))
+  )
+}
+
 #' Simulation: returns raw replication-level IOV and Skew estimates
 #' @param n      Time series length
 #' @param m      Binomial parameter
@@ -186,6 +246,21 @@ scenarios <- scenarios[
 ]
 rownames(scenarios) <- NULL
 
+
+# Szenarien unter MAR
+scenarios_MAR <- expand.grid(
+  n       = c(50, 100, 250, 500, 1000),
+  m       = c(3, 10),
+  p       = c(0.20, 0.45),
+  r       = c(0.35, 0.50),
+  pi_low  = 0.4,
+  pi_high = 0.9
+)
+scenarios_MAR <- scenarios_MAR[
+  (scenarios_MAR$m == 3  & scenarios_MAR$p == 0.20 & scenarios_MAR$r == 0.35) |
+  (scenarios_MAR$m == 10 & scenarios_MAR$p == 0.45 & scenarios_MAR$r == 0.50),
+]
+rownames(scenarios_MAR) <- NULL
 
 # ==============================================================================
 # Run Simulations
@@ -239,6 +314,19 @@ theory_df_2 <- data.frame(
   n    = seq(2, 1000, by = 1),
   diff = sapply(seq(2, 1000, by = 1), function(n) -(4 / (10 * n)) * sum(diag(Sigma_raw)))
 )
+
+set.seed(123)
+results_MAR <- apply(scenarios_MAR, 1, function(row) {
+  simulation_MAR(
+    n       = row["n"],
+    m       = row["m"],
+    p       = row["p"],
+    r       = row["r"],
+    pi_low  = row["pi_low"],
+    pi_high = row["pi_high"],
+    n_reps  = 1000
+  )
+})
 
 # Plot 1: Mittlerer Bias
 ggplot(mean_df_2, aes(x = n, y = mean_diff)) +

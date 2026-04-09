@@ -547,7 +547,7 @@ Since we have shown that $\boldsymbol{\hat{f}}$ is assymptotically normal we can
 \end{align*}
 which leads to an asymptotic variance of the IOV:
 \begin{align*}
-    \sqrt{n}\mathrm{Var}(\widehat{IOV(\boldsymbol{f})}) &\overset{asy.}{=} \boldsymbol{j}_{\mathrm{IOV}} \boldsymbol{\Sigma}_Z \boldsymbol{j}_{\mathrm{IOV}}^{\top} = \sum_{i=0}^{m-1} \sum_{j=0}^{m-1} \frac{4(1- 2 f_i)}{m} \frac{4(1- 2 f_j)}{m} \sigma_{\boldsymbol{Z}; i,j}\\
+    \sqrt{n}\mathrm{Var}(\widehat{IOV(\boldsymbol{f})}) &\overset{asy.}{=} \boldsymbol{j}_{\mathrm{IOV}} \boldsymbol{\Sigma}_Z \boldsymbol{j}_{\mathrm{IOV}}^{\top} = \sum_{i, ~j =0}^{m-1}  \frac{4(1- 2 f_i)}{m} \frac{4(1- 2 f_j)}{m} \sigma_{\boldsymbol{Z}; i,j}\\
     &= \frac{16}{m^2} \sum_{i,j = 0}^{m-1} (1-2f_i)(1- 2 f_j) \sigma_{\boldsymbol{Z}; i,j}
 \end{align*}
 However, since $IOV$ is not a linear function, the first-order delta method only provides information about the asymptotic distribution and variance, not on the finite-sample bias:
@@ -926,7 +926,7 @@ $O(n^{-1})$ is computable using a second-order Taylor expansion. The Hessian of 
     0                   & \text{else.}
 \end{cases}
 \]
-Using the symmetry $\sigma_{\boldsymbol{Z}^*;-1,j} = \sigma_{\boldsymbol{Z}^*;j,-1}$ and the equality from Lemma \ref{lem:quadform} the bias simplifies to, the bias reduces to
+Using the symmetry $\sigma_{\boldsymbol{Z}^*;-1,j} = \sigma_{\boldsymbol{Z}^*;j,-1}$ and the equality from Lemma \ref{lem:quadform} the bias simplifies to
 \begin{align*}
     \mathrm{Bias}(\hat{f}_j)
     &= \frac{1}{2}\mathrm{tr}(\boldsymbol{H}_{g_j}\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}) \\
@@ -1111,8 +1111,7 @@ suffices to include the corresponding diagonal components in
 $\boldsymbol{Z}_t^{(h)*}$. Should one wish to study a dependence 
 measure that also involves off-diagonal frequencies $\hat{f}^*_{ij}(h)$ 
 with $i \neq j$, the vector can straightforwardly be extended by the 
-additional components $O_t O_{t-h} Z_{t,i} Z_{t-h,j}$.
-
+additional components $O_t O_{t-h} Z_{t,i} Z_{t-h,j}$.\\
 Since $\boldsymbol{Z}^{(h)*}_t$ is a measurable function of 
 $(O_t, O_{t-h}, X_t, X_{t-h})$, it inherits strict stationarity 
 and $\alpha$-mixing with exponentially decaying coefficients from 
@@ -1325,8 +1324,8 @@ $\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}$, is given by
     \end{pmatrix}.
 \end{align*}
 Since explicit closed-form expressions for the elements of 
-$\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ require these 
-higher-order mixed moments, a fully general evaluation of 
+$\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ require 
+higher-order mixed moments of $(X_t)$, a fully general evaluation of 
 $\boldsymbol{G}\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}\boldsymbol{G}^\top$ 
 is intractable without further assumptions. We therefore proceed in 
 two steps: first, in \cref{subsec:serial-H0}, we narrow our focus to 
@@ -1368,23 +1367,39 @@ of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$ yields:
 \begin{align*}
 &\textbf{(ix)}\ i = 0,\ldots,m-1,\ j = m,\ldots,2m-1\ 
 \text{(continued from above)}:\\
-&\quad \overset{H_0}{=}\ 
-2\pi(h)\bigl(f_{(j-m)}f_{\min\{i,j-m\}} - f_if_{j-m}^2\bigr) 
-+ f_if_{j-m}^2\,\sigma^{(h)}_{-1,-2}\\[2ex]
+&\quad \overset{H_0}{=} 
+\pi(h)\,f_{j-m}f_{\min\{i,j-m\}} - \pi\pi(h)f_i f_{j-m}^2 \\
+&\qquad + \underbrace{\mathrm{E}[O_t^2 O_{t+h}]\,f_{j-m}f_{\min\{i,j-m\}} 
++ \mathrm{E}[O_{t+h} O_t O_{t-h}]\,f_i f_{j-m}^2 - 2 \pi \pi(h)f_i f_{j-m}^2}_{k=h} \\
+&\qquad + f_i f_{(j-m)}^2 \mathrm{E}[O_t^2 O_{t-h}] - f_i f_{(j-m)}^2\mathrm{E}[O_t^2 O_{t-h}] \\
+&\qquad + \sum_{\substack{k=1\\k\neq h}}^{\infty} \bigl[
+\mathrm{E}[O_t O_{t+k} O_{t+k-h}] + \mathrm{E}[O_{t+k} O_t O_{t-h}]
+- 2\pi\pi(h)\bigr] f_i f_{j-m}^2 \\
+&\quad =2\pi(h)f_{j-m}f_{\min\{i,j-m\}} - \pi \pi(h)f_i f_{j-m}^2 - \pi(h)f_i f_{j-m}^2\\
+&\qquad + (1-\pi)\pi(h)f_i f_{j-m}^2 - (1-\pi)\pi(h)f_i f_{j-m}^2\\ 
+&\qquad + f_{i}f_{j-m}^2 \sum_{k=1}^{\infty} \bigl[
+\mathrm{E}[O_t O_{t+k} O_{t+k-h}] + \mathrm{E}[O_{t+k} O_t O_{t-h}]
+- 2\pi\pi(h)\bigr] \\
+&\quad = 2\pi(h)(f_{(j-m)}f_{\min\{i,j-m\}} - f_i f_{j-m}^2) + f_i f_{j-m}^2 \sigma^{(h)}_{-1, -2}\\[2ex]
 &\textbf{(x)}\ i,j = m,\ldots,2m-1\ \text{(continued from above)}:\\
 &\quad \overset{H_0}{=}\ 
-\pi(h)\bigl(f_{\min\{i-m,j-m\}}^2 - f_{i-m}^2f_{j-m}^2\bigr) 
-+ 2\pi(h,2h)f_{i-m}f_{j-m}
-\bigl(f_{\min\{i-m,j-m\}} - f_{i-m}f_{j-m}\bigr) \\
-&\qquad + f_{i-m}^2f_{j-m}^2\,\sigma^{(h)}_{-2,-2},
+\overset{H_0}{=} \pi(h)f_{\min\{i,j\}}^2 - \pi(h)^2 f_{(i-m)}^2f_{(j-m)}^2 
++ 2 \mathrm{E}[O_t O_{t+h} O_{t-h}] f_i f_j f_{\min\{i,j\}} - 2 \pi(h)^2 f_{i-m}^2 f_{j-m}^2 \\
+&\qquad + \sum_{\substack{k=1\\k\neq h}}^{\infty} 2 f_{i}^2 f_{j}^2 \left[  \mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}] - \pi(h)^2\right] \\
+&\quad = \pi(h)f_{\min\{i-m,j-m\}}^2 - \pi(h)^2 f_{(i-m)}^2f_{(j-m)}^2 
++ 2 \mathrm{E}[O_t O_{t+h} O_{t-h}] f_{i-m} f_{j-m} f_{\min\{i-m,j-m\}}\\
+&\qquad - 2f_{i-m}^2f_{j-m}^2 E[O_{t}O_{t+h}O_{t-h}] 
++ \pi(h)f_{i-m}^2f_{j-m}^2 - \pi(h)f_{i-m}^2f_{j-m}^2 + \\
+&\qquad +2 f_{i-m}^2f_{j-m}^2 \sum_{k=1}^{\infty}  \left[  \mathrm{E}[O_t O_{t-h} O_{t+k} O_{t+k-h}] - \pi(h)^2\right] \\
+&\quad = \pi(h) (f_{\min\{i-m,j-m\}}^2- f_{i-m}^2f_{j-m}^2) + 2\pi(h, 2h)f_{i-m}f_{j-m}(f_{\min\{i-m,j-m\}}- f_{i-m}f_{j-m})\\
+&\qquad + f_{i-m}^2f_{j-m}^2\sigma^{(h)}_{-2,-2},
 \end{align*}}
 \noindent where $\pi(h,2h) := \mathrm{E}[O_tO_{t+h}O_{t-h}]$.
 Substituting all elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$ 
 into $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}} = \boldsymbol{G}
 \boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}\boldsymbol{G}^\top$ and 
 carrying out the matrix multiplication under $H_0$, the elements 
-$\sigma^{(h)*}_{i,j}$ of $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ 
-simplify to:
+$\sigma^{(h)*}_{i,j}$ simplify to (see Appendix~\ref{app:derivation_covariance})::
 {\allowdisplaybreaks\begin{align*}
     &\textbf{(i)}\ i,j = 0,\ldots,m-1: \\
     &\quad \sigma^{(h)*}_{i,j} \overset{H_0}{=} 
@@ -1437,7 +1452,7 @@ of a second-order Taylor expansion. Since the linear term
 $\boldsymbol{D}_\kappa(\hat{\boldsymbol{f}}^{(h)*} - 
 \boldsymbol{\mu}^{(h)*})$ has expectation of order $o(n^{-1})$, 
 it does not contribute to the leading bias term, and the $O(n^{-1})$ 
-bias reduces by \cref{lem:quadform} to
+bias reduces by lemma \ref{lem:quadform} to
 \[
     \mathrm{Bias}(\hat{\kappa}_{\mathrm{ord}})
     = \frac{1}{2}\,\mathrm{tr}\!\left(
@@ -1468,7 +1483,7 @@ symmetry $\sigma^{(h)*}_{i,l} = \sigma^{(h)*}_{l,i}$, yields
     \mathrm{Bias}(\hat{\kappa}_{\mathrm{ord}}) 
     \overset{H_0}{=} -\frac{1}{\pi}.
 \]
-The detailed calculation is carried out in (see Appendix~\ref{app:Bias} for the detailed calculation).
+The detailed calculation is carried out in Appendix~\ref{app:Bias}.
 The results are summarized in the following theorem.
 
 \begin{theorem}[Asymptotic distribution and bias of 
@@ -1517,566 +1532,94 @@ following hold as $n\to\infty$:
 \subsection{Consistency under $H_A$}
 \label{subsec:serial-HA}
 
-Under the alternative hypothesis $H_A$ that $(X_t)$ is not i.i.d., 
-there exists at least one lag $h\geq 1$ such that 
-$\kappa_{\mathrm{ord}}(h)\neq 0$. Since $\hat{\kappa}_{\mathrm{ord}}(h)$ 
-is a continuous function of the sample frequencies $\hat{f}^*_i$ and 
-$\hat{f}^*_{ii}(h)$, which are consistent estimators of $f_i$ and 
-$f_{ii}(h)$ respectively, the continuous mapping theorem yields
+Under the alternative hypothesis $H_A$, the process $(X_t)$ is not i.i.d.,
+so that there exists at least one lag $h \ge 1$ with 
+$\kappa_{\mathrm{ord}}(h) \neq 0$.\\
+The estimator $\hat{\kappa}_{\mathrm{ord}}(h)$ is a continuous function 
+of the empirical frequencies $\hat{f}^*_i$ and $\hat{f}^*_{ii}(h)$.
+Since these are consistent estimators of $f_i$ and $f_{ii}(h)$, 
+the continuous mapping theorem (see, e.g., \citealp[Theorem 3.27]{kallenberg_2021}) implies
 \[
-    \hat{\kappa}_{\mathrm{ord}}(h) \xrightarrow{p} 
-    \kappa_{\mathrm{ord}}(h) \neq 0.
+\hat{\kappa}_{\mathrm{ord}}(h) \xrightarrow{p} 
+\kappa_{\mathrm{ord}}(h) \neq 0.
 \]
-Consequently, the test statistic $\sqrt{n}\,\hat{\kappa}_{\mathrm{ord}}(h)$ 
-diverges in probability under $H_A$, which establishes consistency of 
-the test.
-
-So far, we have only examined aspects of the marginal distribution of 
-the categorical process $(X_t)$. However, an essential component of 
-time series analysis is the study of serial dependence. Recall that 
-the most widely used measures to describe such dependence are the 
-ordinal and nominal Cohen's $\kappa$ (Definition \ref{def:cohens-kappa}). To estimate these measures, we 
-again rely on relative frequencies:
+It follows that
 \[
-    \hat{\kappa}(h)_{ord} = \frac{\sum_{j=0}^{m-1}\left(\hat{f}_{jj}^*(h) 
-    - \bigl(\hat{f}^*_j\bigr)^2\right)}{\sum_{i=0}^{m-1}
-    \hat{f}^*_i\bigl(1-\hat{f}_i^*\bigr)}.
+\sqrt{n}\,\hat{\kappa}_{\mathrm{ord}}(h) \xrightarrow{p} \infty,
 \]
-Hence, it remains to define the estimator $\hat{f}^*_{ij}(h)$ for the 
-bivariate lag-$h$ probabilities $f_{ij}(h)$. As before, we begin with 
-the naive estimator given by the bivariate relative frequency of the 
-amplitude-modulated binarizations,
-\[
-    \hat{\mathfrak{f}}_{ij}(h) 
-    = \frac{1}{n-h}\sum_{t=h+1}^{n} O_t\, O_{t-h}\, Z_{t,i}\, Z_{t-h,j},
-\]
-and compute its expectation:
-\begin{align*}
-    \mathrm{E}\!\left[\hat{\mathfrak{f}}_{ij}(h)\right]
-    &= \frac{1}{n-h}\sum_{t=h+1}^{n}
-       \mathrm{E}\!\left[O_t O_{t-h} Z_{t,i} Z_{t-h,j}\right] \\
-    &= \frac{1}{n-h}\sum_{t=h+1}^{n}
-       \mathrm{E}\!\left[O_t O_{t-h}\right] \cdot 
-       \mathrm{E}\!\left[Z_{t,i} Z_{t-h,j}\right] \\
-    &= \frac{1}{n-h}\sum_{t=h+1}^{n}
-       \mathrm{E}\!\left[O_t O_{t-h}\right] \cdot f_{ij}(h) \\
-    &= \left(\frac{1}{n-h}\sum_{t=h+1}^{n}
-       \mathrm{E}\!\left[O_t O_{t-h}\right]\right) f_{ij}(h),
-\end{align*}
-where the second equality follows from the independence of $(O_t)$ 
-and $(X_t)$, and the third from the stationarity of $(X_t)$. This 
-motivates the corrected estimator
-\[
-    \hat{f}^*_{ij}(h)
-    = \frac{\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} 
-      O_t\, O_{t-h}\, Z_{t,i}\, Z_{t-h,j}}
-      {\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} O_t\, O_{t-h}}
-    =: \hat{\mathfrak{f}}_{ij}(h) \big/ \overline{O O}_{\,h}.
-\]
-As in Section~\ref{sec:Amp Mod}, the properties of this estimator 
-depend on whether $(O_t)$ is deterministic or stochastic. If $(O_t)$ 
-is deterministic, then $O_t$ and $O_{t-h}$ are known constants for 
-all $t$, and the expectation of the corrected estimator simplifies to
-\begin{align*}
-    \mathrm{E}\!\left[\hat{f}^*_{ij}(h)\right]
-    &= \frac{\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} 
-       O_t\, O_{t-h}\, \mathrm{E}\!\left[Z_{t,i}\, Z_{t-h,j}\right]}
-       {\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} O_t\, O_{t-h}} \\
-    &= \frac{\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} 
-       O_t\, O_{t-h}\, f_{ij}(h)}
-       {\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} O_t\, O_{t-h}}
-     = f_{ij}(h),
-\end{align*}
-so the corrected estimator is unbiased in the deterministic case. 
-In the stochastic case, however, both numerator and denominator are random and, moreover, depend on the same process $(O_t)$. In particular, the terms $O_t O_{t-h}$ appear in both, so that numerator and denominator are generally dependent. As a consequence, the expectation of the ratio does not simplify, and in general
-\[
-    \mathrm{E}\!\left[\frac{\hat{\mathfrak{f}}_{ij}(h)}
-    {\overline{O O}_{\,h}}\right] \neq 
-    \frac{\mathrm{E}\!\left[\hat{\mathfrak{f}}_{ij}(h)\right]}
-    {\mathrm{E}\!\left[\overline{O O}_{\,h}\right]}.
-\]
-Hence, $\hat{f}^*_{ij}(h)$ is generally biased. To derive the asymptotic distribution of $\hat{f}^*_{ij}(h)$, we 
-proceed analogously to Section~\ref{sec:Amp Mod} and apply the 
-Cram\'er--Wold device to the sample mean of a suitably defined 
-binary vector:
-\begin{align*}
-    \boldsymbol{Z}^{(h)*}_t 
-    &= \left(
-        Z_{t,-2}^{(h)*},\;
-        Z_{t,-1}^{(h)*},\;
-        \overbrace{\ldots,\, Z_{t,i}^{(h)*},\, \ldots}^{i=0,\,\ldots,\,m-1},\;
-        \overbrace{\ldots,\, Z_{t,m+j}^{(h)*},\, \ldots}^{j=0,\,\ldots,\,m-1}
-       \right)^\top\\
-    &:= \left(
-        O_t O_{t-h},\;
-        \underbrace{O_t,\, \ldots,\, O_{t} Z_{t,i},\, \ldots}_{=\,\boldsymbol{Z}^*_t},\;
-        \ldots,\, O_t O_{t-h} Z_{t,j} Z_{t-h,j},\, \ldots
-        \right)^\top,
-\end{align*}
-The components of $\boldsymbol{Z}^{(h)^*}_t$ are indexed from $-2$ to $2m-1$: the component at 
-index $-2$ captures the product $O_tO_{t-h}$, the components at 
-indices $-1$ through $m-1$ coincide with $\boldsymbol{Z}_t^*$ from 
-Section~\ref{sec:Amp Mod}, and the remaining components at indices 
-$m$ through $2m-1$ capture the lag-$h$ interaction terms 
-$O_tO_{t-h}Z_{t,j}Z_{t-h,j}$. Since $\kappa_{\mathrm{ord}}$ depends 
-only on the diagonal frequencies $\hat{f}^*_{jj}(h)$, it suffices to 
-include the corresponding diagonal components in 
-$\boldsymbol{Z}_t^{(h)*}$. Should one wish to study a dependence 
-measure that also involves off-diagonal frequencies $\hat{f}^*_{ij}(h)$ 
-with $i \neq j$, the vector can straightforwardly be extended by the 
-additional components $O_t O_{t-h} Z_{t,i} Z_{t-h,j}$. \\
-Since $\boldsymbol{Z}^{(h)*}_t$ is a measurable function of 
-$(O_t, O_{t-h}, X_t, X_{t-h})$, it inherits strict stationarity 
-and $\alpha$-mixing with exponentially decaying coefficients from 
-the underlying processes (by the same argument as in 
-Section~\ref{sec:Amp Mod}), and all moment conditions are trivially 
-satisfied as its components are bounded indicator variables. 
-The Cram\'er--Wold device therefore yields
-\[
-    \sqrt{n}\!\left(\bar{\boldsymbol{Z}}^{(h)*}_n - 
-    \boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}\right) 
-    \xrightarrow{d} \mathcal{N}\!\left(\boldsymbol{0},\, 
-    \boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}\right),
-\]
-where $\bar{\boldsymbol{Z}}^{(h)*}_n := \frac{1}{n}\sum_{t=1}^{n} 
-\boldsymbol{Z}^{(h)*}_t$ and
-\[\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}} = E\left[\boldsymbol{Z}^{(h)*}\right] = \left( \pi(h), \pi , \pi \boldsymbol{f}^\top, \pi(h)f_{00}(h), \ldots, \pi(h)f_{m-1m-1}(h)  \right)^\top .\]
-
-To derive the asymptotic null distribution of $\hat{\kappa}(h)$, we 
-evaluate $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$ under the null 
-hypothesis that $(X_t)$ is i.i.d. Under this assumption, 
-$f_{ij}(h) = f_if_j$ for all $h \geq 1$, which considerably simplifies 
-the higher-order moments of $\boldsymbol{Z}^{(h)*}_t$. Before computing 
-the individual elements $\sigma^{(h)}_{ij}$ of 
-$\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$, we collect the relevant 
-higher-order moments of $\boldsymbol{Z}^{(h)*}_t$ under $H_0$, which 
-will be used repeatedly in the calculations below:
-\begin{align*}
-    &\mathrm{E}[Z_{t,i}Z_{t-h,i}Z_{t-k,}Z_{t-k-h,j}]-f_{ii}(h)f_{jj}(h) = \begin{cases}
-        f^2_{\mathrm{min}\{i,j\}} -f_i^2f_j^2& \text{ if } k = 0\\
-        f_i f_j f_{\min\{i,j\}}-f_i f_j^2 & \text{ if } k-h = 0\\
-        0 & \text{else.}
-    \end{cases}\\
-    &\mathrm{E}[Z_{t+k,i} Z_{t,j}Z_{t-h,j}]-f_i f_{jj}(h) = \begin{cases}
-        f_j f_{\min\{i,j\}} -f_i f_j^2 &\text{ if } k = 0 \\
-        0 & \text{ else.}
-    \end{cases}\\
-    &\mathrm{E}[Z_{t,i} Z_{t+k,j}Z_{t+k-h,j}] - f_i f_{jj}(h)
-         = \begin{cases}
-        f_j f_{\min\{i,j\}} -f_i f_j^2 &\text{ if } k, k-h = 0 \\
-        0 & \text{ else.}
-    \end{cases}.
-\end{align*}
-With these simplifications in hand, the individual elements 
-$\sigma^{(h)}_{ij}$ of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$ 
-are calculated as follows:
-{\small
-\allowdisplaybreaks
-\begin{align*}
-&\textbf{(i)}\ i = j = -2: \\
-&\quad \mathrm{Var}(O_t O_{t-h}) + 2\sum_{k=1}^\infty \mathrm{Cov}(O_t O_{t-h}, O_{t+k}O_{t+k-h}) \\
-&\quad = \pi(h)(1-\pi(h)) + 2\sum_{k=1}^{\infty}\bigl(\mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}]-\pi(h)^2 \bigr) \\[2ex]
-%
-&\textbf{(ii)}\ i = -2,\ j = -1: \\
-&\quad \mathrm{Cov}(O_t O_{t-h}, O_t) 
-+ \sum_{k=1}^\infty \bigl[\mathrm{Cov}(O_t O_{t-h}, O_{t+k})
-+ \mathrm{Cov}(O_{t+k} O_{t+k-h}, O_t)\bigr] \\
-&\quad = (1-\pi)\pi(h) 
-+ \sum_{k=1}^{\infty} \bigl[\mathrm{E}[O_t O_{t-h} O_{t+k}] 
-+ \mathrm{E}[O_{t+k}O_{t+k-h} O_t] - 2\pi\pi(h)\bigr] \\[2ex]
-%
-&\textbf{(iii)}\ i = -2,\ j = 0, \ldots, m-1: \\
-&\quad \mathrm{Cov}(O_t O_{t-h}, O_t Z_{t,j}) 
-+ \sum_{k=1}^{\infty}\bigl[\mathrm{Cov}(O_t O_{t-h}, O_{t+k}Z_{t+k,j}) 
-+ \mathrm{Cov}(O_{t+k}O_{t+k-h}, O_t Z_{t,j})\bigr] \\
-&\quad = \mathrm{E}[O_t^2 O_{t-h}]\,\mathrm{E}[Z_{t,j}] 
-- \mathrm{E}[O_t O_{t-h}]\,\mathrm{E}[O_t]\,\mathrm{E}[Z_{t,j}]\\
-&\qquad + \sum_{k=1}^{\infty}\bigl[
-\mathrm{E}[O_t O_{t-h} O_{t+k}]\,\mathrm{E}[Z_{t+k,j}] 
-+ \mathrm{E}[O_{t+k}O_{t+k-h} O_t]\,\mathrm{E}[Z_{t,j}] \\
-&\qquad - \mathrm{E}[O_t O_{t+k}]\,\mathrm{E}[O_{t+k}]\,\mathrm{E}[Z_{t+k,j}] 
-- \mathrm{E}[O_{t+k}O_{t+k-h}]\,\mathrm{E}[O_t]\,\mathrm{E}[Z_{t,j}]\bigr]\\
-&\quad = f_j\Bigl((1-\pi)\pi(h) 
-+ \sum_{k=1}^{\infty}\bigl[\mathrm{E}[O_t O_{t-h} O_{t+k}]
-+ \mathrm{E}[O_t O_{t+k} O_{t+k-h}]- 2\pi\pi(h)\bigr]\Bigr)
-=: f_j\, \sigma^{(h)}_{-2,-1} \\[2ex]
-%
-&\textbf{(iv)}\ i = -2,\ j = m, \ldots, 2m-1: \\
-&\quad \mathrm{Cov}(O_t O_{t-h},\, O_t O_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)})\\ 
-&\qquad + \sum_{k=1}^{\infty}\bigl[
-\mathrm{Cov}(O_t O_{t-h},\, O_{t+k}O_{t+k-h}Z_{t+k,(j-m)}Z_{t+k-h,(j-m)}) \\
-&\qquad + \mathrm{Cov}(O_{t+k}O_{t+k-h},\, O_t O_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)})\bigr] \\
-&\quad = \mathrm{E}[O_t^2 O_{t-h}^2]\,\mathrm{E}[Z_{t,(j-m)}Z_{t-h,(j-m)}] 
-- \pi(h)^2\, f_{(j-m),(j-m)}(h)\\
-&\qquad + \sum_{k=1}^{\infty}\bigl[
-\mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}]\,\mathrm{E}[Z_{t+k,(j-m)}Z_{t+k-h,(j-m)}] \\
-&\qquad + \mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}]\,\mathrm{E}[Z_{t,(j-m)}Z_{t-h,(j-m)}]
-- 2\pi(h)^2\, f_{(j-m),(j-m)}(h)\bigr]\\
-&\quad = f_{(j-m),(j-m)}(h)\Bigl(\pi(h)(1-\pi(h)) 
-+ 2\sum_{k=1}^{\infty}\bigl[\mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}]
-- \pi(h)^2\bigr]\Bigr)
-=: f_{(j-m),(j-m)}(h)\,\sigma^{(h)}_{-2,-2} \\[2ex]
-%
-&\textbf{(v)}\ i = -1,\ j = -1: \\
-&\quad \mathrm{Cov}(O_t, O_t) + 2\sum_{k=1}^\infty \mathrm{Cov}(O_t, O_{t+k}) 
-= \sigma_{\boldsymbol{Z}^*;-1,-1}\\[2ex]
-%
-&\textbf{(vi)}\ i = -1,\ j = 0, \ldots, m-1: \\
-&\quad \mathrm{Cov}(O_t, O_t Z_{t,j}) 
-+ \sum_{k=1}^\infty \bigl[\mathrm{Cov}(O_t, O_{t+k}Z_{t+k,j}) 
-+ \mathrm{Cov}(O_{t+k}, O_t Z_{t,j})\bigr]
-= f_j\,\sigma_{\boldsymbol{Z}^*;-1,-1} \\[2ex]
-%
-&\textbf{(vii)}\ i = -1,\ j = m, \ldots, 2m-1: \\
-&\quad \mathrm{Cov}(O_t,\, O_t O_{t-h} Z_{t,(j-m)}Z_{t-h,(j-m)}) \\
-&\qquad + \sum_{k=1}^\infty \bigl[
-\mathrm{Cov}(O_t,\, O_{t+k}O_{t+k-h}Z_{t+k,(j-m)}Z_{t+k-h,(j-m)})
-+ \mathrm{Cov}(O_{t+k},\, O_t O_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)})\bigr] \\
-&\quad = f_{(j-m),(j-m)}(h)\Bigl((1-\pi)\pi(h)
-+ \sum_{k=1}^\infty \bigl[\mathrm{E}[O_t O_{t+k} O_{t+k-h}] 
-+ \mathrm{E}[O_t O_{t+k} O_{t-h}] - 2\pi\pi(h)\bigr]\Bigr)\\
-&\quad = f_{(j-m),(j-m)}(h)\,\sigma^{(h)}_{-2,-1} \\[2ex]
-%
-&\textbf{(viii)}\ i = 0, \ldots, m-1,\ j = 0, \ldots, m-1: \\
-&\quad \mathrm{Cov}(O_t Z_{t,i}, O_t Z_{t,j}) 
-+ \sum_{k=1}^{\infty}\bigl[\mathrm{Cov}(O_t Z_{t,i}, O_{t+k}Z_{t+k,j}) 
-+ \mathrm{Cov}(O_{t+k}Z_{t+k,i}, O_t Z_{t,j})\bigr] \\
-&\quad = \sigma_{\boldsymbol{Z}^*;i,j} 
-= f_i f_j\,\sigma_{\boldsymbol{Z}^*;-1,-1} 
-+\pi(f_{\min\{i,j\}}- f_i f_j)  
-+ \sum_{k=1}^{\infty} \pi(k)\bigl(f_{ij}(k) + f_{ji}(k) - 2f_i f_j\bigr) \\[2ex]
-%
-&\textbf{(ix)}\ i = 0, \ldots, m-1,\ j = m, \ldots, 2m-1: \\
-&\quad \mathrm{Cov}(O_t Z_{t,i},\, O_t O_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)}) 
-+ \sum_{k=1}^{\infty}\bigl[
-\mathrm{Cov}(O_t Z_{t,i},\, O_{t+k} O_{t+k-h}Z_{t+k,(j-m)}Z_{t+k-h,(j-m)}) \\
-&\qquad + \mathrm{Cov}(O_{t+k} Z_{t+k,i},\, O_t O_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)})\bigr] \\
-&\quad = \pi(h)\,\mathrm{E}[Z_{t,i}Z_{t,(j-m)}Z_{t-h,(j-m)}] 
-- \pi\pi(h)\, f_i\, f_{(j-m),(j-m)}(h) \\
-&\qquad + \sum_{k=1}^{\infty} \bigl[
-\mathrm{E}[O_t O_{t+k} O_{t+k-h}]\,\mathrm{E}[Z_{t,i}Z_{t+k,(j-m)}Z_{t+k-h,(j-m)}] \\
-&\qquad + \mathrm{E}[O_{t+k} O_t O_{t-h}]\,\mathrm{E}[Z_{t+k,i}Z_{t,(j-m)}Z_{t-h,(j-m)}] 
-- 2\pi\pi(h)\,f_i\,f_{(j-m),(j-m)}(h)\bigr]\\
-&\quad \overset{H_0}{=} 
-\pi(h)\,f_{j-m}f_{\min\{i,j-m\}} - \pi\pi(h)f_i f_{j-m}^2 \\
-&\qquad + \underbrace{\mathrm{E}[O_t^2 O_{t+h}]\,f_{j-m}f_{\min\{i,j-m\}} 
-+ \mathrm{E}[O_{t+h} O_t O_{t-h}]\,f_i f_{j-m}^2 - 2 \pi \pi(h)f_i f_{j-m}^2}_{k=h} \\
-&\qquad + f_i f_{(j-m)}^2 \mathrm{E}[O_t^2 O_{t-h}] - f_i f_{(j-m)}^2\mathrm{E}[O_t^2 O_{t-h}] \\
-&\qquad + \sum_{\substack{k=1\\k\neq h}}^{\infty} \bigl[
-\mathrm{E}[O_t O_{t+k} O_{t+k-h}] + \mathrm{E}[O_{t+k} O_t O_{t-h}]
-- 2\pi\pi(h)\bigr] f_i f_{j-m}^2 \\
-&\quad =2\pi(h)f_{j-m}f_{\min\{i,j-m\}} - \pi \pi(h)f_i f_{j-m}^2 - \pi(h)f_i f_{j-m}^2\\
-&\qquad + (1-\pi)\pi(h)f_i f_{j-m}^2 - (1-\pi)\pi(h)f_i f_{j-m}^2\\ 
-&\qquad + f_{i}f_{j-m}^2 \sum_{k=1}^{\infty} \bigl[
-\mathrm{E}[O_t O_{t+k} O_{t+k-h}] + \mathrm{E}[O_{t+k} O_t O_{t-h}]
-- 2\pi\pi(h)\bigr] \\
-&\quad = 2\pi(h)(f_{(j-m)}f_{\min\{i,j-m\}} - f_i f_{j-m}^2) + f_i f_{j-m}^2 \sigma^{(h)}_{-1, -2}\\
-%
-&\textbf{(x)}\ i = m, \ldots, 2m-1,\ j = m, \ldots, 2m-1: \\
-&\quad \mathrm{Cov}(O_t O_{t-h}Z_{t,(i-m)}Z_{t-h,(i-m)},\, O_t O_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)}) \\
-&\qquad + \sum_{k=1}^{\infty}\bigl[
-\mathrm{Cov}(O_t O_{t-h}Z_{t,(i-m)}Z_{t-h,(i-m)},\, O_{t+k} O_{t+k-h}Z_{t+k,(j-m)}Z_{t+k-h,(j-m)}) \\
-&\qquad + \mathrm{Cov}(O_{t+k} O_{t+k-h}Z_{t+k,(i-m)}Z_{t+k-h,(i-m)},\, O_t O_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)})\bigr] \\
-&\quad = \pi(h)\,\mathrm{E}[Z_{t,(i-m)}Z_{t-h,(i-m)}Z_{t,(j-m)}Z_{t-h,(j-m)}] 
-- \pi(h)^2\,f_{(i-m),(i-m)}(h)\,f_{(j-m),(j-m)}(h)\\
-&\qquad + \sum_{k=1}^{\infty} \bigl[
-\mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}]\,
-\mathrm{E}[Z_{t,(i-m)}Z_{t-h,(i-m)}Z_{t+k,(j-m)}Z_{t+k-h,(j-m)}] \\
-&\qquad + \mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}]\,
-\mathrm{E}[Z_{t+k,(i-m)}Z_{t+k-h,(i-m)}Z_{t,(j-m)}Z_{t-h,(j-m)}]\\
-&\qquad - 2\pi(h)^2\,f_{(i-m),(i-m)}(h)\,f_{(j-m),(j-m)}(h)\bigr]\\
-&\quad \overset{H_0}{=} \pi(h)f_{\min\{i,j\}}^2 - \pi(h)^2 f_{(i-m)}^2f_{(j-m)}^2 
-+ 2 \mathrm{E}[O_t O_{t+h} O_{t-h}] f_i f_j f_{\min\{i,j\}} - 2 \pi(h)^2 f_{i-m}^2 f_{j-m}^2 \\
-&\qquad + \sum_{\substack{k=1\\k\neq h}}^{\infty} 2 f_{i}^2 f_{j}^2 \left[  \mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}] - \pi(h)^2\right] \\
-&\quad = \pi(h)f_{\min\{i-m,j-m\}}^2 - \pi(h)^2 f_{(i-m)}^2f_{(j-m)}^2 
-+ 2 \mathrm{E}[O_t O_{t+h} O_{t-h}] f_{i-m} f_{j-m} f_{\min\{i-m,j-m\}}\\
-&\qquad - 2f_{i-m}^2f_{j-m}^2 E[O_{t}O_{t+h}O_{t-h}] 
-+ \pi(h)f_{i-m}^2f_{j-m}^2 - \pi(h)f_{i-m}^2f_{j-m}^2 + \\
-&\qquad +2 f_{i-m}^2f_{j-m}^2 \sum_{k=1}^{\infty}  \left[  \mathrm{E}[O_t O_{t-h} O_{t+k} O_{t+k-h}] - \pi(h)^2\right] \\
-&\quad = \pi(h) (f_{\min\{i-m,j-m\}}^2- f_{i-m}^2f_{j-m}^2) + 2\pi(h, 2h)f_{i-m}f_{j-m}(f_{\min\{i-m,j-m\}}- f_{i-m}f_{j-m})\\
-&\qquad + f_{i-m}^2f_{j-m}^2\sigma^{(h)}_{-2,-2}.
-\end{align*}
-}
-where
-\[\pi(h, 2h):= E[O_t O_{t+h}O_{t-h}].\]
-To now obtain the joint distribution of the $\hat{f}^*_{i}$ and $\hat{f}^*_{jj}(h)$ for all $j, i = 0, \ldots,~ m-1$ we define vector valued function $\boldsymbol{g}: [0;1]^{2(m+1)}\rightarrow [0;1]^{2m}$, where
-\[g_j(\boldsymbol{x}) = \begin{cases}
-    x_j/x_{-1}& \text{ for } j = 0, \ldots, ~ m-1 \\
-    x_j/x_{-2}& \text{ for } j = m, \ldots, ~ 2m-1 \\
-\end{cases}\]
-such that 
-\[g_j(\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}) = f_j \quad \text{and} \quad g_{j+m}(\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}) = f_{jj}(h) \quad \text{for } j = 0, \ldots, ~m-1  .\]
-This allows us to write the corrected estimator $\hat{\boldsymbol{f}}^{(h)*}$ as
-\[
-    \hat{\boldsymbol{f}}^{(h)*} 
-    := \boldsymbol{g}\!\left(\bar{\boldsymbol{Z}}^{(h)*}_n\right)
-    = \left(\hat{f}^*_0,\, \ldots,\, \hat{f}^*_{m-1},\, 
-      \hat{f}^*_{00}(h),\, \ldots,\, 
-      \hat{f}^*_{m-1,m-1}(h)\right)^\top,
-\]
-with asymptotic mean
-\[
-    \boldsymbol{\mu}^{(h)*} 
-    := \boldsymbol{g}\!\left(\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}\right)
-    = \left(f_0,\, \ldots,\, f_{m-1},\, 
-      f_{00}(h),\, \ldots,\, f_{m-1,m-1}(h)\right)^\top.
-\]
-To apply the delta method, we compute the Jacobian $\boldsymbol{G}$ 
-of $\boldsymbol{g}$ evaluated at $\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}$:
-
-\begin{align*}
-    &\boldsymbol{G}_{2m \times 2(m+1)} = \begin{pmatrix}
-        \frac{\partial g_0(\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}})}{\partial x_{-2}}& \cdots & \frac{\partial g_0(\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}})}{\partial x_{2m - 1}}\\
-        \vdots& \ddots &\vdots \\
-        \frac{\partial g_{j+m-1}(\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}})}{\partial x_{-2}}& \cdots & \frac{ \partial g_{j+m-1}\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}) }{\partial x_{2m - 1}} 
-    \end{pmatrix} \\
-    &= 
-    \begin{pmatrix}
-    0 & \frac{-f_0}{\pi} & \frac{1}{\pi}& 0 &\cdots&&\cdots & 0 \\
-    \vdots &\vdots & 0 &\ddots & \ddots &&& \vdots \\
-    0 & \frac{-f_{m-1}}{\pi}& \vdots & \ddots & \frac{1}{\pi} \\
-    \frac{-f_{00}(h)}{\pi(h)} & 0 & & & & \frac{1}{\pi(h)}&\ddots&\vdots\\
-    \vdots & \vdots & \vdots & & & \ddots & \ddots&0\\
-    \frac{-f_{m-1, m-1}(h)}{\pi(h)} & 0 & 0 & \cdots& &\cdots & 0&\frac{1}{\pi(h)}      
-    \end{pmatrix}.
-\end{align*}
-By the multivariate delta method, the asymptotic covariance matrix of $\sqrt{n}(\hat{\boldsymbol{f}}^{(h)*}- \mu)$ is given by $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}} = \boldsymbol{G}\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}} \boldsymbol{G}^\top$. Carrying out the matrix multiplication row by row yields:
-\begin{align*}
-    \boldsymbol{G}\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}} \boldsymbol{G}^\top &= \begin{pmatrix}
-        \frac{- f_0}{\pi} \sigma^{(h)}_{-1, -2} + \frac{1}{\pi} \sigma^{(h)}_{0, -2} & \cdots & \frac{-f_0}{\pi} \sigma^{(h)}_{-1, 2m-1} +  \frac{1}{\pi} \sigma^{(h)}_{0, 2m-1} \\
-        \vdots &\ddots & \vdots \\
-        \frac{-f_{m-1}}{\pi} \sigma^{(h)}_{-1, -2} + \frac{1}{\pi} \sigma^{(h)}_{m-1, -2} & \cdots & \frac{-f_{m-1}}{\pi} \sigma^{(h)}_{-1, 2m-1} +  \frac{1}{\pi} \sigma^{(h)}_{m-1, 2m-1} \\
-        \frac{-f_{00}(h)}{\pi(h)} \sigma^{(h)}_{-2, -2} + \frac{1}{\pi(h)} \sigma^{(h)}_{m, -2} & \cdots & \frac{-f_{00}(h)}{\pi(h)} \sigma^{(h)}_{-2, 2m-1} +  \frac{1}{\pi(h)} \sigma^{(h)}_{m, 2m-1} \\
-        \vdots &\ddots& \vdots \\
-        \frac{f_{m-1, m-1}(h)}{\pi(h)} \sigma^{(h)}_{-2, -2} + \frac{1}{\pi(h)} \sigma^{(h)}_{2m-1, -2} & \cdots & \frac{-f_{m-1, m-1}(h)}{\pi(h)} \sigma^{(h)}_{-2, 2m-1} +  \frac{1}{\pi(h)} \sigma^{(h)}_{2m-1, 2m-1}
-    \end{pmatrix} \boldsymbol{G}^\top.
-\end{align*}
-To obtain explicit expressions for the individual elements $\sigma_{i,j}^{(h)*}$, 
-we distinguish three cases according to whether the indices correspond to marginal or bivariate components
-{\allowdisplaybreaks
-\begin{align*}
-    &\textbf{(i)}\ i = 0, \ldots, m-1,\ j = 0, \ldots, m-1: \\
-    &\qquad \frac{-f_j}{\pi} \left(\frac{-f_i}{\pi} \sigma^{(h)}_{-1,-1} 
-        + \frac{1}{\pi} \sigma^{(h)}_{i,-1}\right) 
-      + \frac{1}{\pi} \left(\frac{-f_i}{\pi} \sigma^{(h)}_{-1,j} 
-        + \frac{1}{\pi} \sigma^{(h)}_{i,j}\right) \\
-    &\quad = \frac{f_i f_j}{\pi^2} \sigma^{(h)}_{-1,-1} 
-           - \frac{f_j}{\pi^2} \sigma^{(h)}_{i,-1} 
-           - \frac{f_i}{\pi^2} \sigma^{(h)}_{-1,j} 
-           + \frac{1}{\pi^2} \sigma^{(h)}_{i,j} \\
-    &\quad = \frac{1}{\pi}\left(f_{\min\{i,j\}} - f_i f_j\right) 
-           + \sum_{h=1}^{\infty} \pi(h) \left(f_{ij}(h) + f_{ji}(h) 
-           - 2f_i f_j\right) 
-           = \sigma_{\hat{\boldsymbol{f}}^*;i,j} \\
-    &\quad \overset{H_0}{=} \frac{1}{\pi} \left(f_{\min\{i,j\}} 
-           - f_i f_j\right)  \\[1ex]
-    %
-    &\textbf{(ii)}\ i = 0, \ldots, m-1,\ j = m, \ldots, 2m-1 
-      \ (j' = j - m): \\
-    &\qquad \frac{-f_{j'j'}(h)}{\pi(h)} 
-        \left(\frac{-f_i}{\pi} \sigma^{(h)}_{-1,-2} 
-            + \frac{1}{\pi} \sigma^{(h)}_{i,-2}\right) 
-      + \frac{1}{\pi(h)} 
-        \left(\frac{-f_i}{\pi} \sigma^{(h)}_{-1,j} 
-            + \frac{1}{\pi} \sigma^{(h)}_{i,j}\right) \\
-    &\quad = \frac{1}{\pi(h)\,\pi} \Bigl( 
-            f_{j'j'}(h)\,f_i\,\sigma^{(h)}_{-1,-2} 
-          - f_{j'j'}(h)\,f_i\,\sigma^{(h)}_{-2,-1} 
-          - f_i\,f_{j'j'}(h)\,\sigma^{(h)}_{-2,-1} 
-          + \sigma^{(h)}_{i,j} \Bigr) \\
-    &\quad = \frac{1}{\pi(h)\,\pi} \left(
-            2\pi(h)\,f_{j'}\bigl(f_{\min\{i,j'\}} - f_i f_{j'}\bigr) 
-          + f_i f_{j'}^2\,\sigma^{(h)}_{-1,-2} 
-          - f_{j'j'}(h)\,f_i\,\sigma^{(h)}_{-1,-2}\right) \\
-    &\quad \overset{H_0}{=} 
-        \frac{2}{\pi}\,f_{j'}\!\left(f_{\min\{i,j'\}} - f_i f_{j'}\right)
-        = 2f_{j'} \sigma^{(h)*}_{i, j'}\\[1ex]
-    %
-    &\textbf{(iii)}\ i = m, \ldots, 2m-1,\ j = m, \ldots, 2m-1 
-      \ (i' = i-m,\ j' = j-m): \\
-    &\qquad \frac{-f_{j'j'}(h)}{\pi(h)}
-        \left(\frac{-f_{i'i'}(h)}{\pi(h)}\sigma_{-2,-2}^{(h)} 
-            + \frac{1}{\pi(h)} \sigma^{(h)}_{i,-2}\right)
-        + \frac{1}{\pi(h)}
-        \left(\frac{-f_{i'i'}(h)}{\pi(h)}\sigma^{(h)}_{-2,j} 
-            + \frac{1}{\pi(h)}\sigma^{(h)}_{i,j}\right) \\
-    &\quad = \frac{1}{\pi(h)^2}\left(f_{i'i'}(h)f_{j'j'}(h) \sigma^{(h)}_{-2,-2} - 2 f_{i'i'}(h)f_{j'j'}(h) \sigma^{(h)}_{-2,-2} + \sigma_{i, j}\right) \\            
-    &\quad \overset{H_0}{=} \frac{1}{\pi(h)^2}\Bigl(\pi(h) (f^2_{\min\{i', j'\}}- f_{i'}^2 f_{j'}^2) + 2 \pi(h, 2h)f_{i'}f_{j'}(f_{\min\{i',j'\}}- f_{i'}f_{j'}) \\
-    &\qquad + f_{i'}^2f_{j'}^2 \sigma^{(h)}_{-2, -2} - f_{i'}^2f_{j'}^2 \sigma^{(h)}_{-2, -2}\Bigr)\\
-    &\quad = \frac{1}{\pi(h)^2}(f_{\min\{i', j'\}}- f_{i'} f_{j'}) \Bigl(\pi(h)(f_{\min\{i', j'\}}- f_{i'} f_{j'})+ 2\pi(h, 2h)f_{i'}f_{j'}\Bigr)
-\end{align*}}
-To derive the asymptotic variance of $\hat{\kappa}$, we apply the delta method to $\kappa = \frac{\sum_{j=0}^{m-1}(f_{jj}(h)-f_j^2)}{\sum_{j=0}^{m-1}f_j(1-f_j)}$. 
-The relevant Jacobian is given by 
-\[\boldsymbol{D}_{\kappa} := \left(d_{1,0}, \ldots, d_{1,m-1}, d_{2,0}, \ldots, d_{2,m-1}\right),\]
-where for  $i = 0, \ldots, m-1$
-\begin{align*}
-    \textbf{(i)}\ d_{1; i} &= \frac{\partial }{\partial f_i} \frac{\sum_{j=0}^{m-1}(f_{jj}(h)-f_j^2)}{\sum_{j=0}^{m-1}f_j(1-f_j)} \\  
-    &= \frac{-2f_i \left(\sum_{j=0}^{m-1}f_j(1-f_j)\right) - (1-2f_i)\left(\sum_{j=0}^{m-1}(f_{jj}(h)-f_j^2)\right)}{\left(\sum_{j=0}^{m-1}f_j(1-f_j)\right)^2} \\
-    &=  \frac{-2f_i }{\sum_{j=0}^{m-1}f_j(1-f_j)} - \frac{(1-2f_i)\left(\sum_{j=0}^{m-1}(f_{jj}(h)-f_j^2)\right)}{\left(\sum_{j=0}^{m-1}f_j(1-f_j)\right)^2} \\
-    % '&\quad \overset{H_0}{=} \frac{-2f_i }{\sum_{j=0}^{m-1}f_j(1-f_j)}\\'[1ex]
-    \textbf{(ii)}\ d_{2 ; i} &= \frac{\partial }{\partial f_{ii}(h)} \frac{\sum_{j=0}^{m-1}(f_{jj}(h)-f_j^2)}{\sum_{j=0}^{m-1}f_j(1-f_j)} \\
-    &= \frac{1}{\sum_{j=0}^{m-1}f_j(1-f_j)}.
-\end{align*}
-Plugging  the derivates and the elements of $\boldsymbol{\Sigma}_{\boldsymbol{f}(h)*}$ into the delta method formula and evaluating under $H_0$ yields
-
-{\allowdisplaybreaks\begin{align*}
-    &\boldsymbol{D}_{\kappa}\boldsymbol{\Sigma}_{\boldsymbol{f}(h)^*}\boldsymbol{D}_{\kappa}^\top \\
-    & \quad = \sum_{i,j=0}^{m-1} d_{1, i}\, d_{1, j}\, \sigma^{(h)*}_{i,j}
-    + 2\sum_{i,j=0}^{m-1} d_{1, i}\, d_{2, j}\, \sigma^{(h)*}_{i,\,j+m}
-    + \sum_{i,j=0}^{m-1} d_{2, i}\, d_{2,j}\, \sigma^{(h)*}_{i+m,\,j+m} \\
-    &\quad = \sum_{i,j=0}^{m-1} \frac{4f_i f_j}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \sigma^{(h)*}_{i,j}
-    + 2\sum_{i,j=0}^{m-1} \frac{-2 f_i }{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\, \sigma^{(h)*}_{i,\,j+m} \\
-    &\qquad+ \sum_{i,j=0}^{m-1} \frac{1}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\, \sigma^{(h)*}_{i+m,\,j+m} \\
-    &\quad = \frac{1}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \sum_{i,j=0}^{m-1}  \left(4 f_i f_j \sigma^{(h)*}_{i,j} - 4 f_ i \sigma^{(h)*}_{i,j+m} + \sigma^{(h)*}_{i+m,j+m} \right) \\
-    &\quad = \frac{1}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \sum_{i,j=0}^{m-1} \Bigl(4 f_i f_j \frac{1}{\pi} (f_{\min\{i,j\}}-f_i f_j) - 4f_i \frac{2}{\pi} f_j (f_{ \min\{i,j\} } -f_i f_j) \\
-    &\qquad + \frac{1}{\pi(h)^2}(f_{\min\{i', j'\}}- f_{i'} f_{j'}) \Bigl[\pi(h)(f_{\min\{i', j'\}}- f_{i'} f_{j'})+ 2\pi(h, 2h)f_{i'}f_{j'}\Bigr] \Bigr) \\
-    &\quad = \frac{1}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \frac{1}{\pi(h)}\sum_{i,j =0}^{m-1} \Bigl(-4 f_i f_j \frac{\pi(h)}{\pi} (f_{\min\{i,j\}}-f_i f_j) \\
-    &\qquad +(f_{\min\{i,j\}}-f_i f_j)^2+  (f_{\min\{i,j\}}-f_i f_j) \frac{2\pi(h, 2h)}{\pi(h)}f_i f_j \Bigr) \\
-    &\quad= \frac{\frac{1}{\pi(h)}\sum_{i,j =0}^{m-1} \Bigl(f_{\min\{i,j\}}-f_i f_j\Bigr)\Bigl(f_{\min\{i,j\}} + (1+ 2\frac{\pi(h, 2h)}{\pi(h)} - 4\frac{\pi(h)}{\pi})f_i f_j\Bigr)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} 
-\end{align*}}
-Building on the variance derivation above, we now investigate the 
-finite-sample bias by means of a second-order Taylor expansion.
-Since the linear term $\boldsymbol{D}_\kappa(\hat{\boldsymbol{f}}^{(h)*} 
-- \boldsymbol{\mu}^{(h)*})$ has expectation of order $o(n^{-1})$, 
-it does not contribute to the leading bias term, and the 
-$O(n^{-1})$ bias reduces to
-\[
-    \mathrm{Bias}(\hat{\kappa}_{\mathrm{ord}})
-    = \frac{1}{2}\,\mathrm{tr}\!\left(
-      \boldsymbol{H}_{\kappa}\,\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}
-      \right) + o(n^{-1}),
-\]
-by lemma \ref{lem:quadform}.
-The elements $h_{i,i}$ for $i = 0,\ldots, 2m-1$ of the Hessian 
-$\boldsymbol{H}_{\kappa}$ are given by
-\begin{align*}
-     \frac{\partial d_{1,i}}{\partial f_j} 
-    &=  \begin{cases}
-        2\left(\frac{2f_i - 4 f_i^2}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{1}{\sum_{k=0}^{m-1}f_k(1-f_k)}\right) &\text{ if } i=j \\
-        2\frac{f_i+ f_j - 4f_i f_j}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} & \text{ if } i \neq j
-    \end{cases} \\
-    \frac{\partial d_{1,i}}{\partial f_{jj}(h)} 
-    &= \frac{-(1-2f_i)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
-    \frac{\partial d_{2,i}}{\partial f_{j}} 
-    &= \frac{-(1-2f_j)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
-    \frac{\partial d_{2,i}}{\partial f_{jj}(h)} 
-    &= 0.
-\end{align*}
-Detailed derivations of $\frac{\partial d_{1,i}}{\partial f_j}$ can be found in Appendix~\ref{app:Hessian}.
-The $i$-th diagonal element of 
-$\boldsymbol{H}_{\kappa}\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ 
-is denoted by
-\[
-    \left[\boldsymbol{H}_{\kappa}
-    \boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}\right]_{ii}
-    = \sum_{j=0}^{2m-1} h_{\kappa;\, i,j}\, \sigma^{(h)*}_{j,i}.
-\]
-These diagonal elements can be distinguished into the two cases:
-\begin{align*}
-    &\textbf{(i)}\, i = 0, \ldots, m-1:\\
-    &\left[\boldsymbol{H}_{\kappa}
-    \boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}\right]_{ii} 
-    = 2 \left(\frac{2f_i -4f_i^2}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} -\frac{1}{\sum_{k=0}^{m-1}f_k(1-f_k)}\right) \sigma_{ii}^{(h)*} \\
-    &\qquad + \sum_{\substack{l=0\\ l \neq i}}^{m-1} 
-        2\frac{f_i + f_l - 4f_i f_l}
-             {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\, 
-        \sigma_{l,i}^{(h)*} 
-    + \sum_{l=m}^{2m-1}  
-        \frac{-(1-2f_i)}
-             {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\, 
-        \sigma_{l,i}^{(h)*}\\
-    &\quad = 2\left(-\frac{1}{\sum_{k=0}^{m-1}f_k(1-f_k)}\sigma_{i,i}^{(h)*} + \sum_{l=0}^{m-1} 
-        \frac{f_i + f_l - 4f_i f_l}
-             {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\sigma_{l,i}^{(h)*}\right) \\
-    &\qquad + \sum_{l=m}^{2m-1}  
-        \frac{-(1-2f_i)}
-             {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\, 
-        \sigma_{l,i}^{(h)*}\\[1ex]
-    &\textbf{(ii)}\, i = m, \ldots, 2m-1\ (i' = i - m):\\
-        &\left[\boldsymbol{H}_{\kappa}
-        \boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}\right]_{ii} 
-    = \sum_{l=0}^{m-1} \frac{-(1-2f_l)}
-        {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}
-        \,\sigma^{(h)*}_{l,\,i}
-\end{align*}
-such that we end up with a finite sample bias of: 
-\begin{align*}
-    \mathrm{Bias}(\hat{\kappa}_{\mathrm{ord}})
-    &= \frac{1}{2}\mathrm{tr}(\boldsymbol{H}_{\kappa}\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}})
-    = \frac{1}{2}\sum_{i=0}^{2m-1}\left[\boldsymbol{H}_{\kappa}
-    \boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}\right]_{ii} \\
-    &= \frac{1}{2} \sum_{i=0}^{m-1}\Bigl[2\Bigl(-\frac{1}{\sum_{k=0}^{m-1}f_k(1-f_k)}\sigma_{i,i}^{(h)*} + \sum_{l=0}^{m-1} 
-        \frac{f_i + f_l - 4f_i f_l}
-             {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\sigma_{l,i}^{(h)*}\Bigr) \\
-    &\qquad + \sum_{l=m}^{2m-1}  
-        \frac{-(1-2f_i)}
-             {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\, 
-        \sigma_{l,i}^{(h)*}\Bigr] + \frac{1}{2} \sum_{i=m}^{2m-1}\Bigl[\sum_{l=0}^{m-1}  
-        \frac{-(1-2f_i)}
-             {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\, 
-        \sigma_{i,l}^{(h)*}\Bigr]\\
-    &= -\frac{\sum_{i=0}^{m-1}\sigma_{ii}^{(h*)}}{\sum_{k=0}^{m-1}f_k(1-f_k)} + \frac{\sum_{i,l = 0}^{m-1}(f_i + f_l - 4f_i f_l)\sigma_{l,i}^{(h)*}}
-             {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} 
-        - \frac{\sum_{i,l=0}^{m-1}(1-2f_i)\sigma_{i, m+l}^{(h)*}}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
-    &= -\frac{\frac{1}{\pi}\sum_{i=0}^{m-1}(f_i- f_i^2)}{\sum_{k=0}^{m-1}f_k(1-f_k)} +  \frac{\sum_{i,l = 0}^{m-1}(f_i + f_l - 4f_i f_l)\sigma_{l,i}^{(h)*}- \sum_{i,l=0}^{m-1}(1-2f_i)2f_l\sigma^{(h)*}_{l,i}}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
-    &= -\frac{1}{\pi} + \frac{\sum_{i,l = 0}^{m-1}\left(f_i + f_l - 4f_i f_l - 2f_l+ 4 f_j f_l \right)\sigma^{(h)*}_{l,i}}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}
-    = -\frac{1}{\pi} + \frac{\overbrace{\sum_{i,l = 0}^{m-1}\left(f_i - f_l \right)}^{=0}\sigma^{(h)*}_{l,i}}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
-    &= -\frac{1}{\pi}
-\end{align*}
-Note that we substituted $\sigma^{(h)*}_{i, m+l} = 2f_l\sigma_{i,l}^{(h*)}$ from case \textbf{(ii)} of $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ and used its symmetry by substituting $\sigma_{i,l}^{(h)*}= \sigma_{l,i}^{(h)*}$. \\
-The results of the previous derivations are summarized in the following theorem
-\begin{theorem}[Asymptotic distribution and bias of $\hat{\kappa}_{\mathrm{ord}}(h)$]
-\label{thm:kappa-asymp}
-Let the assumptions of theorem \ref{thm:clt_fstarhat} hold and denote
-\[\pi(h_1, \ldots, h_r):= \mathrm{E}[O_0\cdot O_{h_1}\ldots O_{h_r}].\] Then, under the null hypothesis $H_0$ 
-that $(X_t)$ is i.i.d., the following hold as $n \to \infty$:
-
-\begin{enumerate}
-    \item \textbf{Asymptotic normality.} The estimator 
-    $\hat{\kappa}_{\mathrm{ord}}(h)$ satisfies
-    \[
-        \sqrt{n}\,\hat{\kappa}_{\mathrm{ord}}(h) 
-        \xrightarrow{d} \mathcal{N}(0, \sigma^2_\kappa),
-    \]
-    where
-    \[
-        \sigma^2_\kappa =
-        \frac{
-            \frac{1}{\pi(h)} \sum_{i,j=0}^{m-1}
-            \bigl(f_{\min\{i,j\}} - f_i f_j\bigr)
-            \Bigl(
-                f_{\min\{i,j\}} 
-                + \Bigl(
-                    1 + \frac{2\pi(h,2h)}{\pi(h)} 
-                    - \frac{4\pi(h)}{\pi}
-                \Bigr) f_i f_j
-            \Bigr)
-        }{
-            \left(
-                \sum_{k=0}^{m-1} f_k (1 - f_k)
-            \right)^2
-        }.
-    \]
-
-    \item \textbf{Finite-sample bias.} The approximate bias of 
-    $n \hat{\kappa}_{\mathrm{ord}}(h)$ under $H_0$ is
-    \[
-        \mathrm{Bias}\bigl(n \hat{\kappa}_{\mathrm{ord}}(h)\bigr) 
-        \approx -\frac{1}{\pi},
-    \]
-    so that the bias-corrected estimator is given by
-    \[
-        \hat{\kappa}^{\mathrm{bc}}_{\mathrm{ord}}(h) 
-        := \hat{\kappa}_{\mathrm{ord}}(h) + \frac{1}{n\pi}.
-    \]
-\end{enumerate}
-\end{theorem}
+since $\hat{\kappa}_{\mathrm{ord}}(h)$ converges to a nonzero constant.\\
+Therefore, the test statistic diverges under $H_A$, implying that 
+the rejection probability converges to one. This establishes the 
+consistency of the test.
 
 \begin{appendices}
 
 % \renewcommand{\thesection}{\Alph{section}}
 
 \chapter{Appendix}
+\section{Derivation of the Asymptotic Covariance Matrix}
+\label{app:derivation_covariance}
+
+In this section, we provide the detailed derivation of the elements of 
+the asymptotic covariance matrix 
+$\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$.
+
+By the multivariate delta method, the asymptotic covariance matrix of 
+$\sqrt{n}(\hat{\boldsymbol{f}}^{(h)*} - \mu)$ is given by
+\[
+\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}} 
+= \boldsymbol{G}\,\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}\,\boldsymbol{G}^\top.
+\]
+
+Carrying out the matrix multiplication row by row yields
+\[
+\boldsymbol{G}\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}} \boldsymbol{G}^\top
+=
+\begin{pmatrix}
+\frac{- f_0}{\pi} \sigma^{(h)}_{-1, -2} + \frac{1}{\pi} \sigma^{(h)}_{0, -2} & \cdots & \frac{-f_0}{\pi} \sigma^{(h)}_{-1, 2m-1} +  \frac{1}{\pi} \sigma^{(h)}_{0, 2m-1} \\
+\vdots &\ddots & \vdots \\
+\frac{-f_{m-1}}{\pi} \sigma^{(h)}_{-1, -2} + \frac{1}{\pi} \sigma^{(h)}_{m-1, -2} & \cdots & \frac{-f_{m-1}}{\pi} \sigma^{(h)}_{-1, 2m-1} +  \frac{1}{\pi} \sigma^{(h)}_{m-1, 2m-1} \\
+\frac{-f_{00}(h)}{\pi(h)} \sigma^{(h)}_{-2, -2} + \frac{1}{\pi(h)} \sigma^{(h)}_{m, -2} & \cdots & \frac{-f_{00}(h)}{\pi(h)} \sigma^{(h)}_{-2, 2m-1} +  \frac{1}{\pi(h)} \sigma^{(h)}_{m, 2m-1} \\
+\vdots &\ddots& \vdots \\
+\frac{f_{m-1, m-1}(h)}{\pi(h)} \sigma^{(h)}_{-2, -2} + \frac{1}{\pi(h)} \sigma^{(h)}_{2m-1, -2} & \cdots & \frac{-f_{m-1, m-1}(h)}{\pi(h)} \sigma^{(h)}_{-2, 2m-1} +  \frac{1}{\pi(h)} \sigma^{(h)}_{2m-1, 2m-1}
+\end{pmatrix}
+\boldsymbol{G}^\top.
+\]
+
+To obtain explicit expressions for the entries 
+$\sigma^{(h)*}_{i,j}$, we distinguish three cases depending on whether 
+the indices correspond to marginal or bivariate components:
+
+{\allowdisplaybreaks
+\begin{align*}
+    &\textbf{(i)}\ i,j = 0, \ldots, m-1: \\
+    &\quad \sigma^{(h)*}_{i,j}
+    = \frac{f_i f_j}{\pi^2} \sigma^{(h)}_{-1,-1} 
+    - \frac{f_j}{\pi^2} \sigma^{(h)}_{i,-1} 
+    - \frac{f_i}{\pi^2} \sigma^{(h)}_{-1,j} 
+    + \frac{1}{\pi^2} \sigma^{(h)}_{i,j} \\
+    &\quad = \frac{1}{\pi}\left(f_{\min\{i,j\}} - f_i f_j\right) 
+    + \sum_{h=1}^{\infty} \pi(h) \left(f_{ij}(h) + f_{ji}(h) - 2f_i f_j\right) \\
+    &\quad \overset{H_0}{=} 
+    \frac{1}{\pi} \left(f_{\min\{i,j\}} - f_i f_j\right) \\[1ex]
+    %
+    &\textbf{(ii)}\ i = 0, \ldots, m-1,\ j = m, \ldots, 2m-1 
+    \ (j' = j - m): \\
+    &\quad \sigma^{(h)*}_{i,j}
+    = \frac{1}{\pi(h)\,\pi} \Bigl(
+    2\pi(h)\,f_{j'}(f_{\min\{i,j'\}} - f_i f_{j'}) 
+    + f_i f_{j'}^2\,\sigma^{(h)}_{-1,-2} 
+    - f_{j'j'}(h) f_i \sigma^{(h)}_{-1,-2} \Bigr) \\
+    &\quad \overset{H_0}{=} 
+    \frac{2}{\pi}\,f_{j'}\!\left(f_{\min\{i,j'\}} - f_i f_{j'}\right) \\[1ex]
+    %
+    &\textbf{(iii)}\ i,j = m, \ldots, 2m-1 
+    \ (i' = i-m,\ j' = j-m): \\
+    &\quad \sigma^{(h)*}_{i,j}
+    = \frac{1}{\pi(h)^2}(f_{\min\{i', j'\}}- f_{i'} f_{j'})
+    \Bigl(\pi(h)(f_{\min\{i', j'\}}- f_{i'} f_{j'}) \\
+    &\qquad\qquad + 2\pi(h, 2h)f_{i'}f_{j'}\Bigr).
+\end{align*}}
 
 \section{Asymptotic Variance of $\hat{\kappa}_{\mathrm{ord}}(h)$}
 \label{app:var-kappa}
