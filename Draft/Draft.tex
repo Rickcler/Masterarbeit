@@ -1382,8 +1382,7 @@ of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$ yields:
 - 2\pi\pi(h)\bigr] \\
 &\quad = 2\pi(h)(f_{(j-m)}f_{\min\{i,j-m\}} - f_i f_{j-m}^2) + f_i f_{j-m}^2 \sigma^{(h)}_{-1, -2}\\[2ex]
 &\textbf{(x)}\ i,j = m,\ldots,2m-1\ \text{(continued from above)}:\\
-&\quad \overset{H_0}{=}\ 
-\overset{H_0}{=} \pi(h)f_{\min\{i,j\}}^2 - \pi(h)^2 f_{(i-m)}^2f_{(j-m)}^2 
+&\quad \overset{H_0}{=} \pi(h)f_{\min\{i,j\}}^2 - \pi(h)^2 f_{(i-m)}^2f_{(j-m)}^2 
 + 2 \mathrm{E}[O_t O_{t+h} O_{t-h}] f_i f_j f_{\min\{i,j\}} - 2 \pi(h)^2 f_{i-m}^2 f_{j-m}^2 \\
 &\qquad + \sum_{\substack{k=1\\k\neq h}}^{\infty} 2 f_{i}^2 f_{j}^2 \left[  \mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}] - \pi(h)^2\right] \\
 &\quad = \pi(h)f_{\min\{i-m,j-m\}}^2 - \pi(h)^2 f_{(i-m)}^2f_{(j-m)}^2 
@@ -1551,6 +1550,112 @@ since $\hat{\kappa}_{\mathrm{ord}}(h)$ converges to a nonzero constant.\\
 Therefore, the test statistic diverges under $H_A$, implying that 
 the rejection probability converges to one. This establishes the 
 consistency of the test.
+
+\chapter{Simulation Study}
+\label{chap:simulation}
+
+The theoretical results derived in the preceding chapters characterize 
+the asymptotic behavior of the proposed estimators, but leave open the 
+question of how well these approximations perform in finite samples. 
+In particular, the bias corrections derived for the IOV estimator 
+(Corollary \ref{cor:iov_missing}) and for $\hat{\kappa}_{\mathrm{ord}}(h)$ (Theorem~\ref{thm:kappa-asymp}) 
+are asymptotic results, and it is not a priori clear at what sample 
+sizes they provide reliable guidance. This chapter therefore complements 
+the theoretical analysis with a Monte Carlo simulation study, pursuing 
+three goals: first, to assess the finite-sample accuracy of the 
+asymptotic bias formulas; second, to investigate the rate of convergence 
+of the estimators to their asymptotic normal distributions; and third, 
+to examine the sensitivity of the estimators to violations of the MCAR 
+assumption.
+
+\section{Setup and Design}
+\label{sec:sim-setup}
+
+\subsection*{Data generating process}
+
+All simulations are based on the BinAR(1) process as described in \citet[Section 3.3.]{Weiss2018}, which provides a flexible and tractable model for ordinal 
+categorical time series with controlled serial dependence. The BinAR(1) process $(X_t)$ with binomial parameter $m$ and thinning 
+parameter $r \in [0,1]$ is defined by the recursion
+\[
+    X_t = B(X_{t-1},\, \alpha) + B(m - X_{t-1},\, \beta),
+\]
+where $B(k, p)$ denotes a binomial random variable with parameters $k$ 
+and $p$, and where $\alpha = p(1-r) + r$ and $\beta = p(1-r)$ are 
+determined by the stationary mean $p := \mathrm{E}[X_t]/m$ and the 
+thinning parameter $r$. The parameter $r$ controls the strength of 
+serial dependence: $r = 0$ yields an i.i.d.\ process, while larger 
+values of $r$ induce stronger positive autocorrelation. The stationary 
+marginal distribution of $(X_t)$ is $\mathrm{Binomial}(m, p)$, so that 
+the true CDF vector $\boldsymbol{f}$ and the true IOV are available in 
+closed form as
+\[
+    f_i = P(X_t \leq i) = \sum_{k=0}^{i}\binom{m}{k}p^k(1-p)^{m-k}, 
+    \qquad i = 0,\ldots,m-1,
+\]
+\[
+    \mathrm{IOV} = \frac{4}{m}\sum_{i=0}^{m-1} f_i(1-f_i).
+\]
+Missingness is introduced via the amplitude modulation framework of 
+\cref{sec:Amp Mod}. Under the baseline MCAR assumption, the 
+missingness indicator $O_t \sim \mathrm{Bernoulli}(\pi)$ is generated 
+independently of $(X_t)$, with observation probability $\pi \in (0,1]$. 
+To assess robustness, two additional MAR mechanisms are considered in 
+\cref{sec:sim-mcar-violation}, where the observation probability 
+depends on the current value of $X_t$.
+
+\subsection*{Simulation scenarios}
+
+Two combinations of $(m, p, r)$ are considered, chosen to represent 
+qualitatively different settings:
+\begin{itemize}
+    \item \textbf{Scenario A:} $m = 3$, $p = 0.20$, $r = 0.35$ — 
+    a coarse ordinal scale with few categories, a skewed marginal 
+    distribution, and moderate serial dependence.
+    \item \textbf{Scenario B:} $m = 10$, $p = 0.45$, $r = 0.50$ — 
+    a finer ordinal scale, a near-symmetric marginal distribution, 
+    and stronger serial dependence.
+\end{itemize}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth, height = 6cm]{../Graphs/Marginal CDF.png}
+    \caption{Marginal CDFS of the two simulation scenarios.}
+    \label{fig:marginal-dist}
+\end{figure}
+The CDFs for both scenarios are shown in Figure \ref{fig:marginal-dist}. For each scenario, two observation probabilities are considered: 
+$\pi = 1$ (no missingness) and $\pi = 0.75$ (25\% missing at random). 
+The time series length varies over $n \in \{50, 100, 250, 500, 1000\}$, 
+and all results are based on $B = 1{,}000$ Monte Carlo replications. 
+To study the convergence of the bias as a function of $n$, an 
+additional fine grid $n \in \{2, 3, 5, 10, 15, 25, 37, 50, 75, 100, 
+150, 200, 375, 500, 750, 1000\}$ is used for Scenario B under 
+$\pi = 0.75$, with $B = 1{,}000$ replications each.
+
+\subsection*{Estimators and performance measures}
+
+In each replication, the following quantities are computed from the 
+observed data $(O_t X_t)_{t=1}^n$: the corrected CDF estimator 
+$\hat{\boldsymbol{f}}^*$ (Definition~\ref{def:correctedest}), the 
+IOV estimator $\widehat{\mathrm{IOV}}$, the skewness estimator 
+$\widehat{\mathrm{skew}}$, and the ordinal Cohen's $\kappa$ estimator 
+$\hat{\kappa}_{\mathrm{ord}}(h)$ for lags $h \in \{1, 2\}$. 
+Performance is assessed through the following measures, averaged across 
+replications:
+\begin{itemize}
+    \item \textbf{Mean bias:} $\frac{1}{B}\sum_{b=1}^B 
+    (\hat{\theta}_b - \theta)$, where $\theta$ denotes the true 
+    parameter value.
+    \item \textbf{$n$-scaled bias:} $n \cdot \frac{1}{B}\sum_{b=1}^B 
+    (\hat{\theta}_b - \theta)$, used to assess convergence to the 
+    theoretical $O(n^{-1})$ bias limit.
+    \item \textbf{Standard deviation} across replications, compared 
+    against the asymptotic standard deviation 
+    $\sqrt{\sigma^2_\theta / n}$ derived in the theoretical chapters.
+\end{itemize}
+The theoretical bias limit for the IOV estimator under MCAR is given 
+by $-\frac{4}{mn}\mathrm{tr}(\boldsymbol{\Sigma}_Z)$ 
+(), and for $\hat{\kappa}_{\mathrm{ord}}(h)$ under $H_0$ by 
+$-\frac{1}{n\pi}$ (\cref{thm:kappa-asymp}). These serve as 
+benchmarks against which the simulated bias curves are compared.
 
 \begin{appendices}
 

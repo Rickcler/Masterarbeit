@@ -341,5 +341,94 @@ ggplot(subset, aes(x = x_pos, y = mean_C,
           alpha = 0.05, fill = "gray90")
         
 
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+# ==============================================================================
+# Wahre Marginalverteilungen für beide Szenarien
+# ==============================================================================
+
+# Szenario A: m=3, p=0.20
+scen_A <- data.frame(
+  scenario  = "Scenario A\nm = 3, p = 0.20, r = 0.35",
+  category  = 0:3,
+  pmf       = dbinom(0:3, size = 3, prob = 0.20),
+  cdf       = pbinom(0:3, size = 3, prob = 0.20)
+)
+
+# Szenario B: m=10, p=0.45
+scen_B <- data.frame(
+  scenario  = "Scenario B\nm = 10, p = 0.45, r = 0.50",
+  category  = 0:10,
+  pmf       = dbinom(0:10, size = 10, prob = 0.45),
+  cdf       = pbinom(0:10, size = 10, prob = 0.45)
+)
+
+plot_df <- bind_rows(scen_A, scen_B) %>%
+  mutate(scenario = factor(scenario,
+                           levels = c(
+                             "Scenario A\nm = 3, p = 0.20, r = 0.35",
+                             "Scenario B\nm = 10, p = 0.45, r = 0.50"
+                           )),
+         category = factor(category))
+
+# ==============================================================================
+# Plot: PMF und CDF nebeneinander, beide Szenarien
+# ==============================================================================
+
+# PMF
+p_pmf <- ggplot(plot_df,
+                aes(x = category, y = pmf)) +
+  geom_col(fill = "grey70", color = "grey40", width = 0.6) +
+  geom_text(aes(label = round(pmf, 3)),
+            vjust = -0.4, size = 2.8, color = "grey30") +
+  facet_wrap(~ scenario, scales = "free_x") +
+  scale_y_continuous(limits = c(0, 0.60),
+                     name   = "Probability") +
+  scale_x_discrete(name = "Category") +
+  labs(title = "Marginal PMF") +
+  theme_minimal() +
+  theme(
+    strip.text       = element_text(size = 10, face = "bold"),
+    panel.grid.major.x = element_blank(),
+    plot.title       = element_text(size = 11)
+  )
+
+# CDF
+p_cdf <- ggplot(plot_df,
+                aes(x = category, y = cdf)) +
+  geom_col(fill = "grey70", color = "grey40", width = 0.6) +
+  geom_text(aes(label = round(cdf, 3)),
+            vjust = -0.4, size = 2.8, color = "grey30") +
+  geom_hline(yintercept = 0.5,
+             linetype = "dashed", color = "steelblue",
+             linewidth = 0.6) +
+  annotate("text", x = 0.6, y = 0.52,
+           label = "0.5", color = "steelblue", size = 3) +
+  facet_wrap(~ scenario, scales = "free_x") +
+  scale_y_continuous(limits = c(0, 1.05),
+                     name   = "Cumulative Probability") +
+  scale_x_discrete(name = "Category") +
+  labs(title = "Marginal CDF") +
+  theme_minimal() +
+  theme(
+    strip.text         = element_text(size = 10, face = "bold"),
+    panel.grid.major.x = element_blank(),
+    plot.title         = element_text(size = 11)
+  )
+
+# Kombiniert
+library(patchwork)
+
+p_pmf / p_cdf +
+  plot_annotation(
+    title    = "Marginal distributions of the two simulation scenarios",
+    subtitle = "Top: PMF    Bottom: CDF    Dashed line: 0.5",
+    theme    = theme(
+      plot.title    = element_text(size = 13, face = "bold"),
+      plot.subtitle = element_text(size = 10, color = "grey40")
+    )
+  )
 
 load("Masterarbeit.RData")

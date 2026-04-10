@@ -45,6 +45,11 @@ generate_O_MAR <- function(x, m, pi_low = 0.5, pi_high = 0.9) {
   rbinom(length(x), 1, pi_t)
 }
 
+generate_O_MAR_inv <- function(x, m, pi_low = 0.5, pi_high = 0.9) {
+  # pi_t fällt mit x: hohe Werte seltener beobachtet
+  pi_t <- pi_high - (pi_high - pi_low) * (x / m)
+  rbinom(length(x), 1, pi_t)
+}
 
 #' Generate i.i.d. Binomial process
 #' @param p  Success probability
@@ -197,6 +202,41 @@ simulation_MAR <- function(n, m, p, r, pi_low = 0.5, pi_high = 0.9,
   )
 }
 
+simulation_MAR_inv <- function(n, m, p, r, pi_low = 0.5, pi_high = 0.9,
+                                n_reps = 1000) {
+  results <- matrix(
+    NA, nrow = n_reps, ncol = 4,
+    dimnames = list(NULL, c("IOV", "Skew", "lag1_Cohen", "lag2_Cohen"))
+  )
+
+  for (rep in 1:n_reps) {
+    count_process   <- generate_binar1(n, m, p, r)
+    Missing_process <- generate_O_MAR_inv(count_process, m, pi_low, pi_high)
+    observed_counts <- count_process[Missing_process == 1]
+    CDF             <- marginal_probs_e(m, observed_counts,
+                                        length(observed_counts))
+
+    iid_process         <- generate_iid(p, m, n)
+    Missing_iid         <- generate_O_MAR_inv(iid_process, m, pi_low, pi_high)
+    observed_counts_iid <- iid_process[Missing_iid == 1]
+    CDF_iid             <- marginal_probs_e(m, observed_counts_iid,
+                                             length(observed_counts_iid))
+
+    results[rep, 1] <- (4 / m) * sum(CDF * (1 - CDF))
+    results[rep, 2] <- (2 / m) * sum(CDF - 1)
+    results[rep, 3] <- sum(
+      biv_probs_e(m, iid_process, Missing_iid, n, h = 1) - CDF_iid^2
+    ) / sum(CDF_iid * (1 - CDF_iid))
+    results[rep, 4] <- sum(
+      biv_probs_e(m, iid_process, Missing_iid, n, h = 2) - CDF_iid^2
+    ) / sum(CDF_iid * (1 - CDF_iid))
+  }
+ 
+  list(
+    summary = rbind(colMeans(results, na.rm = TRUE),
+                    apply(results, 2, sd))
+  )
+}
 #' Simulation: returns raw replication-level IOV and Skew estimates
 #' @param n      Time series length
 #' @param m      Binomial parameter
@@ -324,6 +364,18 @@ results_MAR <- apply(scenarios_MAR, 1, function(row) {
     r       = row["r"],
     pi_low  = row["pi_low"],
     pi_high = row["pi_high"],
+    n_reps  = 1000
+  )
+})
+
+results_MAR_inv <- apply(scenarios_MAR, 1, function(row) {
+  simulation_MAR_inv(
+    n       = as.numeric(row["n"]),
+    m       = as.numeric(row["m"]),
+    p       = as.numeric(row["p"]),
+    r       = as.numeric(row["r"]),
+    pi_low  = as.numeric(row["pi_low"]),
+    pi_high = as.numeric(row["pi_high"]),
     n_reps  = 1000
   )
 })
@@ -473,3 +525,4 @@ ggplot(plot_df, aes(x = category, color = n, linetype = type)) +
   ) +
   theme_minimal()
 save.image("Masterarbeit.RData")
+load("Masterarbeit.RData")
