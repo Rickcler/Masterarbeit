@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.16)  10 APR 2026 13:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.16)  13 APR 2026 16:06
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -637,31 +637,31 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 
 [29] [30]
 chapter 4.
-
-LaTeX Warning: Reference `sec:sim-mcar-violation' on page 1 undefined on input line 1603.
-
 [31
 
 ]
-<../Graphs/Marginal CDF.png, id=315, 498.36188pt x 362.85562pt>
+
+LaTeX Warning: Reference `sec:sim-mcar-violation' on page 1 undefined on input line 1623.
+
+<../Graphs/Marginal CDF.png, id=317, 498.36188pt x 362.85562pt>
 File: ../Graphs/Marginal CDF.png Graphic file (type png)
 <use ../Graphs/Marginal CDF.png>
-Package pdftex.def Info: ../Graphs/Marginal CDF.png  used on input line 1620.
+Package pdftex.def Info: ../Graphs/Marginal CDF.png  used on input line 1640.
 (pdftex.def)             Requested size: 448.14133pt x 170.71933pt.
 
-Overfull \hbox (64.75482pt too wide) in paragraph at lines 1624--1632
+Overfull \hbox (64.75482pt too wide) in paragraph at lines 1644--1652
 \T1/lmr/m/n/12 func-tion of $\OML/lmm/m/it/12 n$\T1/lmr/m/n/12 , an ad-di-tional fine grid $\OML/lmm/m/it/12 n \OMS/lmsy/m/n/12 2 f\OT1/lmr/m/n/12 2\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 3\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 5\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 10\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 15\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 25\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 37\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 50\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 75\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 100\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 150\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 200\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 375\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 500\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 750\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 1000\OMS/lmsy/m/n/12 g$
  []
 
 
-Overfull \hbox (12.61961pt too wide) in paragraph at lines 1635--1643
+Overfull \hbox (12.61961pt too wide) in paragraph at lines 1655--1663
 \T1/lmr/m/n/12 In each repli-ca-tion, the fol-low-ing quan-ti-ties are com-puted from the ob-served data $\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 O[]X[]\OT1/lmr/m/n/12 )[]$\T1/lmr/m/n/12 :
  []
 
-[32 <../Graphs/Marginal CDF.png>] [33]
+[32] [33 <../Graphs/Marginal CDF.png>]
 chapter A.
 
-Overfull \hbox (55.43958pt too wide) detected at line 1692
+Overfull \hbox (55.43958pt too wide) detected at line 1712
 [][][][][] \OT1/lmr/m/n/12 = [] [][]\OML/lmm/m/it/12 :
  []
 
@@ -670,45 +670,45 @@ Overfull \hbox (55.43958pt too wide) detected at line 1692
 ]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1729.
+(hyperref)                removing `math shift' on input line 1749.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 1729.
+(hyperref)                removing `subscript' on input line 1749.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1729.
+(hyperref)                removing `math shift' on input line 1749.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1778.
+(hyperref)                removing `math shift' on input line 1798.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\kappa' on input line 1778.
+(hyperref)                removing `\kappa' on input line 1798.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1778.
+(hyperref)                removing `math shift' on input line 1798.
 
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 1784.
+(Font)              <5> on input line 1804.
 [35]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1811.
+(hyperref)                removing `math shift' on input line 1831.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\kappa' on input line 1811.
+(hyperref)                removing `\kappa' on input line 1831.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1811.
+(hyperref)                removing `math shift' on input line 1831.
 
 [36]
-Overfull \hbox (11.8054pt too wide) detected at line 1856
+Overfull \hbox (11.8054pt too wide) detected at line 1876
 []
  []
 
@@ -736,9 +736,9 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  108i,19n,107p,11277b,643s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eufb10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eufm10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbsy10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbsy7.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx8.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbxi10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi5.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi6.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmib10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmib7.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr17.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr5.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr6.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy5.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy6.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Draft.pdf (38 pages, 607974 bytes).
+Output written on Draft.pdf (38 pages, 611255 bytes).
 PDF statistics:
- 606 PDF objects out of 1000 (max. 8388607)
+ 608 PDF objects out of 1000 (max. 8388607)
  120 named destinations out of 1000 (max. 500000)
  238 words of extra memory for PDF output out of 10000 (max. 10000000)
 
