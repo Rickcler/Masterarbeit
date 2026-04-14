@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex Draft"] 1776089163.76182 "Draft.aux" "Draft.bbl" "Draft" 1776089169.08296 0
+["bibtex Draft"] 1776156617.46664 "Draft.aux" "Draft.bbl" "Draft" 1776156623.60395 0
   "./references.bib" 1775644595 3113 b90de84dfbe86f14ca39af4146269bfc ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/bibtex/bst/bibtex/apalike.bst" 1291972791 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "Draft.aux" 1776089167 22301 63e58f295d64c18de5ac58af0fa050ad "pdflatex"
+  "Draft.aux" 1776156621 22367 eed2963e6790c9611425cf54698c19d9 "pdflatex"
   (generated)
   "Draft.bbl"
   "Draft.blg"
   (rewritten before read)
-["pdflatex"] 1776089164.37117 "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" "Draft.pdf" "Draft" 1776089169.08405 0
+["pdflatex"] 1776156618.16887 "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" "Draft.pdf" "Draft" 1776156623.60537 0
   "../Graphs/Marginal CDF.png" 1775820971 26676 08f51e18322020a417474ad48b82f48c ""
   "C:/Users/victo/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1774892181 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/victo/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1773650309 13333849 12741b35d044f71bab70047640433069 ""
@@ -179,10 +179,10 @@
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1751104012 9684 a33a14b82ce60d6e77cb9be689d79ee6 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/tex/latex/xpatch/xpatch.sty" 1585221260 8510 7803f78066c4f9d008405191a4b43073 ""
-  "Draft.aux" 1776089167 22301 63e58f295d64c18de5ac58af0fa050ad "pdflatex"
-  "Draft.bbl" 1776089164 2135 e7ddf1c8a7f11899cf4d0f95b884f2b1 "bibtex Draft"
-  "Draft.tex" 1776089156 99542 6a418b1582576f967d311309cccae5fc ""
-  "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" 1776089156 99542 6a418b1582576f967d311309cccae5fc ""
+  "Draft.aux" 1776156621 22367 eed2963e6790c9611425cf54698c19d9 "pdflatex"
+  "Draft.bbl" 1776156617 2135 e7ddf1c8a7f11899cf4d0f95b884f2b1 "bibtex Draft"
+  "Draft.tex" 1776156610 99315 db75c3a461ad42ae575611d8f651de71 ""
+  "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" 1776156610 99315 db75c3a461ad42ae575611d8f651de71 ""
   (generated)
   "Draft.aux"
   "Draft.log"

@@ -1574,7 +1574,7 @@ assumption.
 \subsection*{Data generating process}
 
 All simulations are based on the BinAR(1) process as described in \citet[Section 3.3.]{Weiss2018}, which provides a flexible and tractable model for ordinal 
-categorical time series with controlled serial dependence. The BinAR(1) has three parameters: the number of categories $m \in \mathbb{N}$, the marginal probability $p \in [0,1]$ and the thinning parameter $r \in \left(\max\left\{\frac{-p}{1-p}, \frac{1-\pi}{-\pi}\right\};1\right)$. It is defined by the recursion
+categorical time series with controlled serial dependence. The BinAR(1) process is parameterized by:: the number of categories $m \in \mathbb{N}$, the marginal probability $p \in [0,1]$ and the thinning parameter $r \in \left(\max\left\{\frac{-p}{1-p}, \frac{1-p}{-p}\right\};1\right)$. It is defined by the recursion
 \[
     X_t = B(X_{t-1},\, \alpha) + B(m - X_{t-1},\, \beta),
 \]
@@ -1593,28 +1593,24 @@ closed form as
 The parameter $r$ controls the strength of 
 serial dependence: $r = 0$ yields an i.i.d.\ process, values larger than zero 
 imply positive autocorrelation and values less than zero imply negative autocorrelation.
-The one-step-ahead transition probabilities are given by
-\[p_{i|j}(1)= \sum^{\min\{i,j\}}_{o = \max\{0, i+j-m \}}\binom{j}{o} \binom{m-j}{i-o}\alpha^o (1-\alpha)^{j-o} \beta^{i-o} (1-\beta)^{m-j+o-i}, \]
+The one-step-ahead transition probabilities, defined as
+\[p_{i|j}(1) = P(X_t = i | X_{t-1} = j),\]
+are given by
+\[p_{i|j}(1)= \sum^{\min\{i,j\}}_{q = \max\{0, i+j-m \}}\binom{j}{q} \binom{m-j}{i-q}\alpha^q (1-\alpha)^{j-q} \beta^{i-q} (1-\beta)^{m-j+q-i}, \]
 and the $h$-step-ahead transition probabilities can be obtained by replacing $\alpha$ and $\beta$ with $\alpha_h = p(1-r^h) + r^h$ and $\beta_h = p(1-r^h)$. The 
 joint probabilities $p_{ij}(h) = P(X_t = i, X_{t-h} = j)$ can then be computed by multiplying the transition probabilities with the marginal probability of $X_t= j$:
-\[p_{ji}(h)= p_{i|j}(1) \cdot p_j.\]
+\[p_{ji}(h)= p_{i|j}(h) \cdot p_j.\]
 The respective components of the joint CDF can then be computed using the cumulative sum
 \[f_{ij}(h) = \sum_{k=0}^i \sum_{l=0}^j p_{kl}(h).\]
-Under the BinAR(1) model, these do not factorize as $f_if_j$ unless $r = 0$, reflecting 
-the serial dependence induced by the thinning parameter $r$. In 
-particular, the diagonal probabilities $f_{ii}(h)$ satisfy 
-$f_{ii}(h) > f_i^2$ for $r > 0$, so that $\kappa_{\mathrm{ord}}(h) > 0$ 
-— the process tends to remain in the same region of the state space 
-across lag $h$. The strength of this dependence decays geometrically 
-in $h$, with $\kappa_{\mathrm{ord}}(h) \to 0$ as $h \to \infty$, 
-consistent with the $\alpha$-mixing assumption of 
-\cref{thm:clt_fstarhat}. For $r = 0$, the process is i.i.d.\ and 
-$\kappa_{\mathrm{ord}}(h) = 0$ for all $h \geq 1$, which corresponds 
-to the null hypothesis $H_0$ considered in \cref{subsec:serial-H0}.
-The true value of $\kappa_{\mathrm{ord}}(h)$ is not available in 
-closed form for the BinAR(1) process, but can be computed numerically 
-using the transition probabilities given by 
-\[p_{i|j}= \sum^{\min\{i,j\}}_{o = \max\{0, i+j-m \}}\binom{j}{o} \binom{m-j}{i-o}\alpha^o (1-\alpha)^{j-o} \beta^{i-o} (1-\beta)^{m-j+o-i}.\]
+Hence,  $\kappa_{\mathrm{ord}}(h)$ is also given in close form by plugging $f_{ij}(h)$ and $f_i$ into the formula from Definition \ref{def:cohens-kappa}. Since the BinAR(1)-process is a ergodic Markov chain on the finite 
+state space $\{0,\ldots,m\}$ \citep[p.~60]{Weiss2018}, it follows that the process is $\phi$-mixing with exponentially decaying 
+coefficients, i.e.\ there exist constants $a > 0$ and $\rho \in (0,1)$ 
+such that $\phi(n) \le a \rho^n$ for all $n$ 
+\citep[Appendix~B.2.2]{Weiss2018}. Moreover, the mixing coefficients satisfy the inequality 
+$2\alpha(n) \le \phi(n)$ for all $n$ \citep[Eq.~(1.11)]{bradley_2005}. 
+Hence, the $\alpha$-mixing coefficients also decay exponentially, showing that the BinAR(1) 
+process satisfies the assumption of 
+\cref{thm:clt_fstarhat}. \\
 Missingness is introduced via the amplitude modulation framework of 
 \cref{sec:Amp Mod}. Under the baseline MCAR assumption, the 
 missingness indicator $O_t \sim \mathrm{Bernoulli}(\pi)$ is generated 
