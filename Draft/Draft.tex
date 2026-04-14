@@ -1573,51 +1573,111 @@ assumption.
 
 \subsection*{Data generating process}
 
-All simulations are based on the BinAR(1) process as described in \citet[Section 3.3.]{Weiss2018}, which provides a flexible and tractable model for ordinal 
-categorical time series with controlled serial dependence. The BinAR(1) process is parameterized by:: the number of categories $m \in \mathbb{N}$, the marginal probability $p \in [0,1]$ and the thinning parameter $r \in \left(\max\left\{\frac{-p}{1-p}, \frac{1-p}{-p}\right\};1\right)$. It is defined by the recursion
+All simulations are based on the BinAR(1) process as described in 
+\citet[Section~3.3]{Weiss2018}, which serves as a flexible and tractable 
+model for ordinal categorical time series with controllable serial dependence.
+
+\paragraph{Model definition.}
+The BinAR(1) process is parameterized by the number of categories 
+$m \in \mathbb{N}$, the marginal probability $p \in (0,1)$, and the 
+thinning parameter 
 \[
-    X_t = B(X_{t-1},\, \alpha) + B(m - X_{t-1},\, \beta),
+r \in \left(\max\left\{-\frac{p}{1-p}, -\frac{1-p}{p}\right\}, 1\right).
 \]
-where $B(k, j)$ denotes a binomial random variable with parameters $k$ 
-and $j$, and where $\alpha = p(1-r) + r$ and $\beta = p(1-r)$. The stationary 
-marginal distribution of $(X_t)$ is $\mathrm{Binomial}(m, p)$, so that 
-the true CDF vector $\boldsymbol{f}$ and the true IOV are available in 
-closed form as
+It is defined recursively by
 \[
-    f_i = P(X_t \leq i) = \sum_{k=0}^{i}\binom{m}{k}p^k(1-p)^{m-k}, 
-    \qquad i = 0,\ldots,m-1,
+X_t = B(X_{t-1},\, \alpha) + B(m - X_{t-1},\, \beta),
+\]
+where $B(k, q)$ denotes a binomial random variable with parameters 
+$k$ and $q$, and where $\alpha = p(1-r) + r$ and $\beta = p(1-r)$. 
+This representation has a simple interpretation: units currently in state 
+“1” persist with probability $\alpha$, while units in state “0” switch to 
+state “1” with probability $\beta$. The parameter $r$ controls the strength and direction of serial 
+dependence: $r = 0$ yields an i.i.d.\ process, positive values imply 
+positive autocorrelation, and negative values imply negative autocorrelation.
+
+\paragraph{Distributional properties.}
+The stationary marginal distribution of $(X_t)$ is 
+$\mathrm{Binomial}(m, p)$, so that the process is strictly stationary. 
+In particular, the true CDF vector $\boldsymbol{f}$ and the index of 
+ordinal variation (IOV) are available in closed form as
+\[
+f_i = P(X_t \leq i) = \sum_{k=0}^{i}\binom{m}{k}p^k(1-p)^{m-k}, 
+\qquad i = 0,\ldots,m-1,
 \]
 \[
-    \mathrm{IOV} = \frac{4}{m}\sum_{i=0}^{m-1} f_i(1-f_i).
+\mathrm{IOV} = \frac{4}{m}\sum_{i=0}^{m-1} f_i(1-f_i).
 \]
-The parameter $r$ controls the strength of 
-serial dependence: $r = 0$ yields an i.i.d.\ process, values larger than zero 
-imply positive autocorrelation and values less than zero imply negative autocorrelation.
-The one-step-ahead transition probabilities, defined as
-\[p_{i|j}(1) = P(X_t = i | X_{t-1} = j),\]
+The one-step-ahead transition probabilities
+\[
+p_{i|j}(1) = P(X_t = i \mid X_{t-1} = j)
+\]
 are given by
-\[p_{i|j}(1)= \sum^{\min\{i,j\}}_{q = \max\{0, i+j-m \}}\binom{j}{q} \binom{m-j}{i-q}\alpha^q (1-\alpha)^{j-q} \beta^{i-q} (1-\beta)^{m-j+q-i}, \]
-and the $h$-step-ahead transition probabilities can be obtained by replacing $\alpha$ and $\beta$ with $\alpha_h = p(1-r^h) + r^h$ and $\beta_h = p(1-r^h)$. The 
-joint probabilities $p_{ij}(h) = P(X_t = i, X_{t-h} = j)$ can then be computed by multiplying the transition probabilities with the marginal probability of $X_t= j$:
-\[p_{ji}(h)= p_{i|j}(h) \cdot p_j.\]
-The respective components of the joint CDF can then be computed using the cumulative sum
-\[f_{ij}(h) = \sum_{k=0}^i \sum_{l=0}^j p_{kl}(h).\]
-Hence,  $\kappa_{\mathrm{ord}}(h)$ is also given in close form by plugging $f_{ij}(h)$ and $f_i$ into the formula from Definition \ref{def:cohens-kappa}. Since the BinAR(1)-process is a ergodic Markov chain on the finite 
-state space $\{0,\ldots,m\}$ \citep[p.~60]{Weiss2018}, it follows that the process is $\phi$-mixing with exponentially decaying 
-coefficients, i.e.\ there exist constants $a > 0$ and $\rho \in (0,1)$ 
-such that $\phi(n) \le a \rho^n$ for all $n$ 
-\citep[Appendix~B.2.2]{Weiss2018}. Moreover, the mixing coefficients satisfy the inequality 
-$2\alpha(n) \le \phi(n)$ for all $n$ \citep[Eq.~(1.11)]{bradley_2005}. 
-Hence, the $\alpha$-mixing coefficients also decay exponentially, showing that the BinAR(1) 
-process satisfies the assumption of 
-\cref{thm:clt_fstarhat}. \\
+\[
+p_{i|j}(1)= \sum^{\min\{i,j\}}_{q = \max\{0, i+j-m \}}
+\binom{j}{q} \binom{m-j}{i-q}\alpha^q (1-\alpha)^{j-q} 
+\beta^{i-q} (1-\beta)^{m-j+q-i}.
+\]
+The $h$-step-ahead transition probabilities are obtained by replacing 
+$\alpha$ and $\beta$ with $\alpha_h = p(1-r^h) + r^h$ and 
+$\beta_h = p(1-r^h)$. The joint probabilities
+\[
+p_{ij}(h) = P(X_t = i, X_{t-h} = j)
+\]
+are then given by
+\[
+p_{ij}(h) = p_{i|j}(h)\cdot p_j,
+\]
+where $p_j = P(X_t = j)$. The corresponding joint CDF components are
+\[
+f_{ij}(h) = \sum_{k=0}^i \sum_{l=0}^j p_{kl}(h).
+\]
+Hence, $\kappa_{\mathrm{ord}}(h)$ is available in closed form by 
+plugging the relevant $f_{ij}(h)$ and $f_i$ into the formula from Definition~\ref{def:cohens-kappa}. 
+This makes the BinAR(1) process particularly suitable for simulation 
+studies, as both marginal and joint quantities are analytically tractable.
+
+\paragraph{Mixing properties.}
+Finally, we verify that the BinAR(1) process satisfies the dependence 
+assumptions required for the asymptotic theory. Since the BinAR(1) process 
+is an ergodic Markov chain on the finite state space $\{0,\ldots,m\}$ 
+\citep[p.~60]{Weiss2018}, it follows that the process is $\phi$-mixing 
+with exponentially decaying coefficients, i.e.\ there exist constants 
+$C > 0$ and $\rho \in (0,1)$ such that $\phi(n) \le C \rho^n$ for all $n$ 
+\citep[Appendix~B.2.2]{Weiss2018}. \\
+Moreover, the mixing coefficients satisfy the inequality 
+$2\alpha(n) \le \phi(n)$ for all $n$ \citep[Eq.~(1.11)]{bradley_2005}. In particular, this also implies
+\[\alpha(n) \leq \phi(n) \leq C \rho^n,\]
+showing that the BinAR(1) process satisfies the mixing-assumptions of \cref{thm:clt_fstarhat}.
+\paragraph{Missingness mechanism.}
 Missingness is introduced via the amplitude modulation framework of 
-\cref{sec:Amp Mod}. Under the baseline MCAR assumption, the 
-missingness indicator $O_t \sim \mathrm{Bernoulli}(\pi)$ is generated 
-independently of $(X_t)$, with observation probability $\pi \in (0,1]$. 
-To assess robustness, two additional MAR mechanisms are considered in 
-\cref{sec:sim-mcar-violation}, where the observation probability 
-depends on the current value of $X_t$.
+\cref{sec:Amp Mod}. We consider three different data-generating mechanisms 
+for the observation process $(O_t)$.\\
+First, as a baseline, we assume independent missingness, where 
+$(O_t)$ is i.i.d.\ Bernoulli distributed with constant observation probability 
+$\pi \in (0,1]$, i.e.
+\[
+O_t \sim \mathrm{Bernoulli}(\pi).
+\]
+Second, we consider a dependent missingness process, where $(O_t)$ follows a 
+BinAR(1) process with $m=1$. This induces serial dependence in the observation 
+process while preserving a binary state space.\\
+Third, we consider observation schemes that depend on the current state of 
+the underlying process $(X_t)$, corresponding to MNAR-type mechanisms. In 
+the first variant, the observation probability increases with $X_t$, i.e.
+\[
+\pi_t = \pi_{\text{low}} + (\pi_{\text{high}} - \pi_{\text{low}})\frac{X_t}{m},
+\]
+while in the second variant it decreases with $X_t$, i.e.
+\[
+\pi_t = \pi_{\text{high}} - (\pi_{\text{high}} - \pi_{\text{low}})\frac{X_t}{m}.
+\]
+In both cases,
+\[
+O_t \mid X_t \sim \mathrm{Bernoulli}(\pi_t).
+\]
+These three mechanisms allow us to study independent, serially dependent, 
+and state-dependent missingness within a unified simulation framework.
 
 \subsection*{Simulation scenarios}
 

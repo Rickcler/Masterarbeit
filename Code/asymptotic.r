@@ -39,6 +39,7 @@ lag_h_joint_pmf <- function(m, p, r, h = 1) {
   lag_h_conditional(m, p, r, h = h) * dbinom(0:m, m, p) 
 }
 
+
 asymp_df
 #-- Get CDF from PMF matrix
 pmf_to_cdf <- function(pmf) {
@@ -52,7 +53,7 @@ lag_h_joint_cdf <- function(m, p, r, h = 1) {
   return(pmf_to_cdf(lag_h_joint_pmf(m,p, r, h=h)))
 }
 
-lag_h_joint_cdf(m,p,r, h = 1000)
+lag_h_joint_pmf(1,p,r, h = 1000)
 
 Sigma_Star <- function(m, p, r, pi) {
 
@@ -87,6 +88,40 @@ Sigma_Star <- function(m, p, r, pi) {
 }
 
 Sigma_Star(10, 0.45, 0.5, 0.75)
+
+Sigma_Star_dep <- function(m, p, r, pi, r_h) {
+
+  # marginale CDF auf 0,...,m-1
+  f <- pbinom(0:(m-1), m, p)
+
+
+  Sigma <- matrix(0, nrow = m, ncol = m)
+
+  for (i in 0:(m-1)) {
+    for (j in 0:(m-1)) {
+
+      smaller <- min(i, j)
+
+      # i.i.d.-Teil (Missingness)
+      iid_part <- (1 / pi) * (f[smaller + 1] - f[i + 1] * f[j + 1])
+
+      H <- 50  # oder adaptiv: bis r^H < 1e-8
+      lag_sum <- 0
+
+      for (h in 1:H) {
+        cdf_lag_h <- lag_h_joint_cdf(m,p, r, h)
+        pi_h <- lag_h_joint_pmf(1, pi, r_h, h)[2,2]
+        lag_sum <- lag_sum + (pi_h * (cdf_lag_h[i+1, j+1] + cdf_lag_h[j+1, i+1] - 2 * f[i+1] * f[j+1])) 
+      }
+
+      Sigma[i + 1, j + 1] <- iid_part + ((1/pi^2) * lag_sum)
+    }
+  }
+
+  return(Sigma)
+}
+
+
 
 IOV_asymptotic <- function(Sigma, marginal_cdf, n, m) {
 

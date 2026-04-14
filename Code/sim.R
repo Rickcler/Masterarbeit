@@ -23,12 +23,16 @@ generate_binar1 <- function(n, m, p, r) {
   return(I)
 }
 
+
+
 #' Generate amplitude-modulating missingness process
 #' @param n   Length of the time series
 #' @param pi  Observation probability
 generate_O <- function(n, pi) {
   rbinom(n, 1, pi)
 }
+
+
 
 #' Generate missingness process dependent on X_t (MAR)
 #' 
@@ -121,7 +125,7 @@ true_IOV <- function(m, p) {
 #' @param pi     Observation probability
 #' @param n_reps Number of replications
 #' @return List with two matrices (summary, cdf), each with rows mean and sd
-simulation <- function(n, m, p, r, pi, n_reps = 1000) {
+simulation <- function(n, m, p, r,  pi, pi_h, n_reps = 1000) {
   results <- matrix(
     NA, nrow = n_reps, ncol = 4,
     dimnames = list(NULL, c("IOV", "Skew", "lag1_Cohen", "lag2_Cohen"))
@@ -134,7 +138,7 @@ simulation <- function(n, m, p, r, pi, n_reps = 1000) {
   for (rep in 1:n_reps) {
     # BinAR(1) process with missingness
     count_process   <- generate_binar1(n, m, p, r)
-    Missing_process <- generate_O(n, pi)
+    Missing_process <- generate_binar1(n, 1, pi, pi_h)
     observed_counts <- count_process[Missing_process == 1]
     CDF             <- marginal_probs_e(m, observed_counts, length(observed_counts))
 
@@ -278,7 +282,8 @@ scenarios <- expand.grid(
   m  = c(3, 10),
   p  = c(0.20, 0.45),
   r  = c(0, 0.35, 0.50),
-  pi = c(1, 0.75)
+  pi = c(1, 0.75),
+  pi_h = c(0, 0.5, 0.75)
 )
 scenarios <- scenarios[
   (scenarios$m == 3  & scenarios$p == 0.20 & scenarios$r == 0.35) |
@@ -312,7 +317,7 @@ set.seed(123)
 results <- apply(scenarios, 1, function(row) {
   simulation(
     n = row["n"], m = row["m"], p = row["p"],
-    r = row["r"], pi = row["pi"], n_reps = 1000
+    r = row["r"], pi = row["pi"], pi_h = row["pi_h"], n_reps = 1000
   )
 })
 
