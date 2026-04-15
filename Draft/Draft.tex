@@ -813,37 +813,22 @@ $h \in \mathbb{N}$. The individual elements of $\boldsymbol{\Sigma}_{\boldsymbol
 are then given by
 {\small
 \begin{align*}
-&\textbf{(i)}\ i = j = -1: \\
-&\quad \mathrm{Var}(O_t) + 2\sum_{h=1}^\infty \mathrm{Cov}(O_t, O_{t+h}) 
-= \pi(1-\pi) + 2\sum_{h=1}^{\infty}\gamma_O(h) \\[2ex]
-&\textbf{(ii)}\ j > i = -1: \\
-&\quad \mathrm{Cov}(O_t, O_tZ_{t,j}) 
-+ 2\sum_{h=1}^\infty \mathrm{Cov}(O_t, O_{t+h}Z_{t+h,j}) \\
-&\quad \overset{\perp}{=} 
-\left(\mathrm{E}[O_t^2]\mathrm{E}[Z_{t,j}] - \mathrm{E}[O_t]^2\mathrm{E}[Z_{t,j}]\right) \\
-&\qquad + 2\sum_{h=1}^{\infty}
-\left(\mathrm{E}[O_tO_{t+h}]\mathrm{E}[Z_{t,j}] 
-- \mathrm{E}[O_t]^2\mathrm{E}[Z_{t,j}]\right) \\
-&\quad = (\pi - \pi^2)f_j + 2\sum_{h=1}^{\infty}(\gamma_O(h) + \pi^2 - \pi^2)f_j \\
-&\quad = \pi(1-\pi)f_j + 2f_j\sum_{h=1}^{\infty}\gamma_O(h) 
-= f_j\!\left(\pi(1-\pi) + 2\sum_{h=1}^{\infty}\gamma_O(h)\right) 
-= f_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1} \\[2ex]
-&\textbf{(iii)}\ i,j \geq 0: \\
-&\quad \mathrm{Cov}(O_tZ_{t,i}, O_tZ_{t,j}) 
-+ \sum_{h=1}^{\infty}\bigl[\mathrm{Cov}(O_tZ_{t,i}, O_{t+h}Z_{t+h,j}) 
-+ \mathrm{Cov}(O_{t+h}Z_{t+h,i}, O_tZ_{t,j})\bigr] \\
-&\quad \overset{\perp}{=} 
-\bigl(\mathrm{E}[O_t^2]\mathrm{E}[Z_{t,i}Z_{t,j}] - \pi^2f_if_j\bigr) \\
-&\qquad + \sum_{h=1}^{\infty}\bigl[
-\mathrm{E}[O_tO_{t+h}]\mathrm{E}[Z_{t,i}Z_{t+h,j}] - \pi^2f_if_j 
-+ \mathrm{E}[O_tO_{t+h}]\mathrm{E}[Z_{t,j}Z_{t+h,i}] - \pi^2f_if_j
-\bigr]\\
-&\quad = \pi f_{\mathrm{min}\{i,j\}} - \pi^2 f_if_j  
-+ \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h) + f_{ji}(h) - 2\pi^2 f_if_j)\\
-&\quad = f_if_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1} 
-+ \pi(f_{\mathrm{min}\{i,j\}} - f_if_j)  
-+ \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h) + f_{ji}(h) - 2f_if_j)
+    &\textbf{(i)}\ i = j = -1: \\
+    &\quad \mathrm{Var}(O_t) + 2\sum_{h=1}^\infty \mathrm{Cov}(O_t, O_{t+h}) \\
+    &\quad= \pi(1-\pi) + 2\sum_{h=1}^{\infty}\gamma_O(h) =: \sigma_{\boldsymbol{Z}^*;\,-1,-1} \\[2ex]
+    &\textbf{(ii)}\ j > i = -1: \\
+    &\quad \mathrm{Cov}(O_t, O_tZ_{t,j}) 
+    + 2\sum_{h=1}^\infty \mathrm{Cov}(O_t, O_{t+h}Z_{t+h,j}) \\
+    &\quad = f_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1} \\[2ex]
+    &\textbf{(iii)}\ i,j \geq 0: \\
+    &\quad \mathrm{Cov}(O_tZ_{t,i}, O_tZ_{t,j}) 
+    + \sum_{h=1}^{\infty}\bigl[\mathrm{Cov}(O_tZ_{t,i}, O_{t+h}Z_{t+h,j}) 
+    + \mathrm{Cov}(O_{t+h}Z_{t+h,i}, O_tZ_{t,j})\bigr] \\
+    &\quad = f_if_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1} 
+    + \pi(f_{\mathrm{min}\{i,j\}} - f_if_j)  
+    + \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h) + f_{ji}(h) - 2f_if_j)
 \end{align*}}
+\noindent The detailed derivations of these expressions are provided in Appendix \ref{app:derivation_covarianceZ}.
 \end{remark}
 \noindent To now derive the asymptotic properties of $\hat{\boldsymbol{f}}^*$ we define the vector-valued function $\boldsymbol{g}:= [0,1]^{m+1} \rightarrow [0,1]^{m}$ as
 \[g_j(x_{-1}, x_{0}, \ldots, x_{m-1}) = x_j / x_{-1}, \quad \text{for } j = 0 \ldots, m-1,\]
@@ -910,7 +895,7 @@ where
     &= \frac{f_j f_i }{\pi^2} \sigma_{\boldsymbol{Z}^*; -1, -1} - \frac{f_j}{\pi^2} \sigma_{\boldsymbol{Z}^*; i, -1} - \frac{f_i}{\pi^2}\sigma_{\boldsymbol{Z}^*; -1, j} + \frac{1}{\pi^2} \sigma_{\boldsymbol{Z}^*; i, j} \\
     &= \frac{1}{\pi^2}\left(f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} - f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} - f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} + \sigma_{\boldsymbol{Z}^*; i, j}\right) = \frac{1}{\pi^2}(\sigma_{\boldsymbol{Z}^*; i, j}-f_if_j \sigma_{\boldsymbol{Z}^*; -1, -1}) \\
     &= \frac{1}{\pi^2}\left(\left[f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} + \pi(f_{\min \{i,j\}}- f_if_j) + \sum_{h=1}^{\infty}\pi(h)f_{ij}(h)+f_{ji}(h)-2f_if_j\right]- f_if_j \sigma_{\boldsymbol{Z}^*; -1, -1}\right) \\
-    &= \underbrace{\frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j) }_{\mathrm{lag}(0)}+ \sum_{h=1}^{\infty}\underbrace{\pi(h)(f_{ij}(h)+f_{ji}(h)-2f_if_j)}_{\mathrm{lag}(h)}
+    &= \underbrace{\frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j) }_{\mathrm{lag}(0)}+ \frac{1}{\pi^2}\sum_{h=1}^{\infty}\underbrace{\pi(h)(f_{ij}(h)+f_{ji}(h)-2f_if_j)}_{\mathrm{lag}(h)}
 \end{align*}
 Here, the lag-0 term captures the contemporaneous covariance structure of the
 observed process, while the lag-$h$ terms accumulate the serial dependence
@@ -1647,7 +1632,7 @@ $C > 0$ and $\rho \in (0,1)$ such that $\phi(n) \le C \rho^n$ for all $n$
 \citep[Appendix~B.2.2]{Weiss2018}. \\
 Moreover, the mixing coefficients satisfy the inequality 
 $2\alpha(n) \le \phi(n)$ for all $n$ \citep[Eq.~(1.11)]{bradley_2005}. In particular, this also implies
-\[\alpha(n) \leq \phi(n) \leq C \rho^n,\]
+\[\alpha(n) \leq \phi(n) \leq C \rho^n ~ \text{for some} ~ C > 0, \rho \in (0,1),\]
 showing that the BinAR(1) process satisfies the mixing-assumptions of \cref{thm:clt_fstarhat}.
 \paragraph{Missingness mechanism.}
 Missingness is introduced via the amplitude modulation framework of 
@@ -1664,15 +1649,15 @@ BinAR(1) process with $m=1$. This induces serial dependence in the observation
 process while preserving a binary state space.\\
 Third, we consider observation schemes that depend on the current state of 
 the underlying process $(X_t)$, corresponding to MNAR-type mechanisms. In 
-the first variant, the observation probability increases with $X_t$, i.e.
+the first variant, the observation probability increases linearly with $X_t$, i.e.
 \[
 \pi_t = \pi_{\text{low}} + (\pi_{\text{high}} - \pi_{\text{low}})\frac{X_t}{m},
 \]
-while in the second variant it decreases with $X_t$, i.e.
+while in the second variant it decreases linearly with $X_t$, i.e.
 \[
 \pi_t = \pi_{\text{high}} - (\pi_{\text{high}} - \pi_{\text{low}})\frac{X_t}{m}.
 \]
-In both cases,
+The parameters $\pi_{\text{low}}$ and $\pi_{\text{high}}$ define the minimum and maximum observation probabilities, respectively, and therefore determine the range in which $\pi_t$ can vary. In both cases,
 \[
 O_t \mid X_t \sim \mathrm{Bernoulli}(\pi_t).
 \]
@@ -1738,7 +1723,42 @@ benchmarks against which the simulated bias curves are compared.
 % \renewcommand{\thesection}{\Alph{section}}
 
 \chapter{Appendix}
-\section{Derivation of the Asymptotic Covariance Matrix}
+\section{Derivation of the Asymptotic Covariance Matrix $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{*}}$}
+\label{app:derivation_covarianceZ}
+In this section we provide the detailed computtations of the elements \textbf{(ii)} and \textbf{(iii)} of the asymptotic covariance matrix $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{*}}$.
+\begin{align*}
+    &\textbf{(ii)}\ j > i = -1: \\
+    &\quad \mathrm{Cov}(O_t, O_tZ_{t,j}) 
+    + 2\sum_{h=1}^\infty \mathrm{Cov}(O_t, O_{t+h}Z_{t+h,j}) \\
+    &\quad \overset{\perp}{=} 
+    \left(\mathrm{E}[O_t^2]\mathrm{E}[Z_{t,j}] - \mathrm{E}[O_t]^2\mathrm{E}[Z_{t,j}]\right) \\
+    &\qquad + 2\sum_{h=1}^{\infty}
+    \left(\mathrm{E}[O_tO_{t+h}]\mathrm{E}[Z_{t,j}] 
+    - \mathrm{E}[O_t]^2\mathrm{E}[Z_{t,j}]\right) \\
+    &\quad = (\pi - \pi^2)f_j + 2\sum_{h=1}^{\infty}(\gamma_O(h) + \pi^2 - \pi^2)f_j \\
+    &\quad = \pi(1-\pi)f_j + 2f_j\sum_{h=1}^{\infty}\gamma_O(h) 
+    = f_j\!\left(\pi(1-\pi) + 2\sum_{h=1}^{\infty}\gamma_O(h)\right) \\
+    &\quad = f_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1} \\[2ex]
+    &\textbf{(iii)}\ i,j \geq 0: \\
+    &\quad \mathrm{Cov}(O_tZ_{t,i}, O_tZ_{t,j}) 
+    + \sum_{h=1}^{\infty}\bigl[\mathrm{Cov}(O_tZ_{t,i}, O_{t+h}Z_{t+h,j}) 
+    + \mathrm{Cov}(O_{t+h}Z_{t+h,i}, O_tZ_{t,j})\bigr] \\
+    &\quad \overset{\perp}{=} 
+    \bigl(\mathrm{E}[O_t^2]\mathrm{E}[Z_{t,i}Z_{t,j}] - \mathrm{E}[O_t]^2 \mathrm{E}[Z_{t,i}] \mathrm{E}[Z_{t,j}]\bigr) \\
+    &\qquad + \sum_{h=1}^{\infty}\bigl[
+    \mathrm{E}[O_tO_{t+h}]\mathrm{E}[Z_{t,i}Z_{t+h,j}] - \mathrm{E}[O_t]\mathrm{E}[O_{t+h}] \mathrm{E}[Z_{t,i}] \mathrm{E}[Z_{t+h,j}]\\
+    &\qquad + \mathrm{E}[O_tO_{t+h}]\mathrm{E}[Z_{t,j}Z_{t+h,i}] - \mathrm{E}[O_t]\mathrm{E}[O_{t+h}] \mathrm{E}[Z_{t,j}] \mathrm{E}[Z_{t+h,i}]
+    \bigr]\\
+    &\quad = \bigl(\pi f_{\mathrm{min}\{i,j\}} - \pi^2 f_if_j\bigr) 
+    + \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h) + f_{ji}(h)) - 2\pi^2 f_if_j \\
+    &\qquad + 2f_if_j\sum_{h=1}^{\infty} \gamma_O(h) - 2f_if_j\sum_{h=1}^{\infty} \gamma_{O}(h) + f_i f_j \pi - f_i f_j \pi  \\
+    &\quad = f_if_j \pi(1-\pi) + f_if_j\sum_{h=1}^{\infty} \gamma_O(h) + \pi(f_{\mathrm{min}\{i,j\}} - f_i f_j) \\
+    &\qquad + \sum_{h=1}^{\infty} \left(\pi(h)(f_{ij}(h) + f_{ji}(h)) - 2f_if_j(\gamma_O(h) + \pi^2)\right)  \\
+    &\quad = f_if_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1} 
+    + \pi(f_{\mathrm{min}\{i,j\}} - f_if_j)  
+    + \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h) + f_{ji}(h) - 2f_if_j)
+\end{align*}
+\section{Derivation of the Asymptotic Covariance Matrix $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$}
 \label{app:derivation_covariance}
 
 In this section, we provide the detailed derivation of the elements of 

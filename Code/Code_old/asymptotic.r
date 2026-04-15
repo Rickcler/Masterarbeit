@@ -40,7 +40,7 @@ lag_h_joint_pmf <- function(m, p, r, h = 1) {
 }
 
 
-asymp_df
+
 #-- Get CDF from PMF matrix
 pmf_to_cdf <- function(pmf) {
   cdf <- apply(pmf, 2, cumsum)
@@ -87,9 +87,9 @@ Sigma_Star <- function(m, p, r, pi) {
   return(Sigma)
 }
 
-Sigma_Star(10, 0.45, 0.5, 0.75)
 
-Sigma_Star_dep <- function(m, p, r, pi, r_h) {
+
+Sigma_Star_dep <- function(m, p, r, pi, pi_h) {
 
   # marginale CDF auf 0,...,m-1
   f <- pbinom(0:(m-1), m, p)
@@ -109,9 +109,9 @@ Sigma_Star_dep <- function(m, p, r, pi, r_h) {
       lag_sum <- 0
 
       for (h in 1:H) {
-        cdf_lag_h <- lag_h_joint_cdf(m,p, r, h)
-        pi_h <- lag_h_joint_pmf(1, pi, r_h, h)[2,2]
-        lag_sum <- lag_sum + (pi_h * (cdf_lag_h[i+1, j+1] + cdf_lag_h[j+1, i+1] - 2 * f[i+1] * f[j+1])) 
+        cdf_lag_h <- lag_h_joint_cdf(m, p, r, h)
+        pi_h_f <- lag_h_joint_pmf(1, pi, pi_h, h)[2, 2]
+        lag_sum <- lag_sum + (pi_h_f * (cdf_lag_h[i+1, j+1] + cdf_lag_h[j+1, i+1] - 2 * f[i+1] * f[j+1])) 
       }
 
       Sigma[i + 1, j + 1] <- iid_part + ((1/pi^2) * lag_sum)
@@ -173,7 +173,7 @@ Cohens_asymptotic_iid <- function(n, pi, m , marginal_cdf) {
   Expectation_Cohens_K <- -(1/(n * pi))
   return(c(Expectation_Cohens_K, sqrt(Var_Cohens_K)))
 }
-Cohens_asymptotic(50, 1, 3, pbinom(0:2, 3, 0.45))
+Cohens_asymptotic_iid(50, 1, 3, pbinom(0:2, 3, 0.45))
 
 
 scenarios <- expand.grid(
@@ -192,10 +192,14 @@ scenarios <- scenarios[
 rownames(scenarios) <- NULL
 scenarios
 
-unique_coeffs <- data.frame(rbind(c(m= 3, p = 0.2, r = 0.35, pi = 1),
-                       c(m= 10, p = 0.45, r = 0.5, pi = 1),
-                       c(m= 3, p = 0.2, r = 0.35, pi = 0.75),
-                       c(m= 10, p = 0.45, r = 0.5, pi = 0.75)))
+unique_coeffs <- data.frame(rbind(c(m= 3, p = 0.2, r = 0.35, pi = 1 , pi_h = 0),
+                        c(m= 3, p = 0.2, r = 0.35, pi = 0.75, pi_h = 0),
+                        c(m= 3, p = 0.2, r = 0.35, pi = 1 , pi_h = 0.2),
+                        c(m= 3, p = 0.2, r = 0.35, pi = 0.75, pi_h = 0.2),
+                        c(m= 3, p = 0.2, r = 0.35, pi = 1 , pi_h = 0.75),
+                        c(m= 3, p = 0.2, r = 0.35, pi = 0.75, pi_h = 0.75),
+                        c(m= 10, p = 0.45, r = 0.5, pi = 1, pi_h = 0),
+                        c(m= 10, p = 0.45, r = 0.5, pi = 0.75, pi_h = 0)))
 unique_n <- c(50, 100, 250, 500, 1000)
 
 
@@ -218,21 +222,23 @@ for (scenario_idx in 1:nrow(unique_coeffs)) {
   p_val <- as.numeric(params["p"])
   r_val <- as.numeric(params["r"])
   pi_val <- as.numeric(params["pi"])
+  pi_h <- as.numeric(params["pi_h"])
   
   marginal <- pbinom(0:(m_val-1), m_val, p_val)
-  Sigma <- Sigma_Star(m_val, p_val, r_val, pi_val)
+  Sigma <- Sigma_Star_dep(m_val, p_val, r_val, pi_val, pi_h)
   
   for (n_val in unique_n) {
     iov_result <- IOV_asymptotic(Sigma, marginal, n_val, m_val)
     skew_result <- Skew_asymptotic(Sigma, marginal, n_val, m_val)
-    C_result <- Cohens_asymptotic(n_val, pi_val, m_val, marginal)
+    C_result <- Cohens_asymptotic_iid(n_val, pi_val, m_val, marginal)
     # Create a row for this combination
     row <- data.frame(
       n = n_val,
-      pi = pi_val,
       m = m_val,
       p = p_val,
       r = r_val,
+      pi = pi_val,
+      pi_h = pi_h,
       type = "Asymptotic",
       mean_IOV = iov_result[1],
       sd_IOV = iov_result[2],
@@ -250,6 +256,6 @@ for (scenario_idx in 1:nrow(unique_coeffs)) {
     asymp_df <- rbind(asymp_df, row)
   }
 }
-
+asymp_df
 load("Masterarbeit.RData")
 

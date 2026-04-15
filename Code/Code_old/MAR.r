@@ -52,9 +52,6 @@ mar_inv_df <- do.call(rbind, lapply(seq_along(mar_inv_idx), function(i) {
 }))
 
 
-# Sicherstellen dass Spaltennamen übereinstimmen
-mcar_df <- mcar_df %>% rename(mean_C = mean_C)  # bereits korrekt
-# falls nötig: mar_df$mean_C <- mar_df$mean_C1
 
 
 # Alle drei zusammenführen
