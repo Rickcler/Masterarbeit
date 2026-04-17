@@ -1,0 +1,743 @@
+\documentclass{beamer}
+
+\usepackage{amsmath, amssymb}
+\usepackage{cleveref}
+
+% -------------------------------------------------------
+% Section header on every content slide (top-right corner)
+% -------------------------------------------------------
+\setbeamertemplate{headline}{%
+  \begin{beamercolorbox}[wd=\paperwidth, ht=2.5ex, dp=1ex, rightskip=0.3cm]{section in head/foot}%
+    \hfill\small\textit{\insertsectionhead}\hspace{0.3cm}
+  \end{beamercolorbox}%
+}
+
+\title{Inference for Categorical Time Series with Missing Observations}
+\author{Victor Minig}
+\date{27.04.2026}
+
+\begin{document}
+
+\frame{\titlepage}
+
+%------------------------------------------------
+\begin{frame}{Outline}
+\tableofcontents
+\end{frame}
+
+%================================================
+\section{Categorical Time Series}
+%================================================
+
+\begin{frame}{Motivation}
+\begin{itemize}
+    \item Many real-world time series are \textbf{categorical}:
+    \begin{itemize}
+        \item Credit ratings (AAA, AA, ...)
+        \item Weather states (sunny, rainy, ...)
+        \item Survey responses (agree, neutral, disagree)
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    
+    \item Classical time series methods assume \textbf{numeric structure}
+    
+    \vspace{0.3cm}
+    
+    \item $\Rightarrow$ Need new tools for:
+    \begin{itemize}
+        \item Computing proper tests for marginal features 
+        \item Measuring temporal dependence without bias 
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Categorical Time Series}
+\begin{block}{Definition}
+A categorical time series $(X_t)$ takes values in a finite set
+\[
+S = \{s_0, \dots, s_m\}.
+\]
+\end{block}
+
+\vspace{0.3cm}
+
+\textbf{Two types of categorical data:}
+\begin{itemize}
+    \item \textbf{Nominal:} no natural ordering
+    \item \textbf{Ordinal:} inherent ordering
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Key implication:}
+\begin{itemize}
+    \item Available statistical tools depend on structure of $S$
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Marginal Distributions}
+\textbf{Central object: marginal probabilities}
+
+\vspace{0.3cm}
+
+\textbf{Nominal data:}
+\[
+p_i = P(X_t = s_i)
+\]
+\begin{itemize}
+    \item Probability Mass Function (PMF)
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{Ordinal data:}
+\[
+f_i = P(X_t \leq s_i)
+\]
+\begin{itemize}
+    \item Cumulative Distribution Function (CDF)
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Key difference:}
+\begin{itemize}
+    \item Ordinal $\Rightarrow$ uses ordering
+    \item Nominal $\Rightarrow$ no cumulative structure
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Location Measures}
+\textbf{Nominal data:}
+\begin{itemize}
+    \item No ordering $\Rightarrow$ no mean/median
+    \item Use \textbf{mode}:
+\[
+\text{Mod}(X_t) = \arg\max_{s_i} P(X_t = s_i)
+\]
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{Ordinal data:}
+\begin{itemize}
+    \item Ordering allows additional measures
+    \item \textbf{Median:}
+\[
+\text{Med}(X_t) = \min \{ s_i : F(s_i) \geq 1/2 \}
+\]
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Interpretation:}
+\begin{itemize}
+    \item Mode = most frequent category
+    \item Median = central position in ordering
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Dispersion Measures}
+\textbf{Different notions of variability}
+
+\vspace{0.3cm}
+
+Both indices are scaled to $[0,1]$, with 0 = minimal dispersion (mass on single category) and 1 = maximal dispersion (differs between types).
+
+\vspace{0.4cm}
+
+\textbf{Ordinal: Index of Ordinal Variation (IOV)}
+\[
+\text{IOV}(\boldsymbol{f}) = \frac{4}{m} \sum_{i=0}^{m-1} f_i (1 - f_i)
+\]
+
+\vspace{0.4cm}
+
+\textbf{Nominal: Index of Qualitative Variation (IQV)}
+\[
+\text{IQV}(\boldsymbol{p}) = \frac{m+1}{m} \left(1 - \sum_{i=0}^{m} p_i^2 \right)
+\]
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Stationarity}
+\textbf{Why do we need stationarity?}
+
+\begin{itemize}
+    \item Stable probabilistic structure over time
+    \item Enables estimation and asymptotics
+\end{itemize}
+
+\vspace{0.5cm}
+
+\begin{block}{Strict Stationarity}
+\[
+F_{X_t, \dots, X_{t+j}} = F_{X_{t+h}, \dots, X_{t+h+j}}
+\]
+for all $t, j, h$.
+\end{block}
+
+\vspace{0.3cm}
+
+\begin{itemize}
+    \item Distribution invariant under time shifts
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Temporal Dependence}
+\textbf{Goal: capture dependence across time}
+
+\vspace{0.3cm}
+
+\textbf{Problem:}
+\begin{itemize}
+    \item No meaningful arithmetic operations
+    \item Classical ACF not applicable
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{Solution:}
+\begin{itemize}
+    \item Work with joint probabilities
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{block}{Bivariate Probabilities}
+\[
+p_{ij}(h) = P(X_t = s_i, X_{t+h} = s_j), \quad  f_{ij}(h) = P(X_t \leq s_i, X_{t+h} \leq s_j)
+\]
+\end{block}
+
+\begin{itemize}
+    \item Independence $\Rightarrow p_{ij}(h) = p_i p_j \quad \text{and} \quad  f_{ij}(h) = f_i f_j $
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Cohen's $\kappa$}
+\textbf{Idea: measure deviation from independence}
+
+\vspace{0.5cm}
+
+\[
+\kappa(h)_{\mathrm{nom}} =
+\frac{\sum_{j=0}^{m} (p_{jj}(h) - p_j^2)}
+{1 - \sum_{i=0}^{m} p_i^2} \quad
+\kappa(h)_{\mathrm{ord}} =
+\frac{\sum_{j=0}^{m} (f_{jj}(h) - f_j^2)}
+{1 - \sum_{i=0}^{m} f_i(1 - f_i)}
+\]
+
+\vspace{0.5cm}
+
+\begin{itemize}
+    \item $\kappa = 1$: perfect persistence
+    \item $\kappa = 0$: independence
+    \item $\kappa < 0$: tendency to switch states
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{Interpretation:}
+\begin{itemize}
+    \item Probability of staying in same category
+    \item Relative to independence benchmark
+\end{itemize}
+\end{frame}
+
+%================================================
+\section{Estimation — Complete Data}
+%================================================
+
+%------------------------------------------------
+\begin{frame}{From Theory to Estimation}
+\textbf{All quantities defined so far are population quantities.}
+
+\vspace{0.4cm}
+
+\begin{block}{Central question}
+How do we estimate $\boldsymbol{f}$, IOV, and $\kappa_{\mathrm{ord}}(h)$ from data — and what are the statistical properties of these estimators?
+\end{block}
+
+\vspace{0.4cm}
+
+\textbf{Two steps:}
+\begin{enumerate}
+    \item Estimate marginal CDF $\boldsymbol{f}$ via relative frequencies
+    \item Derive distributions of plug-in estimators via the \textbf{delta method}
+\end{enumerate}
+
+\vspace{0.3cm}
+
+$\Rightarrow$ Key tool: a CLT for dependent data under \textbf{mixing conditions}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Estimation of Marginal Probabilities}
+\textbf{Idea: use of indicator functions}
+
+\vspace{0.3cm}
+
+\[
+Y_{t,i} = \mathbb{I}\{X_t = s_i\} \quad \text{and} \quad Z_{t,i} = \mathbb{I}\{X_t \leq s_i\}
+\]
+Then estimators are given by:
+\begin{itemize}
+    \item $\hat{p}_i = \frac{1}{n} \sum_{t=1}^n Y_{t,i}$
+    \item $\hat{f}_i = \frac{1}{n} \sum_{t=1}^n Z_{t,i}$
+\end{itemize}
+
+\vspace{0.3cm}
+
+Intuition:\\
+$\Rightarrow$ we just count relative frequencies\\
+From here we mainly look at ordinal data, but the nominal case is in many ways analogous.
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Mixing Assumptions}
+
+\begin{block}{Idea}
+The Central Limit Theorem (CLT) provides asymptotic normality and enables statistical inference.
+\end{block}
+
+\begin{alertblock}{Problem}
+Classical CLT results assume independence, but in practice data may exhibit serial dependence.
+\end{alertblock}
+
+\begin{block}{Solution}
+To handle dependence, we impose \textbf{mixing conditions}:
+\begin{itemize}
+    \item $\alpha$-mixing quantifies the decay of dependence between past and future observations
+    \item Exponential decay of the mixing coefficients allows a CLT for dependent data
+\end{itemize}
+\end{block}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{CLT under Serial Dependence}
+    \begin{block}{Result}
+    \[\sqrt{n}(\hat{f} - f) \Rightarrow \mathcal{N}(0, \boldsymbol{\Sigma})\]
+    where the elements of $\boldsymbol{\Sigma}$ are given by:
+    \[\sigma_{ij} = \underbrace{\left(f_{\min\{i,j\}}- f_i f_j\right)}_{\text{lag}(0)} + \sum_{h=1}^{\infty} \underbrace{\left(f_{ij}(h) + f_{ji}(h) - 2f_if_j\right)}_{\text{lag}(h)}.\]
+    Note that $\text{lag}(h) \rightarrow 0$ as $h \rightarrow \infty$.
+    \end{block}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{CLTs for Marginal Estimators}
+    \begin{block}{Idea}
+        IOV is a function of the marginal probabilities \\
+        $\Rightarrow$ apply the \textbf{delta method} to obtain asymptotic distributions 
+    \end{block}
+    \begin{block}{Results}
+        \begin{itemize}
+            \item Asymptotic variance: 
+            \[\sqrt{n}\,\mathrm{Var}(\widehat{\mathrm{IOV}}) \overset{\mathrm{asy}}{=} \frac{16}{m^2}\sum_{i,j = 0}^{m-1} (1 - 2f_i)(1 - 2f_j) \sigma_{ij}\]
+            \item Bias to order $n^{-1}$:
+            \[n\, \mathrm{Bias}(\widehat{\mathrm{IOV}}) = -\frac{4}{m} \sum_{i = 0}^{m-1}  \sigma_{ii}\]
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+%================================================
+\section{Missing Data}
+%================================================
+
+%------------------------------------------------
+\begin{frame}{Why Does Missingness Matter?}
+
+\textbf{Missing observations are ubiquitous in practice:}
+\begin{itemize}
+    \item Panel surveys: participants drop out over time
+    \item Administrative data: recording gaps or system failures
+    \item Sensor data: transmission errors, device downtime
+\end{itemize}
+
+\vspace{0.4cm}
+
+\textbf{Key problem: naive estimators are biased}
+
+\begin{itemize}
+    \item Simply ignoring missing observations distorts relative frequencies
+    \item $\Rightarrow$ biased estimates of $\boldsymbol{f}$, IOV, and $\kappa_{\mathrm{ord}}(h)$
+\end{itemize}
+
+\vspace{0.4cm}
+
+\textbf{Goal:}
+\begin{itemize}
+    \item Correct for missingness — under suitable assumptions
+    \item Derive valid asymptotic theory for the corrected estimators
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Amplitude Modulation}
+    \begin{block}{Idea}
+        Missingness can be modeled as a binary process $(O_t)$, that \textit{modulates} the \textit{amplitude} of the actual process: 
+        \[O_t = 1 \text{ if } X_t \text{ is observed and } O_t = 0 \text{ if } X_t \text{ is missing}\] 
+        The observed process is then given by $(O_t X_t)$.
+    \end{block}
+    \begin{block}{Assumptions}
+        \begin{itemize}
+            \item $(O_t)$ is stationary with $P(O_t = 1) = \pi > 0$ and joint moments $E[O_t O_{t+h}] = \pi(h)$
+            \item $(O_t)$ is $\alpha$-mixing with exponential decay
+            \item $(O_t)$ and $(X_t)$ are \textbf{independent}
+        \end{itemize}
+    \end{block}    
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Missingness Mechanisms}
+    Originally developed for cross-sectional data, but also relevant for time series:
+    \begin{itemize}  
+        \item \textbf{MCAR:} Missing Completely At Random
+        \[P(O_t = 1| X_t, X_{t-1}, \ldots)\ = P(O_t = 1)\]
+        \item \textbf{MAR:} Missing At Random
+        \[P(O_t = 1| X_t, X_{t-1}, \ldots)\ = P(O_t = 1| X_{t-1}, \ldots)\]
+        \item \textbf{MNAR:} Missing Not at Random
+        \[P(O_t = 1| X_t, X_{t-1}, \ldots)\ \neq P(O_t = 1| X_{t-1}, \ldots)\]
+    \end{itemize}
+    From here on, unless stated otherwise, we assume MCAR.
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Naive vs.\ Corrected Estimators}
+    \begin{block}{Naive estimator}
+        \[\hat{\boldsymbol{\mathfrak{f}}} = \frac{1}{n} \sum_{t=1}^n O_t \boldsymbol{Z}_t\]
+        $\Rightarrow$ biased and inconsistent: $E[\hat{\mathfrak{f}}_i] = \pi f_i \neq f_i$
+    \end{block}
+    \begin{block}{Corrected estimator}
+        \[\hat{\boldsymbol{f}}^* = \frac{\sum_{t=1}^n O_t \boldsymbol{Z}_t}{\sum_{t=1}^n O_t}\]
+        $\Rightarrow$ divide by number of observed time points, not by $n$
+    \end{block}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Asymptotic Properties of the Corrected Estimator}
+    \begin{block}{Result}
+        \[\sqrt{n}(\hat{\boldsymbol{f}}^* - \boldsymbol{f}) \Rightarrow \mathcal{N}(0, \boldsymbol{\Sigma}^*)\]
+        where the elements of $\boldsymbol{\Sigma}^*$ are given by:
+        \[\sigma^*_{ij} = \frac{1}{\pi} (f_{\mathrm{min}\{i,j\}}- f_i f_j) + \frac{1}{\pi^2} \sum_{h = 1}^{\infty} \pi(h)(f_{ij}(h) + f_{ji}(h) - 2f_if_j)\]
+    \end{block}
+
+    \vspace{0.3cm}
+    \textbf{Remarks:}
+    \begin{itemize}
+        \item Inflation factor $1/\pi$ at lag 0: fewer effective observations
+        \item Serial dependence in $(O_t)$ enters via $\pi(h) = E[O_t O_{t+h}]$
+        \item Reduces to $\boldsymbol{\Sigma}$ when $\pi = 1$ (no missing data)
+    \end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Marginal Statistics under Missingness}
+    \begin{block}{Strategy}
+        Replace $\boldsymbol{\Sigma}$ by $\boldsymbol{\Sigma}^*$ in all delta-method results
+    \end{block}
+
+    \vspace{0.3cm}
+
+    \textbf{IOV} (nonlinear in $\boldsymbol{f}$, delta method applies):
+    \[
+    \sqrt{n}\,\mathrm{Var}\bigl(\mathrm{IOV}(\hat{\boldsymbol{f}}^*)\bigr) \overset{\mathrm{asy.}}{=}
+    \frac{16}{m^2} \sum_{i,j=0}^{m-1}(1-2f_i)(1-2f_j)\,\sigma^*_{i,j}
+    \]
+    \[
+    \mathrm{Bias}\bigl(\mathrm{IOV}(\hat{\boldsymbol{f}}^*)\bigr) = -\frac{4}{mn}\sum_{i=0}^{m-1}\sigma^*_{i,i}
+    \]
+
+    \vspace{0.3cm}
+
+    \textbf{Skew} (linear in $\boldsymbol{f}$, Hessian vanishes):
+    \begin{itemize}
+        \item Estimator is \textbf{unbiased}
+        \item Asymptotic variance analogous, replacing $\boldsymbol{\Sigma}$ by $\boldsymbol{\Sigma}^*$
+    \end{itemize}
+\end{frame}
+
+%================================================
+\section{Serial Dependence under Missingness}
+%================================================
+
+%------------------------------------------------
+\begin{frame}{Estimating Bivariate Probabilities}
+\textbf{Need to estimate $f_{ij}(h) = P(X_t \leq s_i, X_{t+h} \leq s_j)$}
+
+\vspace{0.3cm}
+
+\textbf{Naive estimator:}
+\[
+\hat{\mathfrak{f}}_{ij}(h) = \frac{1}{n-h}\sum_{t=h+1}^{n} O_t\, O_{t-h}\, Z_{t,i}\, Z_{t-h,j}
+\]
+
+\textbf{Problem:} $E[\hat{\mathfrak{f}}_{ij}(h)] = \pi(h) \cdot f_{ij}(h) \neq f_{ij}(h)$
+
+\vspace{0.4cm}
+
+\textbf{Corrected estimator:}
+\[
+\hat{f}^*_{ij}(h) = \frac{\frac{1}{n-h}\sum_{t=h+1}^{n} O_t\, O_{t-h}\, Z_{t,i}\, Z_{t-h,j}}{\frac{1}{n-h}\sum_{t=h+1}^{n} O_t\, O_{t-h}} =: \hat{\mathfrak{f}}_{ij}(h) \Big/ \overline{OO}_h
+\]
+
+$\Rightarrow$ divide by the proportion of \textbf{jointly observed} pairs at lag $h$
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Estimating Cohen's $\kappa$ under Missingness}
+\textbf{Plug-in estimator:}
+\[
+\hat{\kappa}_{\mathrm{ord}}(h) = \frac{\sum_{j=0}^{m-1}\left(\hat{f}_{jj}^*(h) - (\hat{f}^*_j)^2\right)}{\sum_{i=0}^{m-1}\hat{f}^*_i(1-\hat{f}_i^*)}
+\]
+
+\vspace{0.4cm}
+
+\textbf{Joint asymptotic distribution via delta method:}
+\begin{itemize}
+    \item Define augmented vector $\hat{\boldsymbol{f}}^{(h)*} = (\hat{f}^*_0, \ldots, \hat{f}^*_{m-1}, \hat{f}^*_{00}(h), \ldots, \hat{f}^*_{m-1,m-1}(h))^\top$
+    \item CLT holds for the sample mean of the underlying binary process $\boldsymbol{Z}^{(h)*}_t$
+    \item Apply delta method to $\kappa_{\mathrm{ord}}$
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Key challenge:} long-run covariance involves third- and fourth-order mixed moments of $(X_t)$ — not closed-form in general.\\
+$\Rightarrow$ focus on the \textbf{null distribution} first
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Asymptotic Null Distribution of $\hat{\kappa}_{\mathrm{ord}}(h)$}
+\textbf{Under $H_0$: $(X_t)$ is i.i.d.}, $f_{ij}(h) = f_i f_j$, and higher-order moments factor.
+
+\vspace{0.3cm}
+
+\begin{block}{Theorem}
+Under $H_0$ and MCAR,
+\[
+\sqrt{n}\,\hat{\kappa}_{\mathrm{ord}}(h) \xrightarrow{d} \mathcal{N}(0, \sigma^2_\kappa),
+\]
+where
+\[
+\sigma^2_\kappa =
+\frac{\dfrac{1}{\pi(h)}\displaystyle\sum_{i,j=0}^{m-1}
+(f_{\min\{i,j\}}-f_if_j)
+\!\left(f_{\min\{i,j\}} + \left(1+\dfrac{2\pi(h,2h)}{\pi(h)} - \dfrac{4\pi(h)}{\pi}\right)f_if_j\right)}
+{\left(\displaystyle\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}
+\]
+with $\pi(h,2h) = E[O_t O_{t+h} O_{t-h}]$.
+\end{block}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Bias Correction for $\hat{\kappa}_{\mathrm{ord}}(h)$}
+
+\textbf{Second-order Taylor expansion yields the finite-sample bias under $H_0$:}
+\[
+\mathrm{Bias}\!\left(n\hat{\kappa}_{\mathrm{ord}}(h)\right) \approx -\frac{1}{\pi}
+\]
+
+\vspace{0.4cm}
+
+\textbf{Bias-corrected estimator:}
+\[
+\hat{\kappa}^{\mathrm{bc}}_{\mathrm{ord}}(h) := \hat{\kappa}_{\mathrm{ord}}(h) + \frac{1}{n\pi}
+\]
+
+\vspace{0.4cm}
+
+\textbf{Remarks:}
+\begin{itemize}
+    \item Bias increases as $\pi \downarrow$ (more missingness)
+    \item Under complete data ($\pi = 1$): reduces to the known $-1/n$ bias
+    \item Closed-form correction — no resampling needed
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Consistency under $H_A$}
+
+\textbf{Under $H_A$:} $(X_t)$ is not i.i.d., so $\kappa_{\mathrm{ord}}(h) \neq 0$ for some $h$.
+
+\vspace{0.4cm}
+
+\begin{block}{Result}
+$\hat{\kappa}_{\mathrm{ord}}(h)$ is a continuous function of $\hat{f}^*_i$ and $\hat{f}^*_{ii}(h)$.\\
+By the \textbf{continuous mapping theorem}:
+\[
+\hat{\kappa}_{\mathrm{ord}}(h) \xrightarrow{p} \kappa_{\mathrm{ord}}(h) \neq 0,
+\]
+and therefore
+\[
+\sqrt{n}\,\hat{\kappa}_{\mathrm{ord}}(h) \xrightarrow{p} \infty.
+\]
+\end{block}
+
+\vspace{0.3cm}
+$\Rightarrow$ The test is \textbf{consistent}: rejection probability $\to 1$ under $H_A$.
+\end{frame}
+
+%================================================
+\section{Simulation Study}
+%================================================
+
+%------------------------------------------------
+\begin{frame}{Simulation Goals and Setup}
+\textbf{Three goals:}
+\begin{enumerate}
+    \item Assess finite-sample accuracy of asymptotic bias formulas
+    \item Examine convergence to asymptotic normality
+    \item Study robustness to violations of the MCAR assumption
+\end{enumerate}
+
+\vspace{0.4cm}
+
+\textbf{Data generating process:} BinAR(1) model
+\begin{itemize}
+    \item Flexible ordinal time series with controllable serial dependence
+    \item Stationary marginal distribution: $X_t \sim \mathrm{Binomial}(m, p)$
+    \item Parameter $r \in (-1,1)$ controls autocorrelation ($r=0$: i.i.d.)
+    \item All quantities (IOV, $\kappa_{\mathrm{ord}}$) available in \textbf{closed form}
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Simulation Scenarios}
+\textbf{Two scenarios chosen to differ qualitatively:}
+
+\vspace{0.3cm}
+
+\begin{columns}
+\begin{column}{0.48\textwidth}
+\textbf{Scenario A}\\
+$m=3$, $p=0.20$, $r=0.35$
+\begin{itemize}
+    \item Few categories
+    \item Skewed marginal distribution
+    \item Moderate serial dependence
+\end{itemize}
+\end{column}
+\begin{column}{0.48\textwidth}
+\textbf{Scenario B}\\
+$m=10$, $p=0.45$, $r=0.50$
+\begin{itemize}
+    \item Many categories
+    \item Near-symmetric distribution
+    \item Strong serial dependence
+\end{itemize}
+\end{column}
+\end{columns}
+
+\vspace{0.4cm}
+
+\textbf{Design:}
+\begin{itemize}
+    \item Observation rates: $\pi \in \{1, 0.75\}$
+    \item Sample sizes: $n \in \{50, 100, 250, 500, 1000\}$
+    \item $B = 1{,}000$ Monte Carlo replications
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Missingness Mechanisms in the Simulation}
+\textbf{Four observation processes $(O_t)$ are studied:}
+
+\begin{enumerate}
+    \item \textbf{Independent MCAR}: $O_t \overset{\mathrm{i.i.d.}}{\sim} \mathrm{Bernoulli}(\pi)$ \\ {\small Baseline; satisfies all theoretical assumptions.}
+    
+    \vspace{0.3cm}
+    
+    \item \textbf{Dependent MCAR}: $(O_t)$ follows BinAR(1) with $m=1$ \\ {\small Serial dependence in missingness; MCAR still holds marginally.}
+    
+    \vspace{0.3cm}
+    
+    \item \textbf{MNAR — increasing}: $\pi_t = \pi_{\mathrm{low}} + (\pi_{\mathrm{high}} - \pi_{\mathrm{low}})\frac{X_t}{m}$ \\ {\small Higher categories more likely to be observed.}
+    
+    \vspace{0.3cm}
+    
+    \item \textbf{MNAR — decreasing}: $\pi_t = \pi_{\mathrm{high}} - (\pi_{\mathrm{high}} - \pi_{\mathrm{low}})\frac{X_t}{m}$ \\ {\small Lower categories more likely to be observed.}
+\end{enumerate}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Performance Measures}
+\textbf{For each estimator $\hat{\theta}$, we compute across $B$ replications:}
+
+\vspace{0.3cm}
+
+\begin{itemize}
+    \item \textbf{Mean bias:} $\frac{1}{B}\sum_{b=1}^B (\hat{\theta}_b - \theta)$ \\
+    {\small Compared against theoretical $O(n^{-1})$ formula.}
+    
+    \vspace{0.3cm}
+    
+    \item \textbf{$n$-scaled bias:} $n \cdot \frac{1}{B}\sum_{b=1}^B (\hat{\theta}_b - \theta)$ \\
+    {\small Should converge to the theoretical bias limit as $n \to \infty$.}
+    
+    \vspace{0.3cm}
+    
+    \item \textbf{Standard deviation:} compared against asymptotic SD $\sqrt{\sigma^2_\theta/n}$
+\end{itemize}
+
+\vspace{0.4cm}
+
+\textbf{Theoretical benchmarks:}
+\begin{itemize}
+    \item IOV bias limit: $-\frac{4}{mn}\,\mathrm{tr}(\boldsymbol{\Sigma}^*)$
+    \item $\kappa$ bias limit (under $H_0$): $-\frac{1}{n\pi}$
+\end{itemize}
+\end{frame}
+
+%================================================
+\section{Summary}
+%================================================
+
+%------------------------------------------------
+\begin{frame}{Summary}
+\begin{itemize}
+    \item Categorical time series require new tools:
+    \begin{itemize}
+        \item Nominal vs.\ ordinal $\Rightarrow$ PMF vs.\ CDF, mode vs.\ median
+    \end{itemize}
+    
+    \vspace{0.2cm}
+    
+    \item Marginal estimation:
+    \begin{itemize}
+        \item Relative frequency estimators + CLT under $\alpha$-mixing
+        \item Delta method for IOV and skew
+    \end{itemize}
+    
+    \vspace{0.2cm}
+
+    \item Missingness:
+    \begin{itemize}
+        \item Amplitude modulation framework under MCAR
+        \item Corrected estimators $\hat{f}^*$ and $\hat{f}^*_{ij}(h)$
+        \item Full asymptotic theory carries over via delta method
+    \end{itemize}
+    
+    \vspace{0.2cm}
+
+    \item Serial dependence under missingness:
+    \begin{itemize}
+        \item Asymptotic null distribution of $\hat{\kappa}_{\mathrm{ord}}(h)$
+        \item Closed-form bias correction $\hat{\kappa}^{\mathrm{bc}}_{\mathrm{ord}}(h) = \hat{\kappa}_{\mathrm{ord}}(h) + \frac{1}{n\pi}$
+        \item Consistency under $H_A$
+    \end{itemize}
+    
+    \vspace{0.2cm}
+
+    \item Simulation study validates finite-sample behavior and robustness
+\end{itemize}
+\end{frame}
+
+\end{document}

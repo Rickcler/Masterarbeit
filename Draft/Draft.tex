@@ -1521,7 +1521,7 @@ so that there exists at least one lag $h \ge 1$ with
 $\kappa_{\mathrm{ord}}(h) \neq 0$.\\
 The estimator $\hat{\kappa}_{\mathrm{ord}}(h)$ is a continuous function 
 of the empirical frequencies $\hat{f}^*_i$ and $\hat{f}^*_{ii}(h)$.
-Since these are consistent estimators of $f_i$ and $f_{ii}(h)$, 
+Since these are consistent estimators of $f_i$ and $f_{ii}(h)$ (see \cref{thm:clt_fstarhat} and \ref{}), 
 the continuous mapping theorem (see, e.g., \citealp[Theorem 3.27]{kallenberg_2021}) implies
 \[
 \hat{\kappa}_{\mathrm{ord}}(h) \xrightarrow{p} 
@@ -1687,8 +1687,8 @@ $\pi = 1$ (no missingness) and $\pi = 0.75$ (25\% missing at random).
 The time series length varies over $n \in \{50, 100, 250, 500, 1000\}$, 
 and all results are based on $B = 1{,}000$ Monte Carlo replications. 
 To study the convergence of the bias as a function of $n$, an 
-additional fine grid $n \in \{2, 3, 5, 10, 15, 25, 37, 50, 75, 100, 
-150, 200, 375, 500, 750, 1000\}$ is used for Scenario B under 
+additional fine grid \[n \in \{2, 3, 5, 10, 15, 25, 37, 50, 75, 100, 
+150, 200, 375, 500, 750, 1000\}\] is used for Scenario B under 
 $\pi = 0.75$, with $B = 1{,}000$ replications each.
 
 \subsection*{Estimators and performance measures}
@@ -1714,7 +1714,7 @@ replications:
 \end{itemize}
 The theoretical bias limit for the IOV estimator under MCAR is given 
 by $-\frac{4}{mn}\mathrm{tr}(\boldsymbol{\Sigma}_Z)$ 
-(), and for $\hat{\kappa}_{\mathrm{ord}}(h)$ under $H_0$ by 
+(corollary \ref{cor:iov_missing}), and for $\hat{\kappa}_{\mathrm{ord}}(h)$ under $H_0$ by 
 $-\frac{1}{n\pi}$ (\cref{thm:kappa-asymp}). These serve as 
 benchmarks against which the simulated bias curves are compared.
 

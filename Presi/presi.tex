@@ -1,0 +1,361 @@
+\documentclass{beamer}
+
+\usepackage{amsmath, amssymb}
+
+\title{Inference for Categorical Time Series with Missing Observations}
+\author{Victor Minig}
+\date{27.04.2026}
+
+\begin{document}
+
+\frame{\titlepage}
+
+%------------------------------------------------
+\begin{frame}{Motivation}
+\begin{itemize}
+    \item Many real-world time series are \textbf{categorical}:
+    \begin{itemize}
+        \item Credit ratings (AAA, AA, ...)
+        \item Weather states (sunny, rainy, ...)
+        \item Survey responses (agree, neutral, disagree)
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    
+    \item Classical time series methods assume \textbf{numeric structure}
+    
+    \vspace{0.3cm}
+    
+    \item $\Rightarrow$ Need new tools for:
+    \begin{itemize}
+        \item Computing proper tests for marginal features 
+        \item Measuring temporal dependence without bias 
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Categorical Time Series}
+\begin{block}{Definition}
+A categorical time series $(X_t)$ takes values in a finite set
+\[
+S = \{s_0, \dots, s_m\}.
+\]
+\end{block}
+
+\vspace{0.3cm}
+
+\textbf{Two types of categorical data:}
+\begin{itemize}
+    \item \textbf{Nominal:} no natural ordering
+    \item \textbf{Ordinal:} inherent ordering
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Key implication:}
+\begin{itemize}
+    \item Available statistical tools depend on structure of $S$
+\end{itemize}
+\end{frame}
+%------------------------------------------------
+\begin{frame}{Marginal Distributions}
+\textbf{Central object: marginal probabilities}
+
+\vspace{0.3cm}
+
+\textbf{Nominal data:}
+\[
+p_i = P(X_t = s_i)
+\]
+\begin{itemize}
+    \item Probability Mass Function (PMF)
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{Ordinal data:}
+\[
+f_i = P(X_t \leq s_i)
+\]
+\begin{itemize}
+    \item Cumulative Distribution Function (CDF)
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Key difference:}
+\begin{itemize}
+    \item Ordinal $\Rightarrow$ uses ordering
+    \item Nominal $\Rightarrow$ no cumulative structure
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Location Measures}
+\textbf{Nominal data:}
+\begin{itemize}
+    \item No ordering $\Rightarrow$ no mean/median
+    \item Use \textbf{mode}:
+\[
+\text{Mod}(X_t) = \arg\max_{s_i} P(X_t = s_i)
+\]
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{Ordinal data:}
+\begin{itemize}
+    \item Ordering allows additional measures
+    \item \textbf{Median:}
+\[
+\text{Med}(X_t) = \min \{ s_i : F(s_i) \geq 1/2 \}
+\]
+\end{itemize}
+
+\vspace{0.3cm}
+
+\textbf{Interpretation:}
+\begin{itemize}
+    \item Mode = most frequent category
+    \item Median = central position in ordering
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Dispersion Measures}
+\textbf{Different notions of variability}
+$\Rightarrow$ Same for minimal, different for maximal variability
+\vspace{0.5cm}
+
+\textbf{Ordinal: Index of Ordinal Variation (IOV)}
+\[
+\text{IOV}(\boldsymbol{f}) = \frac{4}{m} \sum_{i=0}^{m-1} f_i (1 - f_i)
+\]
+
+\vspace{0.5cm}
+
+\textbf{Nominal: Index of Qualitative Variation (IQV)}
+\[
+\text{IQV}(\boldsymbol{p}) = \frac{m+1}{m} \left(1 - \sum_{i=0}^{m} p_i^2 \right)
+\]
+
+\vspace{0.5cm}
+
+\begin{itemize}
+    \item Both scaled to $[0,1]$
+\end{itemize}
+\end{frame}
+
+
+%------------------------------------------------
+\begin{frame}{Stationarity}
+\textbf{Why do we need stationarity?}
+
+\begin{itemize}
+    \item Stable probabilistic structure over time
+    \item Enables estimation and asymptotics
+\end{itemize}
+
+\vspace{0.5cm}
+
+\begin{block}{Strict Stationarity}
+\[
+F_{X_t, \dots, X_{t+j}} = F_{X_{t+h}, \dots, X_{t+h+j}}
+\]
+for all $t, j, h$.
+\end{block}
+
+\vspace{0.3cm}
+
+\begin{itemize}
+    \item Distribution invariant under time shifts
+\end{itemize}
+\end{frame}
+
+
+
+
+%------------------------------------------------
+\begin{frame}{Temporal Dependence}
+\textbf{Goal: capture dependence across time}
+
+\vspace{0.3cm}
+
+\textbf{Problem:}
+\begin{itemize}
+    \item No meaningful arithmetic operations
+    \item Classical ACF not applicable
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{Solution:}
+\begin{itemize}
+    \item Work with joint probabilities
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{block}{Bivariate Probabilities}
+\[
+p_{ij}(h) = P(X_t = s_i, X_{t+h} = s_j), \quad  f_{ij}(h) = P(X_t \leq s_i, X_{t+h} \leq s_j)
+\]
+\end{block}
+
+\begin{itemize}
+    \item Independence $\Rightarrow p_{ij}(h) = p_i p_j \quad \text{and} \quad  f_{ij}(h) = f_i f_j $
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Cohen's $\kappa$}
+\textbf{Idea: measure deviation from independence}
+
+\vspace{0.5cm}
+
+\[
+\kappa(h)_{\mathrm{nom}} =
+\frac{\sum_{j=0}^{m} (p_{jj}(h) - p_j^2)}
+{1 - \sum_{i=0}^{m} p_i^2} \quad
+\kappa(h)_{\mathrm{ord}} =
+\frac{\sum_{j=0}^{m} (f_{jj}(h) - f_j^2)}
+{1 - \sum_{i=0}^{m} f_i(1 - f_i)}
+\]
+
+\vspace{0.5cm}
+
+\begin{itemize}
+    \item $\kappa = 1$: perfect persistence
+    \item $\kappa = 0$: independence
+    \item $\kappa < 0$: tendency to switch states
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{Interpretation:}
+\begin{itemize}
+    \item Probability of staying in same category
+    \item Relative to independence benchmark
+\end{itemize}
+\end{frame}
+
+
+
+%------------------------------------------------
+\begin{frame}{Estimation of Marginal Probabilities}
+\textbf{Idea: use of indicator functions}
+
+\vspace{0.3cm}
+
+\[
+Y_{t,i} = \mathbb{I}\{X_t = s_i\} \quad \text{and} \quad Z_{t,i} = \mathbb{I}\{X_t \leq s_i\}
+\]
+Then estimators are given by:
+\begin{itemize}
+    \item $\hat{p}_i = \frac{1}{n} \sum_{t=1}^n Y_{t,i}$
+    \item $\hat{f}_i = \frac{1}{n} \sum_{t=1}^n Z_{t,i}$
+\end{itemize}
+
+Intuition:\\
+$\Rightarrow$ we just count relative frequencies\\
+From here we mainly look at ordinal data, but the nominal case is in many ways analogous.
+\end{frame}
+%------------------------------------------------
+\begin{frame}{Mixing Assumptions}
+
+\begin{block}{Idea}
+The Central Limit Theorem (CLT) provides asymptotic normality and enables statistical inference.
+\end{block}
+
+\begin{alertblock}{Problem}
+Classical CLT results assume independence, but in practice data may exhibit serial dependence.
+\end{alertblock}
+
+\begin{block}{Solution}
+To handle dependence, we impose \textbf{mixing conditions}:
+\begin{itemize}
+    \item $\alpha$-mixing quantifies the decay of dependence between past and future observations
+    \item Exponential decay of the mixing coefficients allows a CLT for dependent data
+\end{itemize}
+\end{block}
+\end{frame}
+%------------------------------------------------
+\begin{frame}{CLT under serial dependence}
+    \begin{block}{Result}
+    \[\sqrt{n}(\hat{f} - f) \Rightarrow \mathcal{N}(0, \boldsymbol{\Sigma})\]
+    where the elements of $\boldsymbol{\Sigma}$ are given by:
+    \[\sigma_{ij} = \underbrace{\left(f_{\min\{i,j\}}- f_i f_j\right)}_{\text{lag}(0)} + \sum_{h=1}^{\infty} \underbrace{\left(f_{ij}(h) + f_{ji}(h) - 2f_if_j\right)}_{\text{lag}(h)}.\]
+    Note that $lag(h) \rightarrow 0$ as $h \rightarrow \infty$.
+    \end{block}
+\end{frame}
+%------------------------------------------------
+\begin{frame}{CLT's for marginal estimators}
+    \begin{block}{Idea}
+        IOV is function of the marginal probabilities \\
+        $\Rightarrow$ we can apply the \textbf{delta method}  to obtain their asymptotic distributions 
+    \end{block}
+    \begin{block}{Results}
+        \begin{itemize}
+            \item Asymptotic variance 
+            \[\sqrt{n}Var(\hat{IOV}) \overset{asy}{=} \frac{16}{m^2}\sum_{i,j = 0}^{m-1} (1 - 2f_i)(1 - 2f_j) \sigma_{ij}\]
+            \item Bias to order $n^{-1}$:
+            \[n Bias(\hat{IOV}) = -\frac{4}{m} \sum_{i = 0}^{m-1}  \sigma_{ii}\]
+        \end{itemize}
+    \end{block}
+\end{frame}
+%------------------------------------------------
+\begin{frame}{Missingness - Relevance}
+    
+\end{frame}
+%------------------------------------------------
+\begin{frame}{Amplitude Modulation}
+    \begin{block}{Idea}
+        Missingness can be modeled as a binary process $(O_t)$, that \textit{modulates} the \textit{amplitude} of the actual process: 
+        \[O_t = 1 \text{ if } X_t \text{ is observed and } O_t = 0 \text{ if } X_t \text{ is missing}\] 
+        The observed process is then given by $(O_t X_t)$.
+    \end{block}
+    \begin{block}{Assumptions}
+        \begin{itemize}
+            \item $(O_t)$ is stationary with $P(O_t = 1) = \pi > 0$ and joint moments $E[O_t O_{t+h}] = \pi(h)$
+            \item $(O_t)$ is $\alpha$-mixing with exponential decay
+        \end{itemize}
+    \end{block}    
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Missingness Mechanisms}
+    Originally developed for cross-sectional data, but also relevant for time series:
+    \begin{itemize}  
+        \item \textbf{MCAR:} Missing Completely At Random
+        \[P(O_t = 1| X_t, X_{t-1}, \ldots)\ = P(O_t = 1)\]
+        \item \textbf{MAR:} Missing At Random
+        \[P(O_t = 1| X_t, X_{t-1}, \ldots)\ = P(O_t = 1| X_{t-1}, \ldots)\]
+        \item \textbf{MNAR:} Missing Not at Random
+        \[P(O_t = 1| X_t, X_{t-1}, \ldots)\ \neq P(O_t = 1| X_{t-1}, \ldots)\]
+    \end{itemize}
+    From here on, unless stated otherwise , we assume MCAR.
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Naive vs corrected estimators}
+    \begin{block}{Naive estimator}
+        \[\hat{\boldsymbol{\mathfrak{f}}} = \frac{1}{n} \sum_{t=1}^n O_t \boldsymbol{Z}_t\]
+        $\Rightarrow$ biased and inconsistent due to missingness
+    \end{block}
+    \begin{block}{Corrected estimator}
+        \[\hat{\boldsymbol{f}}^* = \frac{1}{n} \frac{\sum_{t=1}^n O_t \boldsymbol{Z}_t}{\sum_{t=1}^n O_t}\] 
+    \end{block}
+\end{frame}
+%------------------------------------------------
+\begin{frame}{Asymptotic properties of the corrected estimator}
+    \begin{block}{Result}
+        \[\sqrt{n}(\hat{\boldsymbol{f}}^* - \boldsymbol{f}) \Rightarrow \mathcal{N}(0, \boldsymbol{\Sigma}^*)\]
+        where the elements of $\boldsymbol{\Sigma}^*$ are given by:
+        \[\sigma^*_{ij} = \frac{1}{\pi} (f_{\mathrm{min}\{i,j\}}- f_i f_j) + \frac{1}{\pi^2} \sum_{h = 1}^{\infty} \pi(h)(f_{ij}(h) + f_{ji}(h) - 2f_if_j)\]
+    \end{block}
+
+\end{frame}
+
+
+\end{document}

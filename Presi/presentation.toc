@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{Categorical Time Series}{3}{0}{1}
+\beamer@sectionintoc {2}{Estimation — Complete Data}{11}{0}{2}
+\beamer@sectionintoc {3}{Missing Data}{16}{0}{3}
+\beamer@sectionintoc {4}{Serial Dependence under Missingness}{22}{0}{4}
+\beamer@sectionintoc {5}{Simulation Study}{27}{0}{5}
+\beamer@sectionintoc {6}{Summary}{31}{0}{6}

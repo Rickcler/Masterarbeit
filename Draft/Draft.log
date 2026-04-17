@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (MiKTeX 26.2) (preloaded format=pdflatex 2026.3.16)  15 APR 2026 14:40
+This is XeTeX, Version 3.141592653-2.6-0.999998 (MiKTeX 26.2) (preloaded format=xelatex 2026.4.16)  16 APR 2026 14:14
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -45,7 +45,7 @@ File: scrsize12pt.clo 2026/02/02 v3.49.2 KOMA-Script font size class option (12p
 ) (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/koma-script\typearea.sty
 Package: typearea 2026/02/02 v3.49.2 KOMA-Script package (type area)
 \ta@bcor=\skip50
-\ta@div=\count275
+\ta@div=\count271
 Package typearea Info: You've used standard option `a4paper'.
 (typearea)             This is correct!
 (typearea)             Internally I'm using `paper=a4'.
@@ -74,13 +74,13 @@ Package typearea Info: These are the values describing the layout:
 (typearea)              \baselineskip   = 14.5pt
 (typearea)              on input line 1810.
 )
-\c@part=\count276
-\c@chapter=\count277
-\c@section=\count278
-\c@subsection=\count279
-\c@subsubsection=\count280
-\c@paragraph=\count281
-\c@subparagraph=\count282
+\c@part=\count272
+\c@chapter=\count273
+\c@section=\count274
+\c@subsection=\count275
+\c@subsubsection=\count276
+\c@paragraph=\count277
+\c@subparagraph=\count278
 \scr@dte@chapter@maxnumwidth=\skip55
 Class scrreprt Info: using compatibility default `afterindent=bysign'
 (scrreprt)           for `\chapter on input line 5934.
@@ -119,21 +119,28 @@ Package tocbasic Info: omitting babel extension for `lof'
 (tocbasic)             because of feature `nobabel' available
 (tocbasic)             for `lof' on input line 7225.
 \scr@dte@figure@maxnumwidth=\skip64
-\c@figure=\count283
+\c@figure=\count279
 Package tocbasic Info: omitting babel extension for `lot'
 (tocbasic)             because of feature `nobabel' available
 (tocbasic)             for `lot' on input line 7238.
 \scr@dte@table@maxnumwidth=\skip65
-\c@table=\count284
+\c@table=\count280
 Class scrreprt Info: Redefining `\numberline' on input line 7409.
 \bibindent=\dimen148
 ) (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
 Package: inputenc 2024/02/08 v1.3d Input encoding file
 \inpenc@prehook=\toks18
 \inpenc@posthook=\toks19
+
+
+Package inputenc Warning: inputenc package ignored with utf8 based engines.
+
 ) (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty
 Package: fontenc 2025/07/18 v2.1d Standard LaTeX package
-) (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/lm\lmodern.sty
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 116.
+ (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmr.fd
+File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)) (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/lm\lmodern.sty
 Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
@@ -176,9 +183,9 @@ Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
 ) (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
-Package graphics Info: Driver file: pdftex.def on input line 106.
- (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
-File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
+Package graphics Info: Driver file: xetex.def on input line 106.
+ (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\xetex.def
+File: xetex.def 2025/11/01 v5.0p Graphics/color driver for xetex
 ))
 \Gin@req@height=\dimen149
 \Gin@req@width=\dimen150
@@ -199,14 +206,14 @@ Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 ) (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
-\inf@bad=\count285
+\inf@bad=\count281
 LaTeX Info: Redefining \frac on input line 233.
-\uproot@=\count286
-\leftroot@=\count287
+\uproot@=\count282
+\leftroot@=\count283
 LaTeX Info: Redefining \overline on input line 398.
 LaTeX Info: Redefining \colon on input line 409.
-\classnum@=\count288
-\DOTSCASE@=\count289
+\classnum@=\count284
+\DOTSCASE@=\count285
 LaTeX Info: Redefining \ldots on input line 495.
 LaTeX Info: Redefining \dots on input line 498.
 LaTeX Info: Redefining \cdots on input line 619.
@@ -219,20 +226,20 @@ LaTeX Info: Redefining \Bigg on input line 724.
 \big@size=\dimen153
 LaTeX Font Info:    Redeclaring font encoding OML on input line 742.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 743.
-\macc@depth=\count290
+\macc@depth=\count286
 LaTeX Info: Redefining \bmod on input line 904.
 LaTeX Info: Redefining \pmod on input line 909.
 LaTeX Info: Redefining \smash on input line 939.
 LaTeX Info: Redefining \relbar on input line 969.
 LaTeX Info: Redefining \Relbar on input line 970.
-\c@MaxMatrixCols=\count291
+\c@MaxMatrixCols=\count287
 \dotsspace@=\muskip17
-\c@parentequation=\count292
-\dspbrk@lvl=\count293
+\c@parentequation=\count288
+\dspbrk@lvl=\count289
 \tag@help=\toks21
-\row@=\count294
-\column@=\count295
-\maxfields@=\count296
+\row@=\count290
+\column@=\count291
+\maxfields@=\count292
 \andhelp@=\toks22
 \eqnshift@=\dimen154
 \alignsep@=\dimen155
@@ -268,31 +275,33 @@ Package: amsthm 2020/05/29 v2.20.6
 \dth@everypar=\toks30
 ) (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/xpatch\xpatch.sty (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/l3kernel\expl3.sty
 Package: expl3 2026-01-19 L3 programming layer (loader) 
- (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
-File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count297
+ (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-xetex.def
+File: l3backend-xetex.def 2025-10-09 L3 backend support: XeTeX
+\g__graphics_track_int=\count293
+\g__pdfannot_backend_int=\count294
+\g__pdfannot_backend_link_int=\count295
 ))
 Package: xpatch 2020/03/25 v0.3a Extending etoolbox patching commands
  (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/l3packages/xparse\xparse.sty
 Package: xparse 2025-10-09 L3 Experimental document command parser
 ) (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
 Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count298
+\etb@tempcnta=\count296
 ))
 Class scrreprt Info: amsthm's \deferred@thm@head patched.
  (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/appendix\appendix.sty
 Package: appendix 2020/02/08 v1.2c extra appendix facilities
-\c@@pps=\count299
-\c@@ppsavesec=\count300
-\c@@ppsaveapp=\count301
+\c@@pps=\count297
+\c@@ppsavesec=\count298
+\c@@ppsaveapp=\count299
 )
-\c@theorem=\count302
+\c@theorem=\count300
  (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/natbib\natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip72
 \bibsep=\skip73
 LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count303
+\c@NAT@ctr=\count301
 ) (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
 Package: hyperref 2026-01-29 v7.01p Hypertext links for LaTeX
  (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty
@@ -312,7 +321,7 @@ Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
-Package pdftexcmds Info: \pdfdraftmode found.
+Package pdftexcmds Info: \pdfdraftmode not found.
 )) (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
 ) (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
@@ -324,25 +333,21 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
  (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
-\c@section@level=\count304
+\c@section@level=\count302
 ) (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/generic/stringenc\stringenc.sty
 Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
 )
 \@linkdim=\dimen160
-\Hy@linkcounter=\count305
-\Hy@pagecounter=\count306
+\Hy@linkcounter=\count303
+\Hy@pagecounter=\count304
  (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
 File: pd1enc.def 2026-01-29 v7.01p Hyperref: PDFDocEncoding definition (HO)
-Now handling font encoding PD1 ...
-... no UTF-8 mapping file for font encoding PD1
 ) (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-\Hy@SavedSpaceFactor=\count307
+\Hy@SavedSpaceFactor=\count305
  (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def
 File: puenc.def 2026-01-29 v7.01p Hyperref: PDF Unicode definition (HO)
-Now handling font encoding PU ...
-... no UTF-8 mapping file for font encoding PU
 )
 Package hyperref Info: Hyper figures OFF on input line 4201.
 Package hyperref Info: Link nesting OFF on input line 4206.
@@ -351,7 +356,7 @@ Package hyperref Info: Plain pages OFF on input line 4216.
 Package hyperref Info: Backreferencing OFF on input line 4221.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4468.
-\c@Hy@tempcnt=\count308
+\c@Hy@tempcnt=\count306
  (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty
 \Urlmuskip=\muskip18
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
@@ -363,7 +368,7 @@ Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
  (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
-\Fld@menulength=\count309
+\Fld@menulength=\count307
 \Field@Width=\dimen162
 \Fld@charsize=\dimen163
 Package hyperref Info: Hyper figures OFF on input line 6084.
@@ -373,13 +378,16 @@ Package hyperref Info: backreferencing OFF on input line 6099.
 Package hyperref Info: Link coloring OFF on input line 6104.
 Package hyperref Info: Link coloring with OCG OFF on input line 6109.
 Package hyperref Info: PDF/A mode OFF on input line 6114.
-\Hy@abspage=\count310
-\c@Item=\count311
-\c@Hfootnote=\count312
+\Hy@abspage=\count308
+\c@Item=\count309
+\c@Hfootnote=\count310
 )
-Package hyperref Info: Driver (autodetected): hpdftex.
- (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
-File: hpdftex.def 2026-01-29 v7.01p Hyperref driver for pdfTeX
+Package hyperref Info: Driver (autodetected): hxetex.
+ (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hxetex.def
+File: hxetex.def 2026-01-29 v7.01p Hyperref driver for XeTeX
+\pdfm@box=\box57
+\c@Hy@AnnotLevel=\count311
+\HyField@AnnotCount=\count312
 \Fld@listcount=\count313
 \c@bookmark@seq@number=\count314
  (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfilecheck.sty
@@ -416,14 +424,10 @@ Class scrreprt Info: loading recommended package `bookmark'.
 (scrreprt)           before \begin{document} on input line 34.
 (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/bookmark\bookmark.sty
 Package: bookmark 2023-12-10 v1.31 PDF bookmarks (HO)
- (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/bookmark\bkm-pdftex.def
-File: bkm-pdftex.def 2023-12-10 v1.31 bookmark driver for pdfTeX and luaTeX (HO)
+ (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/bookmark\bkm-dvipdfm.def
+File: bkm-dvipdfm.def 2023-12-10 v1.31 bookmark driver for dvipdfm (HO)
 \BKM@id=\count315
-))
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 34.
- (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmr.fd
-File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) (Draft.aux
+)) (Draft.aux
 
 LaTeX Warning: Label `sec:serial-dependence' multiply defined.
 
@@ -442,6 +446,8 @@ LaTeX Font Info:    ... okay on input line 34.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 34.
 LaTeX Font Info:    ... okay on input line 34.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 34.
 LaTeX Font Info:    ... okay on input line 34.
 LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 34.
 LaTeX Font Info:    ... okay on input line 34.
@@ -462,25 +468,6 @@ Package scrbase Info: activating english \listfigurename on input line 34.
 Package scrbase Info: activating english \listtablename on input line 34.
 Package scrbase Info: activating english \bibname on input line 34.
 Package scrbase Info: activating english \indexname on input line 34.
- (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
-[Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count316
-\scratchdimen=\dimen164
-\scratchbox=\box57
-\nofMPsegments=\count317
-\nofMParguments=\count318
-\everyMPshowfont=\toks31
-\MPscratchCnt=\count319
-\MPscratchDim=\dimen165
-\MPnumerator=\count320
-\makeMPintoPDFobject=\count321
-\everyMPtoPDFconversion=\toks32
-) (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
-Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
-Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
- (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
-))
 Package hyperref Info: Link coloring OFF on input line 34.
 
 chapter 1.
@@ -517,20 +504,16 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 LaTeX Font Info:    Trying to load font information for U+msb on input line 48.
  (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 78.
- (C:\Users\victo\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd
-File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) [1
 
 
-{C:/Users/victo/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}]
+]
 Underfull \hbox (badness 10000) in paragraph at lines 86--87
 
  []
 
 
-Overfull \hbox (0.47821pt too wide) in paragraph at lines 90--93
+Overfull \hbox (1.10352pt too wide) in paragraph at lines 90--93
 \T1/lmr/m/n/12 ing-ful or-der, sta-tis-ti-cal pro-ce-dures can-not make use of cu-mu-la-tive struc-ture. There-
  []
 
@@ -546,7 +529,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 101.
 
-[2{C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}] [3{C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathex.enc}] [4] [5] [6] [7]
+[2] [3] [4] [5] [6] [7]
 chapter 2.
 
 Underfull \hbox (badness 10000) in paragraph at lines 410--416
@@ -556,6 +539,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 410--416
 [8
 
 ]
+Missing character: There is no – in font ec-lmr12!
+
 Overfull \hbox (4.24123pt too wide) in paragraph at lines 467--476
 \T1/lmr/m/n/12 Since $\OML/lmm/m/it/12 L$ \T1/lmr/m/n/12 is lin-ear on a finite-dimensional space, it is con-tin-u-ous and hence Borel-measurable
  []
@@ -567,6 +552,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 608--609
 
 [12] [13]
 chapter 3.
+Missing character: There is no — in font ec-lmr12!
 
 LaTeX Warning: Reference `sec:mnar' on page 14 undefined on input line 716.
 
@@ -604,7 +590,10 @@ Overfull \hbox (78.9165pt too wide) detected at line 1262
 []
  []
 
-[23] [24] [25]
+[23] [24]
+Missing character: There is no — in font ec-lmr12!
+Missing character: There is no — in font ec-lmr12!
+[25]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 1323.
@@ -635,8 +624,17 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 1516.
 
+
+LaTeX Warning: Reference `' on page 29 undefined on input line 1524.
+
 [29] [30]
 chapter 4.
+Missing character: There is no “ in font ec-lmr12!
+Missing character: There is no ” in font ec-lmr12!
+Missing character: There is no “ in font ec-lmr12!
+Missing character: There is no ” in font ec-lmr12!
+Missing character: There is no “ in font ec-lmr12!
+Missing character: There is no ” in font ec-lmr12!
 
 Overfull \hbox (14.11913pt too wide) in paragraph at lines 1585--1589
  \T1/lmss/bx/n/12 Dis-tri-bu-tional prop-er-ties.[] \T1/lmr/m/n/12 The sta-tion-ary marginal dis-tri-bu-tion of $\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 X[]\OT1/lmr/m/n/12 )$ \T1/lmr/m/n/12 is $[]\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 m; p\OT1/lmr/m/n/12 )$\T1/lmr/m/n/12 ,
@@ -645,22 +643,16 @@ Overfull \hbox (14.11913pt too wide) in paragraph at lines 1585--1589
 [31
 
 ] [32]
-<../Graphs/Marginal CDF.png, id=332, 498.36188pt x 362.85562pt>
-File: ../Graphs/Marginal CDF.png Graphic file (type png)
-<use ../Graphs/Marginal CDF.png>
-Package pdftex.def Info: ../Graphs/Marginal CDF.png  used on input line 1681.
-(pdftex.def)             Requested size: 448.14133pt x 170.71933pt.
-
-Overfull \hbox (64.75482pt too wide) in paragraph at lines 1685--1693
-\T1/lmr/m/n/12 func-tion of $\OML/lmm/m/it/12 n$\T1/lmr/m/n/12 , an ad-di-tional fine grid $\OML/lmm/m/it/12 n \OMS/lmsy/m/n/12 2 f\OT1/lmr/m/n/12 2\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 3\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 5\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 10\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 15\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 25\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 37\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 50\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 75\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 100\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 150\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 200\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 375\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 500\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 750\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 1000\OMS/lmsy/m/n/12 g$
- []
-
+Missing character: There is no — in font ec-lmr12!
+Missing character: There is no — in font ec-lmr12!
+File: ../Graphs/Marginal CDF.png Graphic file (type bmp)
+<../Graphs/Marginal CDF.png>
 
 Overfull \hbox (12.61961pt too wide) in paragraph at lines 1696--1704
 \T1/lmr/m/n/12 In each repli-ca-tion, the fol-low-ing quan-ti-ties are com-puted from the ob-served data $\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 O[]X[]\OT1/lmr/m/n/12 )[]$\T1/lmr/m/n/12 :
  []
 
-[33] [34 <../Graphs/Marginal CDF.png>]
+[33] [34]
 chapter A.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
@@ -1630,17 +1622,12 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 16495 strings out of 467867
- 301268 string characters out of 5418334
- 871400 words of memory out of 5000000
- 45018 multiletter control sequences out of 15000+600000
- 760979 words of font info for 146 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 108i,19n,107p,11277b,645s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eufb10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/euler/eufm10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbsy10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbsy7.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx8.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbxi10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi12.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi5.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi6.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmib10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmib7.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr17.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr5.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr6.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri12.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmssbx10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy5.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy6.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on Draft.pdf (41 pages, 623492 bytes).
-PDF statistics:
- 640 PDF objects out of 1000 (max. 8388607)
- 128 named destinations out of 1000 (max. 500000)
- 246 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 15850 strings out of 402983
+ 285505 string characters out of 5448482
+ 861050 words of memory out of 5000000
+ 44372 multiletter control sequences out of 15000+600000
+ 760285 words of font info for 146 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 108i,19n,107p,11277b,530s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
+Output written on Draft.xdv (41 pages, 199768 bytes).
