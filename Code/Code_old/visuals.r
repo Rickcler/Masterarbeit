@@ -44,7 +44,7 @@ combined_df <- combined_df %>%
 
 c = 0.2 # Ändere {0.2, 0.45} 
 
-subset_pi <- combined_df %>% filter(p == c, pi_h == 0)
+subset_pi <- combined_df %>% filter(p == c, pi_h == 0, pi == 0.75)
 
 
 unique_groups <- unique(subset_pi[, c("n", "pi", "type")])

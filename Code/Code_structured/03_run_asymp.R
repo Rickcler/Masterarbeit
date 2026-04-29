@@ -5,8 +5,8 @@
 # Voraussetzung: 01_functions.R muss geladen sein
 # ==============================================================================
 
-source("00_setup.R")
-source("01_functions.R")
+source("Code/Code_structured/00_setup.R")
+source("Code/Code_structured/01_functions.R")
 
 # ------------------------------------------------------------------------------
 # Parameterkoeffizientengitter

@@ -50,7 +50,7 @@ Let  $(X_t)$ be a \textit{categorical}  time series process, where each $X_t$ ta
 \[
 S := \{s_0, \dots, s_m\}, \qquad m \in \mathbb{N}.
 \]
-$(X_t)$ may be \textit{nominal}, in which case the order of magnitude of the elements in $S$ is arbitrary and solely usesd for notational consistency, or $ordinal$, in which case the order of the elements in $S$ reflects the inherent order of the elements.
+$(X_t)$ may be \textit{nominal}, in which case the order of magnitude of the elements in $S$ is arbitrary and solely used for notational consistency, or $ordinal$, in which case the order of the elements in $S$ reflects the inherent order of the elements.
 \section{Stationarity}
 Furthermore, $(X_t)$ is assumed to be stationary. A distinction can be made between two forms of stationarity:
 \begin{definition}[Weak Stationarity]
@@ -326,7 +326,7 @@ to categorical data, since it relies on the existence of meaningful arithmetic
 operations on the observed values. For nominal data, such operations are undefined, 
 and for ordinal data they are questionable, as the categories carry no numerical meaning beyond their ordering.\\
 Dependence measures for categorical time series are typically constructed 
-from the bivariate lag-$h$ probabilities introduced in defintion \ref{def:biv_probs}. 
+from the bivariate lag-$h$ probabilities introduced in Definition \ref{def:biv_probs}. 
 Under serial independence, these would factorize as $f_{ij}(h) = f_if_j$ and 
 $p_{ij}(h) = p_ip_j$ respectively. Measures for serial dependence are naturally 
 constructed by quantifying the deviation of the bivariate probabilities from this 
@@ -365,7 +365,7 @@ measures attain their upper bound:
     &= \frac{\sum_{j=0}^{m-1}(f_j - f_j^2)}{\sum_{i=0}^{m-1}(f_i - f_i^2)} = 1, \\[1ex]
     \kappa_{\mathrm{nom}}(h) 
     &= \frac{\sum_{j=0}^{m}(p_j - p_j^2)}{1 - \sum_{i=0}^{m}p_i^2}
-    = \frac{1 - \sum_{j=0}^{m}p_j^2}{1 - \sum_{i=0}^{m}p_i^2} = 1.
+    = \frac{1 - \sum_{j=0}^{m}p_j^2}{1 - \sum_{i=0}^{m}p_i^2} = 1,
 \end{align*}
 where we used that $\sum_{j=0}^{m} p_j = 1$, so that $\sum_{j=0}^{m}(p_j - p_j^2) = 1 - \sum_{j=0}^{m} p_j^2$. 
 Under serial independence, $f_{jj}(h) = f_j^2$ and $p_{jj}(h) = p_jp_j$, so that
@@ -605,7 +605,9 @@ the finite-sample bias is given by
 \end{align*}
 
 
-This implies that the bias is strictly negative and only depends on the marginal variances $\sigma_{\boldsymbol{Z}; i,i}$ of the indivdual estimators $f_i$,  not on the covariances. The results are summarized in the following theorem: \\
+This implies that the bias is strictly negative and only depends on the marginal variances 
+$\sigma_{\boldsymbol{Z}; i,i}$ of the indivdual estimators $f_i$,  not on the covariances. 
+The results are summarized in the following theorem: \\
 \begin{theorem}[Asymptotic Distribution of $\widehat{\mathrm{IOV}}$]\label{thm:iov_asymp}
 Under the assumptions of Theorem~\ref{thm:clt_fhat}:
 \begin{enumerate}
@@ -754,7 +756,7 @@ and therefore, here $\hat{\boldsymbol{f}^*} = \hat{\boldsymbol{\mathfrak{f}}}/\b
 to where $\hat{\boldsymbol{f^*}}$ is generally biased.
 \section{Asymptotic Theory for the corrected estimator}
 \subsection*{The extended process - stationarity and $\alpha$-mixing}
-To study this bias we assume $(O_t)$ and $(X_t)$ to be stationary and $\alpha$-mixing with exponetially decaying coefficients (see Definition \ref{def:mixing}), with $\mathrm{E}[O_t] = \pi $, a autocovariance function $\gamma_{O}(h) := \mathrm{Cov}[O_h, O_0]$ and joint expectations $\pi(h):= \mathrm{E}[O_h O_0] = \gamma_O(h) + \pi^2$. To study the joint asymptotic distribution of the estimator $\hat{\boldsymbol{f}}^*$, we introduce the extended binary vectors in order to derive the joint asymptotic distribution of all sample averages entering its definition:
+To study this bias we assume $(O_t)$ and $(X_t)$ to be stationary and $\alpha$-mixing with exponetially decaying coefficients (see Definition~\ref{def:mixing}), with $\mathrm{E}[O_t] = \pi $, a autocovariance function $\gamma_{O}(h) := \mathrm{Cov}[O_h, O_0]$ and joint expectations $\pi(h):= \mathrm{E}[O_h O_0] = \gamma_O(h) + \pi^2$. To study the joint asymptotic distribution of the estimator $\hat{\boldsymbol{f}}^*$, we introduce the extended binary vectors in order to derive the joint asymptotic distribution of all sample averages entering its definition:
 \[\boldsymbol{Z}^*_t:= (O_t, O_t Z_{t,0}, \ldots, O_t Z_{t,m-1})^\top =  O_t (1, \boldsymbol{Z}^\top_t)^\top,\]
 where the elements of $\boldsymbol{Z}_t^*$ are are numbered as $Z_{t,-1}^*, Z_{t,0}^*, \ldots, Z_{t,m-1}^*$. The expectation of $\boldsymbol{Z}_t^*$ is given by
 \begin{align*}
@@ -798,7 +800,7 @@ of the strictly stationary and $\alpha$-mixing process $\boldsymbol{Z}_t^*$, it
 inherits both properties, with $\alpha_{U_t^*}(n) \leq \alpha_{\boldsymbol{Z}_t^*}(n) 
 \leq C\rho^n$ following from the inclusion $\sigma(U_t^*) \subset \sigma(\boldsymbol{Z}_t^*)$. 
 The summability condition therefore holds by the same geometric series argument as 
-in Theorem \ref{thm:clt_fhat}. Since each $Z_{t,i}^* \in \{0,1\}$, the projection $U_t^*$ 
+in Theorem~\ref{thm:clt_fhat}. Since each $Z_{t,i}^* \in \{0,1\}$, the projection $U_t^*$ 
 is bounded and all moments are finite. Ibragimov's CLT \citep[Theorem~7]{Ibragimov1962} 
 therefore applies to $U_t^*$, and the Cramér--Wold theorem 
 \citep[Corollary~4.5]{kallenberg_2021} yields the multivariate result.
@@ -857,7 +859,7 @@ The Jacobian of $\boldsymbol{g}(\boldsymbol{x})$ evaluated at $\boldsymbol{x} = 
 Then, following the delta method, we have the following result
 \begin{theorem}[Asymptotic Normality of $\hat{\boldsymbol{f}}^*$]\label{thm:clt_fstarhat}
 Let $(X_t)$ be a strictly stationary, ordinal process that is $\alpha$-mixing with exponentially decaying
-coefficients. Let the modulating process $(O_t)$ also be strictily stationary and $\alpha$-mixing with exponentially decaying coefficients, with moments $\mathrm{E}[O_t] = \pi > 0$ and $\mathrm{E}[O_h O_0] = \pi(h) > 0$. Furthermore, let $(O_t)$ and $(X_t)$ be independent, where $X_t$ is observed if $O_t = 1$. Then the corrected estimator from definition~\ref{def:correctedest} satisfies the following multivariate CLT:
+coefficients. Let the modulating process $(O_t)$ also be strictily stationary and $\alpha$-mixing with exponentially decaying coefficients, with moments $\mathrm{E}[O_t] = \pi > 0$ and $\mathrm{E}[O_h O_0] = \pi(h) > 0$. Furthermore, let $(O_t)$ and $(X_t)$ be independent, where $X_t$ is observed if $O_t = 1$. Then the corrected estimator from Definition~\ref{def:correctedest} satisfies the following multivariate CLT:
 \begin{equation}\label{eq:clt_fstarhat}
     \sqrt{n}\bigl(\hat{\boldsymbol{f}}^* - \boldsymbol{f}\bigr)
     \xrightarrow[n\to\infty]{d}
@@ -911,7 +913,7 @@ $O(n^{-1})$ is computable using a second-order Taylor expansion. The Hessian of 
     0                   & \text{else.}
 \end{cases}
 \]
-Using the symmetry $\sigma_{\boldsymbol{Z}^*;-1,j} = \sigma_{\boldsymbol{Z}^*;j,-1}$ and the equality from Lemma \ref{lem:quadform} the bias simplifies to
+Using the symmetry $\sigma_{\boldsymbol{Z}^*;-1,j} = \sigma_{\boldsymbol{Z}^*;j,-1}$ and the equality from Lemma~\ref{lem:quadform} the bias simplifies to
 \begin{align*}
     \mathrm{Bias}(\hat{f}_j)
     &= \frac{1}{2}\mathrm{tr}(\boldsymbol{H}_{g_j}\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}) \\
@@ -961,10 +963,10 @@ $i,j = 0,\ldots,m-1$ and $h \geq 1$, so that the asymptotic
 covariance reduces to
 \[
     \sigma_{\hat{\boldsymbol{f}}^*;\, i,j}
-    = \frac{1}{\pi}\bigl(f_{\min\{i,j\}} - f_if_j\bigr)
+    = \frac{1}{\pi}\bigl(f_{\min\{i,j\}} - f_i f_j\bigr)
     + \frac{1}{\pi^2}\sum_{h=1}^{\infty} \pi(h)
-    \overbrace{(f_{ij}(h) + f_{ji}(h) - 2f_if_j)}^{=0}
-    = \frac{1}{\pi}\bigl(f_{\min\{i,j\}} - f_if_j\bigr).
+    \overbrace{(f_{ij}(h) + f_{ji}(h) - 2f_i f_j)}^{=0}
+    = \frac{1}{\pi}\bigl(f_{\min\{i,j\}} - f_i f_j\bigr).
 \]
 \end{corollary}
 When the main process is serially independent, all temporal dependence in
@@ -974,8 +976,7 @@ $\hat{\boldsymbol{f}}^*$ vanishes and the asymptotic covariance only depends on 
 The asymptotic properties of marginal statistics based on $\hat{\boldsymbol{f}}^*$
 follow directly from the delta method, in exact analogy to the complete-data case.
 The following results are for the IOV and the skew. However, the derivations for other marginal statistics are analogous. 
-\begin{corollary}[Asymptotic distribution of $\mathrm{IOV}(\hat{\boldsymbol{f}}^*)$]
-\label{cor:iov_missing}
+\begin{corollary}[Asymptotic distribution of $\mathrm{IOV}(\hat{\boldsymbol{f}}^*)$]\label{cor:iov_missing}
 Under the conditions of Theorem~\ref{thm:clt_fstarhat}, the delta method argument from Theorem~\ref{thm:iov_asymp} 
 carries over to the missing-data case with $\boldsymbol{\Sigma}_Z$ replaced by
 $\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}}^*}$, yielding
@@ -1002,10 +1003,6 @@ estimator is unbiased and its asymptotic variance is given by
     \frac{4}{m^2}\sum_{i,j=0}^{m-1}\sigma_{\hat{\boldsymbol{f}}^*;\,i,j}.
 \]
 \end{remark}
-
-\section{Serial Dependence}
-\label{sec:serial-dependence}
-
 
 \section{Serial Dependence}
 \label{sec:serial-dependence}
@@ -1097,13 +1094,8 @@ $\boldsymbol{Z}_t^{(h)*}$. Should one wish to study a dependence
 measure that also involves off-diagonal frequencies $\hat{f}^*_{ij}(h)$ 
 with $i \neq j$, the vector can straightforwardly be extended by the 
 additional components $O_t O_{t-h} Z_{t,i} Z_{t-h,j}$.\\
-Since $\boldsymbol{Z}^{(h)*}_t$ is a measurable function of 
-$(O_t, O_{t-h}, X_t, X_{t-h})$, it inherits strict stationarity 
-and $\alpha$-mixing with exponentially decaying coefficients from 
-the underlying processes by the same argument as in 
-Section~\ref{sec:Amp Mod}, and all moment conditions are trivially 
-satisfied as its components are bounded indicator variables. 
-The Cramér--Wold device therefore yields
+\begin{proposition}[Asymptotic distribution of $\bar{\boldsymbol{Z}}^{(h)*}_n$]\label{prop:clt_zstar_h}
+Let the assumptions of Theorem~\ref{thm:clt_fstarhat} hold. Then
 \[
     \sqrt{n}\!\left(\bar{\boldsymbol{Z}}^{(h)*}_n - 
     \boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}\right) 
@@ -1111,24 +1103,35 @@ The Cramér--Wold device therefore yields
     \boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}\right),
 \]
 where $\bar{\boldsymbol{Z}}^{(h)*}_n := \frac{1}{n}\sum_{t=1}^{n} 
-\boldsymbol{Z}^{(h)*}_t$ and
+\boldsymbol{Z}^{(h)*}_t$,
 \[
     \boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}} 
     = \bigl(\pi(h),\, \pi,\, \pi\boldsymbol{f}^\top,\, 
       \pi(h)f_{00}(h),\, \ldots,\, 
-      \pi(h)f_{m-1,m-1}(h)\bigr)^\top.
+      \pi(h)f_{m-1,m-1}(h)\bigr)^\top,
 \]
-The long-run covariance matrix $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$ 
-has elements
+and $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$ has elements
 \[
     \sigma^{(h)}_{i,j} = \mathrm{Cov}(Z^{(h)*}_{t,i}, Z^{(h)*}_{t,j}) 
     + \sum_{k=1}^{\infty}\bigl[
     \mathrm{Cov}(Z^{(h)*}_{t,i}, Z^{(h)*}_{t+k,j}) 
     + \mathrm{Cov}(Z^{(h)*}_{t+k,i}, Z^{(h)*}_{t,j})\bigr].
 \]
-Using the independence of $(O_t)$ and $(X_t)$, these can be 
-computed explicitly. We record the following notation: since 
-$O_t \sim \mathrm{Bernoulli}(\pi)$, we have $\mathrm{E}[O_t] = \pi$, 
+\end{proposition}
+\begin{proof}
+Since $\boldsymbol{Z}^{(h)*}_t$ is a measurable function of the bounded 
+indicator variables $(O_t, O_{t-h}, \allowbreak X_t, X_{t-h})$, it inherits strict 
+stationarity and $\alpha$-mixing with exponentially decaying coefficients 
+from the underlying processes by the same argument as in 
+Proposition~\ref{prop:clt_zstar}, and all moment conditions are trivially satisfied. 
+The result then follows from the Cramér--Wold theorem 
+\citep[Corollary~4.5]{kallenberg_2021} and Ibragimov's CLT 
+\citep[Theorem~7]{Ibragimov1962}.
+\end{proof}
+
+\noindent Using the independence of $(O_t)$ and $(X_t)$, the elements 
+$\sigma^{(h)}_{i,j}$ can be computed explicitly. We record the 
+following notation: since $O_t \sim \mathrm{Bernoulli}(\pi)$, we have $\mathrm{E}[O_t] = \pi$, 
 $\mathrm{Var}(O_t) = \pi(1-\pi)$, $\mathrm{E}[O_t^2] = \pi$, and 
 we write $\pi(h) := \mathrm{E}[O_tO_{t-h}]$ and 
 $\gamma_O(h) := \mathrm{Cov}(O_t, O_{t-h}) = \pi(h) - \pi^2$ 
@@ -1261,7 +1264,7 @@ O_tO_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)})\bigr] \\
 - 2f_{(i-m),(i-m)}(h)\,f_{(j-m),(j-m)}(h)\bigr]
 \end{align*}}
 Note that cases \textbf{(v)},\textbf{(vi)} and \textbf{(viii)} coincide with cases 
-\textbf{(i)-(iii)} from $\boldsymbol{\Sigma}_{\boldsymbol{Z}*}$ of proposition \ref{prop:clt_zstar}. Also note that cases \textbf{(i)--(viii)} admit fully explicit closed-form 
+\textbf{(i)-(iii)} from $\boldsymbol{\Sigma}_{\boldsymbol{Z}*}$ of Proposition~\ref{prop:clt_zstar}. Also note that cases \textbf{(i)--(viii)} admit fully explicit closed-form 
 expressions, whereas cases \textbf{(ix)} and \textbf{(x)} involve 
 third- and fourth-order mixed moments of $(X_t)$ — such as 
 $\mathrm{E}[Z_{t,i}Z_{t,(j-m)}Z_{t-h,(j-m)}]$ — that do not simplify 
@@ -1277,13 +1280,22 @@ vector-valued function $\boldsymbol{g}\colon [0,1]^{2(m+1)} \to
         x_j / x_{-2} & \text{for } j = m,\ldots,2m-1,
     \end{cases}
 \]
-so that 
-\[\hat{\boldsymbol{f}}^{(h)*} := 
-\boldsymbol{g}(\bar{\boldsymbol{Z}}^{(h)*}_n) \quad \text{and} 
-\quad \boldsymbol{\mu}^{(h)*} := 
+so that $\hat{\boldsymbol{f}}^{(h)*} := 
+\boldsymbol{g}(\bar{\boldsymbol{Z}}^{(h)*}_n)$ and 
+$\boldsymbol{\mu}^{(h)*} := 
 \boldsymbol{g}(\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}) 
-= (f_0,\ldots,f_{m-1},f_{00}(h),\ldots,f_{m-1,m-1}(h))^\top.\]
-By the multivariate delta method \citep[Chapter~3]{VanderVaart1998},
+= (f_0,\ldots,f_{m-1},f_{00}(h),\ldots,f_{m-1,m-1}(h))^\top$. Since $\boldsymbol{g}$ is continuous at 
+$\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}$, consistency of 
+$\hat{\boldsymbol{f}}^{(h)*}$ follows immediately from 
+Theorem~\ref{prop:clt_zstar_h} and the continuous mapping theorem 
+\citep[Theorem~3.27]{kallenberg_2021}. Asymptotic normality then 
+follows by the multivariate delta method 
+\citep[Chapter~3]{VanderVaart1998}:
+\begin{theorem}[Asymptotic normality of $\hat{\boldsymbol{f}}^{(h)*}$]
+\label{thm:clt_fhat_h}
+Let the assumptions of Theorem~\ref{thm:clt_fstarhat} hold. Then 
+$\hat{\boldsymbol{f}}^{(h)*}$ is consistent for $\boldsymbol{\mu}^{(h)*}$, 
+and
 \[
     \sqrt{n}\!\left(\hat{\boldsymbol{f}}^{(h)*} 
     - \boldsymbol{\mu}^{(h)*}\right)
@@ -1308,23 +1320,48 @@ $\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}$, is given by
     &\cdots & 0&\frac{1}{\pi(h)}      
     \end{pmatrix}.
 \end{align*}
-Since explicit closed-form expressions for the elements of 
-$\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ require 
-higher-order mixed moments of $(X_t)$, a fully general evaluation of 
-$\boldsymbol{G}\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}\boldsymbol{G}^\top$ 
-is intractable without further assumptions. We therefore proceed in 
-two steps: first, in \cref{subsec:serial-H0}, we narrow our focus to 
-the asymptotic null distribution of $\sqrt{n}\,\hat{\kappa}_{\mathrm{ord}}(h)$, 
-under which the i.i.d.\ assumption on $(X_t)$ yields the simplifications 
-needed for closed-form results. Second, in \cref{subsec:serial-HA}, 
-we return to the general model and show that the test is consistent 
-under $H_A$, without requiring explicit expressions for 
-$\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$.
-\subsection{Asymptotic null distribution under $H_0$}
-\label{subsec:serial-H0}
+\end{theorem}
+% Since explicit closed-form expressions for the elements of 
+% $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ require 
+% higher-order mixed moments of $(X_t)$, a fully general evaluation of 
+% $\boldsymbol{G}\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}\boldsymbol{G}^\top$ 
+% is intractable without further assumptions. We therefore proceed in 
+% two steps: first, in Section~\ref{subsec:serial-H0}, we narrow our focus to 
+% the asymptotic null distribution of $\sqrt{n}\,\hat{\kappa}_{\mathrm{ord}}(h)$, 
+% under which the i.i.d.\ assumption on $(X_t)$ yields the simplifications 
+% needed for closed-form results. Second, in Section~\ref{subsec:serial-HA}, 
+% we return to the general model and show that the test is consistent 
+% under $H_A$, without requiring explicit expressions for 
+% l
+\subsection{Hypothesis Testing for Serial Dependence}
+\label{subsec:serial-testing}
+The asymptotic results derived above provide the foundation for a
+formal test of serial independence based on $\hat{\kappa}_{\mathrm{ord}}(h)$.
+The null and alternative hypotheses are
+\[
+    H_0: \kappa_{\mathrm{ord}}(h) = 0
+    \qquad \text{vs.} \qquad
+    H_A: \kappa_{\mathrm{ord}}(h) \neq 0.
+\]
+A key asymmetry between $H_0$ and $H_A$ shapes the subsequent
+analysis: the asymptotic variance $\sigma^2_\kappa$ of
+$\sqrt{n}\,\hat{\kappa}_{\mathrm{ord}}(h)$ is only available in
+closed form under $H_0$, where the i.i.d.\ assumption on $(X_t)$
+eliminates the higher-order mixed moments of $(X_t)$ that appear
+in $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ (cases
+\textbf{(ix)} and \textbf{(x)} of
+Section~\ref{subsec:serial-general}). Under $H_A$, the general
+expression for $\sigma^2_\kappa$ is intractable without further
+assumptions on the dependence structure of $(X_t)$. Consequently,
+confidence intervals for the true value $\kappa_{\mathrm{ord}}(h)$
+cannot be constructed under $H_A$ in the present framework.
+What can be established under $H_A$ is the consistency of the test,
+which is treated in Section~\ref{subsec:serial-HA}.
 
+\subsubsection{Asymptotic null distribution, test statistic, and
+confidence intervals under $H_0$}
 Under the null hypothesis $H_0$ that $(X_t)$ is i.i.d., the condition 
-$f_{ij}(h) = f_if_j$ holds for all $h \geq 1$. This considerably 
+$f_{ij}(h) = f_i f_j$ holds for all $h \geq 1$. This considerably 
 simplifies the third- and fourth-order mixed moments of 
 $\boldsymbol{Z}^{(h)*}_t$ appearing in cases \textbf{(ix)} and 
 \textbf{(x)} of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$. Before 
@@ -1378,12 +1415,12 @@ of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$ yields:
 &\quad = \pi(h) (f_{\min\{i-m,j-m\}}^2- f_{i-m}^2f_{j-m}^2) + 2\pi(h, 2h)f_{i-m}f_{j-m}(f_{\min\{i-m,j-m\}}- f_{i-m}f_{j-m})\\
 &\qquad + f_{i-m}^2f_{j-m}^2\sigma^{(h)}_{-2,-2},
 \end{align*}}
-\noindent where $\pi(h,2h) := \mathrm{E}[O_tO_{t+h}O_{t-h}]$.
+\noindent where $\pi(h,2h) := \mathrm{E}[O_t O_{t+h}O_{t-h}]$.
 Substituting all elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$ 
 into $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}} = \boldsymbol{G}
 \boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}\boldsymbol{G}^\top$ and 
 carrying out the matrix multiplication under $H_0$, the elements 
-$\sigma^{(h)*}_{i,j}$ simplify to (see Appendix~\ref{app:derivation_covariance})::
+$\sigma^{(h)*}_{i,j}$ simplify to (see Appendix~\ref{app:derivation_covariance}):
 {\allowdisplaybreaks\begin{align*}
     &\textbf{(i)}\ i,j = 0,\ldots,m-1: \\
     &\quad \sigma^{(h)*}_{i,j} \overset{H_0}{=} 
@@ -1417,7 +1454,7 @@ where for $i = 0,\ldots,m-1$:
 \end{align*}
 Plugging the derivatives and the elements of 
 $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ into the delta method 
-formula and evaluating under $H_0$ yields (see Appendix \ref{app:var-kappa} 
+formula and evaluating under $H_0$ yields (see Appendix~\ref{app:var-kappa} 
 for the detailed calculation)
 \begin{align*}
     \sigma^2_\kappa 
@@ -1436,7 +1473,7 @@ of a second-order Taylor expansion. Since the linear term
 $\boldsymbol{D}_\kappa(\hat{\boldsymbol{f}}^{(h)*} - 
 \boldsymbol{\mu}^{(h)*})$ has expectation of order $o(n^{-1})$, 
 it does not contribute to the leading bias term, and the $O(n^{-1})$ 
-bias reduces by lemma \ref{lem:quadform} to
+bias reduces by Lemma~\ref{lem:quadform} to
 \[
     \mathrm{Bias}(\hat{\kappa}_{\mathrm{ord}})
     = \frac{1}{2}\,\mathrm{tr}\!\left(
@@ -1473,7 +1510,7 @@ The results are summarized in the following theorem.
 \begin{theorem}[Asymptotic distribution and bias of 
 $\hat{\kappa}_{\mathrm{ord}}(h)$]
 \label{thm:kappa-asymp}
-Let the assumptions of \cref{thm:clt_fstarhat} hold and denote
+Let the assumptions of Theorem~\ref{thm:clt_fstarhat} hold and denote
 \[
     \pi(h_1,\ldots,h_r) := \mathrm{E}[O_0\cdot O_{h_1}\cdots O_{h_r}].
 \]
@@ -1513,6 +1550,94 @@ following hold as $n\to\infty$:
 \end{enumerate}
 \end{theorem}
 
+\begin{remark}[Simplification under i.i.d. observation process]
+\label{rem:iid_Ot}
+Suppose in addition that the observation process $(O_t)$ is
+i.i.d. Then the joint moments factorize as
+\[
+    \pi(h) = \mathrm{E}[O_t O_{t-h}] = \pi^2,
+    \qquad
+    \pi(h,2h) = \mathrm{E}[O_t O_{t-h} O_{t-2h}] = \pi^3.
+\]
+Substituting into $\sigma^2_\kappa$ yields
+\[
+    \sigma^2_\kappa =
+    \frac{
+        \frac{1}{\pi^2}\displaystyle\sum_{i,j=0}^{m-1}
+        \bigl(f_{\min\{i,j\}}-f_if_j\bigr)
+        \Bigl(f_{\min\{i,j\}} 
+        + (1-2\pi)f_if_j\Bigr)
+    }{
+        \left(\displaystyle\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2
+    }.
+\]
+\end{remark}
+\paragraph{Test statistic and confidence intervals.}
+Under $H_0$, Theorem~\ref{thm:kappa-asymp} and Slutsky's theorem  \citep[Theorem~13.18]{klenke2005}
+immediately yield a consistent plug-in test. Replacing all unknown
+quantities in $\sigma^2_\kappa$ by their sample counterparts,
+specifically $f_i$ by $\hat{f}^*_i$, the bivariate probabilities
+$f_{ij}(h)$ by $\hat{f}^*_{ij}(h)$, and the observation-process
+moments $\pi$, $\pi(h)$, and $\pi(h,2h)$ by
+\begin{align*}
+    \hat{\pi}      &:= \bar{O}
+        = \frac{1}{n}\sum_{t=1}^n O_t, \quad
+    \widehat{\pi(h)}   := \overline{OO}_{\,h}
+        = \frac{1}{n-h}\sum_{t=h+1}^n O_t O_{t-h}, \\
+    \widehat{\pi(h,2h)} &:= \frac{1}{n-2h}
+        \sum_{t=2h+1}^n O_t O_{t+h} O_{t-h},
+\end{align*}
+yields a consistent estimator $\hat{\sigma}^2_\kappa$ of
+$\sigma^2_\kappa$. Consistency follows from the continuous mapping
+theorem together with the consistency of $\hat{f}^*_i$,
+$\hat{f}^*_{ij}(h)$ (Theorems~\ref{thm:clt_fstarhat}
+and~\ref{thm:clt_fhat_h}) and the law of large numbers applied to
+the observation-process moments.\\
+Alternatively, one may test for serial independence of the observation 
+process $(O_t)$ using, for example, a portmanteau test such as the Ljung–Box 
+test (see \cite[Chapter~1.6]{brockwell_davis_2016}). If the null hypothesis of no serial dependence cannot
+be rejected, it is justified to assume that $(O_t)$ is i.i.d., in which
+case the simplified variance expression in
+Remark~\ref{rem:iid_Ot} can be used. In this situation, only $\pi$
+needs to be estimated, which can improve numerical stability of the
+plug-in estimator. If, however, serial dependence is detected, the
+general estimator based on $\hat{\pi}(h)$ and
+$\hat{\pi}(h,2h)$ should be preferred.\\
+The test statistic is
+\[
+    T_n(h) := \frac{\sqrt{n}\,\hat{\kappa}_{\mathrm{ord}}(h)}
+                   {\hat{\sigma}_\kappa},
+\]
+and a test of level $\alpha$ rejects $H_0$ whenever
+$|T_n(h)| > z_{\alpha/2}$, where $z_{\alpha/2}$ denotes the
+$(1-\alpha/2)$-quantile of the standard normal distribution.
+Since $T_n(h) \xrightarrow{d} \mathcal{N}(0,1)$ under $H_0$ by
+Theorem~\ref{thm:kappa-asymp} and Slutsky's theorem, this test has
+asymptotic level $\alpha$.\\
+The test can equivalently be expressed through a confidence interval:
+$H_0$ is rejected at level $\alpha$ if and only if $0$ lies outside
+\begin{equation}\label{eq:ci-kappa}
+    \hat{\kappa}_{\mathrm{ord}}(h)
+    \;\pm\;
+    z_{\alpha/2}\,\frac{\hat{\sigma}_\kappa}{\sqrt{n}}.
+\end{equation}
+It is important to note that \eqref{eq:ci-kappa} is an interval for
+the purpose of testing $H_0: \kappa_{\mathrm{ord}}(h) = 0$; it does
+\emph{not} serve as a confidence interval for the true value
+$\kappa_{\mathrm{ord}}(h)$ under $H_A$, as the asymptotic variance
+of $\hat{\kappa}_{\mathrm{ord}}(h)$ differs from $\sigma^2_\kappa$
+when $(X_t)$ is not i.i.d.\\
+\begin{remark}
+The test can be visualised analogously to the sample autocorrelation
+function (ACF): plotting $\hat{\kappa}_{\mathrm{ord}}(h)$ against
+the lag $h$ together with pointwise significance bands
+$\pm\,z_{\alpha/2}\,\hat{\sigma}_\kappa/\sqrt{n}$ provides an
+intuitive summary of the serial dependence structure and immediately
+identifies lags at which $H_0$ is rejected.
+Figure~\ref{fig:kappa-ci} illustrates this for the simulation
+scenarios of Chapter~\ref{chap:simulation}.
+\end{remark}
+
 \subsection{Consistency under $H_A$}
 \label{subsec:serial-HA}
 
@@ -1521,7 +1646,7 @@ so that there exists at least one lag $h \ge 1$ with
 $\kappa_{\mathrm{ord}}(h) \neq 0$.\\
 The estimator $\hat{\kappa}_{\mathrm{ord}}(h)$ is a continuous function 
 of the empirical frequencies $\hat{f}^*_i$ and $\hat{f}^*_{ii}(h)$.
-Since these are consistent estimators of $f_i$ and $f_{ii}(h)$ (see \cref{thm:clt_fstarhat} and \ref{}), 
+Since these are consistent estimators of $f_i$ and $f_{ii}(h)$ (see Theorem~\ref{thm:clt_fstarhat} and Theorem~\ref{thm:clt_fhat_h}), 
 the continuous mapping theorem (see, e.g., \citealp[Theorem 3.27]{kallenberg_2021}) implies
 \[
 \hat{\kappa}_{\mathrm{ord}}(h) \xrightarrow{p} 
@@ -1543,7 +1668,7 @@ The theoretical results derived in the preceding chapters characterize
 the asymptotic behavior of the proposed estimators, but leave open the 
 question of how well these approximations perform in finite samples. 
 In particular, the bias corrections derived for the IOV estimator 
-(Corollary \ref{cor:iov_missing}) and for $\hat{\kappa}_{\mathrm{ord}}(h)$ (Theorem~\ref{thm:kappa-asymp}) 
+(Corollary~\ref{cor:iov_missing}) and for $\hat{\kappa}_{\mathrm{ord}}(h)$ (Theorem~\ref{thm:kappa-asymp}) 
 are asymptotic results, and it is not a priori clear at what sample 
 sizes they provide reliable guidance. This chapter therefore complements 
 the theoretical analysis with a Monte Carlo simulation study, pursuing 
@@ -1595,9 +1720,9 @@ f_i = P(X_t \leq i) = \sum_{k=0}^{i}\binom{m}{k}p^k(1-p)^{m-k},
 \]
 The one-step-ahead transition probabilities
 \[
-p_{i|j}(1) = P(X_t = i \mid X_{t-1} = j)
+p_{i|j}(1) := P(X_t = i \mid X_{t-1} = j)
 \]
-are given by
+are given by \citep[p.~60]{Weiss2018}:
 \[
 p_{i|j}(1)= \sum^{\min\{i,j\}}_{q = \max\{0, i+j-m \}}
 \binom{j}{q} \binom{m-j}{i-q}\alpha^q (1-\alpha)^{j-q} 
@@ -1619,9 +1744,19 @@ f_{ij}(h) = \sum_{k=0}^i \sum_{l=0}^j p_{kl}(h).
 \]
 Hence, $\kappa_{\mathrm{ord}}(h)$ is available in closed form by 
 plugging the relevant $f_{ij}(h)$ and $f_i$ into the formula from Definition~\ref{def:cohens-kappa}. 
-This makes the BinAR(1) process particularly suitable for simulation 
-studies, as both marginal and joint quantities are analytically tractable.
-
+Figure~\ref{fig:kappa-profile} illustrates the serial dependence 
+structure of the BinAR(1) process in terms of Cohen's $\kappa_{\mathrm{ord}}(h)$ 
+as a function of the lag $h$ for different values of the thinning parameter $r$.
+For fixed $m$ and $p$ and $r>0$, the curves decay exponentially with $h$, with the rate of 
+decay decreasing for higher values of $r$. For $r < 0$, $\kappa_{\mathrm{ord}}(h)$ alternates in sign: 
+it is negative at lag $h = 1$, positive at $h = 2$, negative at $h = 3$, etc., while its absolute value
+also decays exponentially to zero as $h$ increases.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth, height = 6cm]{../Graphs/kappa_to_h.png}
+    \caption{Cohen's $\kappa_{\mathrm{ord}}(h)$ for different values of $r$.}
+    \label{fig:kappa-profile}
+\end{figure}
 \paragraph{Mixing properties.}
 Finally, we verify that the BinAR(1) process satisfies the dependence 
 assumptions required for the asymptotic theory. Since the BinAR(1) process 
@@ -1633,10 +1768,10 @@ $C > 0$ and $\rho \in (0,1)$ such that $\phi(n) \le C \rho^n$ for all $n$
 Moreover, the mixing coefficients satisfy the inequality 
 $2\alpha(n) \le \phi(n)$ for all $n$ \citep[Eq.~(1.11)]{bradley_2005}. In particular, this also implies
 \[\alpha(n) \leq \phi(n) \leq C \rho^n ~ \text{for some} ~ C > 0, \rho \in (0,1),\]
-showing that the BinAR(1) process satisfies the mixing-assumptions of \cref{thm:clt_fstarhat}.
+showing that the BinAR(1) process satisfies the mixing-assumptions of Theorem~\ref{thm:clt_fstarhat}.
 \paragraph{Missingness mechanism.}
 Missingness is introduced via the amplitude modulation framework of 
-\cref{sec:Amp Mod}. We consider three different data-generating mechanisms 
+Section~\ref{sec:Amp Mod}. We consider three different data-generating mechanisms 
 for the observation process $(O_t)$.\\
 First, as a baseline, we assume independent missingness, where 
 $(O_t)$ is i.i.d.\ Bernoulli distributed with constant observation probability 
@@ -1644,9 +1779,18 @@ $\pi \in (0,1]$, i.e.
 \[
 O_t \sim \mathrm{Bernoulli}(\pi).
 \]
-Second, we consider a dependent missingness process, where $(O_t)$ follows a 
-BinAR(1) process with $m=1$. This induces serial dependence in the observation 
-process while preserving a binary state space.\\
+Second, we consider a serially dependent observation process, where 
+$(O_t)$ is a stationary binary Markov chain on $\{0,1\}$ with marginal 
+observation probability $\mathrm{E}[O_t] = \pi$ and autocorrelation 
+parameter $\rho \in (0,1)$, with transition probabilities
+\[
+    P(O_t = 1 \mid O_{t-1} = 1) = (1-\rho)\pi+ \rho, \qquad
+    P(O_t = 1 \mid O_{t-1} = 0) = \pi(1-\rho).
+\]
+This mechanism preserves the marginal observation probability $\pi$ 
+while inducing serial dependence in $(O_t)$, with 
+$\mathrm{Cov}(O_t, O_{t+h}) = \rho^h\,\pi(1-\pi)$ for all $h \geq 1$ 
+\citep[p.~139]{Weiss2018}.\\
 Third, we consider observation schemes that depend on the current state of 
 the underlying process $(X_t)$, corresponding to MNAR-type mechanisms. In 
 the first variant, the observation probability increases linearly with $X_t$, i.e.
@@ -1678,12 +1822,14 @@ qualitatively different settings:
 \end{itemize}
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth, height = 6cm]{../Graphs/Marginal CDF.png}
+    \includegraphics[width=\textwidth, height = 6cm]{../Graphs/MarginalDistributions.png}
     \caption{Marginal CDFS of the two simulation scenarios.}
     \label{fig:marginal-dist}
 \end{figure}
-The CDFs for both scenarios are shown in Figure \ref{fig:marginal-dist}. For each scenario, two observation probabilities are considered: 
-$\pi = 1$ (no missingness) and $\pi = 0.75$ (25\% missing at random). 
+The PMF's nad CDFs for both scenarios are shown in Figure~\ref{fig:marginal-dist}. For each scenario, two observation probabilities are considered: 
+$\pi = 1$ (no missingness) and $\pi = 0.75$ (25\% missing at random).\\
+In addition, for scenario A we examine serially dependent missingness, 
+with $\pi = 0.75$ and $r_{\pi} \in \{0.2, 0.75\}$, as well as the two MNAR-type mechanisms described above with $\pi_{\text{low}} = 0.5$ and $\pi_{\text{high}} = 1$. \\
 The time series length varies over $n \in \{50, 100, 250, 500, 1000\}$, 
 and all results are based on $B = 1{,}000$ Monte Carlo replications. 
 To study the convergence of the bias as a function of $n$, an 
@@ -1714,8 +1860,8 @@ replications:
 \end{itemize}
 The theoretical bias limit for the IOV estimator under MCAR is given 
 by $-\frac{4}{mn}\mathrm{tr}(\boldsymbol{\Sigma}_Z)$ 
-(corollary \ref{cor:iov_missing}), and for $\hat{\kappa}_{\mathrm{ord}}(h)$ under $H_0$ by 
-$-\frac{1}{n\pi}$ (\cref{thm:kappa-asymp}). These serve as 
+(Corollary~\ref{cor:iov_missing}), and for $\hat{\kappa}_{\mathrm{ord}}(h)$ under $H_0$ by 
+$-\frac{1}{n\pi}$ (Theorem~\ref{thm:kappa-asymp}). These serve as 
 benchmarks against which the simulated bias curves are compared.
 
 \begin{appendices}
@@ -1723,9 +1869,9 @@ benchmarks against which the simulated bias curves are compared.
 % \renewcommand{\thesection}{\Alph{section}}
 
 \chapter{Appendix}
-\section{Derivation of the Asymptotic Covariance Matrix $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{*}}$}
+\section{Derivation of the Asymptotic Covariance Matrix~$\boldsymbol{\Sigma}_{\boldsymbol{Z}^{*}}$}
 \label{app:derivation_covarianceZ}
-In this section we provide the detailed computtations of the elements \textbf{(ii)} and \textbf{(iii)} of the asymptotic covariance matrix $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{*}}$.
+In this section we provide the detailed computations of the elements \textbf{(ii)} and \textbf{(iii)} of the asymptotic covariance matrix $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{*}}$.
 \begin{align*}
     &\textbf{(ii)}\ j > i = -1: \\
     &\quad \mathrm{Cov}(O_t, O_tZ_{t,j}) 
@@ -1758,8 +1904,7 @@ In this section we provide the detailed computtations of the elements \textbf{(i
     + \pi(f_{\mathrm{min}\{i,j\}} - f_if_j)  
     + \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h) + f_{ji}(h) - 2f_if_j)
 \end{align*}
-\section{Derivation of the Asymptotic Covariance Matrix $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$}
-\label{app:derivation_covariance}
+\section{Derivation of the Asymptotic Covariance Matrix~$\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$}\label{app:derivation_covariance}
 
 In this section, we provide the detailed derivation of the elements of 
 the asymptotic covariance matrix 
@@ -1822,8 +1967,7 @@ the indices correspond to marginal or bivariate components:
     &\qquad\qquad + 2\pi(h, 2h)f_{i'}f_{j'}\Bigr).
 \end{align*}}
 
-\section{Asymptotic Variance of $\hat{\kappa}_{\mathrm{ord}}(h)$}
-\label{app:var-kappa}
+\section{Asymptotic Variance of $\hat{\kappa}_{\mathrm{ord}}(h)$}\label{app:var-kappa}
 
 We derive the asymptotic variance $\sigma^2_\kappa = 
 \boldsymbol{D}_\kappa \boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}} 
@@ -1871,8 +2015,7 @@ formula yields
         {\left(\displaystyle\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}.
 \end{align*}}
 
-\section{Hessian $\kappa(h)$}
-\label{app:Hessian}
+\section{Hessian $\kappa(h)$}\label{app:Hessian}
 In this section, we derive the partial derivatives of $d_{1,i}$ with respect to $f_j$. 
 
 \subsection*{Case $i = j$}
@@ -1908,7 +2051,7 @@ In this section, we derive the partial derivatives of $d_{1,i}$ with respect to 
 \label{app:Bias}
 Using the Hessian elements derived above and the elements of 
 $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ from 
-\cref{subsec:serial-H0}, the diagonal elements of 
+Section~\ref{subsec:serial-H0}, the diagonal elements of 
 $\boldsymbol{H}_\kappa\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ 
 are given by
 \begin{align*}

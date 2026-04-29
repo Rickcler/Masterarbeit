@@ -1,19 +1,20 @@
 # Fdb version 4
-["bibtex Draft"] 1776341651.76998 "Draft.aux" "Draft.bbl" "Draft" 1776341665.43006 0
-  "./references.bib" 1775644595 3113 b90de84dfbe86f14ca39af4146269bfc ""
+["bibtex Draft"] 1777456830.15134 "Draft.aux" "Draft.bbl" "Draft" 1777456875.09403 0
+  "./references.bib" 1776850231 3114 469657e1e6a8f335840f03091ee2dc60 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/bibtex/bst/bibtex/apalike.bst" 1291972791 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "Draft.aux" 1776341660 13134 69f11ac2658ce16a6c8b8aebd09044b4 "xelatex"
+  "Draft.aux" 1777456871 14465 91b741ef9548887e4e8bc40d63df0b8c "xelatex"
   (generated)
   "Draft.bbl"
   "Draft.blg"
   (rewritten before read)
-["xdvipdfmx"] 1776341663.8298 "Draft.xdv" "Draft.pdf" "Draft" 1776341665.45488 0
-  "Draft.xdv" 1776341660 199768 6b8e759c36e9fcde736a77c62eec5e67 "xelatex"
+["xdvipdfmx"] 1777456873.30947 "Draft.xdv" "Draft.pdf" "Draft" 1777456875.12391 0
+  "Draft.xdv" 1777456871 212288 3b390a375f8f7fddec9f613de8485f9e "xelatex"
   (generated)
   "Draft.pdf"
   (rewritten before read)
-["xelatex"] 1776341653.10525 "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" "Draft.xdv" "Draft" 1776341665.43139 0
-  "../Graphs/Marginal CDF.png" 1775820971 26676 08f51e18322020a417474ad48b82f48c ""
+["xelatex"] 1777456863.63501 "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" "Draft.xdv" "Draft" 1777456875.09518 0
+  "../Graphs/MarginalDistributions.png" 1775820788 44363 2d669b6dc812e86d38c4f3da419d5ece ""
+  "../Graphs/kappa_to_h.png" 1776862126 42910 e9f1c6704df8e4132870ee4318425e9d ""
   "C:/Users/victo/AppData/Local/MiKTeX/miktex/data/le/xetex/xelatex.fmt" 1776333737 27177068 ed83974225c2fccd90c08110ff5492d1 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768654 1528 7e12f4c0fcf5a072cebdcfbfc610f54c ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/euler/eufb10.tfm" 1233951852 1028 36de000ffb3f7b5321446b15f27c24a5 ""
@@ -143,10 +144,10 @@
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/tex/latex/rerunfilecheck/rerunfilecheck.sty" 1751104012 9684 a33a14b82ce60d6e77cb9be689d79ee6 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/tex/latex/xpatch/xpatch.sty" 1585221260 8510 7803f78066c4f9d008405191a4b43073 ""
-  "Draft.aux" 1776341660 13134 69f11ac2658ce16a6c8b8aebd09044b4 "xelatex"
-  "Draft.bbl" 1776341652 2135 e7ddf1c8a7f11899cf4d0f95b884f2b1 "bibtex Draft"
-  "Draft.tex" 1776330350 102956 73312091f6945f1a056f9d16d5b65f6a ""
-  "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" 1776330350 102956 73312091f6945f1a056f9d16d5b65f6a ""
+  "Draft.aux" 1777456871 14465 91b741ef9548887e4e8bc40d63df0b8c "xelatex"
+  "Draft.bbl" 1777456830 2137 7a0461988236b6483d977d269c116054 "bibtex Draft"
+  "Draft.tex" 1777456861 110554 11243d750baf2e2f018992bf281eb184 ""
+  "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" 1777456861 110554 11243d750baf2e2f018992bf281eb184 ""
   (generated)
   "Draft.aux"
   "Draft.log"

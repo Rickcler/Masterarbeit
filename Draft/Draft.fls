@@ -250,9 +250,12 @@ INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\eul
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\euler\eufm10.tfm
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\euler\eufm10.tfm
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\euler\eufm7.tfm
-INPUT ..\Graphs\Marginal CDF.png
-INPUT ..\Graphs\Marginal CDF.png
-INPUT ..\Graphs\Marginal CDF.png
+INPUT ..\Graphs\kappa_to_h.png
+INPUT ..\Graphs\kappa_to_h.png
+INPUT ..\Graphs\kappa_to_h.png
+INPUT ..\Graphs\MarginalDistributions.png
+INPUT ..\Graphs\MarginalDistributions.png
+INPUT ..\Graphs\MarginalDistributions.png
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\rm-lmbx12.tfm
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\euler\eufm10.tfm
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmmib10.tfm

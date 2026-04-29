@@ -6,7 +6,7 @@
 
 source("00_setup.R")
 source("01_functions.R")
-
+load("Masterarbeit.RData")  # für UNIQUE_N
 # ------------------------------------------------------------------------------
 # Szenarien: MCAR / serially dependent missingness
 # ------------------------------------------------------------------------------
@@ -147,7 +147,7 @@ sim_data$scaled_bias <- sim_data$n       * sim_data$diff
 set.seed(SEED)
 sim_data_2 <- do.call(rbind, lapply(
   c(2, 3, 5, 10, 15, 25, 37, 50, 75, 100, 150, 200, 375, 500, 750, 1000),
-  function(n_val) simulation_raw(n_val, 10, 0.3, 0.2, 0.75, n_reps = 1000)
+  function(n_val) simulation_raw(n_val, 10, 0.3, 0.2, 0.75, n_reps = 20000)
 ))
 
 sim_data_2$true_IOV    <- true_val

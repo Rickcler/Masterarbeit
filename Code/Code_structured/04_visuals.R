@@ -141,7 +141,7 @@ combined_df <- combined_df %>%
 
 prep_A <- prepare_comparison_subset(
   combined_df,
-  filter_expr   = (p == 0.2 & pi_h == 0),
+  filter_expr   = (p == 0.3 & pi_h == 0),
   group_var_name = "pi"
 )
 sub_A         <- prep_A$subset
@@ -151,18 +151,18 @@ m_A <- sub_A$m[1]; p_A <- sub_A$p[1]; r_A <- sub_A$r[1]
 sub_A$true_C1 <- 0
 
 # IOV
-comparison_plot(
+print(comparison_plot(
   sub_A, "mean_IOV", "lower_IOV", "upper_IOV",
   true_val      = t_IOV_A,
   group_centers = prep_A$group_centers,
   x_labels      = prep_A$x_labels,
-  title         = "Comparison of Asymptotic vs Simulated IOV Results",
   y_label       = "IOV Value",
-  subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  MCAR",
+  title = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  MCAR",
                           m_A, p_A, r_A),
-  ylim_offset   = c(-0.125, 0.075),
+  subtitle = "",
+  ylim_offset   = c(-0.07, 0.03),
   group_var     = "pi"
-)
+))
 
 # Skew
 comparison_plot(
@@ -262,10 +262,11 @@ theory_df_2 <- data.frame(
 mean_df_2 <- sim_data_2 %>%
   dplyr::group_by(n) %>%
   dplyr::summarise(
-    mean_diff        = mean(diff,        na.rm = TRUE),
-    mean_scaled_bias = mean(scaled_bias, na.rm = TRUE),
-    .groups = "drop"
-  )
+  mean_scaled_bias = mean(scaled_bias, na.rm = TRUE),
+  mean_diff        = mean(diff,        na.rm = TRUE),
+  se = sd(scaled_bias, na.rm = TRUE) / sqrt(n()),
+  .groups = "drop"
+)
 
 # Plot C1: Mittlerer Bias
 ggplot(mean_df_2, aes(x = n, y = mean_diff)) +
@@ -281,21 +282,7 @@ ggplot(mean_df_2, aes(x = n, y = mean_diff)) +
   ) +
   theme_minimal()
 
-# Plot C2: n-skalierter mittlerer Bias
-ggplot(mean_df_2, aes(x = n, y = mean_scaled_bias)) +
-  geom_hline(
-    yintercept = -(4 / 10) * sum(diag(Sigma_raw)),
-    color = "steelblue", linetype = "dashed", linewidth = 0.8
-  ) +
-  geom_line() +
-  geom_point(size = 2) +
-  labs(
-    title    = "n-scaled mean bias as a function of n",
-    subtitle = "Dashed: theoretical limit  −4/m · tr(Σ)\nBinAR(1): m = 10, p = 0.3, r = 0.2, π = 0.75",
-    x = "n",
-    y = expression(n ~ Mean(hat(IOV) - IOV))
-  ) +
-  theme_minimal()
+
 
 # Plot C3: CLT-Dichte
 ggplot(sim_data, aes(x = scaled_CLT, fill = factor(n))) +
@@ -319,6 +306,18 @@ ggplot(sim_data, aes(x = scaled_bias, fill = factor(n))) +
     linetype = "dashed"
   ) +
   labs(fill = "n", title = expression(n ~ (hat(IOV) - IOV))) +
+  theme_minimal()
+
+# Plot C5: CLT-Dichte unscaled
+ggplot(sim_data, aes(x = diff, fill = factor(n))) +
+  geom_density(alpha = 0.4) +
+  stat_function(
+    fun  = dnorm,
+    args = list(mean = mean(sim_data$diff),
+                sd   = sd(sim_data$diff)),
+    linetype = "dashed"
+  ) +
+  labs(fill = "n", title = expression(sqrt(n) ~ (hat(IOV) - IOV))) +
   theme_minimal()
 
 # ==============================================================================
@@ -392,8 +391,9 @@ ggplot(plot_cdf_df, aes(x = category, color = n, linetype = type)) +
 
 # ==============================================================================
 # Plot-Block E: Marginale Verteilungen der Simulationsszenarien
-# ==============================================================================
+# ================ge==============================================================
 
+# Masterarbeit
 scen_A <- data.frame(
   scenario = "Scenario A\nm = 3, p = 0.20, r = 0.35",
   category = 0:3,
@@ -456,3 +456,119 @@ p_pmf / p_cdf_dist +
       plot.subtitle = element_text(size = 10, color = "grey40")
     )
   )
+# Vortrag
+
+# Farbpalette für Vortrag
+col_primary   <- "#2C3E6B"   # dunkles Blau
+col_secondary <- "#5B8DB8"   # mittleres Blau
+col_accent    <- "#E8EEF4"   # sehr helles Blau (Hintergrund Balken)
+col_text      <- "#2C2C2C"
+col_grid      <- "#E5E5E5"
+
+
+scen_A <- data.frame(
+  scenario = "Scenario A",
+  category = 0:3,
+  pmf      = dbinom(0:3,  size = 3,  prob = 0.20),
+  cdf      = pbinom(0:3,  size = 3,  prob = 0.20)
+)
+
+scen_B <- data.frame(
+  scenario = "Scenario B",
+  category = 0:10,
+  pmf      = dbinom(0:10, size = 10, prob = 0.45),
+  cdf      = pbinom(0:10, size = 10, prob = 0.45)
+)
+
+plot_dist_df <- bind_rows(scen_A, scen_B) %>%
+  mutate(
+    scenario = factor(scenario, levels = c("Scenario A", "Scenario B")),
+    category = factor(category)
+  )
+# Einheitliches Vortrag-Theme
+theme_talk <- function() {
+  theme_minimal(base_size = 14) +
+    theme(
+      # Hintergrund
+      plot.background  = element_rect(fill = "white", color = NA),
+      panel.background = element_rect(fill = "white", color = NA),
+      panel.grid.major = element_line(color = col_grid, linewidth = 0.4),
+      panel.grid.minor = element_blank(),
+      panel.grid.major.x = element_blank(),
+      # Titel
+      plot.title    = element_text(size = 16, face = "bold",
+                                   color = col_primary, margin = margin(b = 4)),
+      plot.subtitle = element_text(size = 12, color = "grey50",
+                                   margin = margin(b = 10)),
+      # Achsen
+      axis.title    = element_text(size = 12, color = col_text),
+      axis.text     = element_text(size = 11, color = col_text),
+      axis.ticks    = element_blank(),
+      # Facetten
+      strip.text    = element_text(size = 13, face = "bold",
+                                   color = col_primary),
+      strip.background = element_rect(fill = col_accent, color = NA),
+      # Legende
+      legend.position  = "bottom",
+      legend.title     = element_text(size = 11, face = "bold"),
+      legend.text      = element_text(size = 11),
+      # Ränder
+      plot.margin = margin(12, 16, 12, 16)
+    )
+}
+
+p_pmf <- ggplot(plot_dist_df, aes(x = category, y = pmf)) +
+  geom_col(fill = col_secondary, color = "white",
+           width = 0.65, alpha = 0.85) +
+  geom_text(aes(label = sprintf("%.3f", pmf)),
+            vjust = -0.5, size = 3.5,
+            color = col_primary, fontface = "bold") +
+  facet_wrap(~ scenario, scales = "free_x") +
+  scale_y_continuous(
+    limits = c(0, 0.68),
+    expand = c(0, 0),
+    name   = "Probability"
+  ) +
+  scale_x_discrete(name = "Category") +
+  labs(title = "Marginal PMF") +
+  theme_talk()
+
+p_cdf_dist <- ggplot(plot_dist_df, aes(x = category, y = cdf)) +
+  geom_col(fill = col_secondary, color = "white",
+           width = 0.65, alpha = 0.85) +
+  geom_text(aes(label = sprintf("%.3f", cdf)),
+            vjust = -0.5, size = 3.5,
+            color = col_primary, fontface = "bold") +
+  annotate("text",
+           x = 0.55, y = 0.54,
+           label = "0.5",
+           color = "#C0392B",
+           size  = 4,
+           fontface = "bold") +
+  facet_wrap(~ scenario, scales = "free_x") +
+  scale_y_continuous(
+    limits = c(0, 1.10),
+    expand = c(0, 0),
+    name   = "Cumulative Probability"
+  ) +
+  scale_x_discrete(name = "Category") +
+  labs(title = "Marginal CDF") +
+  theme_talk()
+
+p_pmf / p_cdf_dist +
+  plot_annotation(
+    theme = theme(
+      plot.title = element_text(
+        size     = 17,
+        face     = "bold",
+        color    = col_primary,
+        margin   = margin(b = 8)
+      ),
+      plot.background = element_rect(fill = "white", color = NA)
+    )
+  ) &
+  theme(plot.background = element_rect(fill = "white", color = NA))
+
+ggsave("Graphs/marginal_distributions_talk.pdf",
+       width = 11, height = 7, units = "in", dpi = 300)
+

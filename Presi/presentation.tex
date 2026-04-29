@@ -1,17 +1,25 @@
 \documentclass{beamer}
 
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage{graphicx}
 \usepackage{amsmath, amssymb}
 \usepackage{cleveref}
-
+\usepackage{xcolor}
 % -------------------------------------------------------
 % Section header on every content slide (top-right corner)
 % -------------------------------------------------------
+
 \setbeamertemplate{headline}{%
-  \begin{beamercolorbox}[wd=\paperwidth, ht=2.5ex, dp=1ex, rightskip=0.3cm]{section in head/foot}%
+  \begin{beamercolorbox}[wd=\paperwidth, ht=4ex, dp=1.5ex, rightskip=0.3cm]{section in head/foot}%
     \hfill\small\textit{\insertsectionhead}\hspace{0.3cm}
   \end{beamercolorbox}%
 }
-
+\setbeamertemplate{footline}{
+  \hfill
+  \insertframenumber{} / \inserttotalframenumber
+  \hspace{1em}
+}
 \title{Inference for Categorical Time Series with Missing Observations}
 \author{Victor Minig}
 \date{27.04.2026}
@@ -57,82 +65,118 @@
 \begin{block}{Definition}
 A categorical time series $(X_t)$ takes values in a finite set
 \[
-S = \{s_0, \dots, s_m\}.
+S = \{s_0, \dots, s_m\},
 \]
+\hspace{2.5cm}e.g. \raisebox{-0.38\height}{\includegraphics[width=0.4\textwidth]{../Graphs/weather_symbols.png}}
 \end{block}
 
 \vspace{0.3cm}
 
-\textbf{Two types of categorical data:}
+\begin{block}{Serial Dependence}
+In many applications, observations are not independent over time:
 \begin{itemize}
-    \item \textbf{Nominal:} no natural ordering
-    \item \textbf{Ordinal:} inherent ordering
+    \item The distribution of $X_t$ may depend on past values $X_{t-1}, X_{t-2}, \dots$
+    
 \end{itemize}
-
-\vspace{0.3cm}
+\end{block}
 
 \textbf{Key implication:}
 \begin{itemize}
-    \item Available statistical tools depend on structure of $S$
+    \item Available statistical tools depend on both the structure of $S$ and the dependence over time
 \end{itemize}
 \end{frame}
+
+%------------------------------------------------
+\begin{frame}{Ordinal vs. Nominal Data}
+
+
+
+\textbf{Nominal data} (e.g. eye color, gender): 
+
+\begin{columns}
+    \begin{column}{0.5\textwidth}
+        \begin{itemize}
+            \item No natural ordering of categories
+        \end{itemize}
+    \end{column}
+        \begin{column}{0.5\textwidth}
+        \includegraphics[width=0.4\textwidth]{../Graphs/Nominal.png}
+    \end{column}
+\end{columns}
+\vspace{0.5cm}
+
+\textbf{Ordinal data} (e.g. education level, satisfaction ratings):
+
+\begin{columns}
+    \begin{column}{0.5\textwidth}
+        \begin{itemize}
+            \item Elememts of $S$ have a natural ordering
+            \item However, intervals between categories are not meaningful
+        \end{itemize}
+    \end{column}
+        \begin{column}{0.5\textwidth}
+        \includegraphics[width=0.7\textwidth]{../Graphs/Ordinal.png}
+    \end{column}
+\end{columns}
+\vspace{0.5cm}\vspace{0.3cm}
+
+
+
+\end{frame}
+
 
 %------------------------------------------------
 \begin{frame}{Marginal Distributions}
-\textbf{Central object: marginal probabilities}
 
-\vspace{0.3cm}
-
-\textbf{Nominal data:}
-\[
-p_i = P(X_t = s_i)
-\]
-\begin{itemize}
-    \item Probability Mass Function (PMF)
-\end{itemize}
-
+\textbf{PMF}(Probability Mass Function): 
+\begin{columns}
+    \begin{column}{0.5\textwidth}
+        \begin{align*}
+            &p_i = P(X_t = s_i) \\
+            \Rightarrow &\boldsymbol{p} = (p_0, p_1, \dots, p_m)^{\top}
+        \end{align*}
+    \end{column}
+        \begin{column}{0.5\textwidth}
+        \includegraphics[width=1\textwidth]{../Graphs/PMF_weather.png}
+    \end{column}
+\end{columns}
 \vspace{0.5cm}
 
-\textbf{Ordinal data:}
-\[
-f_i = P(X_t \leq s_i)
-\]
-\begin{itemize}
-    \item Cumulative Distribution Function (CDF)
-\end{itemize}
 
-\vspace{0.3cm}
+\textbf{CDF}(Cumulative Distribution Function):
+\begin{columns}
+    \begin{column}{0.5\textwidth}
+        \begin{align*}
+            &f_i = P(X_t \leq s_i) \\
+            \Rightarrow &\boldsymbol{f} = (f_0, f_1, \dots, f_m)^{\top}
+        \end{align*}
+    \end{column}
+        \begin{column}{0.5\textwidth}
+        \includegraphics[width=1\textwidth]{../Graphs/CDF_weather.png}
+    \end{column}
+\end{columns}
 
-\textbf{Key difference:}
-\begin{itemize}
-    \item Ordinal $\Rightarrow$ uses ordering
-    \item Nominal $\Rightarrow$ no cumulative structure
-\end{itemize}
 \end{frame}
+
 
 %------------------------------------------------
 \begin{frame}{Location Measures}
-\textbf{Nominal data:}
-\begin{itemize}
-    \item No ordering $\Rightarrow$ no mean/median
-    \item Use \textbf{mode}:
-\[
-\text{Mod}(X_t) = \arg\max_{s_i} P(X_t = s_i)
-\]
-\end{itemize}
 
-\vspace{0.5cm}
-
-\textbf{Ordinal data:}
-\begin{itemize}
-    \item Ordering allows additional measures
-    \item \textbf{Median:}
-\[
-\text{Med}(X_t) = \min \{ s_i : F(s_i) \geq 1/2 \}
-\]
-\end{itemize}
-
-\vspace{0.3cm}
+\begin{columns}
+    \begin{column}{0.5\textwidth}
+        \textbf{Mode:}
+            \[
+            \text{Mod}(X_t) = \arg\max_{s_i} P(X_t = s_i)
+            \]
+    \end{column}
+    \begin{column}{0.5\textwidth}
+        \textbf{Median:}
+        \[
+        \text{Med}(X_t) = \min \{ s_i : F(s_i) \geq 1/2 \}
+        \]
+    \end{column}
+\end{columns}
+\hspace{1.7cm}\includegraphics[width=0.7\textwidth, height =0.3\textheight]{../Graphs/mode_median.png}
 
 \textbf{Interpretation:}
 \begin{itemize}
@@ -142,27 +186,45 @@ f_i = P(X_t \leq s_i)
 \end{frame}
 
 %------------------------------------------------
-\begin{frame}{Dispersion Measures}
-\textbf{Different notions of variability}
+\begin{frame}{Dispersion}
+\textbf{Minimal Dispersion:}
+\vspace{0.2cm}
+\hspace{2.5cm}\includegraphics[width=0.5\textwidth, height =0.12\textheight]{../Graphs/minimal_dispersion.png}
+    
 
-\vspace{0.3cm}
-
-Both indices are scaled to $[0,1]$, with 0 = minimal dispersion (mass on single category) and 1 = maximal dispersion (differs between types).
+\textbf{Maximal Dispersion:}
+\begin{columns}
+    \begin{column}{0.5\textwidth}
+        \includegraphics[width=1\textwidth, height =0.15\textheight]{../Graphs/ordinal_maximal_dispersion.png}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+        \includegraphics[width=1\textwidth, height =0.15\textheight]{../Graphs/nominal_maximal_dispersion.png}
+    \end{column}
+\end{columns}
 
 \vspace{0.4cm}
 
-\textbf{Ordinal: Index of Ordinal Variation (IOV)}
-\[
-\text{IOV}(\boldsymbol{f}) = \frac{4}{m} \sum_{i=0}^{m-1} f_i (1 - f_i)
-\]
+\noindent
+\begin{minipage}[t]{0.48\textwidth}
+    \textbf{Ordinal}
+    \[
+        \mathrm{IOV}(\boldsymbol{f}) 
+        = \frac{4}{m} \sum_{i=0}^{m-1} f_i(1-f_i)
+    \]
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\textwidth}
+    \textbf{Nominal}
+    \[
+        \mathrm{IQV}(\boldsymbol{p}) 
+        = \frac{m+1}{m}\!\left(1 - \sum_{i=0}^{m} p_i^2\right)
+    \]
+\end{minipage}
 
 \vspace{0.4cm}
 
-\textbf{Nominal: Index of Qualitative Variation (IQV)}
-\[
-\text{IQV}(\boldsymbol{p}) = \frac{m+1}{m} \left(1 - \sum_{i=0}^{m} p_i^2 \right)
-\]
-
+\textbf{From here on:}
+We focus on \textbf{ordinal data}, unless stated otherwise.
 \end{frame}
 
 %------------------------------------------------
@@ -198,40 +260,44 @@ for all $t, j, h$.
 
 \textbf{Problem:}
 \begin{itemize}
-    \item No meaningful arithmetic operations
     \item Classical ACF not applicable
-\end{itemize}
-
-\vspace{0.5cm}
-
-\textbf{Solution:}
-\begin{itemize}
-    \item Work with joint probabilities
 \end{itemize}
 
 \vspace{0.3cm}
 
-\begin{block}{Bivariate Probabilities}
-\[
-p_{ij}(h) = P(X_t = s_i, X_{t+h} = s_j), \quad  f_{ij}(h) = P(X_t \leq s_i, X_{t+h} \leq s_j)
-\]
-\end{block}
+\textbf{Solution:}
+\vspace{0.1cm}
 
-\begin{itemize}
-    \item Independence $\Rightarrow p_{ij}(h) = p_i p_j \quad \text{and} \quad  f_{ij}(h) = f_i f_j $
-\end{itemize}
+
+\begin{columns}
+    \begin{column}{0.5\textwidth}
+        \begin{block}{Bivariate Probabilities}
+            \vspace{-0.5cm}
+            \begin{align*}
+                &p_{ij}(h) = P(X_t = s_i, X_{t+h} = s_j) \\
+                &f_{ij}(h) = P(X_t \leq s_i, X_{t+h} \leq s_j)\\
+                &\textbf{Bei Unabhängigkeit: } \\\\
+                &p_{ij}(h) = p_i p_j \quad \text{und} \quad  f_{ij}(h) = f_i f_j
+            \end{align*}
+        \end{block}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+        \includegraphics[width=\textwidth]{../Graphs/bivariate_matrix.png}
+    \end{column}    
+\end{columns}
+
+
+
+
 \end{frame}
 
 %------------------------------------------------
 \begin{frame}{Cohen's $\kappa$}
-\textbf{Idea: measure deviation from independence}
+\textbf{Idea: Standardized measure of deviation from independence}
 
 \vspace{0.5cm}
 
 \[
-\kappa(h)_{\mathrm{nom}} =
-\frac{\sum_{j=0}^{m} (p_{jj}(h) - p_j^2)}
-{1 - \sum_{i=0}^{m} p_i^2} \quad
 \kappa(h)_{\mathrm{ord}} =
 \frac{\sum_{j=0}^{m} (f_{jj}(h) - f_j^2)}
 {1 - \sum_{i=0}^{m} f_i(1 - f_i)}
@@ -272,13 +338,12 @@ How do we estimate $\boldsymbol{f}$, IOV, and $\kappa_{\mathrm{ord}}(h)$ from da
 
 \textbf{Two steps:}
 \begin{enumerate}
-    \item Estimate marginal CDF $\boldsymbol{f}$ via relative frequencies
-    \item Derive distributions of plug-in estimators via the \textbf{delta method}
+    \item Estimate marginal CDF $\boldsymbol{f}\text{(/} \boldsymbol{p}\text{)}$ (and later the bivariate probabilities) via relative frequencies
+    \item Derive (asymptotic) distributions of plug-in estimators using a \textbf{CLT} and the \textbf{delta method}
 \end{enumerate}
 
 \vspace{0.3cm}
 
-$\Rightarrow$ Key tool: a CLT for dependent data under \textbf{mixing conditions}
 \end{frame}
 
 %------------------------------------------------
@@ -291,42 +356,77 @@ $\Rightarrow$ Key tool: a CLT for dependent data under \textbf{mixing conditions
 Y_{t,i} = \mathbb{I}\{X_t = s_i\} \quad \text{and} \quad Z_{t,i} = \mathbb{I}\{X_t \leq s_i\}
 \]
 Then estimators are given by:
-\begin{itemize}
-    \item $\hat{p}_i = \frac{1}{n} \sum_{t=1}^n Y_{t,i}$
-    \item $\hat{f}_i = \frac{1}{n} \sum_{t=1}^n Z_{t,i}$
-\end{itemize}
+\[
+    \hat{p}_i = \frac{1}{n} \sum_{t=1}^n Y_{t,i} 
+    \quad \text{and} \quad 
+    \hat{f}_i = \frac{1}{n} \sum_{t=1}^n Z_{t,i}
+\]
+
+\vspace{0.2cm}
+
+\hspace{2.5cm} \includegraphics[width=1\textwidth, height = 0.4 \textheight]{../Graphs/marginal_estimation.png}
+\end{frame}
+%------------------------------------------------
+\begin{frame}{Deriving Asymptotic Distributions}
+
+\begin{block}{Goal}
+We aim to derive asymptotic distributions for estimators based on categorical time series for inference.
+\end{block}
 
 \vspace{0.3cm}
 
-Intuition:\\
-$\Rightarrow$ we just count relative frequencies\\
-From here we mainly look at ordinal data, but the nominal case is in many ways analogous.
+\begin{block}{Key tool}
+The \textbf{Central Limit Theorem (CLT)} provides asymptotic normality:
+\[
+\sqrt{n}(\hat{\theta} - \theta) \Rightarrow \mathcal{N}(0, \sigma^2)
+\]
+\end{block}
+
+\vspace{0.3cm}
+
+\begin{alertblock}{Problem}
+Classical CLTs require \textbf{independent observations}, but time series data typically exhibit \textbf{serial dependence}:
+\begin{itemize}
+    \item Current observations depend on past values
+    \item This dependence persists across time lags
+\end{itemize}
+\end{alertblock}
+
+\vspace{0.3cm}
+
 \end{frame}
 
 %------------------------------------------------
-\begin{frame}{Mixing Assumptions}
+\begin{frame}{Mixing Conditions}
 
 \begin{block}{Idea}
-The Central Limit Theorem (CLT) provides asymptotic normality and enables statistical inference.
+We control serial dependence via \textbf{mixing conditions}, which quantify how fast dependence between past and future decays.
 \end{block}
 
-\begin{alertblock}{Problem}
-Classical CLT results assume independence, but in practice data may exhibit serial dependence.
-\end{alertblock}
+\vspace{0.4cm}
 
-\begin{block}{Solution}
-To handle dependence, we impose \textbf{mixing conditions}:
+\begin{block}{$\alpha$-mixing (strong mixing)}
+Let $\mathcal{F}_{-\infty}^t = \sigma(X_s : s \leq t)$ and $\mathcal{F}_{t+h}^{\infty} = \sigma(X_s : s \geq t+h)$.\\
+
+The $\alpha$-mixing coefficients are defined as:
+\[
+\alpha(h) = \sup_{t \in \mathbb{Z}} \sup_{A \in \mathcal{F}_{-\infty}^t,\; B \in \mathcal{F}_{t+h}^{\infty}}
+\big| P(A \cap B) - P(A)P(B) \big|
+\]
+\end{block}
+
+\vspace{0.3cm}
+
 \begin{itemize}
-    \item $\alpha$-mixing quantifies the decay of dependence between past and future observations
-    \item Exponential decay of the mixing coefficients allows a CLT for dependent data
+    \item $\alpha(h) \overset{\tiny h \to \infty}{\rightarrow} 0$: dependence between past and future vanishes
+    \item Exponential decay $\Rightarrow$ CLT for dependent data
 \end{itemize}
-\end{block}
-\end{frame}
 
+\end{frame}
 %------------------------------------------------
 \begin{frame}{CLT under Serial Dependence}
     \begin{block}{Result}
-    \[\sqrt{n}(\hat{f} - f) \Rightarrow \mathcal{N}(0, \boldsymbol{\Sigma})\]
+    \[\sqrt{n}(\hat{\boldsymbol{f}} - \boldsymbol{f}) \Rightarrow \mathcal{N}(0, \boldsymbol{\Sigma})\]
     where the elements of $\boldsymbol{\Sigma}$ are given by:
     \[\sigma_{ij} = \underbrace{\left(f_{\min\{i,j\}}- f_i f_j\right)}_{\text{lag}(0)} + \sum_{h=1}^{\infty} \underbrace{\left(f_{ij}(h) + f_{ji}(h) - 2f_if_j\right)}_{\text{lag}(h)}.\]
     Note that $\text{lag}(h) \rightarrow 0$ as $h \rightarrow \infty$.
@@ -342,11 +442,36 @@ To handle dependence, we impose \textbf{mixing conditions}:
     \begin{block}{Results}
         \begin{itemize}
             \item Asymptotic variance: 
-            \[\sqrt{n}\,\mathrm{Var}(\widehat{\mathrm{IOV}}) \overset{\mathrm{asy}}{=} \frac{16}{m^2}\sum_{i,j = 0}^{m-1} (1 - 2f_i)(1 - 2f_j) \sigma_{ij}\]
+            \[\mathrm{Var}(\sqrt{n}\cdot\widehat{\mathrm{IOV}}) \overset{\mathrm{asy}}{=} \frac{16}{m^2}\sum_{i,j = 0}^{m-1} (1 - 2f_i)(1 - 2f_j) \sigma_{ij}\]
             \item Bias to order $n^{-1}$:
-            \[n\, \mathrm{Bias}(\widehat{\mathrm{IOV}}) = -\frac{4}{m} \sum_{i = 0}^{m-1}  \sigma_{ii}\]
+            \[ \mathrm{Bias}(n\cdot\widehat{\mathrm{IOV}}) = -\frac{4}{m} \sum_{i = 0}^{m-1}  \sigma_{ii}\]
         \end{itemize}
     \end{block}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Scaling of Variance and Bias}
+
+\centering
+\begin{tikzpicture}[node distance=1cm and 0.5cm]
+
+
+% --- Top row ---
+\node (p1) {\includegraphics[width=0.4\textwidth, height = 3cm]{../Graphs/Var_Presi_no_n.png}};
+\node (a1) [right=of p1] {$\xrightarrow{\cdot \sqrt{n}}$};
+\node (p2) [right=of a1] {\includegraphics[width=0.4\textwidth, height = 3cm]{../Graphs/P!.png}};
+% --- Title ---
+\node (t1) [above = 0.5cm of a1] {\small\textbf{Variance}};
+
+% --- Bottom row ---
+\node (p3) [below=of p1] {\includegraphics[width=0.4\textwidth, height = 3cm]{../Graphs/Bias_presi_no_n.png}};
+\node (a2) [right=of p3] {$\xrightarrow{\cdot n}$};
+\node (p4) [right=of a2] {\includegraphics[width=0.4\textwidth, height = 3cm]{../Graphs/Bias_Presi_.png}};
+% --- Title ---
+\node (t2) [above = 0.5cm of a2] {\small\textbf{Bias}};
+\end{tikzpicture}
+
 \end{frame}
 
 %================================================
@@ -359,17 +484,15 @@ To handle dependence, we impose \textbf{mixing conditions}:
 \textbf{Missing observations are ubiquitous in practice:}
 \begin{itemize}
     \item Panel surveys: participants drop out over time
-    \item Administrative data: recording gaps or system failures
     \item Sensor data: transmission errors, device downtime
 \end{itemize}
 
 \vspace{0.4cm}
 
-\textbf{Key problem: naive estimators are biased}
+\textbf{Problem}
 
 \begin{itemize}
-    \item Simply ignoring missing observations distorts relative frequencies
-    \item $\Rightarrow$ biased estimates of $\boldsymbol{f}$, IOV, and $\kappa_{\mathrm{ord}}(h)$
+    \item Simply ignoring missing observations leads to biased estimates of standard errors and plug-in estimators
 \end{itemize}
 
 \vspace{0.4cm}
@@ -390,25 +513,24 @@ To handle dependence, we impose \textbf{mixing conditions}:
     \end{block}
     \begin{block}{Assumptions}
         \begin{itemize}
-            \item $(O_t)$ is stationary with $P(O_t = 1) = \pi > 0$ and joint moments $E[O_t O_{t+h}] = \pi(h)$
+            \item $(O_t)$ is stationary, with $P(O_t = 1) = \pi$ 
+            and joint moments $E[O_t O_{t+h}] = \pi(h)$ (if $O_t$ is i.i.d., then $\pi(h) = \pi^2$)
             \item $(O_t)$ is $\alpha$-mixing with exponential decay
-            \item $(O_t)$ and $(X_t)$ are \textbf{independent}
         \end{itemize}
     \end{block}    
 \end{frame}
 
 %------------------------------------------------
-\begin{frame}{Missingness Mechanisms}
-    Originally developed for cross-sectional data, but also relevant for time series:
+\begin{frame}{Dependence structure of $(O_t)$ and $(X_t)$}
     \begin{itemize}  
-        \item \textbf{MCAR:} Missing Completely At Random
+        \item \textbf{Indepedence:} $(\sim\!\text{MCAR})$
         \[P(O_t = 1| X_t, X_{t-1}, \ldots)\ = P(O_t = 1)\]
-        \item \textbf{MAR:} Missing At Random
+        \item \textbf{Dependendence on past states:} $(\sim\!\text{MCAR})$
         \[P(O_t = 1| X_t, X_{t-1}, \ldots)\ = P(O_t = 1| X_{t-1}, \ldots)\]
-        \item \textbf{MNAR:} Missing Not at Random
+        \item \textbf{Dependence on current state:} $(\sim\!\text{MCAR})$
         \[P(O_t = 1| X_t, X_{t-1}, \ldots)\ \neq P(O_t = 1| X_{t-1}, \ldots)\]
     \end{itemize}
-    From here on, unless stated otherwise, we assume MCAR.
+    From here on, unless stated otherwise, we assume Independence.
 \end{frame}
 
 %------------------------------------------------
@@ -418,7 +540,7 @@ To handle dependence, we impose \textbf{mixing conditions}:
         $\Rightarrow$ biased and inconsistent: $E[\hat{\mathfrak{f}}_i] = \pi f_i \neq f_i$
     \end{block}
     \begin{block}{Corrected estimator}
-        \[\hat{\boldsymbol{f}}^* = \frac{\sum_{t=1}^n O_t \boldsymbol{Z}_t}{\sum_{t=1}^n O_t}\]
+        \[\hat{\boldsymbol{f}}^* = \frac{\frac{1}{n}\sum_{t=1}^n O_t \boldsymbol{Z}_t}{\frac{1}{n}\sum_{t=1}^n O_t}\]
         $\Rightarrow$ divide by number of observed time points, not by $n$
     \end{block}
 \end{frame}
@@ -428,14 +550,22 @@ To handle dependence, we impose \textbf{mixing conditions}:
     \begin{block}{Result}
         \[\sqrt{n}(\hat{\boldsymbol{f}}^* - \boldsymbol{f}) \Rightarrow \mathcal{N}(0, \boldsymbol{\Sigma}^*)\]
         where the elements of $\boldsymbol{\Sigma}^*$ are given by:
-        \[\sigma^*_{ij} = \frac{1}{\pi} (f_{\mathrm{min}\{i,j\}}- f_i f_j) + \frac{1}{\pi^2} \sum_{h = 1}^{\infty} \pi(h)(f_{ij}(h) + f_{ji}(h) - 2f_if_j)\]
+        \[
+            \sigma^*_{ij} =
+            \textcolor{blue}{\frac{1}{\pi}} (f_{\mathrm{min}\{i,j\}} - f_i f_j)
+            +
+            \textcolor{blue}{\frac{1}{\pi^2}} 
+            \sum_{h = 1}^{\infty} 
+            \textcolor{blue}{\pi(h)}
+            \bigl(f_{ij}(h) + f_{ji}(h) - 2f_i f_j\bigr)
+        \]
     \end{block}
 
     \vspace{0.3cm}
     \textbf{Remarks:}
     \begin{itemize}
-        \item Inflation factor $1/\pi$ at lag 0: fewer effective observations
-        \item Serial dependence in $(O_t)$ enters via $\pi(h) = E[O_t O_{t+h}]$
+        \item Inflation factor \textcolor{blue}{$1/\pi$} at lag 0: fewer effective observations
+        \item Serial dependence in $(O_t)$ enters via $\textcolor{blue}{\pi(h)} = E[O_t O_{t+h}]$
         \item Reduces to $\boldsymbol{\Sigma}$ when $\pi = 1$ (no missing data)
     \end{itemize}
 \end{frame}
@@ -443,29 +573,38 @@ To handle dependence, we impose \textbf{mixing conditions}:
 %------------------------------------------------
 \begin{frame}{Marginal Statistics under Missingness}
     \begin{block}{Strategy}
-        Replace $\boldsymbol{\Sigma}$ by $\boldsymbol{\Sigma}^*$ in all delta-method results
+        All results from the complete-data case carry over by replacing 
+        $\boldsymbol{\Sigma}$ with the missingness-adjusted covariance matrix $\boldsymbol{\Sigma}^*$.
     \end{block}
 
     \vspace{0.3cm}
 
-    \textbf{IOV} (nonlinear in $\boldsymbol{f}$, delta method applies):
-    \[
-    \sqrt{n}\,\mathrm{Var}\bigl(\mathrm{IOV}(\hat{\boldsymbol{f}}^*)\bigr) \overset{\mathrm{asy.}}{=}
-    \frac{16}{m^2} \sum_{i,j=0}^{m-1}(1-2f_i)(1-2f_j)\,\sigma^*_{i,j}
-    \]
-    \[
-    \mathrm{Bias}\bigl(\mathrm{IOV}(\hat{\boldsymbol{f}}^*)\bigr) = -\frac{4}{mn}\sum_{i=0}^{m-1}\sigma^*_{i,i}
-    \]
+    \textbf{IOV:} Same delta-method expansion as before, with $\boldsymbol{\Sigma}$ replaced by $\boldsymbol{\Sigma}^*$.
 
     \vspace{0.3cm}
 
-    \textbf{Skew} (linear in $\boldsymbol{f}$, Hessian vanishes):
-    \begin{itemize}
-        \item Estimator is \textbf{unbiased}
-        \item Asymptotic variance analogous, replacing $\boldsymbol{\Sigma}$ by $\boldsymbol{\Sigma}^*$
-    \end{itemize}
+    \textbf{Other statistics (e.g. skewness):}
+    The same delta-method arguments apply. 
 \end{frame}
 
+
+%------------------------------------------------
+
+\begin{frame}{IOV under Missingness}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \includegraphics[width=0.9\textwidth]{../Graphs/IOV_Asymp_Presi.png}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \vspace{1em}
+            \begin{itemize}
+                \item Bias decreases linear in n
+                \item Variance estimates approach the asymptotic variance as $n$ increases
+                \item Asymptotic bias formula captures the finite-sample bias well, even for moderate $n$
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
 %================================================
 \section{Serial Dependence under Missingness}
 %================================================
@@ -476,64 +615,54 @@ To handle dependence, we impose \textbf{mixing conditions}:
 
 \vspace{0.3cm}
 
-\textbf{Naive estimator:}
-\[
-\hat{\mathfrak{f}}_{ij}(h) = \frac{1}{n-h}\sum_{t=h+1}^{n} O_t\, O_{t-h}\, Z_{t,i}\, Z_{t-h,j}
-\]
-
-\textbf{Problem:} $E[\hat{\mathfrak{f}}_{ij}(h)] = \pi(h) \cdot f_{ij}(h) \neq f_{ij}(h)$
-
-\vspace{0.4cm}
-
 \textbf{Corrected estimator:}
 \[
-\hat{f}^*_{ij}(h) = \frac{\frac{1}{n-h}\sum_{t=h+1}^{n} O_t\, O_{t-h}\, Z_{t,i}\, Z_{t-h,j}}{\frac{1}{n-h}\sum_{t=h+1}^{n} O_t\, O_{t-h}} =: \hat{\mathfrak{f}}_{ij}(h) \Big/ \overline{OO}_h
+\hat{f}^*_{ij}(h) =  \frac{\frac{1}{n-h}\sum_{t=h+1}^{n} O_t\, O_{t-h}\, Z_{t,i}\, Z_{t-h,j}}{\frac{1}{n+h} \sum_{t=h+1}^{n} O_t\, O_{t-h}}
 \]
 
-$\Rightarrow$ divide by the proportion of \textbf{jointly observed} pairs at lag $h$
+$\Rightarrow$ divide by the proportion of \textbf{jointly observed}~($\frac{1}{n+h} \sum_{t=h+1}^{n} O_t\, O_{t-h}$) pairs at lag $h$
 \end{frame}
 
 %------------------------------------------------
-\begin{frame}{Estimating Cohen's $\kappa$ under Missingness}
-\textbf{Plug-in estimator:}
-\[
-\hat{\kappa}_{\mathrm{ord}}(h) = \frac{\sum_{j=0}^{m-1}\left(\hat{f}_{jj}^*(h) - (\hat{f}^*_j)^2\right)}{\sum_{i=0}^{m-1}\hat{f}^*_i(1-\hat{f}_i^*)}
-\]
-
-\vspace{0.4cm}
-
-\textbf{Joint asymptotic distribution via delta method:}
-\begin{itemize}
-    \item Define augmented vector $\hat{\boldsymbol{f}}^{(h)*} = (\hat{f}^*_0, \ldots, \hat{f}^*_{m-1}, \hat{f}^*_{00}(h), \ldots, \hat{f}^*_{m-1,m-1}(h))^\top$
-    \item CLT holds for the sample mean of the underlying binary process $\boldsymbol{Z}^{(h)*}_t$
-    \item Apply delta method to $\kappa_{\mathrm{ord}}$
-\end{itemize}
+\begin{frame}{Asymptotic Distribution of $\hat{\kappa}_{\mathrm{ord}}(h)$}
 
 \vspace{0.3cm}
-\textbf{Key challenge:} long-run covariance involves third- and fourth-order mixed moments of $(X_t)$ — not closed-form in general.\\
-$\Rightarrow$ focus on the \textbf{null distribution} first
-\end{frame}
+\textbf{CLT + Delta method:}
+The corrected estimators of $\boldsymbol{f}$ and $\boldsymbol{f}(h)$ are jointly asymptotically normal, hence (continuous mapping theorem)
+\[
+\sqrt{n}\,\bigl(\hat{\kappa}_{\mathrm{ord}}(h) - \kappa_{\mathrm{ord}}(h)\bigr)
+\;\xrightarrow{d}\;
+\mathcal{N}(0, \sigma_\kappa^2)
+\]
+\vspace{0.3cm}
 
+\textbf{Challenge:}
+Higher-order moments of $(X_t)$ are in $\sigma_\kappa^2$.
+
+\vspace{0.3cm}
+
+$\Rightarrow$ We therefore consider the \textbf{null hypothesis of i.i.d. observations}, where $f_{ij}(h) = f_i f_j$, and test on deviation from that.
+
+
+
+\vspace{0.3cm}
+
+\end{frame}
 %------------------------------------------------
 \begin{frame}{Asymptotic Null Distribution of $\hat{\kappa}_{\mathrm{ord}}(h)$}
-\textbf{Under $H_0$: $(X_t)$ is i.i.d.}, $f_{ij}(h) = f_i f_j$, and higher-order moments factor.
 
 \vspace{0.3cm}
 
 \begin{block}{Theorem}
-Under $H_0$ and MCAR,
-\[
-\sqrt{n}\,\hat{\kappa}_{\mathrm{ord}}(h) \xrightarrow{d} \mathcal{N}(0, \sigma^2_\kappa),
-\]
-where
+Under $H_0$ and the previous assumptions on $(O_t)$ and $X_t$, we can compute $\sigma_\kappa^2$ in closed form:
 \[
 \sigma^2_\kappa =
-\frac{\dfrac{1}{\pi(h)}\displaystyle\sum_{i,j=0}^{m-1}
-(f_{\min\{i,j\}}-f_if_j)
-\!\left(f_{\min\{i,j\}} + \left(1+\dfrac{2\pi(h,2h)}{\pi(h)} - \dfrac{4\pi(h)}{\pi}\right)f_if_j\right)}
+\frac{\dfrac{1}{\textcolor{blue}{\pi(h)}}\displaystyle\sum_{i,j=0}^{m-1}
+(f_{\min\{i,j\}}-f_i f_j)
+\!\left(f_{\min\{i,j\}} + \left(1+\dfrac{2\textcolor{blue}{\pi(h,2h)}}{\textcolor{blue}{\pi(h)}} - \dfrac{4\textcolor{blue}{\pi(h)}}{\textcolor{blue}{\pi}}\right)f_if_j\right)}
 {\left(\displaystyle\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}
 \]
-with $\pi(h,2h) = E[O_t O_{t+h} O_{t-h}]$.
+with $\textcolor{blue}{\pi(h,2h)} = E[O_t O_{t+h} O_{t-h}]$.
 \end{block}
 \end{frame}
 
@@ -558,32 +687,26 @@ with $\pi(h,2h) = E[O_t O_{t+h} O_{t-h}]$.
 \begin{itemize}
     \item Bias increases as $\pi \downarrow$ (more missingness)
     \item Under complete data ($\pi = 1$): reduces to the known $-1/n$ bias
-    \item Closed-form correction — no resampling needed
 \end{itemize}
 \end{frame}
 
+
 %------------------------------------------------
-\begin{frame}{Consistency under $H_A$}
-
-\textbf{Under $H_A$:} $(X_t)$ is not i.i.d., so $\kappa_{\mathrm{ord}}(h) \neq 0$ for some $h$.
-
+\begin{frame}{Asymptotic Distribution of $\hat{\kappa}_{\mathrm{ord}}(h)$}
 \vspace{0.4cm}
+\begin{columns}
+    \begin{column}{0.5\textwidth}
+        \textbf{Under $H_0$}
+        \includegraphics[width=0.8\textwidth]{../Graphs/Kappa_H_0.png}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+        \textbf{Under $H_A$}{\tiny(95$\%$ confidence intervals)}
+        \includegraphics[width=0.8\textwidth]{../Graphs/kappa_H_A.png}
+    \end{column}    
+\end{columns}
 
-\begin{block}{Result}
-$\hat{\kappa}_{\mathrm{ord}}(h)$ is a continuous function of $\hat{f}^*_i$ and $\hat{f}^*_{ii}(h)$.\\
-By the \textbf{continuous mapping theorem}:
-\[
-\hat{\kappa}_{\mathrm{ord}}(h) \xrightarrow{p} \kappa_{\mathrm{ord}}(h) \neq 0,
-\]
-and therefore
-\[
-\sqrt{n}\,\hat{\kappa}_{\mathrm{ord}}(h) \xrightarrow{p} \infty.
-\]
-\end{block}
-
-\vspace{0.3cm}
-$\Rightarrow$ The test is \textbf{consistent}: rejection probability $\to 1$ under $H_A$.
 \end{frame}
+
 
 %================================================
 \section{Simulation Study}
@@ -593,23 +716,54 @@ $\Rightarrow$ The test is \textbf{consistent}: rejection probability $\to 1$ und
 \begin{frame}{Simulation Goals and Setup}
 \textbf{Three goals:}
 \begin{enumerate}
-    \item Assess finite-sample accuracy of asymptotic bias formulas
-    \item Examine convergence to asymptotic normality
+    \item Assess finite-sample accuracy of asymptotic distributional properties
+    \item Examine convergence under serially dependent missingness
     \item Study robustness to violations of the MCAR assumption
 \end{enumerate}
 
+\end{frame}
+%------------------------------------------------
+
+\begin{frame}{Data Generating Process: BinAR(1)}
+
+\textbf{Goal:} Simulate ordinal time series with controllable dependence.
+
+\vspace{0.3cm}
+
+\textbf{Idea:}
+A discrete autoregressive process on $\{0,\ldots,m\}$ with binomial transitions.
+
 \vspace{0.4cm}
 
-\textbf{Data generating process:} BinAR(1) model
-\begin{itemize}
-    \item Flexible ordinal time series with controllable serial dependence
-    \item Stationary marginal distribution: $X_t \sim \mathrm{Binomial}(m, p)$
-    \item Parameter $r \in (-1,1)$ controls autocorrelation ($r=0$: i.i.d.)
-    \item All quantities (IOV, $\kappa_{\mathrm{ord}}$) available in \textbf{closed form}
-\end{itemize}
-\end{frame}
+\textbf{Definition (intuition):}
+\[
+X_t = B(X_{t-1}, \alpha) + B(m - X_{t-1}, \beta)
+\]
 
+\begin{itemize}
+    \item $X_t \in \{0,\ldots,m\}$ (ordinal / categorical structure)
+    \item $p$ controls the marginal distribution: $X_t \sim \mathrm{Bin}(m,p)$
+    \item $r$ controls serial dependence
+    \begin{itemize}
+        \item $r=0$: i.i.d.\ case
+        \item $r>0$: positive dependence
+        \item $r<0$: negative dependence
+    \end{itemize}
+\end{itemize}
+
+\vspace{0.3cm}
+
+$\Rightarrow$ Flexible benchmark process with closed-form marginals and dependence structure.
+\end{frame}
 %------------------------------------------------
+\begin{frame}{BinAR(1) with varying degree of serial dependence}
+    \vspace{-0cm}
+    \hspace*{-0.6cm}%
+    \includegraphics[width=1.1\textwidth]{../Graphs/kappa_to_h.png}
+    \vfill
+\end{frame}
+%------------------------------------------------
+
 \begin{frame}{Simulation Scenarios}
 \textbf{Two scenarios chosen to differ qualitatively:}
 
@@ -651,93 +805,98 @@ $m=10$, $p=0.45$, $r=0.50$
 \textbf{Four observation processes $(O_t)$ are studied:}
 
 \begin{enumerate}
-    \item \textbf{Independent MCAR}: $O_t \overset{\mathrm{i.i.d.}}{\sim} \mathrm{Bernoulli}(\pi)$ \\ {\small Baseline; satisfies all theoretical assumptions.}
+    \item $\boldsymbol{O_{t} \perp X_t} \textbf{ and no serial dependence} $: $O_t \overset{\mathrm{i.i.d.}}{\sim} \mathrm{Bernoulli}(\pi)$ \\ {\small Baseline; satisfies all theoretical assumptions.}
     
     \vspace{0.3cm}
     
-    \item \textbf{Dependent MCAR}: $(O_t)$ follows BinAR(1) with $m=1$ \\ {\small Serial dependence in missingness; MCAR still holds marginally.}
+    \item $\boldsymbol{O_{t} \perp X_t}$ \textbf{ and serial dependence}: $(O_t)$ follows BinAR(1) with $m=1$ \\ {\small Serial dependence in missingness.}
     
     \vspace{0.3cm}
     
-    \item \textbf{MNAR — increasing}: $\pi_t = \pi_{\mathrm{low}} + (\pi_{\mathrm{high}} - \pi_{\mathrm{low}})\frac{X_t}{m}$ \\ {\small Higher categories more likely to be observed.}
-    
+    \item \textbf{Dependence between $O_t$ and $X_t$}: Misssingness is state-dependent \\ {\small Higher/ Lower Categories are more likely to be observed.} 
+
     \vspace{0.3cm}
     
-    \item \textbf{MNAR — decreasing}: $\pi_t = \pi_{\mathrm{high}} - (\pi_{\mathrm{high}} - \pi_{\mathrm{low}})\frac{X_t}{m}$ \\ {\small Lower categories more likely to be observed.}
 \end{enumerate}
 \end{frame}
 
 %------------------------------------------------
-\begin{frame}{Performance Measures}
-\textbf{For each estimator $\hat{\theta}$, we compute across $B$ replications:}
 
-\vspace{0.3cm}
-
-\begin{itemize}
-    \item \textbf{Mean bias:} $\frac{1}{B}\sum_{b=1}^B (\hat{\theta}_b - \theta)$ \\
-    {\small Compared against theoretical $O(n^{-1})$ formula.}
-    
-    \vspace{0.3cm}
-    
-    \item \textbf{$n$-scaled bias:} $n \cdot \frac{1}{B}\sum_{b=1}^B (\hat{\theta}_b - \theta)$ \\
-    {\small Should converge to the theoretical bias limit as $n \to \infty$.}
-    
-    \vspace{0.3cm}
-    
-    \item \textbf{Standard deviation:} compared against asymptotic SD $\sqrt{\sigma^2_\theta/n}$
-\end{itemize}
-
-\vspace{0.4cm}
-
-\textbf{Theoretical benchmarks:}
-\begin{itemize}
-    \item IOV bias limit: $-\frac{4}{mn}\,\mathrm{tr}(\boldsymbol{\Sigma}^*)$
-    \item $\kappa$ bias limit (under $H_0$): $-\frac{1}{n\pi}$
-\end{itemize}
+\begin{frame}{MNAR vs.\ MCAR: IOV Bias}
+    \begin{columns}[T]
+        \begin{column}{0.58\textwidth}
+            \includegraphics[width=\textwidth, height = 6cm]{../Graphs/MAR_IOV_Presi.png}
+        \end{column}
+        \begin{column}{0.38\textwidth}
+            {\tiny \textcolor{blue!30}{MNAR — increasing}, \textcolor{red!30}{MNAR — decreasing} and MCAR}\\
+            \vspace{1em}
+            \begin{itemize}
+                \item MNAR is biased and not consistent
+            \end{itemize}
+        \end{column}
+    \end{columns}
 \end{frame}
 
+%------------------------------------------------
+
+% \begin{frame}{Performance Measures}
+% \textbf{For each estimator $\hat{\theta}$, we compute across $B$ replications:}
+
+% \vspace{0.3cm}
+
+% \begin{itemize}
+%     \item \textbf{Mean bias:} $\frac{1}{B}\sum_{b=1}^B (\hat{\theta}_b - \theta)$ \\
+%     {\small Compared against theoretical $O(n^{-1})$ formula.}
+    
+%     \vspace{0.3cm}
+    
+%     \item \textbf{$n$-scaled bias:} $n \cdot \frac{1}{B}\sum_{b=1}^B (\hat{\theta}_b - \theta)$ \\
+%     {\small Should converge to the theoretical bias limit as $n \to \infty$.}
+    
+%     \vspace{0.3cm}
+    
+%     \item \textbf{Standard deviation:} compared against asymptotic SD $\sqrt{\sigma^2_\theta/n}$
+% \end{itemize}
+
+% \vspace{0.4cm}
+
+% \textbf{Theoretical benchmarks:}
+% \begin{itemize}
+%     \item IOV bias limit: $-\frac{4}{mn}\,\mathrm{tr}(\boldsymbol{\Sigma}^*)$
+%     \item $\kappa$ bias limit (under $H_0$): $-\frac{1}{n\pi}$
+% \end{itemize}
+% \end{frame}
+
 %================================================
-\section{Summary}
+\section{Outlook}
 %================================================
 
 %------------------------------------------------
-\begin{frame}{Summary}
-\begin{itemize}
-    \item Categorical time series require new tools:
-    \begin{itemize}
-        \item Nominal vs.\ ordinal $\Rightarrow$ PMF vs.\ CDF, mode vs.\ median
-    \end{itemize}
-    
-    \vspace{0.2cm}
-    
-    \item Marginal estimation:
-    \begin{itemize}
-        \item Relative frequency estimators + CLT under $\alpha$-mixing
-        \item Delta method for IOV and skew
-    \end{itemize}
-    
-    \vspace{0.2cm}
-
-    \item Missingness:
-    \begin{itemize}
-        \item Amplitude modulation framework under MCAR
-        \item Corrected estimators $\hat{f}^*$ and $\hat{f}^*_{ij}(h)$
-        \item Full asymptotic theory carries over via delta method
-    \end{itemize}
-    
-    \vspace{0.2cm}
-
-    \item Serial dependence under missingness:
-    \begin{itemize}
-        \item Asymptotic null distribution of $\hat{\kappa}_{\mathrm{ord}}(h)$
-        \item Closed-form bias correction $\hat{\kappa}^{\mathrm{bc}}_{\mathrm{ord}}(h) = \hat{\kappa}_{\mathrm{ord}}(h) + \frac{1}{n\pi}$
-        \item Consistency under $H_A$
-    \end{itemize}
-    
-    \vspace{0.2cm}
-
-    \item Simulation study validates finite-sample behavior and robustness
-\end{itemize}
+\begin{frame}{Outlook}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{Remaining work}\\[0.5em]
+            \begin{itemize}
+                \item Nominal data — transfer of results 
+                from ordinal to nominal case
+                \item Simulation study — finite-sample 
+                validation of asymptotic results of $\kappa(h)$
+                \item Analysis of impact of 
+                violations of the MCAR assumption
+            \end{itemize}
+        \end{column}
+        \hfill
+        \begin{column}{0.48\textwidth}
+            \textbf{Open research questions}\\[0.5em]
+            \begin{itemize}
+                \item Asymptotic theory given dependence 
+                of $(O_t)$ on past states of $(X_t)$ (MAR)
+                \item Extensions —  
+                multivariate categorical processes
+                \item Applications — credit ratings, 
+                longitudinal survey data
+            \end{itemize}
+        \end{column}
+    \end{columns}
 \end{frame}
-
 \end{document}
