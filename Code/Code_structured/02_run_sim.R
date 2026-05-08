@@ -112,7 +112,11 @@ sim_df <- do.call(rbind, lapply(seq_along(results), function(i) {
     mean_C     = s["mean", "lag1_Cohen"],
     sd_C       = s["sd",   "lag1_Cohen"],
     lower_C    = s["mean", "lag1_Cohen"] - s["sd", "lag1_Cohen"],
-    upper_C    = s["mean", "lag1_Cohen"] + s["sd", "lag1_Cohen"]
+    upper_C    = s["mean", "lag1_Cohen"] + s["sd", "lag1_Cohen"],
+    mean_C_bc  = s["mean", "lag1_Cohen_bc"],
+    sd_C_bc    = s["sd", "lag1_Cohen_bc"],
+    lower_C_bc = s["mean", "lag1_Cohen_bc"] - s["sd", "lag1_Cohen_bc"],
+    upper_C_bc = s["mean", "lag1_Cohen_bc"] + s["sd", "lag1_Cohen_bc"]
   )
 }))
 
@@ -147,7 +151,7 @@ sim_data$scaled_bias <- sim_data$n       * sim_data$diff
 set.seed(SEED)
 sim_data_2 <- do.call(rbind, lapply(
   c(2, 3, 5, 10, 15, 25, 37, 50, 75, 100, 150, 200, 375, 500, 750, 1000),
-  function(n_val) simulation_raw(n_val, 10, 0.3, 0.2, 0.75, n_reps = 20000)
+  function(n_val) simulation_raw(n_val, 10, 0.3, 0.2, 0.75, n_reps  = 50000)
 ))
 
 sim_data_2$true_IOV    <- true_val
@@ -158,5 +162,7 @@ sim_data_2$scaled_bias <- sim_data_2$n       * sim_data_2$diff
 # ------------------------------------------------------------------------------
 # Speichern
 # ------------------------------------------------------------------------------
-
+Sigma_raw
 save.image("Masterarbeit.RData")
+
+

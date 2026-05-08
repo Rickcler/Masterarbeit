@@ -16,3 +16,5 @@ SEED    <- 123
 N_REPS  <- 1000
 UNIQUE_N <- c(50, 100, 250, 500, 1000)
 
+load("Masterarbeit.Rdata")
+save.image("Masterarbeit.Rdata")

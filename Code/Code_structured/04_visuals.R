@@ -106,19 +106,28 @@ comparison_plot <- function(subset, y_var, ymin_var, ymax_var,
     coord_cartesian(ylim = c(true_val + ylim_offset[1],
                              true_val + ylim_offset[2])) +
     labs(title = title, subtitle = subtitle,
-         x = "Scenario", y = y_label) +
+         x = "", y = "") +
     theme_minimal() +
     theme(
-      plot.title         = element_text(hjust = 0.5, face = "bold", size = 14),
+      plot.title         = element_text(hjust = 0.5, face = "bold", size = 20),
       plot.subtitle      = element_text(hjust = 0.5, color = "gray40"),
-      axis.text.x        = element_text(angle = 0, hjust = 0.5, vjust = 1),
+      axis.text.x        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 14, color = "gray20"),
+      axis.text.y        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 14, color = "gray20"),
       legend.position    = "bottom",
-      legend.box         = "vertical",
-      legend.spacing.y   = unit(0.2, "cm"),
+      legend.box         = "horizontal",      # Legendenblöcke nebeneinander
+      legend.direction   = "horizontal",        # Items innerhalb je vertikal
+      legend.spacing.x   = unit(1, "cm"),     # Abstand zwischen den Blöcken
+      legend.text        = element_text(size = 18),
+      legend.title       = element_text(size = 20, face = "bold"),
+      legend.key.size    = unit(0.6, "cm"),
       panel.grid.major.x = element_blank(),
       panel.grid.minor.x = element_blank(),
       panel.border       = element_rect(color = "gray80", fill = NA,
                                         linewidth = 0.5)
+    ) +
+    guides(
+      color = guide_legend(order = 1, override.aes = list(size = 4)),
+      shape = guide_legend(order = 2, override.aes = list(size = 4))
     )
 }
 
@@ -139,9 +148,10 @@ combined_df <- combined_df %>%
 # Plot-Block A: MCAR / pi_h == 0, beide pi-Werte
 # ==============================================================================
 
+
 prep_A <- prepare_comparison_subset(
   combined_df,
-  filter_expr   = (p == 0.3 & pi_h == 0),
+  filter_expr   = (p == 0.2 & pi_h == 0), # hier p 0.2 oder 0.45 wählen
   group_var_name = "pi"
 )
 sub_A         <- prep_A$subset
@@ -150,8 +160,9 @@ t_Skew_A      <- sub_A$true_Skew[1]
 m_A <- sub_A$m[1]; p_A <- sub_A$p[1]; r_A <- sub_A$r[1]
 sub_A$true_C1 <- 0
 
+
 # IOV
-print(comparison_plot(
+IOV_plot <- comparison_plot(
   sub_A, "mean_IOV", "lower_IOV", "upper_IOV",
   true_val      = t_IOV_A,
   group_centers = prep_A$group_centers,
@@ -160,37 +171,45 @@ print(comparison_plot(
   title = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  MCAR",
                           m_A, p_A, r_A),
   subtitle = "",
-  ylim_offset   = c(-0.07, 0.03),
+  ylim_offset   = c(-0.10, 0.05), # anpassen je nach p
   group_var     = "pi"
-))
+)
+print(IOV_plot)
+ggsave(sprintf("Graphs/iov_m%d.png", m_A), IOV_plot, width = 8, height = 5)
 
 # Skew
-comparison_plot(
+Skew_plot <- comparison_plot(
   sub_A, "mean_Skew", "lower_Skew", "upper_Skew",
   true_val      = t_Skew_A,
   group_centers = prep_A$group_centers,
   x_labels      = prep_A$x_labels,
-  title         = "Comparison of Asymptotic vs Simulated Skewness Results",
-  y_label       = "Skewness Value",
-  subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  MCAR",
+  title         = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  MCAR",
                           m_A, p_A, r_A),
-  ylim_offset   = c(-0.15, 0.15),
+  y_label       = "Skewness Value",
+  subtitle      = "",
+  ylim_offset   = c(-0.10, 0.1), # anpassen je nach p
   group_var     = "pi"
 )
+print(Skew_plot)
+ggsave(sprintf("Graphs/skew_m%d.png", m_A), Skew_plot, width = 8, height = 5)
+
+
 
 # Cohen's K
-comparison_plot(
+Cohens_plot <- comparison_plot(
   sub_A, "mean_C", "lower_C", "upper_C",
   true_val      = 0,
   group_centers = prep_A$group_centers,
   x_labels      = prep_A$x_labels,
-  title         = "Comparison of Asymptotic vs Simulated Cohen's κ lag(1)",
+  title         = sprintf("BinAR(1): m = %d, p = %.2f, r = 0  |  MCAR",
+                          m_A, p_A),
   y_label       = "Cohen's κ lag(1)",
-  subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  MCAR",
-                          m_A, p_A, r_A),
-  ylim_offset   = c(-0.3, 0.3),
+  subtitle      = "",
+  ylim_offset   = c(-0.275, 0.26), # anpassen je nach p
   group_var     = "pi"
 )
+print(Cohens_plot)
+ggsave(sprintf("Graphs/kappa_m%d.png", m_A), Cohens_plot, width = 8, height = 5)
 
 # ==============================================================================
 # Plot-Block B: Serielle Abhängigkeit in Missingness, pi == 0.75
@@ -264,11 +283,44 @@ mean_df_2 <- sim_data_2 %>%
   dplyr::summarise(
   mean_scaled_bias = mean(scaled_bias, na.rm = TRUE),
   mean_diff        = mean(diff,        na.rm = TRUE),
-  se = sd(scaled_bias, na.rm = TRUE) / sqrt(n()),
+  se = sd(scaled_bias, na.rm = TRUE),
   .groups = "drop"
-)
+) %>%
+  dplyr::mutate(mean_scaled_diff = (mean_diff * n))
+Marginal <- pbinom(0:9, size = 10, prob = 0.3)
 
-# Plot C1: Mittlerer Bias
+
+Var_Iov <- 0
+for (i in 1:10) {
+  for (j in 1:10) {
+    Var_Iov <- Var_Iov + (1- 2 * Marginal[i])*(1- 2 * Marginal[j])*Sigma_raw[i, j]
+  }
+}
+
+SD_Iov <- sqrt((16 / 10^2) * Var_Iov)
+
+
+# Plot C1: CLT-Dichte unscaled
+ggplot(sim_data, aes(x = diff, fill = factor(n))) +
+  geom_density(alpha = 0.4) +
+  labs(x = expression(Bias(IOV))) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+# Plot C2: CLT-Dichte scaled
+ggplot(sim_data, aes(x = scaled_CLT, fill = factor(n))) +
+  geom_density(alpha = 0.4) +
+  stat_function(
+    fun  = dnorm,
+    args = list(mean = 0,
+                sd   = SD_Iov),
+    linetype = "dashed"
+  ) +
+  labs(x = expression(Bias(IOV))) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+# Plot C3: Mittlerer Bias unscaled
 ggplot(mean_df_2, aes(x = n, y = mean_diff)) +
   geom_line(data = theory_df_2, aes(x = n, y = diff),
             color = "steelblue", linetype = "dashed", linewidth = 0.8) +
@@ -282,45 +334,34 @@ ggplot(mean_df_2, aes(x = n, y = mean_diff)) +
   ) +
   theme_minimal()
 
+# Plot C4: Mittlerer Bias scaled
 
-
-# Plot C3: CLT-Dichte
-ggplot(sim_data, aes(x = scaled_CLT, fill = factor(n))) +
-  geom_density(alpha = 0.4) +
-  stat_function(
-    fun  = dnorm,
-    args = list(mean = mean(sim_data$scaled_CLT),
-                sd   = sd(sim_data$scaled_CLT)),
-    linetype = "dashed"
+ggplot(mean_df_2, aes(x = n, y = mean_scaled_diff)) +
+  
+  # Punkte
+  geom_point(size = 1.5, color = "black") +
+  
+  # schwarze Linie (empirisch)
+  geom_line(color = "black", linewidth = 0.5) +
+  
+  # rote Glättung (wie im Plot)
+  geom_smooth(method = "loess", se = FALSE,
+              color = "red", linewidth = 1) +
+  
+  # theoretischer Grenzwert (horizontal)
+  geom_hline(
+    yintercept = -(4 / 10) * sum(diag(Sigma_raw)),
+    linetype = "dashed",
+    color = "steelblue"
   ) +
-  labs(fill = "n", title = expression(sqrt(n) ~ (hat(IOV) - IOV))) +
-  theme_minimal()
-
-# Plot C4: Bias-Dichte
-ggplot(sim_data, aes(x = scaled_bias, fill = factor(n))) +
-  geom_density(alpha = 0.4) +
-  stat_function(
-    fun  = dnorm,
-    args = list(mean = mean(sim_data$scaled_bias),
-                sd   = sd(sim_data$scaled_bias)),
-    linetype = "dashed"
+  
+  labs(
+    x = "n",
+    y = expression(n %.% Mean(hat(IOV) - IOV))
   ) +
-  labs(fill = "n", title = expression(n ~ (hat(IOV) - IOV))) +
+  
   theme_minimal()
-
-# Plot C5: CLT-Dichte unscaled
-ggplot(sim_data, aes(x = diff, fill = factor(n))) +
-  geom_density(alpha = 0.4) +
-  stat_function(
-    fun  = dnorm,
-    args = list(mean = mean(sim_data$diff),
-                sd   = sd(sim_data$diff)),
-    linetype = "dashed"
-  ) +
-  labs(fill = "n", title = expression(sqrt(n) ~ (hat(IOV) - IOV))) +
-  theme_minimal()
-
-# ==============================================================================
+#====================================================
 # Plot-Block D: Geschätzte CDF-Komponenten
 # ==============================================================================
 
@@ -529,7 +570,7 @@ p_pmf <- ggplot(plot_dist_df, aes(x = category, y = pmf)) +
     expand = c(0, 0),
     name   = "Probability"
   ) +
-  scale_x_discrete(name = "Category") +
+  scale_x_discete(name = "Category") +
   labs(title = "Marginal PMF") +
   theme_talk()
 

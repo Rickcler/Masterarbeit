@@ -295,8 +295,8 @@ Cohens_asymptotic_iid <- function(n, pi, m, marginal_cdf) {
 #' @return List with $summary (mean/sd x 4 statistics) and $cdf (mean/sd x m)
 simulation <- function(n, m, p, r, pi, pi_h, n_reps = N_REPS) {
   results <- matrix(
-    NA, nrow = n_reps, ncol = 4,
-    dimnames = list(NULL, c("IOV", "Skew", "lag1_Cohen", "lag2_Cohen"))
+    NA, nrow = n_reps, ncol = 6,
+    dimnames = list(NULL, c("IOV", "Skew", "lag1_Cohen", "lag2_Cohen", "lag1_Cohen_bc", "lag2_Cohen_bc"))
   )
   cdf_results <- matrix(
     NA, nrow = n_reps, ncol = m,
@@ -313,7 +313,7 @@ simulation <- function(n, m, p, r, pi, pi_h, n_reps = N_REPS) {
     iid_process         <- generate_iid(n, m, p)
     observed_counts_iid <- iid_process[Missing_process == 1]
     CDF_iid             <- marginal_probs_e(m, observed_counts_iid, length(observed_counts_iid))
-
+    pi_est <- mean(Missing_process)
     cdf_results[rep, ] <- CDF
     results[rep, 1]    <- (4 / m) * sum(CDF * (1 - CDF))
     results[rep, 2]    <- (2 / m) * sum(CDF - 1)
@@ -321,6 +321,8 @@ simulation <- function(n, m, p, r, pi, pi_h, n_reps = N_REPS) {
                           sum(CDF_iid * (1 - CDF_iid))
     results[rep, 4]    <- sum(biv_probs_e(m, iid_process, Missing_process, n, h = 2) - CDF_iid^2) /
                           sum(CDF_iid * (1 - CDF_iid))
+    results[rep, 5]    <- results[rep, 3] + (1/(pi_est * n)) # Bias correction for kappa
+    results[rep, 6]    <- results[rep, 4] + (1/(pi_est * n)) # Bias correction for kappa
   }
 
   list(

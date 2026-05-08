@@ -1,10 +1,10 @@
 # Fdb version 4
-["xdvipdfmx"] 1777465245.29336 "Lebenslauf.xdv" "Lebenslauf.pdf" "Lebenslauf" 1777465246.18717 0
+["xdvipdfmx"] 1777535456.06151 "Lebenslauf.xdv" "Lebenslauf.pdf" "Lebenslauf" 1777535457.29414 0
   "Lebenslauf.xdv" 1777465244 26480 6b838f8051e8a858a4c74421961c20b6 "xelatex"
   (generated)
   "Lebenslauf.pdf"
   (rewritten before read)
-["xelatex"] 1777465242.17571 "c:/Users/victo/Desktop/Masterarbeit/Draft/Lebenslauf.tex" "Lebenslauf.xdv" "Lebenslauf" 1777465246.18196 0
+["xelatex"] 1777465242.17571 "c:/Users/victo/Desktop/Masterarbeit/Draft/Lebenslauf.tex" "Lebenslauf.xdv" "Lebenslauf" 1777535457.28172 0
   "C:/Users/victo/AppData/Local/MiKTeX/miktex/data/le/xetex/xelatex.fmt" 1776333737 27177068 ed83974225c2fccd90c08110ff5492d1 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768654 1528 7e12f4c0fcf5a072cebdcfbfc610f54c ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/tex/generic/babel/babel.sty" 1771089191 147019 f2ca437186bfeb562e1066ad59426a04 ""
@@ -54,8 +54,8 @@
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
   "Lebenslauf.aux" 1777465244 266 4f1f4202faca38f1eb5dcdb1ef3fca7d "xelatex"
   "Lebenslauf.out" 1777465244 0 d41d8cd98f00b204e9800998ecf8427e "xelatex"
-  "Lebenslauf.tex" 1777465240 4870 bce4c51e5698d370da47435e11be8f1c ""
-  "c:/Users/victo/Desktop/Masterarbeit/Draft/Lebenslauf.tex" 1777465240 4870 bce4c51e5698d370da47435e11be8f1c ""
+  "Lebenslauf.tex" 1777535450 4870 bce4c51e5698d370da47435e11be8f1c ""
+  "c:/Users/victo/Desktop/Masterarbeit/Draft/Lebenslauf.tex" 1777535450 4870 bce4c51e5698d370da47435e11be8f1c ""
   (generated)
   "Lebenslauf.aux"
   "Lebenslauf.log"

@@ -30,7 +30,7 @@ simulation_kappa_HA <- function(n, m, p, r, pi, h = 1, n_reps = 1000) {
   }
   return(kappa_vals)
 }
-
+save.image("Masterarbeit.RData")
 # True kappa unter H_A (aus geschlossener Form)
 true_kappa_HA <- function(m, p, r, h = 1) {
   f    <- pbinom(0:(m - 1), size = m, prob = p)
@@ -49,7 +49,7 @@ h_val   <- 1
 
 true_kappa <- true_kappa_HA(m_val, p_val, r_val, h = h_val)
 
-set.seed(42)
+set.seed(SEED)
 kappa_HA_list <- lapply(n_grid, function(n) {
   vals <- simulation_kappa_HA(n, m_val, p_val, r_val, pi_val,
                                h = h_val, n_reps = 1000)
@@ -287,20 +287,20 @@ ggplot() +
          x = max(n_grid) * 0.55, 
          y = ci_df$ci_upper[nrow(ci_df)] + 0.01,
          label = expression(paste("95% CI under ", H[0])),
-         color = "steelblue", size = 3.5) +
+         color = "steelblue", size = 5) +
   # Wahres kappa unter H_A
   geom_hline(yintercept = true_kappa,
              color = "#C0392B", linetype = "dashed", linewidth = 0.8) +
   annotate("text",
-           x = max(n_grid) * 0.1,
-           y = true_kappa + 0.015,
+           x = max(n_grid) * 0.15,
+           y = true_kappa + 0.025,
            label = expression(paste("True ", kappa[ord](h))),
-           color = "#C0392B", size = 3.5) +
+           color = "#C0392B", size = 5) +
   # Simulierte Mittelwerte unter H_A
   geom_ribbon(data = kappa_summary,
               aes(x = n_num,
-                  ymin = mean_kappa - sd_kappa,
-                  ymax = mean_kappa + sd_kappa),
+                  ymin = mean_kappa - (1.96 * sd_kappa),
+                  ymax = mean_kappa + (1.96 * sd_kappa)),
               fill = "grey40", alpha = 0.2) +
   geom_line(data = kappa_summary,
             aes(x = n_num, y = mean_kappa),
@@ -323,10 +323,9 @@ ggplot() +
       r == .(r_val) ~ "," ~
       pi == .(pi_val) ~ "," ~
       h == .(h_val) ~
-      "   Black: mean ± 1SD under" ~ H[A] ~
+      "   Black: mean ± 1.96SD under" ~ H[A] ~
       "   Blue band: 95% CI under" ~ H[0]
-    ),
-    caption = "Rejection occurs when the black line exits the blue band"
+    )
   ) +
   theme_minimal() +
   theme(
@@ -335,4 +334,176 @@ ggplot() +
     plot.caption  = element_text(size = 9, color = "grey50", face = "italic")
   )
 
-ggsave("Graphs/kappa_consistency_CI.pdf", width = 9, height = 5.5)
+ggsave("Graphs/Kappa_H_A.png", width = 5.5, height = 8)
+
+# ==============================================================================
+# Rejection Rate Plot — mehrere Szenarien
+# Variiere r (Stärke der Abhängigkeit) und pi (Missingness)
+# um unterschiedliche Konvergenzgeschwindigkeiten zu zeigen
+# ==============================================================================
+
+#' Compute rejection rate for kappa_ord test at alpha = 0.05
+#' under H_A for a given scenario and n_grid
+#' @param n       Time series length
+#' @param m       Binomial parameter
+#' @param p       Success probability
+#' @param r       Thinning parameter (> 0 for H_A)
+#' @param pi      Observation probability
+#' @param h       Lag
+#' @param alpha   Significance level
+#' @param n_reps  Number of replications
+rejection_rate <- function(n, m, p, r, pi, h = 1,
+                            alpha = 0.05, n_reps = 1000) {
+  # Kritischer Wert aus asymptotischer Varianz unter H_0
+  sd_H0    <- sqrt(asymp_var_kappa_H0(m, p, pi) / n)
+  crit_val <- qnorm(1 - alpha / 2) * sd_H0
+
+  kappa_vals <- simulation_kappa_HA(n, m, p, r, pi,
+                                     h = h, n_reps = n_reps)
+  mean(abs(kappa_vals) > crit_val, na.rm = TRUE)
+}
+
+# ==============================================================================
+# Szenarien: variiere r und pi
+# r:  schwache (0.15), moderate (0.35), starke (0.60) Abhängigkeit
+# pi: vollständige (1.0) und partielle (0.75) Beobachtung
+# ==============================================================================
+
+scenarios_rej <- expand.grid(
+  r  = c(0.15, 0.35, 0.60),
+  pi = c(1.00, 0.75)
+) %>%
+  mutate(
+    label = paste0(
+      "r = ", r, ", π = ", pi
+    ),
+    # Linientyp nach pi
+    lty = ifelse(pi == 1.00, "solid", "dashed"),
+    # Farbe nach r
+    col = case_when(
+      r == 0.15 ~ "#5B8DB8",
+      r == 0.35 ~ "#2C3E6B",
+      r == 0.60 ~ "#C0392B"
+    )
+  )
+
+n_grid_rej <- c(50, 100, 250, 500, 1000, 2000)
+m_val      <- 3
+p_val      <- 0.20
+h_val      <- 1
+
+set.seed(42)
+rej_list <- lapply(1:nrow(scenarios_rej), function(s) {
+  sc <- scenarios_rej[s, ]
+  message("Scenario: r = ", sc$r, ", pi = ", sc$pi)
+
+  rates <- sapply(n_grid_rej, function(n) {
+    rejection_rate(
+      n      = n,
+      m      = m_val,
+      p      = p_val,
+      r      = sc$r,
+      pi     = sc$pi,
+      h      = h_val,
+      alpha  = 0.05,
+      n_reps = 1000
+    )
+  })
+
+  data.frame(
+    n     = n_grid_rej,
+    rate  = rates,
+    r     = sc$r,
+    pi    = sc$pi,
+    label = sc$label,
+    col   = sc$col,
+    lty   = sc$lty
+  )
+})
+
+rej_df <- do.call(rbind, rej_list) %>%
+  mutate(
+    label = factor(label, levels = scenarios_rej$label),
+    r_fac = factor(paste0("r = ", r),
+                   levels = c("r = 0.15", "r = 0.35", "r = 0.60")),
+    pi_fac = factor(paste0("π = ", pi),
+                    levels = c("π = 1", "π = 0.75"))
+  )
+
+# ==============================================================================
+# Plot: Rejection Rate als Funktion von n — mehrere Szenarien
+# ==============================================================================
+
+ggplot(rej_df,
+       aes(x     = n,
+           y     = rate,
+           color = r_fac,
+           linetype = pi_fac,
+           group = label)) +
+  # 5%-Nominalniveau
+  geom_hline(yintercept = 0.05,
+             color = "grey50", linetype = "dotted", linewidth = 0.6) +
+  annotate("text",
+           x = max(n_grid_rej) * 0.85, y = 0.07,
+           label = "α = 5%",
+           color = "grey50", size = 3.5) +
+  # 100%-Referenzlinie
+  geom_hline(yintercept = 1.00,
+             color = "grey80", linetype = "solid", linewidth = 0.4) +
+  # Kurven
+  geom_line(linewidth = 0.9) +
+  geom_point(size = 2.5) +
+  scale_color_manual(
+    name   = "Serial dependence",
+    values = c("r = 0.15" = "#5B8DB8",
+               "r = 0.35" = "#2C3E6B",
+               "r = 0.60" = "#C0392B"),
+    labels = c(
+      expression(r == 0.15 ~ "(weak)"),
+      expression(r == 0.35 ~ "(moderate)"),
+      expression(r == 0.60 ~ "(strong)")
+    )
+  ) +
+  scale_linetype_manual(
+    name   = "Observation probability",
+    values = c("π = 1"    = "solid",
+               "π = 0.75" = "dashed"),
+    labels = c(
+      expression(pi == 1 ~ "(no missingness)"),
+      expression(pi == 0.75 ~ "(25% missing)")
+    )
+  ) +
+  scale_x_continuous(
+    breaks = n_grid_rej,
+    trans  = "log10",
+    name   = "n (log scale)"
+  ) +
+  scale_y_continuous(
+    limits = c(0, 1.05),
+    breaks = seq(0, 1, by = 0.25),
+    labels = scales::percent,
+    name   = "Rejection rate"
+  ) +
+  labs(
+    title    = expression(
+      paste("Rejection rate of ", hat(kappa)[ord](h),
+            " test under ", H[A], "  (α = 5%)")
+    ),
+    subtitle = bquote(
+      m == .(m_val) ~ "," ~
+      p == .(p_val) ~ "," ~
+      h == .(h_val) ~
+      "   Solid: π = 1   Dashed: π = 0.75   Dotted: nominal level"
+    )
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title    = element_text(size = 13, face = "bold"),
+    plot.subtitle = element_text(size = 9,  color = "grey40"),
+    legend.position = "right",
+    legend.title    = element_text(size = 10, face = "bold"),
+    legend.text     = element_text(size = 9),
+    panel.grid.minor = element_blank()
+  )
+
+ggsave("Graphs/kappa_rejection_rate.png", width = 5.5, height = 8)

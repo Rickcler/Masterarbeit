@@ -6,7 +6,7 @@
 \usepackage{amsmath, amssymb}
 \usepackage{amsthm}
 \usepackage{appendix}
-
+\usepackage{tikz}
 % Theorem-Definitionen
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{proposition}[theorem]{Proposition}
@@ -19,7 +19,7 @@
 \usepackage{natbib}
 \usepackage{hyperref}
 \usepackage{cleveref}
-
+\usepackage[all]{hypcap}
 % Kein Einzug nach amsthm-Umgebungen
 \usepackage{etoolbox}
 \AtEndEnvironment{theorem}{\noindent}
@@ -930,7 +930,7 @@ from case~\textbf{(ii)} of \hyperref[rem:sigma_zstar]{$\boldsymbol{\Sigma}_{\bol
 To further study the asymptotic distribution of $\hat{\boldsymbol{f}}^*$,
 we consider three special cases of the general result.
 
-\begin{corollary}[Full Observation]
+\begin{corollary}[Full Observation] \label{cor:Full Obs}
 If the process is fully observed, i.e.\ $\pi = 1$, then
 \[
     \sigma_{\hat{\boldsymbol{f}}^*;\, i,j}
@@ -942,7 +942,7 @@ If the process is fully observed, i.e.\ $\pi = 1$, then
 That is, the asymptotic covariance of $\hat{\boldsymbol{f}}^*$ reduces to that of
 the complete-data estimator \hyperref[thm:clt_fhat]{$\hat{\boldsymbol{f}}$}, as one would expect.
 
-\begin{corollary}[i.i.d.\ Observation Process]
+\begin{corollary}[i.i.d.\ Observation Process]\label{cor:iid_Obs}
 If $(O_t)$ is i.i.d., then $\pi(h) = \pi^2$ for all $h \geq 1$,
 and the asymptotic covariance simplifies to
 \[
@@ -957,7 +957,7 @@ missingness. The lag-$h$ terms for $h \geq 1$, however, are unaffected, since
 i.i.d.\ missingness introduces no additional serial dependence into the observation
 process.
 
-\begin{corollary}[i.i.d.\ Main Process]
+\begin{corollary}[i.i.d.\ Main Process]\label{cor:iid_Main}
 If $(X_t)$ is i.i.d., then $f_{ij}(h) = f_if_j$ for all
 $i,j = 0,\ldots,m-1$ and $h \geq 1$, so that the asymptotic
 covariance reduces to
@@ -1559,11 +1559,11 @@ i.i.d. Then the joint moments factorize as
     \qquad
     \pi(h,2h) = \mathrm{E}[O_t O_{t-h} O_{t-2h}] = \pi^3.
 \]
-Substituting into $\sigma^2_\kappa$ yields
+Substituting into $\sigma^2_\kappa$ yields (see Appendix~\ref{app:var-kappa-iid} for the detailed calculation)
 \[
     \sigma^2_\kappa =
-    \frac{
-        \frac{1}{\pi^2}\displaystyle\sum_{i,j=0}^{m-1}
+    \frac{1}{\pi^2}\frac{
+        \displaystyle\sum_{i,j=0}^{m-1}
         \bigl(f_{\min\{i,j\}}-f_if_j\bigr)
         \Bigl(f_{\min\{i,j\}} 
         + (1-2\pi)f_if_j\Bigr)
@@ -1627,6 +1627,13 @@ the purpose of testing $H_0: \kappa_{\mathrm{ord}}(h) = 0$; it does
 $\kappa_{\mathrm{ord}}(h)$ under $H_A$, as the asymptotic variance
 of $\hat{\kappa}_{\mathrm{ord}}(h)$ differs from $\sigma^2_\kappa$
 when $(X_t)$ is not i.i.d.\\
+Also note that $\hat{\kappa}_{\mathrm{ord}}(h)$ for a fixed lag $h$ 
+constitutes a necessary but not sufficient condition for the i.i.d.\ 
+null hypothesis: rejection at any lag $h$ implies departure from 
+i.i.d., but non-rejection at a single lag does not rule out 
+dependence at other lags or through off-diagonal bivariate 
+probabilities. In practice, the test is therefore applied 
+simultaneously for several lags $h = 1, \ldots, H$.
 \begin{remark}
 The test can be visualised analogously to the sample autocorrelation
 function (ACF): plotting $\hat{\kappa}_{\mathrm{ord}}(h)$ against
@@ -1782,14 +1789,14 @@ O_t \sim \mathrm{Bernoulli}(\pi).
 Second, we consider a serially dependent observation process, where 
 $(O_t)$ is a stationary binary Markov chain on $\{0,1\}$ with marginal 
 observation probability $\mathrm{E}[O_t] = \pi$ and autocorrelation 
-parameter $\rho \in (0,1)$, with transition probabilities
+parameter $r_{\pi} \in (0,1)$, with transition probabilities
 \[
-    P(O_t = 1 \mid O_{t-1} = 1) = (1-\rho)\pi+ \rho, \qquad
-    P(O_t = 1 \mid O_{t-1} = 0) = \pi(1-\rho).
+    P(O_t = 1 \mid O_{t-1} = 1) = (1-r_{\pi})\pi+ r_{\pi}, \qquad
+    P(O_t = 1 \mid O_{t-1} = 0) = \pi(1-r_{\pi}).
 \]
 This mechanism preserves the marginal observation probability $\pi$ 
 while inducing serial dependence in $(O_t)$, with 
-$\mathrm{Cov}(O_t, O_{t+h}) = \rho^h\,\pi(1-\pi)$ for all $h \geq 1$ 
+$\mathrm{Cov}(O_t, O_{t+h}) = r_{\pi}^h\,\pi(1-\pi)$ for all $h \geq 1$ 
 \citep[p.~139]{Weiss2018}.\\
 Third, we consider observation schemes that depend on the current state of 
 the underlying process $(X_t)$, corresponding to MNAR-type mechanisms. In 
@@ -1813,10 +1820,13 @@ and state-dependent missingness within a unified simulation framework.
 Two combinations of $(m, p, r)$ are considered, chosen to represent 
 qualitatively different settings:
 \begin{itemize}
-    \item \textbf{Scenario A:} $m = 3$, $p = 0.20$, $r = 0.35$ — 
+    \item \textbf{Scenario A:}\phantomsection\label{scen:A}
+    $m = 3$, $p = 0.20$, $r = 0.35$ — 
     a coarse ordinal scale with few categories, a skewed marginal 
     distribution, and moderate serial dependence.
-    \item \textbf{Scenario B:} $m = 10$, $p = 0.45$, $r = 0.50$ — 
+
+    \item \textbf{Scenario B:}\phantomsection\label{scen:B}
+    $m = 10$, $p = 0.45$, $r = 0.50$ — 
     a finer ordinal scale, a near-symmetric marginal distribution, 
     and stronger serial dependence.
 \end{itemize}
@@ -1833,7 +1843,7 @@ with $\pi = 0.75$ and $r_{\pi} \in \{0.2, 0.75\}$, as well as the two MNAR-type 
 The time series length varies over $n \in \{50, 100, 250, 500, 1000\}$, 
 and all results are based on $B = 1{,}000$ Monte Carlo replications. 
 To study the convergence of the bias as a function of $n$, an 
-additional fine grid \[n \in \{2, 3, 5, 10, 15, 25, 37, 50, 75, 100, 
+additional fine grid \[N_{\text{fine}} := \{2, 3, 5, 10, 15, 25, 37, 50, 75, 100, 
 150, 200, 375, 500, 750, 1000\}\] is used for Scenario B under 
 $\pi = 0.75$, with $B = 1{,}000$ replications each.
 
@@ -1863,7 +1873,363 @@ by $-\frac{4}{mn}\mathrm{tr}(\boldsymbol{\Sigma}_Z)$
 (Corollary~\ref{cor:iov_missing}), and for $\hat{\kappa}_{\mathrm{ord}}(h)$ under $H_0$ by 
 $-\frac{1}{n\pi}$ (Theorem~\ref{thm:kappa-asymp}). These serve as 
 benchmarks against which the simulated bias curves are compared.
+\section{Results}
+\label{sec:sim-results}
 
+\subsection{Marginal Estimation and Dispersion Measures}
+\label{sec:sim-marginal}
+
+\paragraph{Convergence to the asymptotic distribution.}
+Figure~\ref{fig:iov-density} illustrates the convergence of
+$\sqrt{n}(\widehat{\mathrm{IOV}} - \mathrm{IOV})$ to its asymptotic
+normal distribution. The left panel shows the raw centred quantity,
+while the right panel shows the same quantity after multiplication
+by $\sqrt{n}$. Both panels display
+results for $n \in \{50, 1000, 5000\}$ under \hyperref[scen:B]{Scenario~B} with
+$\pi = 0.75$.\\
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}[c]{0.42\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, height = \textwidth]{../Graphs/unscaled_CLT.png}
+    \end{minipage}
+    \begin{minipage}[c]{0.05\textwidth}
+        \centering
+        $\overset{\cdot\, \sqrt{n}}{\rightarrow}$
+    \end{minipage}
+    \begin{minipage}[c]{0.42\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, height = \textwidth]{../Graphs/Scaled_CLT.png}
+    \end{minipage}
+        \begin{minipage}[c]{0.05\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../Graphs/Legend_Var.png}
+    \end{minipage}
+    \caption{\scriptsize Left: simulated density of
+    $(\widehat{\mathrm{IOV}} - \mathrm{IOV})$ for
+    $n \in \{50, 1000, 5000\}$. Right: the same quantity rescaled by a
+    factor of $\sqrt{n}$, i.e.\ $\sqrt{n}(\widehat{\mathrm{IOV}} -
+    \mathrm{IOV})$, overlaid with the
+    asymptotic $\mathcal{N}(0, \sigma^2_{\mathrm{IOV}})$ limit
+    (dashed). \hyperref[scen:B]{Scenario~B} with $\pi = 0.75$. Based on
+    $B = 1{,}000$ replications.}
+    \label{fig:iov-density}
+\end{figure}
+In the left panel, the residual leftward shift at $n = 50$ relative
+to the asymptotic limit reflects the negative finite-sample bias of
+$\widehat{\mathrm{IOV}}$ established in
+Corollary~\ref{cor:iov_missing}. Crucially, this shift is visible
+at $n = 50$ but has mostly vanished by $n = 1000$, consistent
+with the $O(n^{-1})$ order of the bias. The right panel reveals
+a complementary picture: after $\sqrt{n}$-rescaling, the three
+distributions collapse onto the same spread, directly confirming
+that the standard deviation converges at rate $O(n^{-1/2})$ as
+implied by the CLT.  At the same time, a residual leftward shift
+remains visible for $n = 50$ and even $n = 1000$, indicating that the bias
+does not vanish under $\sqrt{n}$-scaling. This is consistent with
+the fact that the bias is of order $O(n^{-1})$, so that
+$\sqrt{n}$-rescaling yields a remaining shift of order $O(n^{-1/2})$.
+
+\paragraph{Finite-sample bias and its order.}
+Figure~\ref{fig:iov_bias_n_scaled} summarizes the finite-sample bias
+of $\widehat{\mathrm{IOV}}$ as a function of $n$. The left panel
+shows the mean bias
+$\frac{1}{B}\sum_{b=1}^B(\widehat{\mathrm{IOV}}_b - \mathrm{IOV})$,
+together with the theoretical approximation
+$-\frac{4}{mn}\sum_{i=0}^{m-1}\sigma_{\hat{\boldsymbol{f}}^*;\,i,i}$
+from Corollary~\ref{cor:iov_missing}$\, $ (dashed). The simulated and
+theoretical curves are nearly indistinguishable across the entire
+range of $n$, confirming the accuracy of the $O(n^{-1})$
+approximation even at small sample sizes.\\
+The right panel displays the $n$-scaled bias
+$n \cdot \frac{1}{B}\sum_{b=1}^B(\widehat{\mathrm{IOV}}_b -
+\mathrm{IOV})$, along with the corresponding theoretical limit
+$-\frac{4}{m}\sum_{i=0}^{m-1}\sigma_{\hat{\boldsymbol{f}}^*;\,i,i}$
+(dashed). If the bias were exactly of order $n^{-1}$, this quantity
+would be constant in $n$. The figure shows that it is indeed nearly
+constant, with only minor fluctuations around the limiting value.\\
+The pointwise $95\%$ confidence bands (vertical lines) widen with
+$n$. Since $\widehat{\mathrm{IOV}}$ has standard deviation of order
+$n^{-1/2}$, its Monte Carlo mean based on $B$ replications has
+standard error of order $(Bn)^{-1/2}$. After multiplication by $n$,
+this becomes $\sqrt{n/B}$, explaining the increasing width of the
+bands. This effect is therefore purely induced by the scaling and
+should not be interpreted as a deterioration of the asymptotic
+approximation.
+
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}[c]{0.42\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{../Graphs/Bias_presi_no_n.png}
+    \end{minipage}
+    \begin{minipage}[c]{0.05\textwidth}
+        \centering
+        $\overset{\cdot\, n}{\rightarrow}$
+    \end{minipage}
+    \begin{minipage}[c]{0.42\textwidth}
+        \centering
+        \includegraphics[width=0.85\textwidth]{../Graphs/Bias_Presi_.png}
+    \end{minipage}
+    \caption{\scriptsize Left: Mean from simulation (solid) and theoretical approximation (dashed) of
+    $(\widehat{\mathrm{IOV}} - \mathrm{IOV})$. Right: the same quanties rescaled by a 
+    factor of $n$. For
+    $n \in N_{\text{fine}}$ and \hyperref[scen:B]{Scenario~B} with $\pi = 0.75$. Based on
+    $B = 20{,}000$ replications.}
+    \label{fig:iov_bias_n_scaled}
+\end{figure}
+
+
+% \begin{figure}[htbp]
+%     \centering
+    
+%     \caption{Mean bias of $\widehat{\mathrm{IOV}}$ as a function
+%     of $n$ (solid), with the theoretical approximation
+%     $-\frac{4}{mn}\,\mathrm{tr}(\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}}^*})$
+%     (dashed). Scenario~B: $m=10$, $p=0.45$, $r=0.50$, $\pi=0.75$.}
+%     \label{fig:iov-bias}
+% \end{figure}
+% \begin{figure}[htbp]
+%     \centering
+    
+%     \caption{$n$-scaled mean bias $n \cdot
+%     (\widehat{\mathrm{IOV}} - \mathrm{IOV})$ with pointwise
+%     $95\%$ confidence bands (vertical lines) and theoretical
+%     limit (dashed horizontal). The widening of the bands with
+%     $n$ reflects the $\sqrt{n/B}$ growth of the Monte Carlo
+%     standard error after $n$-scaling; see also the right panel
+%     of Figure~\ref{fig:iov-density}. Scenario~B: $m=10$,
+%     $p=0.45$, $r=0.50$, $\pi=0.75$.}
+%     \label{fig:iov-bias-scaled}
+% \end{figure}
+
+\paragraph{Asymptotic standard deviation: simulation vs.\ theory.}
+Figure~\ref{fig:iov_comparison} compares the
+simulated standard deviation and bias of $\widehat{\mathrm{IOV}}$ against
+the asymptotic approximation $\sigma_{\mathrm{IOV}}$
+across all combinations of $n \in \{50, 100, 250, 500, 1000\}$
+and $\pi \in \{0.75, 1\}$, for \hyperref[scen:A]{Scenario~A} on the
+left panel and \hyperref[scen:B]{Scenario~B} on the right. 
+Several observations are worth highlighting.\\
+First, the asymptotic approximation tracks the simulated standard
+deviation closely across all sample sizes, with the agreement
+improving monotonically as $n$ grows. At $n = 50$, small
+discrepancies are visible, reflecting the finite-sample correction
+terms omitted by the first-order delta method. By $n = 250$, the
+approximation is already very accurate in both scenarios.\\
+Second, the effect of missingness is clearly visible: for both
+scenarios, the standard deviation under $\pi = 0.75$ is uniformly
+larger than under $\pi = 1$, consistent with the $1/\pi$ inflation
+of the lag-$0$ term in $\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}}^*}$
+established in Theorem~\ref{thm:clt_fstarhat}.\\
+Third, the convergence behaviour differs markedly between the two
+scenarios. In Scenario~A ($m=3$, skewed marginal distribution),
+the standard deviation is larger in absolute terms. This indicates
+that the effect of marginal dispersion on
+$\mathrm{Var}(\widehat{\mathrm{IOV}}(\boldsymbol{f}^*))$
+dominates the effect of serial dependence: the former is more pronounced
+in Scenario~A, whereas the latter is stronger in Scenario~B.\\
+Although less immediately visible in the figure, this also affects the
+difference between the cases $\pi = 1$ and $\pi = 0.75$. The covariance
+terms \hyperref[thm:clt_fstarhat]{$\sigma_{\hat{\boldsymbol{f}}^*; i,j}$} follow the forms given in
+Corollaries~\ref{cor:Full Obs} and~\ref{cor:iid_Obs}, respectively.
+Since here missingness only inflates the lag-$0$ component of the covariance
+structure, whereas serial dependence contributes through the higher-lag
+terms, the relative impact of missingness is smaller in Scenario~B,
+where serial dependence is stronger. Consequently, the gap between
+$\pi = 1$ and $\pi = 0.75$ is more pronounced in Scenario~A than in
+Scenario~B.
+
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}[c]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../Graphs/IOV_m3.png}
+    \end{minipage}
+    \begin{minipage}[c]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../Graphs/IOV_m10.png}
+    \end{minipage}
+    \caption{\scriptsize Simulated vs.\ asymptotic standard deviation of
+    $\widehat{\mathrm{IOV}}$ for Scenario~B ($m=10$, $p=0.45$,
+    $r=0.50$) across $n \in \{50,100,250,500,1000\}$ and
+    $\pi \in \{0.75, 1\}$.}
+    \label{fig:iov_comparison}
+\end{figure}
+
+
+\paragraph{Skewness.}
+Since $\widehat{\mathrm{skew}}$ is exactly unbiased for all $n$
+(Proposition~\ref{prop:skew}), we focus only on the standard
+deviation. Figure~\ref{fig:skew_comparison} compares the simulated standard
+deviation of $\widehat{\mathrm{skew}}$ against the asymptotic
+approximation $\hat{\sigma}_{\mathrm{skew}}/\sqrt{n}$ for both
+scenarios. Agreement is close even at $n = 50$, reflecting the
+faster convergence of the linear estimator. Beyond that, the same 
+observations and reasoning regarding the differences between the two 
+scenarios hold as for the IOV. 
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}[c]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../Graphs/Skew_m3.png}
+    \end{minipage}
+    \begin{minipage}[c]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../Graphs/Skew_m10.png}
+    \end{minipage}
+    \caption{\scriptsize Simulated vs.\ asymptotic standard deviation of
+    $\widehat{\mathrm{skew}}$ for Scenario~B ($m=10$, $p=0.45$,
+    $r=0.50$) across $n \in \{50,100,250,500,1000\}$ and
+    $\pi \in \{0.75, 1\}$.}
+    \label{fig:skew_comparison}
+\end{figure}
+
+\subsection{Serial Dependence: Cohen's \texorpdfstring{$\kappa$}{kappa}}
+\label{sec:sim-kappa}
+
+\paragraph{Distribution under $H_0$.}
+Under the null hypothesis ($r = 0$, i.i.d.\ process),
+Figure~\ref{fig:kappa_comparison} compares simulated and asymptotic
+results for $\hat{\kappa}_{\mathrm{ord}}(1)$ as a function of $n$
+for both scenarios (with $r$ set to 0) and
+$\pi \in \{1, 0.75\}$. As before, the agreement between simulation
+and asymptotic theory is close even for small sample sizes and
+improves further as $n$ increases. \\
+The bias under $\pi = 0.75$ is substantially larger than
+under $\pi = 1$, consistent with the $-1/\pi$ limit established
+in Theorem~\ref{thm:kappa-asymp}. Moreover, the increase in standard error induced by missingness is
+considerably more pronounced for
+$\hat{\kappa}_{\mathrm{ord}}(1)$ than for the marginal estimators.
+As before, Scenario~A exhibits larger absolute standard errors due to
+its greater marginal dispersion.
+
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}[c]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../Graphs/Kappa_m3.png}
+    \end{minipage}
+    \begin{minipage}[c]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../Graphs/Kappa_m10.png}
+    \end{minipage}
+    \caption{\scriptsize Simulated vs.\ asymptotic standard deviation of
+    $\widehat{\mathrm{IOV}}$ for Scenario~B ($m=10$, $p=0.45$,
+    $r=0.50$) across $n \in \{50,100,250,500,1000\}$ and
+    $\pi \in \{0.75, 1\}$.}
+    \label{fig:kappa_comparison}
+\end{figure}
+
+
+% \paragraph{Bias correction.}
+% Figure~\ref{fig:bias-correction} compares the mean bias of the
+% uncorrected estimator $\hat{\kappa}_{\mathrm{ord}}(h)$ and the
+% bias-corrected estimator
+% $\hat{\kappa}^{\mathrm{bc}}_{\mathrm{ord}}(h) =
+% \hat{\kappa}_{\mathrm{ord}}(h) + 1/(n\hat{\pi})$ across sample sizes.
+% The bias correction is effective even at small $n$: at $n = 50$,
+% the mean bias of the corrected estimator is already an order of
+% magnitude smaller than that of the uncorrected estimator.
+% [Figure einfügen: Bias uncorrected vs. corrected, beide Szenarien]
+
+\paragraph{Asymptotic level of the test.}
+To assess whether the test based on $T_n(h)$ achieves its nominal
+level $\alpha = 0.05$, Figure~\ref{fig:rejection-H0} reports the
+empirical rejection frequency under $H_0$ as a function of $n$.
+Both the uncorrected and bias-corrected test statistics are
+considered, using the plug-in estimator $\hat{\sigma}_\kappa$ in
+both cases. Both tests exhibit slight over-rejection at small sample
+sizes, but are already very close to the nominal level by $n = 100$.
+This is consistent with the fact that
+$\kappa_{\mathrm{ord}}(h)$ is not a purely quadratic functional and
+therefore exhibits higher-order bias terms beyond the leading
+$O(n^{-1})$ component, that is corrected for in the bias-corrected veersion.  
+In both scenarios, the test based on the biased corrected estimator
+performs better for small, however the difference decays quite quickly 
+and is hardly visible already for $n = 50$. However, the difference
+seems to be more pronounced in scenario B.
+
+\begin{figure}[htbp]
+    \centering
+        \includegraphics[width=\textwidth]{../Graphs/rejection_H0_level.png}
+    \caption{\scriptsize Rejection rates of
+        $\hat{\kappa}_{\mathrm{ord}}(1)$ and
+        $\hat{\kappa}_{\mathrm{ord}}^{\mathrm{bc}}(1)$
+        for both scenarios under $H_0$ (i.e.\ $r = 0$),
+        across
+        $n \in \{5,10,15,25,37,50,75,100,200,375,500,750,1000,2500,5000\}$,
+        using a nominal significance level of $\alpha = 5\%$.}
+    \label{fig:rejection-H0}
+\end{figure}
+
+
+\paragraph{Power under $H_A$.}
+To illustrate the power of the test,
+Figure~\ref{fig:kappa-H_A} displays two panels.
+The left panel shows the mean estimate of
+$\kappa_{\mathrm{ord}}(1)$ for Scenario~B with $\pi = 0.75$,
+together with $\pm 1.96$ standard errors and the true value of
+$\kappa_{\mathrm{ord}}(1)$ (red dashed line). These are compared
+to the corresponding $95\%$ confidence intervals under $H_0$.
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}[c]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../Graphs/Kappa_H_A.png}
+    \end{minipage}
+    \begin{minipage}[c]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../Graphs/Rejection_rate.png}
+    \end{minipage}
+    \caption{\scriptsize Simulated vs.\ asymptotic standard deviation of
+    $\widehat{\mathrm{IOV}}$ for Scenario~B ($m=10$, $p=0.45$,
+    $r=0.50$) across $n \in \{50,100,250,500,1000\}$ and
+    $\pi \in \{0.75, 1\}$.}
+    \label{fig:kappa-H_A}
+\end{figure}
+
+
+
+\subsection{Robustness under MCAR Violations}
+\label{sec:sim-mcar-violation}
+
+The preceding results were obtained under the MCAR assumption. We
+now examine what happens when this assumption is violated.
+
+\paragraph{Serially dependent observation process.}
+When $(O_t)$ is a stationary binary Markov chain with autocorrelation
+parameter $\rho_\pi \in \{0.2, 0.75\}$ (see Section~\ref{sec:sim-setup}),
+the marginal observation probability $\pi = 0.75$ is preserved but
+$(O_t)$ is no longer i.i.d. Figure~\ref{fig:bias-serial-O} shows
+that the bias of $\hat{\kappa}_{\mathrm{ord}}(h)$ under $H_0$ now
+deviates from the theoretical limit $-1/\pi$: for $\rho_\pi = 0.2$
+the deviation is small, but for $\rho_\pi = 0.75$ it is substantial.
+This illustrates that the simplified formula $\sigma^2_\kappa$ (derived
+under i.i.d.\ $(O_t)$) is no longer valid when $(O_t)$ exhibits
+strong serial dependence, and that a preliminary test for
+independence of $(O_t)$ — as discussed in
+Section~\ref{subsec:serial-H0} — is advisable in practice.
+% [Figure einfügen: Bias-Kurven für rho_pi = 0, 0.2, 0.75]
+
+\paragraph{State-dependent missingness (MNAR).}
+Under the two MNAR mechanisms — observation probability increasing
+or decreasing linearly with $X_t$ — Figure~\ref{fig:bias-mnar}
+shows that the corrected estimator $\hat{\boldsymbol{f}}^*$ is
+now biased: the bias of $\hat{f}^*_i$ is non-negligible and does
+not vanish as $n \to \infty$, confirming that $\hat{\boldsymbol{f}}^*$
+is not consistent under MNAR. The direction of the bias depends on
+the missingness mechanism: when higher categories are more likely
+to be observed, the upper tail of the distribution is
+over-represented, and vice versa. The IOV estimator is affected
+similarly, inheriting the bias of $\hat{\boldsymbol{f}}^*$ through
+the delta method.
+% [Figure einfügen: Bias von f_i* unter MNAR, beide Varianten,
+% im Vergleich zu MCAR]
 \begin{appendices}
 
 % \renewcommand{\thesection}{\Alph{section}}
@@ -2093,9 +2459,50 @@ and using symmetry $\sigma^{(h)*}_{i,l} = \sigma^{(h)*}_{l,i}$:
     &= -\frac{1}{\pi} + \frac{\sum_{i,l = 0}^{m-1}\left(f_i + f_l - 4f_i f_l - 2f_l+ 4 f_j f_l \right)\sigma^{(h)*}_{l,i}}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}
     = -\frac{1}{\pi} + \frac{\overbrace{\sum_{i,l = 0}^{m-1}\left(f_i - f_l \right)}^{=0}\sigma^{(h)*}_{l,i}}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
     &= -\frac{1}{\pi}\end{align*}
-\end{appendices}
-\bibliography{references}
 
+
+\section{Derivation of $\hat{\kappa}_{\mathrm{ord}}$ under i.i.d. missingness}\label{app:var-kappa-iid}
+In this section we provide the detailed computations of the simplified version of $\hat{\kappa}_{\mathrm{ord}}$ under i.i.d. missingness, which is given by
+\begin{align*}
+    \sigma^2_\kappa &=
+        \frac{
+            \displaystyle\sum_{i,j=0}^{m-1}
+            \bigl(f_{\min\{i,j\}}-f_if_j\bigr)
+            \Bigl(f_{\min\{i,j\}} 
+            + \Bigl(1+\frac{2\pi(h,2h)}{\pi(h)} 
+            - \frac{4\pi(h)}{\pi}\Bigr)f_if_j\Bigr)
+        }{
+            \pi(h)\left(\displaystyle\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2
+        }  \\
+    &\overset{\mathrm{i.i.d.}}{=}
+        \frac{
+            \displaystyle\sum_{i,j=0}^{m-1}
+            \bigl(f_{\min\{i,j\}}-f_if_j\bigr)
+            \Bigl(f_{\min\{i,j\}} 
+            + \Bigl(1+\frac{2\pi^3}{\pi^2} 
+            - \frac{4\pi^2}{\pi}\Bigr)f_if_j\Bigr)
+        }{\pi^2
+            \left(\displaystyle\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2
+        }\\
+    &=\frac{1}{\pi^2}
+        \frac{
+            \displaystyle\sum_{i,j=0}^{m-1}
+            \bigl(f_{\min\{i,j\}}-f_if_j\bigr)
+            \Bigl(f_{\min\{i,j\}} 
+            + \Bigl(1-2\pi\Bigr)f_i f_j\Bigr)
+        }{
+            \left(\displaystyle\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2
+        }\\
+    % &= \frac{1}{\pi^2} 
+    %     \frac{
+    %         \displaystyle\sum_{i,j = 0}^{m-1} 
+    %         (f_{\min \{i,j\} }-f_i f_j) 
+    %         (f_{\min \{i,j\} }+f_i f_j)}{\left(\displaystyle\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} - \frac{2}{\pi} \frac{\displaystyle\sum_{i,j = 0}^{m-1} f_i f_j(f_{\min \{i,j\} }-f_i f_j)}{\left(\displaystyle\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} 
+\end{align*}
+
+\end{appendices}
+
+\bibliography{references}
 
 
 \end{document}
