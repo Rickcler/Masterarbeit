@@ -4,12 +4,14 @@
 # ==============================================================================
 
 # Pakete (einmalig installieren falls nötig)
-# install.packages(c("dplyr", "tidyr", "ggplot2", "patchwork"))
+# install.packages(c("dplyr", "tidyr", "ggplot2", "patchwork", "cowplot"))
 
 library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(patchwork)
+library(cowplot)
+
 
 # Globale Simulationsparameter
 SEED    <- 123

@@ -1797,7 +1797,9 @@ parameter $r_{\pi} \in (0,1)$, with transition probabilities
 This mechanism preserves the marginal observation probability $\pi$ 
 while inducing serial dependence in $(O_t)$, with 
 $\mathrm{Cov}(O_t, O_{t+h}) = r_{\pi}^h\,\pi(1-\pi)$ for all $h \geq 1$ 
-\citep[p.~139]{Weiss2018}.\\
+\citep[p.~139]{Weiss2018}. Notably, this process is equal to a BinAR(1)-process 
+with parameters $m =1,~p = \pi$ and $r = r_h$, which implies that the process 
+satisifies the relevant mixing conditions.
 Third, we consider observation schemes that depend on the current state of 
 the underlying process $(X_t)$, corresponding to MNAR-type mechanisms. In 
 the first variant, the observation probability increases linearly with $X_t$, i.e.
@@ -2052,12 +2054,46 @@ Scenario~B.
         \centering
         \includegraphics[width=\textwidth]{../Graphs/IOV_m10.png}
     \end{minipage}
+        
+    \vspace{0.1cm}
+
+    \includegraphics[width=0.55\textwidth]{../Graphs/legend_plot_IOV_Skew.png}
     \caption{\scriptsize Simulated vs.\ asymptotic standard deviation of
     $\widehat{\mathrm{IOV}}$ for Scenario~B ($m=10$, $p=0.45$,
     $r=0.50$) across $n \in \{50,100,250,500,1000\}$ and
     $\pi \in \{0.75, 1\}$.}
     \label{fig:iov_comparison}
 \end{figure}
+
+\paragraph{Serially dependent observation process.}
+When $(O_t)$ is a stationary binary Markov chain with autocorrelation
+parameter $r_\pi \in \{0.2, 0.75\}$ (see Section~\ref{sec:sim-setup}),
+the marginal observation probability $\pi = 0.75$ is preserved but
+$(O_t)$ is no longer i.i.d. Figure~\ref{fig:iov_sd_comparison} shows
+the same comparison as in Figure~\ref{fig:iov_comparison}, however here
+varrying the serial dependence parameter $r_h$ while keeping the marginal missingness
+probability constant.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}[c]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../Graphs/IOV_sd_m3.png}
+    \end{minipage}
+    \begin{minipage}[c]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../Graphs/IOV_sd_m10.png}
+    \end{minipage}
+    
+    \vspace{0.1cm}
+
+    \includegraphics[width=0.55\textwidth]{../Graphs/legend_plot_IOV_sd.png}
+    \caption{\scriptsize Simulated vs.\ asymptotic standard deviation of
+    $\widehat{\mathrm{IOV}}$ for both scenarios across $n \in \{50,100,250,500,1000\}$, with $\pi = 0.75$
+    and $r_{\pi} \in \{0.2, 0.75\}$.}
+    \label{fig:iov_sd_comparison}
+\end{figure}
+
 
 
 \paragraph{Skewness.}
@@ -2081,9 +2117,12 @@ scenarios hold as for the IOV.
         \centering
         \includegraphics[width=\textwidth]{../Graphs/Skew_m10.png}
     \end{minipage}
+    
+    \vspace{0.1cm}
+
+    \includegraphics[width=0.55\textwidth]{../Graphs/legend_plot_IOV_sd.png}
     \caption{\scriptsize Simulated vs.\ asymptotic standard deviation of
-    $\widehat{\mathrm{skew}}$ for Scenario~B ($m=10$, $p=0.45$,
-    $r=0.50$) across $n \in \{50,100,250,500,1000\}$ and
+    $\widehat{\mathrm{skew}}$ for both scenarios, across $n \in \{50,100,250,500,1000\}$ and
     $\pi \in \{0.75, 1\}$.}
     \label{fig:skew_comparison}
 \end{figure}
@@ -2118,9 +2157,12 @@ its greater marginal dispersion.
         \centering
         \includegraphics[width=\textwidth]{../Graphs/Kappa_m10.png}
     \end{minipage}
+
+    \vspace{0.1cm}
+
+    \includegraphics[width=0.55\textwidth]{../Graphs/legend_plot_IOV_sd.png}
     \caption{\scriptsize Simulated vs.\ asymptotic standard deviation of
-    $\widehat{\mathrm{IOV}}$ for Scenario~B ($m=10$, $p=0.45$,
-    $r=0.50$) across $n \in \{50,100,250,500,1000\}$ and
+    $\widehat{\kappa}(1)$ for both scenarios across $n \in \{50,100,250,500,1000\}$ and
     $\pi \in \{0.75, 1\}$.}
     \label{fig:kappa_comparison}
 \end{figure}
@@ -2188,7 +2230,7 @@ to the corresponding $95\%$ confidence intervals under $H_0$.
     \end{minipage}
     \caption{\scriptsize Simulated vs.\ asymptotic standard deviation of
     $\widehat{\mathrm{IOV}}$ for Scenario~B ($m=10$, $p=0.45$,
-    $r=0.50$) across $n \in \{50,100,250,500,1000\}$ and
+    $r=0.50$) across $n \in \{50,100,250,500,1000, 2000\}$ and
     $\pi \in \{0.75, 1\}$.}
     \label{fig:kappa-H_A}
 \end{figure}
@@ -2200,21 +2242,6 @@ to the corresponding $95\%$ confidence intervals under $H_0$.
 
 The preceding results were obtained under the MCAR assumption. We
 now examine what happens when this assumption is violated.
-
-\paragraph{Serially dependent observation process.}
-When $(O_t)$ is a stationary binary Markov chain with autocorrelation
-parameter $\rho_\pi \in \{0.2, 0.75\}$ (see Section~\ref{sec:sim-setup}),
-the marginal observation probability $\pi = 0.75$ is preserved but
-$(O_t)$ is no longer i.i.d. Figure~\ref{fig:bias-serial-O} shows
-that the bias of $\hat{\kappa}_{\mathrm{ord}}(h)$ under $H_0$ now
-deviates from the theoretical limit $-1/\pi$: for $\rho_\pi = 0.2$
-the deviation is small, but for $\rho_\pi = 0.75$ it is substantial.
-This illustrates that the simplified formula $\sigma^2_\kappa$ (derived
-under i.i.d.\ $(O_t)$) is no longer valid when $(O_t)$ exhibits
-strong serial dependence, and that a preliminary test for
-independence of $(O_t)$ — as discussed in
-Section~\ref{subsec:serial-H0} — is advisable in practice.
-% [Figure einfügen: Bias-Kurven für rho_pi = 0, 0.2, 0.75]
 
 \paragraph{State-dependent missingness (MNAR).}
 Under the two MNAR mechanisms — observation probability increasing

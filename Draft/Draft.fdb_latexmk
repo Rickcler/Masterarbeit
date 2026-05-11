@@ -1,32 +1,36 @@
 # Fdb version 4
-["bibtex Draft"] 1778245475.82565 "Draft.aux" "Draft.bbl" "Draft" 1778246717.47719 0
+["bibtex Draft"] 1778504747.95967 "Draft.aux" "Draft.bbl" "Draft" 1778504941.90221 0
   "./references.bib" 1776850231 3114 469657e1e6a8f335840f03091ee2dc60 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/bibtex/bst/bibtex/apalike.bst" 1291972791 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "Draft.aux" 1778246711 23889 075c9d48c6ab0027cf3b0e90fa4c744d "xelatex"
+  "Draft.aux" 1778504931 24517 0bb218945e54fcecf76771518f4dda27 "xelatex"
   (generated)
   "Draft.bbl"
   "Draft.blg"
   (rewritten before read)
-["xdvipdfmx"] 1778246714.15595 "Draft.xdv" "Draft.pdf" "Draft" 1778246717.50227 0
-  "Draft.xdv" 1778246711 253476 15e21c150ae622daed465275ae240471 "xelatex"
+["xdvipdfmx"] 1778504935.72008 "Draft.xdv" "Draft.pdf" "Draft" 1778504941.96106 0
+  "Draft.xdv" 1778504931 254848 5567851c26a301cda0d454e66044b1be "xelatex"
   (generated)
   "Draft.pdf"
   (rewritten before read)
-["xelatex"] 1778246706.89291 "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" "Draft.xdv" "Draft" 1778246717.47942 0
+["xelatex"] 1778504922.63857 "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" "Draft.xdv" "Draft" 1778504941.90352 0
   "../Graphs/Bias_Presi_.png" 1776954898 32278 1b48e0dbc6dbb122b77c475a33bf48d1 ""
   "../Graphs/Bias_presi_no_n.png" 1776954728 16831 4d507b4f5d0cb7239bdfca8397200c7f ""
-  "../Graphs/IOV_m10.png" 1778234579 60462 27a9119a5a4355ced13e32ad235982f9 ""
-  "../Graphs/IOV_m3.png" 1778234673 59802 2cd5824b18d3bc8cc7bc24b8e1f364a5 ""
+  "../Graphs/IOV_m10.png" 1778504393 54021 add9b00a189f10da76c129891e4b138f ""
+  "../Graphs/IOV_m3.png" 1778504897 53258 89905520daa47f746ed5bd98c28b5d2b ""
+  "../Graphs/IOV_sd_m10.png" 1778503707 53662 f583ab85891b1e0e00232d3fb83124bc ""
+  "../Graphs/IOV_sd_m3.png" 1778503725 52676 b052eb2bd61e6950b7d7b1724961b6aa ""
   "../Graphs/Kappa_H_A.png" 1778246321 67078 659d52ed980c24d8ab26befc15117359 ""
   "../Graphs/Kappa_m10.png" 1778234610 60248 afff5ad007262388f71682f6dae601a2 ""
-  "../Graphs/Kappa_m3.png" 1778234690 59830 e11f3997306a92600cd441fcc0792b7a ""
+  "../Graphs/Kappa_m3.png" 1778504921 54098 6a7f8800ea35f7032f027a0d0e1fa122 ""
   "../Graphs/Legend_Var.png" 1777542215 6259 c437854b1a373881718a92274b82a871 ""
   "../Graphs/MarginalDistributions.png" 1775820788 44363 2d669b6dc812e86d38c4f3da419d5ece ""
   "../Graphs/Rejection_rate.png" 1777882818 45520 89b3a5c535a5edf25cc8c5749f226c44 ""
   "../Graphs/Scaled_CLT.png" 1777981455 6195 e76ed4c340e4937d78759bfe2caab3ab ""
-  "../Graphs/Skew_m10.png" 1778234594 59884 4f8973766bb79f9f9fe97b3811f4bccf ""
-  "../Graphs/Skew_m3.png" 1778234681 59534 46f33a0af812fc39cf7f31f3948c9f9c ""
+  "../Graphs/Skew_m10.png" 1778504434 53372 a3c60baf1f8022129c9c641939427f58 ""
+  "../Graphs/Skew_m3.png" 1778504910 52733 dc000a5ba119ff6c6c280934236e5170 ""
   "../Graphs/kappa_to_h.png" 1776862126 42910 e9f1c6704df8e4132870ee4318425e9d ""
+  "../Graphs/legend_plot_IOV_Skew.png" 1778504448 10292 abb688842af513f69e790f54002430bc ""
+  "../Graphs/legend_plot_IOV_sd.png" 1778503795 10472 577a8c951e70db51e57a49f805521c4f ""
   "../Graphs/rejection_H0_level.png" 1778241331 79644 e1bbcb26e26c288564af2a6b1a1c21b9 ""
   "../Graphs/unscaled_CLT.png" 1777981594 4487 50b39b1b461485609d91f85a5555d18d ""
   "C:/Users/victo/AppData/Local/MiKTeX/miktex/data/le/xetex/xelatex.fmt" 1776333737 27177068 ed83974225c2fccd90c08110ff5492d1 ""
@@ -227,10 +231,10 @@
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/tex/latex/xpatch/xpatch.sty" 1585221260 8510 7803f78066c4f9d008405191a4b43073 ""
-  "Draft.aux" 1778246711 23889 075c9d48c6ab0027cf3b0e90fa4c744d "xelatex"
-  "Draft.bbl" 1778245476 2137 7a0461988236b6483d977d269c116054 "bibtex Draft"
-  "Draft.tex" 1778246704 129857 df7ec86659a4f09920c5214bd2a3389e ""
-  "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" 1778246704 129857 df7ec86659a4f09920c5214bd2a3389e ""
+  "Draft.aux" 1778504931 24517 0bb218945e54fcecf76771518f4dda27 "xelatex"
+  "Draft.bbl" 1778504748 2137 7a0461988236b6483d977d269c116054 "bibtex Draft"
+  "Draft.tex" 1778504721 130628 51fc14271c6e1d542c27e2d34a9a4722 ""
+  "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" 1778504721 130628 51fc14271c6e1d542c27e2d34a9a4722 ""
   (generated)
   "Draft.aux"
   "Draft.log"

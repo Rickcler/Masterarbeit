@@ -43,8 +43,31 @@ prepare_comparison_subset <- function(data, filter_expr, group_var_name) {
     ])
   })
 
-  x_labels <- paste0("n = ", group_labels$n, "\n",
-                     group_var_name, " = ", group_labels[[group_var_name]])
+  x_labels <- mapply(
+  function(n_val, g_val) {
+
+    if (group_var_name == "pi") {
+      bquote(atop(n == .(n_val),
+                   pi == .(g_val)))
+
+    } else if (group_var_name == "r_pi") {
+      bquote(atop(n == .(n_val),
+                   r[pi] == .(g_val)))
+
+    } else if (group_var_name == "pi_h") {
+      bquote(atop(n == .(n_val),
+                   pi[h] == .(g_val)))
+
+    } else {
+      bquote(atop(n == .(n_val),
+                   .(group_var_name) == .(g_val)))
+    }
+
+  },
+  group_labels$n,
+  group_labels[[group_var_name]],
+  SIMPLIFY = FALSE
+)
 
   list(subset = subset, group_centers = group_centers, x_labels = x_labels)
 }
@@ -67,7 +90,13 @@ comparison_plot <- function(subset, y_var, ymin_var, ymax_var,
                             title, y_label, subtitle,
                             ylim_offset = c(-0.125, 0.075),
                             group_var = "pi") {
-
+  legend_label <- switch(
+    group_var,
+    "pi"   = expression(pi),
+    "r_pi" = expression(r[pi]),
+    "pi_h" = expression(pi[h]),
+    group_var
+  )
   n_groups   <- length(group_centers)
   rect_xmin  <- c(0.5, seq(2.5, by = 2, length.out = n_groups - 1))
   rect_xmax  <- c(seq(2.5, by = 2, length.out = n_groups - 1),
@@ -101,7 +130,7 @@ comparison_plot <- function(subset, y_var, ymin_var, ymax_var,
     scale_shape_manual(
       values = setNames(c(16, 17, 15, 18),
                         as.character(sort(unique(subset[[group_var]])))),
-      name   = group_var
+      name   = legend_label
     ) +
     coord_cartesian(ylim = c(true_val + ylim_offset[1],
                              true_val + ylim_offset[2])) +
@@ -111,7 +140,7 @@ comparison_plot <- function(subset, y_var, ymin_var, ymax_var,
     theme(
       plot.title         = element_text(hjust = 0.5, face = "bold", size = 20),
       plot.subtitle      = element_text(hjust = 0.5, color = "gray40"),
-      axis.text.x        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 14, color = "gray20"),
+      axis.text.x        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 12, color = "gray20"),
       axis.text.y        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 14, color = "gray20"),
       legend.position    = "bottom",
       legend.box         = "horizontal",      # Legendenblöcke nebeneinander
@@ -151,7 +180,7 @@ combined_df <- combined_df %>%
 
 prep_A <- prepare_comparison_subset(
   combined_df,
-  filter_expr   = (p == 0.2 & pi_h == 0), # hier p 0.2 oder 0.45 wählen
+  filter_expr   = (p == 0.2 & r_pi == 0), # hier p 0.2 oder 0.45 wählen
   group_var_name = "pi"
 )
 sub_A         <- prep_A$subset
@@ -168,14 +197,14 @@ IOV_plot <- comparison_plot(
   group_centers = prep_A$group_centers,
   x_labels      = prep_A$x_labels,
   y_label       = "IOV Value",
-  title = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  MCAR",
+  title = "Scenario A",
+  subtitle = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  MCAR",
                           m_A, p_A, r_A),
-  subtitle = "",
   ylim_offset   = c(-0.10, 0.05), # anpassen je nach p
   group_var     = "pi"
 )
 print(IOV_plot)
-ggsave(sprintf("Graphs/iov_m%d.png", m_A), IOV_plot, width = 8, height = 5)
+ggsave(sprintf("Graphs/iov_m%d.png", m_A), IOV_plot + theme(legend.position = "none"), width = 8, height = 5)
 
 # Skew
 Skew_plot <- comparison_plot(
@@ -183,17 +212,104 @@ Skew_plot <- comparison_plot(
   true_val      = t_Skew_A,
   group_centers = prep_A$group_centers,
   x_labels      = prep_A$x_labels,
-  title         = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  MCAR",
-                          m_A, p_A, r_A),
+  title         = "Scenario A",
   y_label       = "Skewness Value",
-  subtitle      = "",
+  subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  MCAR",
+                          m_A, p_A, r_A),
   ylim_offset   = c(-0.10, 0.1), # anpassen je nach p
   group_var     = "pi"
 )
 print(Skew_plot)
-ggsave(sprintf("Graphs/skew_m%d.png", m_A), Skew_plot, width = 8, height = 5)
+ggsave(sprintf("Graphs/skew_m%d.png", m_A), Skew_plot + theme(legend.position = "none"), width = 8, height = 5)
+
+Cohens_plot <- comparison_plot(
+  sub_A, "mean_C", "lower_C", "upper_C",
+  true_val      = 0,
+  group_centers = prep_A$group_centers,
+  x_labels      = prep_A$x_labels,
+  title         = "Scenario A",
+  y_label       = "Cohen's κ lag(1)",
+  subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = 0  |  MCAR",
+                          m_A, p_A),
+  ylim_offset   = c(-0.275, 0.26), # anpassen je nach p
+  group_var     = "pi"
+)
+print(Cohens_plot)
+ggsave(sprintf("Graphs/kappa_m%d.png", m_A), Cohens_plot + theme(legend.position = "none"), width = 8, height = 5)
 
 
+prep_A <- prepare_comparison_subset(
+  combined_df,
+  filter_expr   = (p == 0.45 & r_pi == 0), # hier p 0.2 oder 0.45 wählen
+  group_var_name = "pi"
+)
+sub_A         <- prep_A$subset
+t_IOV_A       <- sub_A$true_IOV[1]
+t_Skew_A      <- sub_A$true_Skew[1]
+m_A <- sub_A$m[1]; p_A <- sub_A$p[1]; r_A <- sub_A$r[1]
+sub_A$true_C1 <- 0
+
+
+# IOV
+IOV_plot <- comparison_plot(
+  sub_A, "mean_IOV", "lower_IOV", "upper_IOV",
+  true_val      = t_IOV_A,
+  group_centers = prep_A$group_centers,
+  x_labels      = prep_A$x_labels,
+  y_label       = "IOV Value",
+  title         = "Scenario B",
+  subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  MCAR",
+                          m_A, p_A, r_A),
+  ylim_offset   = c(-0.10, 0.05), # anpassen je nach p
+  group_var     = "pi"
+)
+print(IOV_plot)
+ggsave(sprintf("Graphs/iov_m%d.png", m_A), IOV_plot + theme(legend.position = "none"), width = 8, height = 5)
+
+# Skew
+Skew_plot <- comparison_plot(
+  sub_A, "mean_Skew", "lower_Skew", "upper_Skew",
+  true_val      = t_Skew_A,
+  group_centers = prep_A$group_centers,
+  x_labels      = prep_A$x_labels,
+  title         = "Scenario B",
+  subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  MCAR",
+                          m_A, p_A, r_A),
+  y_label       = "Skewness Value",
+  ylim_offset   = c(-0.10, 0.1), # anpassen je nach p
+  group_var     = "pi"
+)
+print(Skew_plot)
+ggsave(sprintf("Graphs/skew_m%d.png", m_A), Skew_plot + theme(legend.position = "none"), width = 8, height = 5)
+
+Cohens_plot <- comparison_plot(
+  sub_A, "mean_C", "lower_C", "upper_C",
+  true_val      = 0,
+  group_centers = prep_A$group_centers,
+  x_labels      = prep_A$x_labels,
+  title         = "Scenario B",
+  y_label       = "Cohen's κ lag(1)",
+  subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = 0  |  MCAR",
+                          m_A, p_A),
+  ylim_offset   = c(-0.275, 0.26), # anpassen je nach p
+  group_var     = "pi"
+)
+print(Cohens_plot)
+ggsave(sprintf("Graphs/kappa_m%d.png", m_A), Cohens_plot + theme(legend.position = "none"), width = 8, height = 5)
+
+# Legende
+p <- Skew_plot
+legend <- get_legend(
+  p + theme(legend.position = "bottom")
+)
+legend_plot_IOV_sd <- ggdraw(legend)
+
+ggsave(
+  "Graphs/legend_plot_IOV_Skew.png",
+  legend_plot_IOV_sd,
+  width = 8,
+  height = 1
+)
 
 # Cohen's K
 Cohens_plot <- comparison_plot(
@@ -215,10 +331,12 @@ ggsave(sprintf("Graphs/kappa_m%d.png", m_A), Cohens_plot, width = 8, height = 5)
 # Plot-Block B: Serielle Abhängigkeit in Missingness, pi == 0.75
 # ==============================================================================
 
+
+# Scenario A
 prep_B <- prepare_comparison_subset(
   combined_df,
-  filter_expr    = (pi_h %in% c(0.2, 0.75) & pi == 0.75),
-  group_var_name = "pi_h"
+  filter_expr    = (r_pi %in% c(0.2, 0.75) & pi == 0.75 & m == 3),
+  group_var_name = "r_pi"
 )
 sub_B    <- prep_B$subset
 t_IOV_B  <- sub_B$true_IOV[1]
@@ -226,19 +344,64 @@ t_Skew_B <- sub_B$true_Skew[1]
 m_B <- sub_B$m[1]; p_B <- sub_B$p[1]; r_B <- sub_B$r[1]
 
 # IOV
-comparison_plot(
+IOV_sd_plot <- comparison_plot(
   sub_B, "mean_IOV", "lower_IOV", "upper_IOV",
   true_val      = t_IOV_B,
   group_centers = prep_B$group_centers,
   x_labels      = prep_B$x_labels,
-  title         = "Comparison of Asymptotic vs Simulated IOV Results\n(Serially Dependent Missingness)",
+  title         = "Scenario A", # C
   y_label       = "IOV Value",
   subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  π = 0.75",
                           m_B, p_B, r_B),
-  ylim_offset   = c(-0.125, 0.075),
-  group_var     = "pi_h"
+  ylim_offset   = c(-0.1, 0.06), # m = 3 -> , m = 10 -> c(-0.07, 0.035)
+  group_var     = "r_pi"
 )
+print(IOV_sd_plot + theme(legend.position = "none"))
+ggsave(sprintf("Graphs/IOV_sd_m%d.png", m_B), IOV_sd_plot + theme(legend.position = "none"), width = 8, height = 5)
 
+
+# Scenario B
+prep_B <- prepare_comparison_subset(
+  combined_df,
+  filter_expr    = (r_pi %in% c(0.2, 0.75) & pi == 0.75 & m == 10),
+  group_var_name = "r_pi"
+)
+sub_B    <- prep_B$subset
+t_IOV_B  <- sub_B$true_IOV[1]
+t_Skew_B <- sub_B$true_Skew[1]
+m_B <- sub_B$m[1]; p_B <- sub_B$p[1]; r_B <- sub_B$r[1]
+
+# IOV
+IOV_sd_plot <- comparison_plot(
+  sub_B, "mean_IOV", "lower_IOV", "upper_IOV",
+  true_val      = t_IOV_B,
+  group_centers = prep_B$group_centers,
+  x_labels      = prep_B$x_labels,
+  title         = "Scenario B", # C
+  y_label       = "IOV Value",
+  subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  π = 0.75",
+                          m_B, p_B, r_B),
+  ylim_offset   = c(-0.07, 0.035), # m = 3 -> c(-0.1, 0.06), m = 10 -> c(-0.07, 0.035)
+  group_var     = "r_pi"
+)
+print(IOV_sd_plot)
+ggsave(sprintf("Graphs/IOV_sd_m%d.png", m_B), IOV_sd_plot + theme(legend.position = "none"), width = 8, height = 5)
+
+
+
+# Legende
+p <- IOV_sd_plot
+legend <- get_legend(
+  p + theme(legend.position = "bottom")
+)
+legend_plot_IOV_sd <- ggdraw(legend)
+
+ggsave(
+  "Graphs/legend_plot_IOV_sd.png",
+  legend_plot_IOV_sd,
+  width = 8,
+  height = 1
+)
 # Skew
 comparison_plot(
   sub_B, "mean_Skew", "lower_Skew", "upper_Skew",
@@ -250,7 +413,7 @@ comparison_plot(
   subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  π = 0.75",
                           m_B, p_B, r_B),
   ylim_offset   = c(-0.15, 0.15),
-  group_var     = "pi_h"
+  group_var     = "r_pi"
 )
 
 # Cohen's K

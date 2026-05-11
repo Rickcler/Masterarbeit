@@ -13,14 +13,14 @@ source("Code/Code_structured/01_functions.R")
 # ------------------------------------------------------------------------------
 
 unique_coeffs <- data.frame(rbind(
-  c(m = 3,  p = 0.20, r = 0.35, pi = 1,    pi_h = 0),
-  c(m = 3,  p = 0.20, r = 0.35, pi = 0.75, pi_h = 0),
-  c(m = 3,  p = 0.20, r = 0.35, pi = 1,    pi_h = 0.2),
-  c(m = 3,  p = 0.20, r = 0.35, pi = 0.75, pi_h = 0.2),
-  c(m = 3,  p = 0.20, r = 0.35, pi = 1,    pi_h = 0.75),
-  c(m = 3,  p = 0.20, r = 0.35, pi = 0.75, pi_h = 0.75),
-  c(m = 10, p = 0.45, r = 0.50, pi = 1,    pi_h = 0),
-  c(m = 10, p = 0.45, r = 0.50, pi = 0.75, pi_h = 0)
+  c(m = 3,  p = 0.20, r = 0.35, pi = 1,    r_pi = 0),
+  c(m = 3,  p = 0.20, r = 0.35, pi = 0.75, r_pi = 0),
+  c(m = 3,  p = 0.20, r = 0.35, pi = 0.75, r_pi = 0.2),
+  c(m = 3,  p = 0.20, r = 0.35, pi = 0.75, r_pi = 0.75),
+  c(m = 10, p = 0.45, r = 0.50, pi = 1,    r_pi = 0),
+  c(m = 10, p = 0.45, r = 0.50, pi = 0.75, r_pi = 0),
+  c(m = 10, p = 0.45, r = 0.50, pi = 0.75, r_pi = 0.2),
+  c(m = 10, p = 0.45, r = 0.50, pi = 0.75, r_pi = 0.75)
 ))
 
 # ------------------------------------------------------------------------------
@@ -33,10 +33,10 @@ asymp_df <- do.call(rbind, lapply(seq_len(nrow(unique_coeffs)), function(idx) {
   p_val   <- as.numeric(params["p"])
   r_val   <- as.numeric(params["r"])
   pi_val  <- as.numeric(params["pi"])
-  pi_h_val <- as.numeric(params["pi_h"])
+  r_pi_val <- as.numeric(params["r_pi"])
 
   marginal <- pbinom(0:(m_val - 1), m_val, p_val)
-  Sigma    <- Sigma_Star(m_val, p_val, r_val, pi_val, pi_h_val)
+  Sigma    <- Sigma_Star(m_val, p_val, r_val, pi_val, r_pi_val)
 
   do.call(rbind, lapply(UNIQUE_N, function(n_val) {
     iov_res  <- IOV_asymptotic(Sigma, marginal, n_val, m_val)
@@ -49,7 +49,7 @@ asymp_df <- do.call(rbind, lapply(seq_len(nrow(unique_coeffs)), function(idx) {
       p          = p_val,
       r          = r_val,
       pi         = pi_val,
-      pi_h       = pi_h_val,
+      r_pi       = r_pi_val,
       type       = "Asymptotic",
       mean_IOV   = iov_res["expectation"],
       sd_IOV     = iov_res["sd"],
@@ -63,6 +63,10 @@ asymp_df <- do.call(rbind, lapply(seq_len(nrow(unique_coeffs)), function(idx) {
       sd_C       = C_res["sd"],
       lower_C    = C_res["expectation"] - C_res["sd"],
       upper_C    = C_res["expectation"] + C_res["sd"],
+      mean_C_bc  = C_res["expectation"] + (1/(n_val * p_val)), 
+      sd_C_bc       = C_res["sd"],
+      lower_C_bc = (C_res["expectation"] + (1/(n_val * p_val))) - C_res["sd"],
+      upper_C_bc = (C_res["expectation"] + (1/(n_val * p_val))) + C_res["sd"],
       row.names  = NULL
     )
   }))
@@ -73,7 +77,7 @@ asymp_df <- do.call(rbind, lapply(seq_len(nrow(unique_coeffs)), function(idx) {
 # Wird in 04_visuals.R (Bias-Plots) benötigt
 # ------------------------------------------------------------------------------
 
-Sigma_raw <- Sigma_Star(m = 10, p = 0.3, r = 0.2, pi = 0.75, pi_h = 0)
+Sigma_raw <- Sigma_Star(m = 10, p = 0.3, r = 0.2, pi = 0.75, r_pi = 0)
 
 # ------------------------------------------------------------------------------
 # Speichern

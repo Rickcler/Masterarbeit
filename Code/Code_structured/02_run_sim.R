@@ -17,14 +17,16 @@ scenarios <- expand.grid(
   p    = c(0.20, 0.45),
   r    = c(0, 0.35, 0.50),
   pi   = c(1, 0.75),
-  pi_h = c(0, 0.2, 0.75)
+  r_pi = c(0, 0.2, 0.75)
 )
 
 scenarios <- scenarios[
-  (scenarios$m == 3  & scenarios$p == 0.20 & scenarios$r == 0.35 & scenarios$pi_h == 0)   |
-  (scenarios$m == 3  & scenarios$p == 0.20 & scenarios$r == 0.35 & scenarios$pi_h == 0.2)  |
-  (scenarios$m == 3  & scenarios$p == 0.20 & scenarios$r == 0.35 & scenarios$pi_h == 0.75) |
-  (scenarios$m == 10 & scenarios$p == 0.45 & scenarios$r == 0.50 & scenarios$pi_h == 0),
+  (scenarios$m == 3  & scenarios$p == 0.20 & scenarios$r == 0.35 & scenarios$r_pi == 0)   |
+  (scenarios$m == 3  & scenarios$p == 0.20 & scenarios$r == 0.35 & scenarios$r_pi == 0.2)  |
+  (scenarios$m == 3  & scenarios$p == 0.20 & scenarios$r == 0.35 & scenarios$r_pi == 0.75) |
+  (scenarios$m == 10 & scenarios$p == 0.45 & scenarios$r == 0.50 & scenarios$r_pi == 0) |
+  (scenarios$m == 10 & scenarios$p == 0.45 & scenarios$r == 0.50 & scenarios$r_pi == 0.2)  |
+  (scenarios$m == 10 & scenarios$p == 0.45 & scenarios$r == 0.50 & scenarios$r_pi == 0.75), 
 ]
 rownames(scenarios) <- NULL
 
@@ -59,7 +61,7 @@ results <- apply(scenarios, 1, function(row) {
     p    = as.numeric(row["p"]),
     r    = as.numeric(row["r"]),
     pi   = as.numeric(row["pi"]),
-    pi_h = as.numeric(row["pi_h"])
+    r_pi = as.numeric(row["r_pi"])
   )
 })
 

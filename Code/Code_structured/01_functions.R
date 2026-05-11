@@ -179,10 +179,10 @@ lag_h_joint_cdf <- function(m, p, r, h = 1) {
 #' @param p     Success probability of the count process
 #' @param r     Thinning parameter of the count process
 #' @param pi    Marginal observation probability  P(R_t = 1)
-#' @param pi_h  Lag-1 joint probability P(R_t = 1, R_{t+1} = 1); starting value
+#' @param r_pi  Lag-1 joint probability P(R_t = 1, R_{t+1} = 1); starting value
 #'              for the missingness BinAR(1) recursion
 #' @param H     Truncation lag (default 50)
-Sigma_Star <- function(m, p, r, pi, pi_h, H = 50) {
+Sigma_Star <- function(m, p, r, pi, r_pi, H = 50) {
   f     <- pbinom(0:(m - 1), m, p)
   Sigma <- matrix(0, nrow = m, ncol = m)
 
@@ -192,13 +192,13 @@ Sigma_Star <- function(m, p, r, pi, pi_h, H = 50) {
       iid_part <- (1 / pi) * (f[smaller + 1] - f[i + 1] * f[j + 1])
 
       lag_sum      <- 0
-      pi_h_current <- pi_h   # reset for each (i,j) — fixes overwrite bug
+      pi_h_current <- r_pi   # reset for each (i,j) — fixes overwrite bug
 
       for (h in 1:H) {
         cdf_lag_h    <- lag_h_joint_cdf(m, p, r, h)
-        pi_h_current <- lag_h_joint_pmf(1, pi, pi_h_current, h)[2, 2]
+        r_pi_current <- lag_h_joint_pmf(1, pi, pi_h_current, h)[2, 2]
         lag_sum      <- lag_sum +
-          pi_h_current * (
+          r_pi_current * (
             cdf_lag_h[i + 1, j + 1] + cdf_lag_h[j + 1, i + 1] -
             2 * f[i + 1] * f[j + 1]
           )
@@ -290,10 +290,10 @@ Cohens_asymptotic_iid <- function(n, pi, m, marginal_cdf) {
 #' @param p      Success probability
 #' @param r      Thinning parameter
 #' @param pi     Marginal observation probability
-#' @param pi_h   Lag-1 joint observation probability (0 = i.i.d. MCAR)
+#' @param r_pi   Lag-1 joint observation probability (0 = i.i.d. MCAR)
 #' @param n_reps Number of replications
 #' @return List with $summary (mean/sd x 4 statistics) and $cdf (mean/sd x m)
-simulation <- function(n, m, p, r, pi, pi_h, n_reps = N_REPS) {
+simulation <- function(n, m, p, r, pi, r_pi, n_reps = N_REPS) {
   results <- matrix(
     NA, nrow = n_reps, ncol = 6,
     dimnames = list(NULL, c("IOV", "Skew", "lag1_Cohen", "lag2_Cohen", "lag1_Cohen_bc", "lag2_Cohen_bc"))
@@ -305,7 +305,7 @@ simulation <- function(n, m, p, r, pi, pi_h, n_reps = N_REPS) {
 
   for (rep in 1:n_reps) {
     count_process   <- generate_binar1(n, m, p, r)
-    Missing_process <- generate_binar1(n, 1, pi, pi_h)
+    Missing_process <- generate_binar1(n, 1, pi, r_pi)
     observed_counts <- count_process[Missing_process == 1]
     CDF             <- marginal_probs_e(m, observed_counts, length(observed_counts))
 
