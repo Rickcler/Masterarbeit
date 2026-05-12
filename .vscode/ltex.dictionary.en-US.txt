@@ -1,0 +1,6 @@
+MNAR
+missingness
+MCAR
+stationarity
+Missingness
+measurability

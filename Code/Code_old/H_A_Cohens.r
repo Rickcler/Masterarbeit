@@ -59,6 +59,7 @@ kappa_HA_list <- lapply(n_grid, function(n) {
   )
 })
 
+
 kappa_HA_df <- do.call(rbind, kappa_HA_list) %>%
   mutate(n = factor(n, levels = n_grid))
 

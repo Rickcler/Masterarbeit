@@ -7,6 +7,7 @@
 \usepackage{amsthm}
 \usepackage{appendix}
 \usepackage{tikz}
+\usepackage{float}
 % Theorem-Definitionen
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{proposition}[theorem]{Proposition}
@@ -85,7 +86,7 @@ Regardless of whether we consider a simple categorical process with few categori
 
     For ordinal data, it is sufficient to consider the cumulative probabilities of the categories $0, \ldots , m-1$ since the cumulative probability of the last category $m$ is always equal to 1. \\
 
-    Although one could equivalently estimate the PMF and derive the CDF from it, representing ordinal data through the CDF is often more convenient as it this form that is used to compute metrics for location and disperson.
+    Although one could equivalently estimate the PMF and derive the CDF from it, representing ordinal data through the CDF is often more convenient as it this form that is used to compute metrics for location and dispersion.
 
     \item \textbf{Nominal data:}
     Since the categories of nominal variables do not possess a meaningful order, statistical procedures cannot make use of cumulative structure.
@@ -253,8 +254,8 @@ Taking the derivative of $g(f_i) := f_i(1-f_i)$  and setting it to zero yields:
 f_i &= \frac{1}{2}.
 \end{align*}
 
-Since $g(f_i=0) = g(f_i = 1)=0$, the fucntion is concave and this critical point is indeed the global maximum.
-Since its been already shown that $\mathrm{IOV}(\boldsymbol{f} = (\frac{1}{2}, \ldots, \frac{1}{2})^T) = 1$, it directly follows that
+Since $g(f_i=0) = g(f_i = 1)=0$, the function is concave and this critical point is indeed the global maximum.
+Since it has been already shown that $\mathrm{IOV}(\boldsymbol{f} = (\frac{1}{2}, \ldots, \frac{1}{2})^T) = 1$, it directly follows that
 \[
 \mathrm{IOV}(\boldsymbol{f}) = 1 \Leftrightarrow \boldsymbol{f} = (\frac{1}{2}, \ldots, \frac{1}{2})^\top
 \]
@@ -538,10 +539,10 @@ where $\boldsymbol{\Sigma}_Z = (\sigma_{Z;i,j})_{i,j=0,\ldots,m-1}$ is given by
 \end{theorem}
 \section{Asymptotic Properties of Sample Dispersion Measures}
 \subsection*{IOV}
-We can now now use this information of the asymptotic distribution of $\hat{\boldsymbol{f}}$ to compute the asymptotic properties of sample measures that are based on $\hat{\boldsymbol{f}}$. According to the multivariate delta method \citep[Chapter~3]{VanderVaart1998} a random variable $G^* := g^*(\boldsymbol{\Theta^*})$, where $\boldsymbol{\Theta^*} \in \mathbb{R}^{m}$, $\sqrt{n}(\boldsymbol{\Theta^*} - \boldsymbol{\Theta})\overset{asy.}{\sim} \mathcal{N}(0, \boldsymbol{\Sigma^*})$ and  $g^*: \mathbb{R}^m\rightarrow \mathbb{R}$ is a continously differentiable function, satisfies
+We can now use this information of the asymptotic distribution of $\hat{\boldsymbol{f}}$ to compute the asymptotic properties of sample measures that are based on $\hat{\boldsymbol{f}}$. According to the multivariate delta method \citep[Chapter~3]{VanderVaart1998} a random variable $G^* := g^*(\boldsymbol{\Theta^*})$, where $\boldsymbol{\Theta^*} \in \mathbb{R}^{m}$, $\sqrt{n}(\boldsymbol{\Theta^*} - \boldsymbol{\Theta})\overset{asy.}{\sim} \mathcal{N}(0, \boldsymbol{\Sigma^*})$ and  $g^*: \mathbb{R}^m\rightarrow \mathbb{R}$ is a continuously differentiable function, satisfies
 \[\sqrt{n}(G^* - g^*(\boldsymbol{\Theta})) \overset{asy.}{\sim} \mathcal{N}(0, \boldsymbol{j\Sigma^* j^{\top}} )\]
 where $\boldsymbol{j}$ is the Jacobian and where $j_i =  \frac{\partial g^*(\boldsymbol{\Theta})}{\partial \theta_i}$. \\
-Since we have shown that $\boldsymbol{\hat{f}}$ is assymptotically normal we can use this to derive the asymptotic properties of sample measures like the IOV. The respective Jacobian is given by:
+Since we have shown that $\boldsymbol{\hat{f}}$ is asymptotically normal we can use this to derive the asymptotic properties of sample measures like the IOV. The respective Jacobian is given by:
 \begin{align*}
 \boldsymbol{j}_{\mathrm{IOV}} &= \left(\frac{\partial \mathrm{IOV}(\boldsymbol{f})}{\partial f_0 }, \ldots, \frac{\partial \mathrm{IOV}(\boldsymbol{f})}{\partial f_{m-1} }\right) = \frac{4}{m}\left((1- 2 f_0), \ldots,(1-2f_{m-1}) \right)
 \end{align*}
@@ -553,7 +554,7 @@ which leads to an asymptotic variance of the IOV:
 However, since $IOV$ is not a linear function, the first-order delta method only provides information about the asymptotic distribution and variance, not on the finite-sample bias:
 \[(\widehat{\mathrm{IOV}} \overset{p}{\rightarrow} \mathrm{IOV}(\boldsymbol{f})) \not\Rightarrow (\mathrm{E}[\widehat{\mathrm{IOV}}] = \mathrm{IOV}(\boldsymbol{f})).\]
 For nonlinear transformations, the curvature induces a bias of order $n^{-1}$. Since
-$\mathrm{IOV}(\boldsymbol{f}) = \frac{4}{m}\sum_{i=0}^{m-1}f_i(1-f_i)$ is quadratic in $\boldsymbol{f}$, all derivatives of order three and higher are eual to 0. Consequently, the second-order Taylor expansion is not merely an
+$\mathrm{IOV}(\boldsymbol{f}) = \frac{4}{m}\sum_{i=0}^{m-1}f_i(1-f_i)$ is quadratic in $\boldsymbol{f}$, all derivatives of order three and higher are equal to 0. Consequently, the second-order Taylor expansion is not merely an
 approximation but exact:
 \[
 \mathrm{IOV}(\hat{\boldsymbol{f}}) = \mathrm{IOV}(\boldsymbol{f}) 
@@ -606,7 +607,7 @@ the finite-sample bias is given by
 
 
 This implies that the bias is strictly negative and only depends on the marginal variances 
-$\sigma_{\boldsymbol{Z}; i,i}$ of the indivdual estimators $f_i$,  not on the covariances. 
+$\sigma_{\boldsymbol{Z}; i,i}$ of the individual estimators $f_i$,  not on the covariances. 
 The results are summarized in the following theorem: \\
 \begin{theorem}[Asymptotic Distribution of $\widehat{\mathrm{IOV}}$]\label{thm:iov_asymp}
 Under the assumptions of Theorem~\ref{thm:clt_fhat}:
@@ -624,7 +625,8 @@ Under the assumptions of Theorem~\ref{thm:clt_fhat}:
 \end{enumerate}
 \end{theorem}
 \subsection*{Skewness}
-In a similiar way the asymptotic properties of other dispersion metrics such as the skew can be analyzed. A simple measure for the skew of an ordinal process is given by:
+Similarly, the asymptotic properties of other dispersion metrics such as the skew
+can be analyzed. A simple measure for the skew of an ordinal process is given by:
 \[\mathrm{skew}(\boldsymbol{f}) = \frac{2}{m} \left(\sum_{i=0}^{m-1}f_i\right) - 1.\]
 This measure captures asymmetry through the average level of the CDF.
 A symmetric distribution is taken as a baseline, and deviations from this
@@ -714,8 +716,8 @@ that $(O_t)$ and $(X_t)$ are \emph{independent}, which corresponds
 to the MCAR case. This is the strongest of the three assumptions 
 and implies in particular that the corrected estimator $\hat{f}^*$ 
 introduced in Section~\ref{sec:Amp Mod} is consistent. Under MAR 
-or MNAR, the independence assumption fails and the estimator may 
-be biased — a point we return to in Section~\ref{sec:mnar}.
+or MNAR, the independence assumption fails and estimators may 
+be biased and inconsistent — as illustrated later in Section~\ref{sec:mnar}.
 
 \section{Amplitude Modulation}\label{sec:Amp Mod}
 \subsection*{Definition of the observation process}
@@ -731,12 +733,13 @@ The amplitude modulating process $O_t$ can be:
     \item \textbf{Stochastic}: $O_t$ follows a probability distribution with $\pi_t := P(O_t=1)$, possibly dependent on the history of $X_t$, $O_t$, or external factors.
 \end{itemize}
 \subsection*{Bias of the naive estimator}
-The amplitude modulation is applied to the binarization vector $\boldsymbol{Z}_t$ to obtain the observable process $(O_t \boldsymbol{Z}_t)$. We then define the naive estimator of $\boldsymbol{f}$ as:
+The amplitude modulation is applied to the binarization vector $\boldsymbol{Z}_t$ to obtain the observable process $(O_t \boldsymbol{Z}_t)$.
+We then define the naive estimator of $\boldsymbol{f}$ as:
 \[\hat{\boldsymbol{\mathfrak{f}}}:= \frac{1}{n} \sum_{t=1}^{n}O_t \boldsymbol{Z}_t.\]
 To assess the performance of this naive estimator we compute its expectation
 \[\mathrm{E}[\hat{\boldsymbol{\mathfrak{f}}}] = \frac{1}{n} \sum_{t = 1}^{n} \mathrm{E}[O_t\boldsymbol{Z_t}] = \frac{1}{n} \sum_{t = 1}^{n} \mathrm{E}[\boldsymbol{Z_t} \mathrm{E}[O_t|\boldsymbol{Z}_t]],\]
 where the last equality follows from the law of iterated expectations.\\
-The dependendce structure between $(O_t)_t$ and $(\boldsymbol{Z}_t)_t$ (or equivalently $(X_t)_t$) is crucial. Under the assumption of independence (see Definition~\ref{def:missingness}, part MCAR), the expression simplifies to
+The dependence structure between $(O_t)_t$ and $(\boldsymbol{Z}_t)_t$ (or equivalently $(X_t)_t$) is crucial. Under the assumption of independence (see Definition~\ref{def:missingness}, part MCAR), the expression simplifies to
 \[\frac{1}{n} \sum_{t = 1}^{n} \mathrm{E}[\boldsymbol{Z_t} \mathrm{E}[O_t|\boldsymbol{Z}_t]] = \frac{1}{n}\sum_{t=1}^{n} \mathrm{E}[\boldsymbol{Z}_t]  \mathrm{E}[O_t] = \left(\frac{1}{n} \sum_{t=1}^{n} \mathrm{E}[O_t]\right) \boldsymbol{f} \]
 \subsection*{The missingness corrected estimator}
 \begin{definition}[Corrected Estimator of $\boldsymbol{f}$]\label{def:correctedest}
@@ -756,9 +759,9 @@ and therefore, here $\hat{\boldsymbol{f}^*} = \hat{\boldsymbol{\mathfrak{f}}}/\b
 to where $\hat{\boldsymbol{f^*}}$ is generally biased.
 \section{Asymptotic Theory for the corrected estimator}
 \subsection*{The extended process - stationarity and $\alpha$-mixing}
-To study this bias we assume $(O_t)$ and $(X_t)$ to be stationary and $\alpha$-mixing with exponetially decaying coefficients (see Definition~\ref{def:mixing}), with $\mathrm{E}[O_t] = \pi $, a autocovariance function $\gamma_{O}(h) := \mathrm{Cov}[O_h, O_0]$ and joint expectations $\pi(h):= \mathrm{E}[O_h O_0] = \gamma_O(h) + \pi^2$. To study the joint asymptotic distribution of the estimator $\hat{\boldsymbol{f}}^*$, we introduce the extended binary vectors in order to derive the joint asymptotic distribution of all sample averages entering its definition:
+To study this bias we assume $(O_t)$ and $(X_t)$ to be stationary and $\alpha$-mixing with exponentially decaying coefficients (see Definition~\ref{def:mixing}), with $\mathrm{E}[O_t] = \pi $, an autocovariance function $\gamma_{O}(h) := \mathrm{Cov}[O_h, O_0]$ and joint expectations $\pi(h):= \mathrm{E}[O_h O_0] = \gamma_O(h) + \pi^2$. To study the joint asymptotic distribution of the estimator $\hat{\boldsymbol{f}}^*$, we introduce the extended binary vectors in order to derive the joint asymptotic distribution of all sample averages entering its definition:
 \[\boldsymbol{Z}^*_t:= (O_t, O_t Z_{t,0}, \ldots, O_t Z_{t,m-1})^\top =  O_t (1, \boldsymbol{Z}^\top_t)^\top,\]
-where the elements of $\boldsymbol{Z}_t^*$ are are numbered as $Z_{t,-1}^*, Z_{t,0}^*, \ldots, Z_{t,m-1}^*$. The expectation of $\boldsymbol{Z}_t^*$ is given by
+where the elements of $\boldsymbol{Z}_t^*$ are numbered as $Z_{t,-1}^*, Z_{t,0}^*, \ldots, Z_{t,m-1}^*$. The expectation of $\boldsymbol{Z}_t^*$ is given by
 \begin{align*}
     \mathrm{E}[\boldsymbol{Z}^{*}_t] &= (\mathrm{E}[O_t], \mathrm{E}[O_t Z_{t,0}], \ldots, \mathrm{E}[O_t Z_{t,m-1}])^\top \\
     &= (\mathrm{E}[O_t], \mathrm{E}[O_t] \mathrm{E}[Z_{t,0}], \ldots, \mathrm{E}[O_t] \mathrm{E}[Z_{t,m-1}])^\top \tag{Independence}\\
@@ -859,7 +862,7 @@ The Jacobian of $\boldsymbol{g}(\boldsymbol{x})$ evaluated at $\boldsymbol{x} = 
 Then, following the delta method, we have the following result
 \begin{theorem}[Asymptotic Normality of $\hat{\boldsymbol{f}}^*$]\label{thm:clt_fstarhat}
 Let $(X_t)$ be a strictly stationary, ordinal process that is $\alpha$-mixing with exponentially decaying
-coefficients. Let the modulating process $(O_t)$ also be strictily stationary and $\alpha$-mixing with exponentially decaying coefficients, with moments $\mathrm{E}[O_t] = \pi > 0$ and $\mathrm{E}[O_h O_0] = \pi(h) > 0$. Furthermore, let $(O_t)$ and $(X_t)$ be independent, where $X_t$ is observed if $O_t = 1$. Then the corrected estimator from Definition~\ref{def:correctedest} satisfies the following multivariate CLT:
+coefficients. Let the modulating process $(O_t)$ also be strictly stationary and $\alpha$-mixing with exponentially decaying coefficients, with moments $\mathrm{E}[O_t] = \pi > 0$ and $\mathrm{E}[O_h O_0] = \pi(h) > 0$. Furthermore, let $(O_t)$ and $(X_t)$ be independent, where $X_t$ is observed if $O_t = 1$. Then the corrected estimator from Definition~\ref{def:correctedest} satisfies the following multivariate CLT:
 \begin{equation}\label{eq:clt_fstarhat}
     \sqrt{n}\bigl(\hat{\boldsymbol{f}}^* - \boldsymbol{f}\bigr)
     \xrightarrow[n\to\infty]{d}
@@ -891,7 +894,7 @@ where
         -\frac{f_{m-1}}{\pi}\sigma_{\boldsymbol{Z}^*; -1, -1} + \frac{1}{\pi}\sigma_{\boldsymbol{Z}^*; m-1, -1} &\ldots&-\frac{f_{m-1}}{\pi}\sigma_{\boldsymbol{Z}^*; -1, m-1} + \frac{1}{\pi}\sigma_{\boldsymbol{Z}^*; m-1, m-1} \\
     \end{pmatrix}\boldsymbol{G}^\top.
 \end{align*}
-\noindent Such that the indivual lements look like this:
+\noindent Such that the individual elements look like this:
 \begin{align*}
     \sigma_{\hat{\boldsymbol{f}}^*; i, j}  &= (-\frac{f_j}{\pi}) (-\frac{f_i}{\pi}\sigma_{\boldsymbol{Z}^*; -1, -1} + \frac{1}{\pi} \sigma_{\boldsymbol{Z}^*; i, -1}) + \frac{1}{\pi}(-\frac{f_{i}}{\pi}\sigma_{\boldsymbol{Z}^*; -1, j}+ \frac{1}{\pi} \sigma_{\boldsymbol{Z}^*; i, j}) \\
     &= \frac{f_j f_i }{\pi^2} \sigma_{\boldsymbol{Z}^*; -1, -1} - \frac{f_j}{\pi^2} \sigma_{\boldsymbol{Z}^*; i, -1} - \frac{f_i}{\pi^2}\sigma_{\boldsymbol{Z}^*; -1, j} + \frac{1}{\pi^2} \sigma_{\boldsymbol{Z}^*; i, j} \\
@@ -996,7 +999,7 @@ $\hat{\boldsymbol{f}}^*$:
 \begin{remark}[Skew under missingness]
 The analogous result for the skew follows immediately, since the skew is linear in
 $\boldsymbol{f}$ and hence $\boldsymbol{H}_{\mathrm{skew}} = 0$. In particular, the
-estimator is unbiased and its asymptotic variance is given by
+estimator is unbiased, and its asymptotic variance is given by
 \[
     \sqrt{n}\mathrm{Var}\bigl(\mathrm{skew}(\hat{\boldsymbol{f}}^*)\bigr)
     \overset{\mathrm{asy.}}{=}
@@ -1263,7 +1266,7 @@ O_tO_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)})\bigr] \\
 &\qquad + \mathrm{E}[Z_{t+k,(i-m)}Z_{t+k-h,(i-m)}Z_{t,(j-m)}Z_{t-h,(j-m)}]
 - 2f_{(i-m),(i-m)}(h)\,f_{(j-m),(j-m)}(h)\bigr]
 \end{align*}}
-Note that cases \textbf{(v)},\textbf{(vi)} and \textbf{(viii)} coincide with cases 
+Note that cases \textbf{(v)}, \textbf{(vi)} and \textbf{(viii)} coincide with cases 
 \textbf{(i)-(iii)} from $\boldsymbol{\Sigma}_{\boldsymbol{Z}*}$ of Proposition~\ref{prop:clt_zstar}. Also note that cases \textbf{(i)--(viii)} admit fully explicit closed-form 
 expressions, whereas cases \textbf{(ix)} and \textbf{(x)} involve 
 third- and fourth-order mixed moments of $(X_t)$ — such as 
@@ -1635,7 +1638,7 @@ dependence at other lags or through off-diagonal bivariate
 probabilities. In practice, the test is therefore applied 
 simultaneously for several lags $h = 1, \ldots, H$.
 \begin{remark}
-The test can be visualised analogously to the sample autocorrelation
+The test can be visualized analogously to the sample autocorrelation
 function (ACF): plotting $\hat{\kappa}_{\mathrm{ord}}(h)$ against
 the lag $h$ together with pointwise significance bands
 $\pm\,z_{\alpha/2}\,\hat{\sigma}_\kappa/\sqrt{n}$ provides an
@@ -1799,7 +1802,7 @@ while inducing serial dependence in $(O_t)$, with
 $\mathrm{Cov}(O_t, O_{t+h}) = r_{\pi}^h\,\pi(1-\pi)$ for all $h \geq 1$ 
 \citep[p.~139]{Weiss2018}. Notably, this process is equal to a BinAR(1)-process 
 with parameters $m =1,~p = \pi$ and $r = r_h$, which implies that the process 
-satisifies the relevant mixing conditions.
+satisfies the relevant mixing conditions.
 Third, we consider observation schemes that depend on the current state of 
 the underlying process $(X_t)$, corresponding to MNAR-type mechanisms. In 
 the first variant, the observation probability increases linearly with $X_t$, i.e.
@@ -1838,9 +1841,9 @@ qualitatively different settings:
     \caption{Marginal CDFS of the two simulation scenarios.}
     \label{fig:marginal-dist}
 \end{figure}
-The PMF's nad CDFs for both scenarios are shown in Figure~\ref{fig:marginal-dist}. For each scenario, two observation probabilities are considered: 
+The PMF's and CDFs for both scenarios are shown in Figure~\ref{fig:marginal-dist}. For each scenario, two observation probabilities are considered: 
 $\pi = 1$ (no missingness) and $\pi = 0.75$ (25\% missing at random).\\
-In addition, for scenario A we examine serially dependent missingness, 
+In addition, for scenario~A we examine serially dependent missingness, 
 with $\pi = 0.75$ and $r_{\pi} \in \{0.2, 0.75\}$, as well as the two MNAR-type mechanisms described above with $\pi_{\text{low}} = 0.5$ and $\pi_{\text{high}} = 1$. \\
 The time series length varies over $n \in \{50, 100, 250, 500, 1000\}$, 
 and all results are based on $B = 1{,}000$ Monte Carlo replications. 
@@ -1884,7 +1887,7 @@ benchmarks against which the simulated bias curves are compared.
 \paragraph{Convergence to the asymptotic distribution.}
 Figure~\ref{fig:iov-density} illustrates the convergence of
 $\sqrt{n}(\widehat{\mathrm{IOV}} - \mathrm{IOV})$ to its asymptotic
-normal distribution. The left panel shows the raw centred quantity,
+normal distribution. The left panel shows the raw centered quantity,
 while the right panel shows the same quantity after multiplication
 by $\sqrt{n}$. Both panels display
 results for $n \in \{50, 1000, 5000\}$ under \hyperref[scen:B]{Scenario~B} with
@@ -1975,7 +1978,7 @@ approximation.
         \includegraphics[width=0.85\textwidth]{../Graphs/Bias_Presi_.png}
     \end{minipage}
     \caption{\scriptsize Left: Mean from simulation (solid) and theoretical approximation (dashed) of
-    $(\widehat{\mathrm{IOV}} - \mathrm{IOV})$. Right: the same quanties rescaled by a 
+    $(\widehat{\mathrm{IOV}} - \mathrm{IOV})$. Right: the same quantities rescaled by a 
     factor of $n$. For
     $n \in N_{\text{fine}}$ and \hyperref[scen:B]{Scenario~B} with $\pi = 0.75$. Based on
     $B = 20{,}000$ replications.}
@@ -1983,32 +1986,9 @@ approximation.
 \end{figure}
 
 
-% \begin{figure}[htbp]
-%     \centering
-    
-%     \caption{Mean bias of $\widehat{\mathrm{IOV}}$ as a function
-%     of $n$ (solid), with the theoretical approximation
-%     $-\frac{4}{mn}\,\mathrm{tr}(\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}}^*})$
-%     (dashed). Scenario~B: $m=10$, $p=0.45$, $r=0.50$, $\pi=0.75$.}
-%     \label{fig:iov-bias}
-% \end{figure}
-% \begin{figure}[htbp]
-%     \centering
-    
-%     \caption{$n$-scaled mean bias $n \cdot
-%     (\widehat{\mathrm{IOV}} - \mathrm{IOV})$ with pointwise
-%     $95\%$ confidence bands (vertical lines) and theoretical
-%     limit (dashed horizontal). The widening of the bands with
-%     $n$ reflects the $\sqrt{n/B}$ growth of the Monte Carlo
-%     standard error after $n$-scaling; see also the right panel
-%     of Figure~\ref{fig:iov-density}. Scenario~B: $m=10$,
-%     $p=0.45$, $r=0.50$, $\pi=0.75$.}
-%     \label{fig:iov-bias-scaled}
-% \end{figure}
-
 \paragraph{Asymptotic standard deviation: simulation vs.\ theory.}
 Figure~\ref{fig:iov_comparison} compares the
-simulated standard deviation and bias of $\widehat{\mathrm{IOV}}$ against
+simulated standard deviation of $\left(\widehat{\mathrm{IOV}} - \mathrm{IOV}\right)$ against
 the asymptotic approximation $\sigma_{\mathrm{IOV}}$
 across all combinations of $n \in \{50, 100, 250, 500, 1000\}$
 and $\pi \in \{0.75, 1\}$, for \hyperref[scen:A]{Scenario~A} on the
@@ -2025,7 +2005,7 @@ scenarios, the standard deviation under $\pi = 0.75$ is uniformly
 larger than under $\pi = 1$, consistent with the $1/\pi$ inflation
 of the lag-$0$ term in $\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}}^*}$
 established in Theorem~\ref{thm:clt_fstarhat}.\\
-Third, the convergence behaviour differs markedly between the two
+Third, the convergence behavior differs markedly between the two
 scenarios. In Scenario~A ($m=3$, skewed marginal distribution),
 the standard deviation is larger in absolute terms. This indicates
 that the effect of marginal dispersion on
@@ -2044,7 +2024,7 @@ $\pi = 1$ and $\pi = 0.75$ is more pronounced in Scenario~A than in
 Scenario~B.
 
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \begin{minipage}[c]{0.49\textwidth}
         \centering
@@ -2059,8 +2039,7 @@ Scenario~B.
 
     \includegraphics[width=0.55\textwidth]{../Graphs/legend_plot_IOV_Skew.png}
     \caption{\scriptsize Simulated vs.\ asymptotic standard deviation of
-    $\widehat{\mathrm{IOV}}$ for Scenario~B ($m=10$, $p=0.45$,
-    $r=0.50$) across $n \in \{50,100,250,500,1000\}$ and
+    $\left(\widehat{\mathrm{IOV}}- \mathrm{IOV}\right)$ for $n \in \{50,100,250,500,1000\}$, with $O_t \overset{i.i.d.}{\sim} Bernoulli(\pi)$ and
     $\pi \in \{0.75, 1\}$.}
     \label{fig:iov_comparison}
 \end{figure}
@@ -2068,13 +2047,20 @@ Scenario~B.
 \paragraph{Serially dependent observation process.}
 When $(O_t)$ is a stationary binary Markov chain with autocorrelation
 parameter $r_\pi \in \{0.2, 0.75\}$ (see Section~\ref{sec:sim-setup}),
-the marginal observation probability $\pi = 0.75$ is preserved but
-$(O_t)$ is no longer i.i.d. Figure~\ref{fig:iov_sd_comparison} shows
-the same comparison as in Figure~\ref{fig:iov_comparison}, however here
-varrying the serial dependence parameter $r_h$ while keeping the marginal missingness
-probability constant.
+the marginal observation probability $\pi = 0.75$ is preserved, but
+$(O_t)$ is no longer i.i.d. Figure~\ref{fig:iov_sd_comparison} presents
+the same comparison as Figure~\ref{fig:iov_comparison}, now varying the
+serial dependence parameter $r_\pi$ while keeping the marginal observation
+probability constant. A comparison of Figure~\ref{fig:iov_sd_comparison} and 
+Figure~\ref{fig:iov_comparison} reveals that the difference between i.i.d.\ 
+$O_t$ and weak serial dependence ($r_\pi = 0.2$) is not substantial. Only upon 
+closer inspection can a slight increase in the standard deviation be observed. 
+Even under much stronger serial dependence ($r_\pi = 0.75$), the effect remains 
+limited, with only a slight increase in the standard deviations.
+This serves to illustrate that the dispersion of $\widehat{IOV}$ is primarily
+driven on the marginal distribution of $X_t$ than on any serial dependence structure.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \begin{minipage}[c]{0.49\textwidth}
         \centering
@@ -2089,7 +2075,7 @@ probability constant.
 
     \includegraphics[width=0.55\textwidth]{../Graphs/legend_plot_IOV_sd.png}
     \caption{\scriptsize Simulated vs.\ asymptotic standard deviation of
-    $\widehat{\mathrm{IOV}}$ for both scenarios across $n \in \{50,100,250,500,1000\}$, with $\pi = 0.75$
+    $\left(\widehat{\mathrm{IOV}}- \mathrm{IOV}\right)$ for both scenarios across $n \in \{50,100,250,500,1000\}$, with $\pi = 0.75$
     and $r_{\pi} \in \{0.2, 0.75\}$.}
     \label{fig:iov_sd_comparison}
 \end{figure}
@@ -2168,16 +2154,6 @@ its greater marginal dispersion.
 \end{figure}
 
 
-% \paragraph{Bias correction.}
-% Figure~\ref{fig:bias-correction} compares the mean bias of the
-% uncorrected estimator $\hat{\kappa}_{\mathrm{ord}}(h)$ and the
-% bias-corrected estimator
-% $\hat{\kappa}^{\mathrm{bc}}_{\mathrm{ord}}(h) =
-% \hat{\kappa}_{\mathrm{ord}}(h) + 1/(n\hat{\pi})$ across sample sizes.
-% The bias correction is effective even at small $n$: at $n = 50$,
-% the mean bias of the corrected estimator is already an order of
-% magnitude smaller than that of the uncorrected estimator.
-% [Figure einfügen: Bias uncorrected vs. corrected, beide Szenarien]
 
 \paragraph{Asymptotic level of the test.}
 To assess whether the test based on $T_n(h)$ achieves its nominal
@@ -2190,7 +2166,7 @@ sizes, but are already very close to the nominal level by $n = 100$.
 This is consistent with the fact that
 $\kappa_{\mathrm{ord}}(h)$ is not a purely quadratic functional and
 therefore exhibits higher-order bias terms beyond the leading
-$O(n^{-1})$ component, that is corrected for in the bias-corrected veersion.  
+$O(n^{-1})$ component, that is corrected for in the bias-corrected version.  
 In both scenarios, the test based on the biased corrected estimator
 performs better for small, however the difference decays quite quickly 
 and is hardly visible already for $n = 50$. However, the difference
@@ -2210,35 +2186,49 @@ seems to be more pronounced in scenario B.
 \end{figure}
 
 
+
 \paragraph{Power under $H_A$.}
-To illustrate the power of the test,
+To illustrate the power of the test under violation of the i.i.d. assumption of $X_t$,
 Figure~\ref{fig:kappa-H_A} displays two panels.
-The left panel shows the mean estimate of
-$\kappa_{\mathrm{ord}}(1)$ for Scenario~B with $\pi = 0.75$,
-together with $\pm 1.96$ standard errors and the true value of
-$\kappa_{\mathrm{ord}}(1)$ (red dashed line). These are compared
-to the corresponding $95\%$ confidence intervals under $H_0$.
-\begin{figure}[htbp]
+The left panel shows the mean estimate of $\kappa_{\mathrm{ord}}(1)$ for Scenario~A with $\pi = 0.75$,
+together with $\pm 1.96$ standard errors and the true value of $\kappa_{\mathrm{ord}}(1)$ (red dashed line),
+compared to the 95\% confidence intervals computed using Theorem~\ref{thm:kappa-asymp}. Asymptotically, 
+the test is consistent: the two ribbons monotonically get narrower, and at around 500 observations they 
+become non-overlapping, indicating that less than 2.5\% of samples under the given scenario would fall 
+inside the 95\% confidence intervals. However, for smaller $n$, the two ribbons are clearly overlapping, 
+indicating that the test would fail to reject $H_0$, even though there is serial dependence in the 
+underlying process.
+To show which factors determine the convergence speed of the test, the right panel shows rejection rates for 
+Scenario~A with varying serial dependence parameter $r \in \{0.15, 0.35, 0.6\}$ and marginal observation probability 
+$\pi \in \{0.75, 1\}$. The test shows that the convergence rate increases strongly with $r$: the scenario with 
+$r = 0.6$ already achieves a near 100\% rejection rate at $n = 100$, whereas the scenario with $r = 0.15$ 
+(for $\pi = 1$) only reaches this level at $n = 2000$. The marginal observation probability is also important: in all scenarios, 
+the speed of convergence is substantially slower for $\pi = 0.75$ compared to $\pi = 1$. 
+\begin{figure}[H]
     \centering
     \begin{minipage}[c]{0.49\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{../Graphs/Kappa_H_A.png}
+        \includegraphics[width=\textwidth, height = 0.7 \textwidth]{../Graphs/Kappa_H_A.png}
     \end{minipage}
     \begin{minipage}[c]{0.49\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{../Graphs/Rejection_rate.png}
+        \includegraphics[width=\textwidth, height = 0.7 \textwidth]{../Graphs/kappa_rejection_rate.png}
     \end{minipage}
-    \caption{\scriptsize Simulated vs.\ asymptotic standard deviation of
-    $\widehat{\mathrm{IOV}}$ for Scenario~B ($m=10$, $p=0.45$,
-    $r=0.50$) across $n \in \{50,100,250,500,1000, 2000\}$ and
-    $\pi \in \{0.75, 1\}$.}
+    \caption{\scriptsize
+        Left: Mean estimate of $\hat{\kappa}(1)$ together with
+        $\pm 1.96$ standard deviations (gray ribbon) for Scenario~A,
+        compared to the 95\% confidence intervals under $H_0$.
+        Right: Rejection rate under $H_A$ for Scenario~A with varying
+        serial dependence parameter $r \in \{0.15, 0.35, 0.6\}$ and
+        marginal observation probability $\pi \in \{0.75, 1\}$.
+        For both panels, $n \in \{50, 100, 250, 500, 1000, 2000\}$.}
     \label{fig:kappa-H_A}
 \end{figure}
 
 
 
 \subsection{Robustness under MCAR Violations}
-\label{sec:sim-mcar-violation}
+\label{sec:mnar}
 
 The preceding results were obtained under the MCAR assumption. We
 now examine what happens when this assumption is violated.
@@ -2255,8 +2245,16 @@ to be observed, the upper tail of the distribution is
 over-represented, and vice versa. The IOV estimator is affected
 similarly, inheriting the bias of $\hat{\boldsymbol{f}}^*$ through
 the delta method.
-% [Figure einfügen: Bias von f_i* unter MNAR, beide Varianten,
-% im Vergleich zu MCAR]
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[height=\textwidth]{../Graphs/MAR_IOV.png}    
+    \caption{\scriptsize Simulated vs.\ asymptotic standard deviation of
+    Simulated bias of $\hat{IOV}$ under MNAR missingness for Scenario A, 
+    across $n\in \{50, 100, 250, 500, 1000\}$ and $\pi = 0.75$. $O_t$ and $X_t$
+    are related as described in Section~\ref{sec:sim-setup}.}
+    \label{fig:bias-mnar}
+\end{figure}
 \begin{appendices}
 
 % \renewcommand{\thesection}{\Alph{section}}

@@ -181,6 +181,8 @@ INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\tex\generic\pgf\libraries\pgf
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\tex\generic\pgf\modules\pgfmodulematrix.code.tex
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibrarytopaths.code.tex
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\tex\generic\pgf\frontendlayer\tikz\libraries\tikzlibrarytopaths.code.tex
+INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\tex\latex\float\float.sty
+INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\tex\latex\float\float.sty
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\tex\latex\natbib\natbib.sty
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\tex\latex\natbib\natbib.sty
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\tex\latex\hyperref\hyperref.sty
@@ -430,9 +432,12 @@ INPUT ..\Graphs\rejection_H0_level.png
 INPUT ..\Graphs\Kappa_H_A.png
 INPUT ..\Graphs\Kappa_H_A.png
 INPUT ..\Graphs\Kappa_H_A.png
-INPUT ..\Graphs\Rejection_rate.png
-INPUT ..\Graphs\Rejection_rate.png
-INPUT ..\Graphs\Rejection_rate.png
+INPUT ..\Graphs\kappa_rejection_rate.png
+INPUT ..\Graphs\kappa_rejection_rate.png
+INPUT ..\Graphs\kappa_rejection_rate.png
+INPUT ..\Graphs\MAR_IOV.png
+INPUT ..\Graphs\MAR_IOV.png
+INPUT ..\Graphs\MAR_IOV.png
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\rm-lmbx12.tfm
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\euler\eufm10.tfm
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmmib10.tfm
