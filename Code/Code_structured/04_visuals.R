@@ -188,19 +188,21 @@ t_IOV_A       <- sub_A$true_IOV[1]
 t_Skew_A      <- sub_A$true_Skew[1]
 m_A <- sub_A$m[1]; p_A <- sub_A$p[1]; r_A <- sub_A$r[1]
 sub_A$true_C1 <- 0
-
+sub_A$IOV_centered <- sub_A$mean_IOV - t_IOV_A
+sub_A$IOV_lower_centered <- sub_A$lower_IOV - t_IOV_A
+sub_A$IOV_upper_centered <- sub_A$upper_IOV - t_IOV_A
 
 # IOV
 IOV_plot <- comparison_plot(
-  sub_A, "mean_IOV", "lower_IOV", "upper_IOV",
-  true_val      = t_IOV_A,
+  sub_A, "IOV_centered", "IOV_lower_centered", "IOV_upper_centered",
+  true_val      = 0,
   group_centers = prep_A$group_centers,
   x_labels      = prep_A$x_labels,
   y_label       = "IOV Value",
   title = "Scenario A",
   subtitle = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  MCAR",
                           m_A, p_A, r_A),
-  ylim_offset   = c(-0.10, 0.05), # anpassen je nach p
+  ylim_offset   = c(-0.10, 0.06), # anpassen je nach p
   group_var     = "pi"
 )
 print(IOV_plot)
@@ -238,6 +240,7 @@ print(Cohens_plot)
 ggsave(sprintf("Graphs/kappa_m%d.png", m_A), Cohens_plot + theme(legend.position = "none"), width = 8, height = 5)
 
 
+
 prep_A <- prepare_comparison_subset(
   combined_df,
   filter_expr   = (p == 0.45 & r_pi == 0), # hier p 0.2 oder 0.45 wählen
@@ -248,19 +251,21 @@ t_IOV_A       <- sub_A$true_IOV[1]
 t_Skew_A      <- sub_A$true_Skew[1]
 m_A <- sub_A$m[1]; p_A <- sub_A$p[1]; r_A <- sub_A$r[1]
 sub_A$true_C1 <- 0
-
+sub_A$IOV_centered <- sub_A$mean_IOV - t_IOV_A
+sub_A$IOV_lower_centered <- sub_A$lower_IOV - t_IOV_A
+sub_A$IOV_upper_centered <- sub_A$upper_IOV - t_IOV_A
 
 # IOV
 IOV_plot <- comparison_plot(
-  sub_A, "mean_IOV", "lower_IOV", "upper_IOV",
-  true_val      = t_IOV_A,
+  sub_A, "IOV_centered", "IOV_lower_centered", "IOV_upper_centered",
+  true_val      = 0,
   group_centers = prep_A$group_centers,
   x_labels      = prep_A$x_labels,
   y_label       = "IOV Value",
-  title         = "Scenario B",
-  subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  MCAR",
-                          m_A, p_A, r_A),
-  ylim_offset   = c(-0.10, 0.05), # anpassen je nach p
+  title = "Scenario B",
+  subtitle = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  MCAR",
+                     m_A, p_A, r_A),
+  ylim_offset   = c(-0.10, 0.06), # anpassen je nach p
   group_var     = "pi"
 )
 print(IOV_plot)
@@ -343,17 +348,20 @@ t_IOV_B  <- sub_B$true_IOV[1]
 t_Skew_B <- sub_B$true_Skew[1]
 m_B <- sub_B$m[1]; p_B <- sub_B$p[1]; r_B <- sub_B$r[1]
 
+sub_B$IOV_centered <- sub_B$mean_IOV - t_IOV_B
+sub_B$IOV_lower_centered <- sub_B$lower_IOV - t_IOV_B
+sub_B$IOV_upper_centered <- sub_B$upper_IOV - t_IOV_B
 # IOV
 IOV_sd_plot <- comparison_plot(
-  sub_B, "mean_IOV", "lower_IOV", "upper_IOV",
-  true_val      = t_IOV_B,
+  sub_B, "IOV_centered", "IOV_lower_centered", "IOV_upper_centered",
+  true_val      = 0,
   group_centers = prep_B$group_centers,
   x_labels      = prep_B$x_labels,
   title         = "Scenario A", # C
   y_label       = "IOV Value",
   subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  π = 0.75",
                           m_B, p_B, r_B),
-  ylim_offset   = c(-0.1, 0.06), # m = 3 -> , m = 10 -> c(-0.07, 0.035)
+  ylim_offset   = c(-0.10, 0.06), # m = 3 -> , m = 10 -> c(-0.07, 0.035)
   group_var     = "r_pi"
 )
 print(IOV_sd_plot + theme(legend.position = "none"))
@@ -371,17 +379,20 @@ t_IOV_B  <- sub_B$true_IOV[1]
 t_Skew_B <- sub_B$true_Skew[1]
 m_B <- sub_B$m[1]; p_B <- sub_B$p[1]; r_B <- sub_B$r[1]
 
+sub_B$IOV_centered <- sub_B$mean_IOV - t_IOV_B
+sub_B$IOV_lower_centered <- sub_B$lower_IOV - t_IOV_B
+sub_B$IOV_upper_centered <- sub_B$upper_IOV - t_IOV_B
 # IOV
 IOV_sd_plot <- comparison_plot(
-  sub_B, "mean_IOV", "lower_IOV", "upper_IOV",
-  true_val      = t_IOV_B,
+  sub_B, "IOV_centered", "IOV_lower_centered", "IOV_upper_centered",
+  true_val      = 0,
   group_centers = prep_B$group_centers,
   x_labels      = prep_B$x_labels,
   title         = "Scenario B", # C
   y_label       = "IOV Value",
   subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  π = 0.75",
                           m_B, p_B, r_B),
-  ylim_offset   = c(-0.07, 0.035), # m = 3 -> c(-0.1, 0.06), m = 10 -> c(-0.07, 0.035)
+  ylim_offset   = c(-0.10, 0.06), # m = 3 -> , m = 10 -> c(-0.07, 0.035)
   group_var     = "r_pi"
 )
 print(IOV_sd_plot)

@@ -757,7 +757,7 @@ of $\boldsymbol{f}$ is defined as
 and therefore, here $\hat{\boldsymbol{f}^*} = \hat{\boldsymbol{\mathfrak{f}}}/\bar{O}$ is a perfectly unbiased estimator of $\boldsymbol{f}$. However, if $O_t$ is a stochastic process then $\mathrm{E}[O_t] = \pi_t \in (0; 1]$ and
 \[\frac{1}{n}\sum_{t=1}^{n} \mathrm{E}[O_t]= \frac{1}{n}\sum_{t=1}^{n} \pi_t \neq \frac{1}{n}\sum_{t=1}^{n} O_t = \bar{O},\]
 to where $\hat{\boldsymbol{f^*}}$ is generally biased.
-\section{Asymptotic Theory for the corrected estimator}
+\section{Asymptotic Theory for the corrected estimator} \label{sec:fstar_hat}
 \subsection*{The extended process - stationarity and $\alpha$-mixing}
 To study this bias we assume $(O_t)$ and $(X_t)$ to be stationary and $\alpha$-mixing with exponentially decaying coefficients (see Definition~\ref{def:mixing}), with $\mathrm{E}[O_t] = \pi $, an autocovariance function $\gamma_{O}(h) := \mathrm{Cov}[O_h, O_0]$ and joint expectations $\pi(h):= \mathrm{E}[O_h O_0] = \gamma_O(h) + \pi^2$. To study the joint asymptotic distribution of the estimator $\hat{\boldsymbol{f}}^*$, we introduce the extended binary vectors in order to derive the joint asymptotic distribution of all sample averages entering its definition:
 \[\boldsymbol{Z}^*_t:= (O_t, O_t Z_{t,0}, \ldots, O_t Z_{t,m-1})^\top =  O_t (1, \boldsymbol{Z}^\top_t)^\top,\]
@@ -847,7 +847,7 @@ and  accordingly
     g(\bar{\boldsymbol{\mu}}_{\boldsymbol{Z}^*}^*) = \boldsymbol{f}.
 \end{align*}
 The Jacobian of $\boldsymbol{g}(\boldsymbol{x})$ evaluated at $\boldsymbol{x} = \boldsymbol{\mu}_{\boldsymbol{Z}^*}$ is given by
-\[\boldsymbol{G}_{(m+1)\times m} =
+\[\boldsymbol{G}_{m\times (m+1)} =
 \begin{pmatrix}
     \frac{\partial g_0(\boldsymbol{\mu}_{\boldsymbol{Z}^*})}{\partial x_{-1}}& \ldots & \frac{\partial g_0(\boldsymbol{\mu}_{\boldsymbol{Z}^*})}{\partial x_{m-1}}\\
     \vdots & \cdots& \vdots\\
@@ -2172,7 +2172,7 @@ performs better for small, however the difference decays quite quickly
 and is hardly visible already for $n = 50$. However, the difference
 seems to be more pronounced in scenario B.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
         \includegraphics[width=\textwidth]{../Graphs/rejection_H0_level.png}
     \caption{\scriptsize Rejection rates of
@@ -2234,18 +2234,28 @@ The preceding results were obtained under the MCAR assumption. We
 now examine what happens when this assumption is violated.
 
 \paragraph{State-dependent missingness (MNAR).}
-Under the two MNAR mechanisms — observation probability increasing
-or decreasing linearly with $X_t$ — Figure~\ref{fig:bias-mnar}
-shows that the corrected estimator $\hat{\boldsymbol{f}}^*$ is
-now biased: the bias of $\hat{f}^*_i$ is non-negligible and does
-not vanish as $n \to \infty$, confirming that $\hat{\boldsymbol{f}}^*$
-is not consistent under MNAR. The direction of the bias depends on
-the missingness mechanism: when higher categories are more likely
-to be observed, the upper tail of the distribution is
-over-represented, and vice versa. The IOV estimator is affected
-similarly, inheriting the bias of $\hat{\boldsymbol{f}}^*$ through
-the delta method.
-
+Under the two MNAR mechanisms described in Section~\ref{sec:sim-setup},
+Figure~\ref{fig:bias-mnar} shows the simulated bias of
+$\widehat{\mathrm{IOV}}$ for Scenario~A across
+$n \in \{50, 100, 250, 500, 1000\}$ with marginal observation probability
+$\pi = 0.75$.
+In both settings, the bias of $\hat{\boldsymbol{f}}^*$ is non-negligible
+and does not vanish as $n \to \infty$, confirming that the corrected
+estimator is not consistent under MNAR. Since $\widehat{\mathrm{IOV}}$
+is a plug-in estimator based on $\hat{\boldsymbol{f}}^*$, it inherits
+this inconsistency through the delta method — as is clearly visible in
+Figure~\ref{fig:bias-mnar} from the widening ribbons and the absence
+of any convergence of the bias curves with growing $n$.
+The direction of the bias depends on the missingness mechanism.
+When higher categories are more likely to be observed (blue ribbon),
+the upper tail of the distribution is over-represented. Given the
+right-skewed marginal distribution of Scenario~A, this artificially
+inflates the estimated dispersion, resulting in a persistent positive
+bias of $\widehat{\mathrm{IOV}}$.
+The inverse holds when lower categories are more likely to be observed
+(red ribbon): the lower tail is over-represented relative to the true
+distribution, which compresses the estimated spread and produces a
+persistent negative bias.
 \begin{figure}[htbp]
     \centering
     \includegraphics[height=\textwidth]{../Graphs/MAR_IOV.png}    
@@ -2255,6 +2265,161 @@ the delta method.
     are related as described in Section~\ref{sec:sim-setup}.}
     \label{fig:bias-mnar}
 \end{figure}
+
+\chapter{Extension to Nominal Processes}
+\label{chap:nominal}
+
+The theoretical framework developed in the preceding chapters was 
+presented for ordinal categorical processes, where the natural ordering 
+of the categories allows the marginal distribution to be represented 
+through the CDF vector $\boldsymbol{f}$ and its sample analogue 
+$\hat{\boldsymbol{f}}$. For nominal processes, no such ordering exists, 
+and the marginal distribution is instead characterized by the PMF vector 
+$\boldsymbol{p}$ and its estimator $\hat{\boldsymbol{p}}$ (recall 
+Definition~\ref{def:empirical_estimators}). Since both estimators are sample 
+means of bounded indicator processes,and since we again assume $(X_t)$ to be strictly stationary and
+$\alpha$-mixing with exponentially decaying coefficients
+(Definition~\ref{def:mixing}), the asymptotic theory carries over almost entirely. 
+This chapter makes this correspondence precise and focuses on the points 
+where the nominal case genuinely differs: the choice of dispersion 
+measure and the form of the serial dependence measure.
+
+\section{Asymptotic Distribution of $\hat{\boldsymbol{p}}$}
+
+The structure of $\boldsymbol{\Sigma}_Y$
+differs from that of $\boldsymbol{\Sigma}_Z$, however, in the lag-0
+term. For ordinal data, the joint expectation
+$\mathrm{E}[Z_{t,i}Z_{t,j}] = P(X_t \leq s_i, X_t \leq s_j) =
+f_{\min\{i,j\}}$ exploits the cumulative structure of the
+binarization. For nominal data, no such ordering exists, and instead
+$\mathrm{E}[Y_{t,i}Y_{t,j}] = P(X_t = s_i, X_t = s_j)$, which equals
+$p_i$ if $i = j$ and zero otherwise. Using the Kronecker delta
+$\delta_{i,j} := \mathbb{I}\{i = j\}$, this can be written compactly
+as $\mathrm{E}[Y_{t,i}Y_{t,j}] = \delta_{i,j}p_i$, so that
+$\mathrm{Cov}(Y_{t,i}, Y_{t,j}) = p_j(\delta_{i,j} - p_i)$,
+yielding the following result.
+
+\begin{theorem}[Asymptotic Normality of $\hat{\boldsymbol{p}}$]
+\label{thm:clt_phat}
+Let $(X_t)$ be strictly stationary and $\alpha$-mixing with
+exponentially decaying coefficients. Then
+\[
+    \sqrt{n}\bigl(\hat{\boldsymbol{p}} - \boldsymbol{p}\bigr)
+    \xrightarrow[n\to\infty]{d}
+    \mathcal{N}\bigl(\boldsymbol{0},\, \boldsymbol{\Sigma}_Y\bigr),
+\]
+where $\boldsymbol{\Sigma}_Y = (\sigma_{Y;i,j})_{i,j=0,\ldots,m}$ is
+given by
+\[
+    \sigma_{Y;i,j}
+    = p_j(\delta_{i,j} - p_i)
+    + \sum_{h=1}^{\infty}\bigl(p_{ij}(h) + p_{ji}(h) - 2p_ip_j\bigr).
+\]
+\end{theorem}
+\section{Asymptotic Properties of the IQV}
+
+Since $\mathrm{IQV}(\boldsymbol{p}) = \frac{m+1}{m}(1 -
+\sum_{i=0}^m p_i^2)$ is quadratic in $\boldsymbol{p}$, all
+derivatives of order three and higher vanish identically, and the
+second-order Taylor expansion is exact. The Jacobian and Hessian are
+\[
+    \boldsymbol{j}_{\mathrm{IQV}}
+    = -\frac{2(m+1)}{m}(p_0, \ldots, p_m),
+    \qquad
+    \boldsymbol{H}_{\mathrm{IQV}}
+    = -\frac{2(m+1)}{m}\boldsymbol{I}_{m+1},
+\]
+and the following result is obtained by the same argument as
+Theorem~\ref{thm:iov_asymp}, with $\boldsymbol{\Sigma}_Z$ replaced
+by $\boldsymbol{\Sigma}_Y$ throughout:
+
+\begin{proposition}[Asymptotic Distribution of $\widehat{\mathrm{IQV}}$]
+\label{prop:iqv_asymp}
+Under the assumptions of Theorem~\ref{thm:clt_phat}:
+\begin{enumerate}
+    \item[\normalfont(i)] \textbf{Asymptotic variance:}
+    \[
+        \sqrt{n}\,\mathrm{Var}\bigl(\widehat{\mathrm{IQV}}\bigr)
+        \overset{\mathrm{asy.}}{=}
+        \frac{4(m+1)^2}{m^2}
+        \sum_{i,j=0}^{m} p_i p_j\,\sigma_{Y;i,j}.
+    \]
+    \item[\normalfont(ii)] \textbf{Bias to order $n^{-1}$:}
+    \[
+        \mathrm{Bias}\bigl(\widehat{\mathrm{IQV}}\bigr)
+        = -\frac{2(m+1)}{mn}\sum_{i=0}^{m}\sigma_{Y;i,i}.
+    \]
+\end{enumerate}
+\end{proposition}
+
+% \section{Serial Dependence: Nominal Cohen's $\kappa$}
+
+% For nominal processes, serial dependence is measured by 
+% $\kappa_{\mathrm{nom}}(h)$ (recall Definition~\ref{def:cohens-kappa}). 
+% Its sample analogue is
+% \[
+%     \hat{\kappa}_{\mathrm{nom}}(h) 
+%     := \frac{\sum_{j=0}^{m}\bigl(\hat{p}_{jj}(h) - \hat{p}_j^2\bigr)}
+%            {1 - \sum_{i=0}^{m}\hat{p}_i^2},
+% \]
+% where $\hat{p}_{jj}(h)$ denotes the corrected estimator of the 
+% diagonal bivariate probability $p_{jj}(h)$, defined in direct analogy 
+% to $\hat{f}^*_{jj}(h)$ from Section~\ref{sec:serial-dependence} with 
+% $Z_{t,j}$ replaced by $Y_{t,j}$ throughout. The asymptotic theory for 
+% $\hat{\kappa}_{\mathrm{nom}}(h)$ proceeds in exact analogy to 
+% Section~\ref{subsec:serial-H0}: under $H_0$ that $(X_t)$ is i.i.d., 
+% the bivariate probabilities factorize as $p_{ij}(h) = p_ip_j$, which 
+% eliminates the higher-order mixed moments and yields closed-form 
+% expressions for the asymptotic variance and finite-sample bias of 
+% $\hat{\kappa}_{\mathrm{nom}}(h)$. The derivations are structurally 
+% identical to those of Theorem~\ref{thm:kappa-asymp} and are omitted 
+% here.
+
+\section{Missingness}
+
+The amplitude modulation framework of Section~\ref{sec:Amp Mod} extends 
+to nominal processes without modification: the observation indicator 
+$O_t$ multiplies the binarization vector $\boldsymbol{Y}_t$ rather than 
+$\boldsymbol{Z}_t$, and the corrected estimator of $\boldsymbol{p}$ is 
+defined analogously to Definition~\ref{def:correctedest} as
+
+\begin{definition}[Corrected estimator $\hat{\boldsymbol{p}}^*$]\label{def:p_starhat}
+\[
+    \hat{\boldsymbol{p}}^*
+    := \frac{\frac{1}{n}\sum_{t=1}^n O_t \boldsymbol{Y}_t}
+            {\frac{1}{n}\sum_{t=1}^n O_t}
+    = \frac{\hat{\boldsymbol{\mathfrak{p}}}}{\bar{O}}.
+\]
+\end{definition}
+Since $O_t\boldsymbol{Y}_t$ is a bounded indicator process that 
+inherits stationarity and $\alpha$-mixing from $(O_t)$ and $(X_t)$ 
+by the same argument as in Section~\ref{sec:Amp Mod}, the asymptotic 
+normality of $\hat{\boldsymbol{p}}^*$ follows from 
+Theorem~\ref{thm:clt_fstarhat} with $\boldsymbol{Z}_t^*$ replaced by 
+$\boldsymbol{Y}_t^* := O_t(1, \boldsymbol{Y}_t^\top)^\top$. The 
+asymptotic covariance matrix $\boldsymbol{\Sigma}_{\hat{\boldsymbol{p}}^*}$ 
+takes the same form as \hyperref[thm:clt_fstarhat]{$\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}}^*}$} with $f_i$, $f_{ij}(h)$ 
+replaced by $p_i$, $p_{ij}(h)$ and $(f_{\mathrm{min}\{i,j\}}- f_i f_j)$ by $p_j(\delta_{i,j} - p_i)$ throughout. 
+The results are summarized in the following theorem: 
+\begin{theorem}[Asymptotic Normality of $\hat{\boldsymbol{p}}$]
+\label{thm:clt_pstarhat}
+Let the same assumptions regarding $X_t$ and $O_t$ hold as in Theorem~\ref{thm:clt_fstarhat}, except that $X_t$ is nominal instead of ordinal. Then
+the corrected estimator $\hat{\boldsymbol{p}}^*$ (Definition \ref{def:p_starhat}) satisifies the following multivariate CLT: 
+\[
+    \sqrt{n}\bigl(\hat{\boldsymbol{p}^*} - \boldsymbol{p}\bigr)
+    \xrightarrow[n\to\infty]{d}
+    \mathcal{N}\bigl(\boldsymbol{0},\, \boldsymbol{\Sigma}_{\boldsymbol{p}^*}\bigr),
+\]
+where $\boldsymbol{\Sigma}_{\boldsymbol{p}^*} = (\sigma_{\boldsymbol{p}^*;i,j})_{i,j=0,\ldots,m}$ is
+given by
+\[
+    \sigma_{\boldsymbol{p}^*;i,j}
+    =  \frac{1}{\pi}p_j(\delta_{i,j} - p_i)
+    + \frac{1}{\pi^2}\sum_{h=1}^{\infty}\bigl(p_{ij}(h) + p_{ji}(h) - 2p_i p_j\bigr).
+\]
+\end{theorem}
+\noindent The bias of order $O(n^{-1})$ is, as for \hyperref[thm:clt_fstarhat]{$\hat{\boldsymbol{f}}^*$}, exactly 0. The detailed calculations for the 
+asymptotic variance and the bias can be found in Appendix~\ref{app:pstar}.
 \begin{appendices}
 
 % \renewcommand{\thesection}{\Alph{section}}
@@ -2525,6 +2690,67 @@ In this section we provide the detailed computations of the simplified version o
     %         (f_{\min \{i,j\} }+f_i f_j)}{\left(\displaystyle\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} - \frac{2}{\pi} \frac{\displaystyle\sum_{i,j = 0}^{m-1} f_i f_j(f_{\min \{i,j\} }-f_i f_j)}{\left(\displaystyle\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} 
 \end{align*}
 
+\section{Asymptotic Variance and Bias of $\hat{\boldsymbol{p}}^*$}
+\label{app:pstar}
+
+The asymptotic properties of $\hat{\boldsymbol{p}}^*$ follow from the
+delta method by exactly the same argument as in
+Section~\ref{sec:fstar_hat}. Defining the vector-valued function
+$\boldsymbol{g}\colon [0,1]^{m+2} \to [0,1]^{m+1}$ by
+\[
+    g_j(x_{-1}, x_0, \ldots, x_m) = x_j / x_{-1},
+    \qquad j = 0, \ldots, m,
+\]
+and evaluating the Jacobian at
+$\boldsymbol{\mu}_{\boldsymbol{Y}^*} := \pi(1, \boldsymbol{p}^\top)^\top$
+yields
+\[
+    \boldsymbol{G} =
+    \begin{pmatrix}
+        -\frac{p_0}{\pi} & \frac{1}{\pi} & 0 & \ldots & 0\\
+        -\frac{p_1}{\pi} & 0 & \frac{1}{\pi} & \ddots & \vdots \\
+        \vdots & \vdots & \ddots & \ddots & 0\\
+        -\frac{p_{m}}{\pi} & 0 & \ldots & 0 & \frac{1}{\pi}
+    \end{pmatrix},
+\]
+which has the same structure as the Jacobian in
+Section~\ref{sec:fstar_hat}, with $f_i$ replaced by $p_i$ throughout.
+Since the elements of $\boldsymbol{\Sigma}_{\boldsymbol{Y}^*}$ are
+obtained from those of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}$ by
+replacing $f_i$, $f_{ij}(h)$, and $(f_{\min\{i,j\}} - f_if_j)$ with
+$p_i$, $p_{ij}(h)$, and $p_j(\delta_{i,j} - p_i)$ respectively, it
+follows by the same matrix multiplication as in
+Section~\ref{sec:fstar_hat} that the elements of
+$\boldsymbol{\Sigma}_{\hat{\boldsymbol{p}}^*}$ are obtained from those
+of $\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}}^*}$ by the same
+substitution.
+
+For the bias, the Hessian of $g_j$ evaluated at
+$\boldsymbol{\mu}_{\boldsymbol{Y}^*}$ is sparse, with non-zero entries
+\[
+    \boldsymbol{H}_{g_j} =
+    \begin{cases}
+        \dfrac{2p_j}{\pi^2}  & \text{if } i = k = -1, \\[1ex]
+        -\dfrac{1}{\pi^2}    & \text{if } i = -1,\ k = j, \\[1ex]
+        0                    & \text{else,}
+    \end{cases}
+\]
+which is identical in structure to the ordinal case. Applying
+Lemma~\ref{lem:quadform} and using
+$\sigma_{\boldsymbol{Y}^*;\,-1,j} = p_j\,\sigma_{\boldsymbol{Y}^*;\,-1,-1}$
+from the nominal analogue of case~\textbf{(ii)} of
+Remark~\ref{rem:sigma_zstar}, the bias reduces to
+\begin{align*}
+    \mathrm{Bias}(\hat{p}_j)
+    &= \frac{1}{2}\,\mathrm{tr}
+       \bigl(\boldsymbol{H}_{g_j}\,\boldsymbol{\Sigma}_{\boldsymbol{Y}^*}\bigr) \\
+    &= \frac{p_j}{\pi^2}\,\sigma_{\boldsymbol{Y}^*;\,-1,-1}
+       - \frac{1}{\pi^2}\,p_j\,\sigma_{\boldsymbol{Y}^*;\,-1,-1}
+     = 0.
+\end{align*}
+Hence, $\hat{\boldsymbol{p}}^*$ is unbiased to order $n^{-1}$ under
+MCAR, in direct analogy to the ordinal result of
+Section~\ref{sec:fstar_hat}.
 \end{appendices}
 
 \bibliography{references}
