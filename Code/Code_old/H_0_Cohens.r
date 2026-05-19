@@ -3,7 +3,7 @@
 # Nutzt simulation() direkt mit r = 0
 # ==============================================================================
 
-n_grid_H0  <- c(5, 10, 15, 25, 37, 50, 75, 100,  200, 375, 500, 750, 1000, 2500, 5000)
+n_grid_H0  <- c(25, 37, 50, 75, 100,  200, 375, 500, 750, 1000, 2500, 5000)
 alpha_test <- 0.05
 
 # Szenarien A und B mit r = 0 (H_0: i.i.d.)
@@ -102,8 +102,8 @@ ggplot(rej_H0_df,
              linetype  = "dashed",
              linewidth = 0.7) +
   annotate("text",
-           x     = 15,
-           y     = alpha_test + 0.008,
+           x     = 40,
+           y     = alpha_test - 0.008,
            label = "Nominal level (5%)",
            color = "grey40",
            size  = 3.5) +
@@ -118,7 +118,7 @@ ggplot(rej_H0_df,
   )  +
   scale_x_log10(name = "log(n)") +
   scale_y_continuous(
-    limits = c(0, 0.20),
+    limits = c(0, 0.1),
     breaks = seq(0, 0.20, by = 0.05),
     labels = scales::percent_format(accuracy = 1),
     name   = "Empirical rejection frequency"
@@ -127,17 +127,12 @@ ggplot(rej_H0_df,
     title    = expression(
       paste("Empirical rejection frequency under ",
             H[0], "  (", alpha, " = 5%)")
-    ),
-    subtitle = bquote(
-      pi == 0.75 ~
-      "   2000 replications per scenario" ~
-      "   h = 1"
     )
   ) +
   theme_minimal() +
   theme(
     plot.title       = element_text(size = 13, face = "bold"),
-    plot.subtitle    = element_text(size = 9,  color = "grey40"),
+    plot.subtitle    = element_text(size = 11,  color = "grey40"),
     plot.caption     = element_text(size = 9,  color = "grey50",
                                     face = "italic"),
     legend.position  = "bottom",

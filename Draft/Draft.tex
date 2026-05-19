@@ -8,6 +8,7 @@
 \usepackage{appendix}
 \usepackage{tikz}
 \usepackage{float}
+\usepackage{fontspec}
 % Theorem-Definitionen
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{proposition}[theorem]{Proposition}
@@ -1478,7 +1479,7 @@ $\boldsymbol{D}_\kappa(\hat{\boldsymbol{f}}^{(h)*} -
 it does not contribute to the leading bias term, and the $O(n^{-1})$ 
 bias reduces by Lemma~\ref{lem:quadform} to
 \[
-    \mathrm{Bias}(\hat{\kappa}_{\mathrm{ord}})
+    \mathrm{Bias}(n\hat{\kappa}_{\mathrm{ord}})
     = \frac{1}{2}\,\mathrm{tr}\!\left(
       \boldsymbol{H}_{\kappa}\,\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}
       \right) + o(n^{-1}).
@@ -1504,8 +1505,8 @@ $\sigma^{(h)*}_{i,m+l} = 2f_l\sigma^{(h)*}_{i,l}$ from case
 \textbf{(ii)} of $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ and 
 symmetry $\sigma^{(h)*}_{i,l} = \sigma^{(h)*}_{l,i}$, yields
 \[
-    \mathrm{Bias}(\hat{\kappa}_{\mathrm{ord}}) 
-    \overset{H_0}{=} -\frac{1}{\pi}.
+    \mathrm{Bias}(\hat{\kappa}_{\mathrm{ord}}(h)) 
+    \overset{H_0}{=} -\frac{1}{n\pi}.
 \]
 The detailed calculation is carried out in Appendix~\ref{app:Bias}.
 The results are summarized in the following theorem.
@@ -1539,11 +1540,11 @@ following hold as $n\to\infty$:
             \left(\displaystyle\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2
         }.
     \]
-    \item \textbf{Finite-sample bias.} The approximate bias of 
-    $n\hat{\kappa}_{\mathrm{ord}}(h)$ under $H_0$ is
+    \item \textbf{Finite-sample bias.} The bias of 
+    $\hat{\kappa}_{\mathrm{ord}}(h)$ under $H_0$ is
     \[
-        \mathrm{Bias}\bigl(n\hat{\kappa}_{\mathrm{ord}}(h)\bigr) 
-        \approx -\frac{1}{\pi},
+        \mathrm{Bias}\bigl(\hat{\kappa}_{\mathrm{ord}}(h)\bigr) 
+        = -\frac{1}{n \pi}+ o(n^{-1}),
     \]
     so that the bias-corrected estimator is
     \[
@@ -1637,16 +1638,16 @@ i.i.d., but non-rejection at a single lag does not rule out
 dependence at other lags or through off-diagonal bivariate 
 probabilities. In practice, the test is therefore applied 
 simultaneously for several lags $h = 1, \ldots, H$.
-\begin{remark}
-The test can be visualized analogously to the sample autocorrelation
-function (ACF): plotting $\hat{\kappa}_{\mathrm{ord}}(h)$ against
-the lag $h$ together with pointwise significance bands
-$\pm\,z_{\alpha/2}\,\hat{\sigma}_\kappa/\sqrt{n}$ provides an
-intuitive summary of the serial dependence structure and immediately
-identifies lags at which $H_0$ is rejected.
-Figure~\ref{fig:kappa-ci} illustrates this for the simulation
-scenarios of Chapter~\ref{chap:simulation}.
-\end{remark}
+% \begin{remark}
+% The test can be visualized analogously to the sample autocorrelation
+% function (ACF): plotting $\hat{\kappa}_{\mathrm{ord}}(h)$ against
+% the lag $h$ together with pointwise significance bands
+% $\pm\,z_{\alpha/2}\,\hat{\sigma}_\kappa/\sqrt{n}$ provides an
+% intuitive summary of the serial dependence structure and immediately
+% identifies lags at which $H_0$ is rejected.
+% Figure~\ref{fig:kappa-ci} illustrates this for the simulation
+% scenarios of Chapter~\ref{chap:simulation}.
+% \end{remark}
 
 \subsection{Consistency under $H_A$}
 \label{subsec:serial-HA}
@@ -1753,14 +1754,18 @@ where $p_j = P(X_t = j)$. The corresponding joint CDF components are
 f_{ij}(h) = \sum_{k=0}^i \sum_{l=0}^j p_{kl}(h).
 \]
 Hence, $\kappa_{\mathrm{ord}}(h)$ is available in closed form by 
-plugging the relevant $f_{ij}(h)$ and $f_i$ into the formula from Definition~\ref{def:cohens-kappa}. 
-Figure~\ref{fig:kappa-profile} illustrates the serial dependence 
-structure of the BinAR(1) process in terms of Cohen's $\kappa_{\mathrm{ord}}(h)$ 
-as a function of the lag $h$ for different values of the thinning parameter $r$.
-For fixed $m$ and $p$ and $r>0$, the curves decay exponentially with $h$, with the rate of 
-decay decreasing for higher values of $r$. For $r < 0$, $\kappa_{\mathrm{ord}}(h)$ alternates in sign: 
-it is negative at lag $h = 1$, positive at $h = 2$, negative at $h = 3$, etc., while its absolute value
-also decays exponentially to zero as $h$ increases.
+plugging the relevant $f_{ij}(h)$ and $f_i$ into 
+Definition~\ref{def:cohens-kappa}. Figure~\ref{fig:kappa-profile} 
+illustrates the serial dependence structure of the BinAR(1) process 
+by displaying the analytically computed values of 
+$\kappa_{\mathrm{ord}}(h)$ as a function of the lag $h$ for 
+Scenario B with $r \in \{-0.5, -0.2,0.2, 0.4 0.6, 0.8, 0.95  \}$. 
+For $r > 0$, the curves decay exponentially with $h$, 
+with the rate of decay decreasing for higher values of $r$ — 
+reflecting the stronger persistence of the process. For $r < 0$, 
+$\kappa_{\mathrm{ord}}(h)$ alternates in sign: negative at odd lags 
+and positive at even lags, while its absolute value decays 
+exponentially to zero as $h \to \infty$.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=\textwidth, height = 6cm]{../Graphs/kappa_to_h.png}
@@ -1841,16 +1846,16 @@ qualitatively different settings:
     \caption{Marginal CDFS of the two simulation scenarios.}
     \label{fig:marginal-dist}
 \end{figure}
-The PMF's and CDFs for both scenarios are shown in Figure~\ref{fig:marginal-dist}. For each scenario, two observation probabilities are considered: 
+The PMF's and CDFs for both scenarios are shown in Figure~\ref{fig:marginal-dist}. 
+Depending on the experiment, the serial dependence parameter $r$ may be varied
+to illustrate certain results. 
+For each scenario, two observation probabilities are considered: 
 $\pi = 1$ (no missingness) and $\pi = 0.75$ (25\% missing at random).\\
-In addition, for scenario~A we examine serially dependent missingness, 
+In addition, for we examine serially dependent missingness, 
 with $\pi = 0.75$ and $r_{\pi} \in \{0.2, 0.75\}$, as well as the two MNAR-type mechanisms described above with $\pi_{\text{low}} = 0.5$ and $\pi_{\text{high}} = 1$. \\
-The time series length varies over $n \in \{50, 100, 250, 500, 1000\}$, 
-and all results are based on $B = 1{,}000$ Monte Carlo replications. 
-To study the convergence of the bias as a function of $n$, an 
-additional fine grid \[N_{\text{fine}} := \{2, 3, 5, 10, 15, 25, 37, 50, 75, 100, 
-150, 200, 375, 500, 750, 1000\}\] is used for Scenario B under 
-$\pi = 0.75$, with $B = 1{,}000$ replications each.
+The sample size $n$ and the number of Monte Carlo replications $B$ vary 
+across experiments and are stated explicitly for each figure. As a default, 
+results are based on $n \in \{50, 100, 250, 500, 1000\}$ and $B = 1{,}000$ replications.
 
 \subsection*{Estimators and performance measures}
 
@@ -1887,7 +1892,7 @@ benchmarks against which the simulated bias curves are compared.
 \paragraph{Convergence to the asymptotic distribution.}
 Figure~\ref{fig:iov-density} illustrates the convergence of
 $\sqrt{n}(\widehat{\mathrm{IOV}} - \mathrm{IOV})$ to its asymptotic
-normal distribution. The left panel shows the raw centered quantity,
+normal distribution. The left panel shows a kernel density plot of the raw quantity,
 while the right panel shows the same quantity after multiplication
 by $\sqrt{n}$. Both panels display
 results for $n \in \{50, 1000, 5000\}$ under \hyperref[scen:B]{Scenario~B} with
@@ -2005,7 +2010,7 @@ scenarios, the standard deviation under $\pi = 0.75$ is uniformly
 larger than under $\pi = 1$, consistent with the $1/\pi$ inflation
 of the lag-$0$ term in $\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}}^*}$
 established in Theorem~\ref{thm:clt_fstarhat}.\\
-Third, the convergence behavior differs markedly between the two
+Third, the convergence behavior differs subtly between the two
 scenarios. In Scenario~A ($m=3$, skewed marginal distribution),
 the standard deviation is larger in absolute terms. This indicates
 that the effect of marginal dispersion on
@@ -2058,7 +2063,8 @@ closer inspection can a slight increase in the standard deviation be observed.
 Even under much stronger serial dependence ($r_\pi = 0.75$), the effect remains 
 limited, with only a slight increase in the standard deviations.
 This serves to illustrate that the dispersion of $\widehat{IOV}$ is primarily
-driven on the marginal distribution of $X_t$ than on any serial dependence structure.
+driven by the marginal distributions of $X_t$ and $O_T$, and not an any serial 
+dependence structure.
 
 \begin{figure}[H]
     \centering
@@ -2168,7 +2174,7 @@ $\kappa_{\mathrm{ord}}(h)$ is not a purely quadratic functional and
 therefore exhibits higher-order bias terms beyond the leading
 $O(n^{-1})$ component, that is corrected for in the bias-corrected version.  
 In both scenarios, the test based on the biased corrected estimator
-performs better for small, however the difference decays quite quickly 
+performs better for small $n$, however the difference decays quite quickly 
 and is hardly visible already for $n = 50$. However, the difference
 seems to be more pronounced in scenario B.
 
@@ -2180,8 +2186,8 @@ seems to be more pronounced in scenario B.
         $\hat{\kappa}_{\mathrm{ord}}^{\mathrm{bc}}(1)$
         for both scenarios under $H_0$ (i.e.\ $r = 0$),
         across
-        $n \in \{5,10,15,25,37,50,75,100,200,375,500,750,1000,2500,5000\}$,
-        using a nominal significance level of $\alpha = 5\%$.}
+        $n \in \{25, 37, 50, 75, 100, 200, 375, 500, 750, 1000, 2500, 5000\}$,
+        using a nominal significance level of $\alpha = 5\%$ for $B = 5000$ iterations.}
     \label{fig:rejection-H0}
 \end{figure}
 
@@ -2190,9 +2196,9 @@ seems to be more pronounced in scenario B.
 \paragraph{Power under $H_A$.}
 To illustrate the power of the test under violation of the i.i.d. assumption of $X_t$,
 Figure~\ref{fig:kappa-H_A} displays two panels.
-The left panel shows the mean estimate of $\kappa_{\mathrm{ord}}(1)$ for Scenario~A with $\pi = 0.75$,
-together with $\pm 1.96$ standard errors and the true value of $\kappa_{\mathrm{ord}}(1)$ (red dashed line),
-compared to the 95\% confidence intervals computed using Theorem~\ref{thm:kappa-asymp}. Asymptotically, 
+The left panel shows the mean estimate of $\kappa_{\mathrm{ord}}(1)$ (black dots) for Scenario~A with $\pi = 0.75$,
+together with $\pm 1.96$ standard errors (grey ribbon) and the true value of $\kappa_{\mathrm{ord}}(1)$ (red dashed line),
+compared to the 95\% confidence intervals (blue ribbon) computed using Theorem~\ref{thm:kappa-asymp}. Asymptotically, 
 the test is consistent: the two ribbons monotonically get narrower, and at around 500 observations they 
 become non-overlapping, indicating that less than 2.5\% of samples under the given scenario would fall 
 inside the 95\% confidence intervals. However, for smaller $n$, the two ribbons are clearly overlapping, 
@@ -2214,6 +2220,7 @@ the speed of convergence is substantially slower for $\pi = 0.75$ compared to $\
         \centering
         \includegraphics[width=\textwidth, height = 0.7 \textwidth]{../Graphs/kappa_rejection_rate.png}
     \end{minipage}
+    {\scriptsize {\fontspec{Arial} log(n)}}
     \caption{\scriptsize
         Left: Mean estimate of $\hat{\kappa}(1)$ together with
         $\pm 1.96$ standard deviations (gray ribbon) for Scenario~A,
@@ -2221,7 +2228,7 @@ the speed of convergence is substantially slower for $\pi = 0.75$ compared to $\
         Right: Rejection rate under $H_A$ for Scenario~A with varying
         serial dependence parameter $r \in \{0.15, 0.35, 0.6\}$ and
         marginal observation probability $\pi \in \{0.75, 1\}$.
-        For both panels, $n \in \{50, 100, 250, 500, 1000, 2000\}$.}
+        For both panels, $n \in \{50, 100, 250, 500, 1000, 2000\}$ and $B = 1000$ for all scenarios.}
     \label{fig:kappa-H_A}
 \end{figure}
 
@@ -2244,10 +2251,12 @@ and does not vanish as $n \to \infty$, confirming that the corrected
 estimator is not consistent under MNAR. Since $\widehat{\mathrm{IOV}}$
 is a plug-in estimator based on $\hat{\boldsymbol{f}}^*$, it inherits
 this inconsistency through the delta method — as is clearly visible in
-Figure~\ref{fig:bias-mnar} from the widening ribbons and the absence
+Figure~\ref{fig:bias-mnar} from the narrowing ribbons and the absence
 of any convergence of the bias curves with growing $n$.
-The direction of the bias depends on the missingness mechanism.
-When higher categories are more likely to be observed (blue ribbon),
+The direction of the bias depends on the particular dependence
+structure between $X_t$ and $O_T$ together with features of the marginal 
+distribtution of $X_t$.
+Here, hen higher categories are more likely to be observed (blue ribbon),
 the upper tail of the distribution is over-represented. Given the
 right-skewed marginal distribution of Scenario~A, this artificially
 inflates the estimated dispersion, resulting in a persistent positive
@@ -2277,7 +2286,7 @@ $\hat{\boldsymbol{f}}$. For nominal processes, no such ordering exists,
 and the marginal distribution is instead characterized by the PMF vector 
 $\boldsymbol{p}$ and its estimator $\hat{\boldsymbol{p}}$ (recall 
 Definition~\ref{def:empirical_estimators}). Since both estimators are sample 
-means of bounded indicator processes,and since we again assume $(X_t)$ to be strictly stationary and
+means of bounded indicator processes, and since we again assume $(X_t)$ to be strictly stationary and
 $\alpha$-mixing with exponentially decaying coefficients
 (Definition~\ref{def:mixing}), the asymptotic theory carries over almost entirely. 
 This chapter makes this correspondence precise and focuses on the points 
@@ -2418,8 +2427,10 @@ given by
     + \frac{1}{\pi^2}\sum_{h=1}^{\infty}\bigl(p_{ij}(h) + p_{ji}(h) - 2p_i p_j\bigr).
 \]
 \end{theorem}
-\noindent The bias of order $O(n^{-1})$ is, as for \hyperref[thm:clt_fstarhat]{$\hat{\boldsymbol{f}}^*$}, exactly 0. The detailed calculations for the 
-asymptotic variance and the bias can be found in Appendix~\ref{app:pstar}.
+\noindent As for
+\hyperref[thm:clt_fstarhat]{$\hat{\boldsymbol{f}}^*$},
+the second-order term in the Taylor expansion vanishes identically, implying that no second-order asymptotic bias occurs. The detailed calculations for the asymptotic variance and bias are provided in Appendix~\ref{app:pstar}.
+
 \begin{appendices}
 
 % \renewcommand{\thesection}{\Alph{section}}

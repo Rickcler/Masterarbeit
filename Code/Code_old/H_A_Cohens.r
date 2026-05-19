@@ -59,7 +59,6 @@ kappa_HA_list <- lapply(n_grid, function(n) {
   )
 })
 
-
 kappa_HA_df <- do.call(rbind, kappa_HA_list) %>%
   mutate(n = factor(n, levels = n_grid))
 
@@ -285,8 +284,8 @@ ggplot() +
             aes(x = n_num, y = ci_lower),
             color = "steelblue", linetype = "dashed", linewidth = 0.7) +
   annotate("text",
-         x = max(n_grid) * 0.55, 
-         y = ci_df$ci_upper[nrow(ci_df)] + 0.01,
+         x = max(n_grid) * 0.25, 
+         y = ci_df$ci_upper[nrow(ci_df)] - 0.01,
          label = expression(paste("95% CI under ", H[0])),
          color = "steelblue", size = 5) +
   # Wahres kappa unter H_A
@@ -294,7 +293,7 @@ ggplot() +
              color = "#C0392B", linetype = "dashed", linewidth = 0.8) +
   annotate("text",
            x = max(n_grid) * 0.15,
-           y = true_kappa + 0.025,
+           y = true_kappa + 0.05,
            label = expression(paste("True ", kappa[ord](h))),
            color = "#C0392B", size = 5) +
   # Simulierte Mittelwerte unter H_A
@@ -309,13 +308,17 @@ ggplot() +
   geom_point(data = kappa_summary,
              aes(x = n_num, y = mean_kappa),
              size = 2.5, color = "black") +
-  scale_x_continuous(breaks = n_grid, name = "n") +
+  scale_x_continuous(
+    breaks = n_grid_rej,
+    trans  = "log10",
+    name   = ""
+  ) +
   scale_y_continuous(
-    name = expression(hat(kappa)[ord](h))
+    name = expression(hat(kappa)[ord](1))
   ) +
   labs(
     title    = expression(
-      paste("Consistency of ", hat(kappa)[ord](h),
+      paste("Consistency of ", hat(kappa)[ord](1),
             " under ", H[A], " — 95% CI under ", H[0])
     ),
     subtitle = bquote(
@@ -330,9 +333,12 @@ ggplot() +
   ) +
   theme_minimal() +
   theme(
+    axis.text.x        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 12, color = "gray20"),
+    axis.text.y        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 14, color = "gray20"),
     plot.title    = element_text(size = 13, face = "bold"),
     plot.subtitle = element_text(size = 9, color = "grey40"),
-    plot.caption  = element_text(size = 9, color = "grey50", face = "italic")
+    plot.caption  = element_text(size = 9, color = "grey50", face = "italic"),
+    axis.ticks.length = unit(2.5, "mm")
   )
 
 ggsave("Graphs/Kappa_H_A.png", width = 5.5, height = 8)
@@ -426,7 +432,7 @@ rej_df <- do.call(rbind, rej_list) %>%
   mutate(
     label = factor(label, levels = scenarios_rej$label),
     r_fac = factor(paste0("r = ", r),
-                   levels = c("r = 0.15", "r = 0.35", "r = 0.60")),
+                   levels = c("r = 0.15", "r = 0.35", "r = 0.6")),
     pi_fac = factor(paste0("π = ", pi),
                     levels = c("π = 1", "π = 0.75"))
   )
@@ -458,26 +464,22 @@ ggplot(rej_df,
     name   = "Serial dependence",
     values = c("r = 0.15" = "#5B8DB8",
                "r = 0.35" = "#2C3E6B",
-               "r = 0.60" = "#C0392B"),
-    labels = c(
-      expression(r == 0.15 ~ "(weak)"),
-      expression(r == 0.35 ~ "(moderate)"),
-      expression(r == 0.60 ~ "(strong)")
-    )
+               "r = 0.6" = "#C0392B"),
+    #labels = c(
+    #  expression(r == 0.15 ~ "(weak)"),
+    #  expression(r == 0.35 ~ "(moderate)"),
+    #  expression(r == 0.60 ~ "(strong)")
+    #)
   ) +
   scale_linetype_manual(
     name   = "Observation probability",
     values = c("π = 1"    = "solid",
-               "π = 0.75" = "dashed"),
-    labels = c(
-      expression(pi == 1 ~ "(no missingness)"),
-      expression(pi == 0.75 ~ "(25% missing)")
-    )
-  ) +
+               "π = 0.75" = "dashed")
+    )+
   scale_x_continuous(
     breaks = n_grid_rej,
     trans  = "log10",
-    name   = "n (log scale)"
+    name   = ""
   ) +
   scale_y_continuous(
     limits = c(0, 1.05),
@@ -498,13 +500,20 @@ ggplot(rej_df,
     )
   ) +
   theme_minimal() +
+  guides(
+  color    = guide_legend(order = 1, keywidth = unit(1, "cm")),
+  linetype = guide_legend(order = 2, keywidth = unit(1, "cm"))
+  ) +
   theme(
     plot.title    = element_text(size = 13, face = "bold"),
     plot.subtitle = element_text(size = 9,  color = "grey40"),
+    axis.text.x        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 12, color = "gray20"),
+    axis.text.y        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 12, color = "gray20"),
     legend.position = "right",
-    legend.title    = element_text(size = 10, face = "bold"),
-    legend.text     = element_text(size = 9),
-    panel.grid.minor = element_blank()
+    legend.title    = element_text(size = 8, face = "bold"),
+    legend.text     = element_text(size = 7),
+    panel.grid.minor = element_blank(),
+    axis.ticks.length = unit(2.5, "mm")
   )
 
 ggsave("Graphs/kappa_rejection_rate.png", width = 5.5, height = 8)

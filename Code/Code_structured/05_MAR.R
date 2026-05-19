@@ -13,7 +13,7 @@ load("Masterarbeit.RData")
 
 # MCAR: direkt aus sim_df (m=3, p=0.20, r=0.35, pi=0.75, pi_h=0)
 mcar_df <- sim_df %>%
-  filter(m == 3, p == 0.20, r == 0.35, pi == 0.75, pi_h == 0) %>%
+  filter(m == 3, p == 0.20, r == 0.35, pi == 0.75, r_pi == 0) %>%
   mutate(mechanism = "MCAR") %>%
   select(n, mechanism, mean_IOV, sd_IOV, mean_Skew, sd_Skew, mean_C, sd_C)
 
@@ -78,7 +78,7 @@ mech_linetypes <- c("MCAR" = "solid", "MAR" = "dashed",
 # Plot 1: Mittlerer IOV – MCAR vs. MAR
 # ------------------------------------------------------------------------------
 
-ggplot(compare_df,
+plt <- ggplot(compare_df,
        aes(x = n, y = mean_IOV, color = mechanism,
            linetype = mechanism, group = mechanism)) +
   geom_hline(yintercept = true_iov,
@@ -108,10 +108,164 @@ ggplot(compare_df,
   ) +
   theme_minimal() +
   theme(legend.position = "bottom")
+ggsave("Graphs/iov_mnar.png", width = 8, height = 5)
+# ------------------------------------------------------------------------------
+# Plot 2: Mittlerer Bias – MCAR vs. MAR
+# ------------------------------------------------------------------------------
+
+# Simulation Function
+
+simulation_kappa_HA_MNAR <- function(
+    n, m, p, r,
+    pi_low = 0.5,
+    pi_high = 0.9,
+    h = 1,
+    n_reps = 1000,
+    mechanism = c("increasing", "decreasing")
+) {
+
+  mechanism <- match.arg(mechanism)
+
+  kappa_vals <- numeric(n_reps)
+
+  for(rep in 1:n_reps) {
+
+    # abhängiger Prozess
+    count_process <- generate_binar1(n, m, p, r)
+
+    # MNAR Missingness
+    O_t <- switch(
+      mechanism,
+
+      increasing =
+        generate_O_MAR(
+          count_process,
+          m,
+          pi_low,
+          pi_high
+        ),
+
+      decreasing =
+        generate_O_MAR_inv(
+          count_process,
+          m,
+          pi_low,
+          pi_high
+        )
+    )
+
+    # geschätzte CDF
+    CDF_hat <- marginal_probs_e(
+      m,
+      count_process[O_t == 1],
+      sum(O_t)
+    )
+
+    # geschätzte biv probs
+    biv_hat <- biv_probs_e(
+      m,
+      count_process,
+      O_t,
+      n,
+      h = h
+    )
+
+    # Cohen-Kappa-artige Statistik
+    num <- sum(biv_hat - CDF_hat^2)
+    den <- sum(CDF_hat * (1 - CDF_hat))
+
+    kappa_vals[rep] <- num / den
+  }
+
+  kappa_vals
+}
+
+
+# Rejection Rate
+rejection_rate_MNAR <- function(
+    n,
+    m,
+    p,
+    r,
+    pi_low = 0.5,
+    pi_high = 0.9,
+    h = 1,
+    alpha = 0.05,
+    n_reps = 1000,
+    mechanism = c("increasing", "decreasing")
+) {
+
+  mechanism <- match.arg(mechanism)
+
+  # asymptotischer kritischer Wert
+  # (falsch unter MNAR -> genau das willst du zeigen)
+  sd_H0 <- sqrt(asymp_var_kappa_H0(m, p, pi = 0.75) / n)
+
+  crit_val <- qnorm(1 - alpha / 2) * sd_H0
+
+  kappa_vals <- simulation_kappa_HA_MNAR(
+    n         = n,
+    m         = m,
+    p         = p,
+    r         = r,
+    pi_low    = pi_low,
+    pi_high   = pi_high,
+    h         = h,
+    n_reps    = n_reps,
+    mechanism = mechanism
+  )
+
+  mean(abs(kappa_vals) > crit_val, na.rm = TRUE)
+}
+
+# Scenarios
+scenarios_mnar <- expand.grid(
+  r = c(0.00, 0.15, 0.35),
+  mechanism = c("increasing", "decreasing"),
+  stringsAsFactors = FALSE
+)
+# Simulation
+n_grid_mnar <- c(50, 100, 250, 500, 1000, 2000)
+
+rej_list_mnar <- lapply(1:nrow(scenarios_mnar), function(s) {
+
+  sc <- scenarios_mnar[s, ]
+
+  rates <- sapply(n_grid_mnar, function(n) {
+
+    rejection_rate_MNAR(
+      n          = n,
+      m          = 3,
+      p          = 0.20,
+      r          = sc$r,
+      pi_low     = 0.5,
+      pi_high    = 0.9,
+      h          = 1,
+      alpha      = 0.05,
+      n_reps     = 1000,
+      mechanism  = sc$mechanism
+    )
+  })
+
+  data.frame(
+    n = n_grid_mnar,
+    rate = rates,
+    r = sc$r,
+    mechanism = sc$mechanism
+  )
+})
+
+
+rej_df_mnar <- do.call(rbind, rej_list_mnar)
 
 # ------------------------------------------------------------------------------
 # Plot 2: Mittlerer Bias – MCAR vs. MAR
 # ------------------------------------------------------------------------------
+
+
+
+
+
 
 Sigma_mcar <- Sigma_Star(m = 3, p = 0.20, r = 0.35, pi = 0.75, pi_h = 0)
 
