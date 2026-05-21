@@ -198,7 +198,6 @@ rejection_rate_MNAR <- function(
   mechanism <- match.arg(mechanism)
 
   # asymptotischer kritischer Wert
-  # (falsch unter MNAR -> genau das willst du zeigen)
   sd_H0 <- sqrt(asymp_var_kappa_H0(m, p, pi = 0.75) / n)
 
   crit_val <- qnorm(1 - alpha / 2) * sd_H0
@@ -220,7 +219,7 @@ rejection_rate_MNAR <- function(
 
 # Scenarios
 scenarios_mnar <- expand.grid(
-  r = c(0.00, 0.15, 0.35),
+  r = c(0.00, 0.15, 0.35, 0.6),
   mechanism = c("increasing", "decreasing"),
   stringsAsFactors = FALSE
 )
@@ -258,9 +257,301 @@ rej_list_mnar <- lapply(1:nrow(scenarios_mnar), function(s) {
 
 rej_df_mnar <- do.call(rbind, rej_list_mnar)
 
+
+library(ggplot2)
+library(dplyr)
+library(scales)
+
+rej_df_mnar <- rej_df_mnar %>%
+  mutate(
+    r_fac = factor(
+      paste0("r = ", r),
+      levels = c("r = 0", "r = 0.15", "r = 0.35", "r = 0.6")
+    ),
+    mech_fac = factor(
+      mechanism,
+      levels = c("increasing", "decreasing"),
+      labels = c(
+        "Increasing",
+        "Decreasing"
+      )
+    )
+  )
+
+mech_fac = factor(
+  mechanism,
+  levels = c("increasing", "decreasing"),
+  labels = c(
+    "Increasing",
+    "Decreasing"
+  )
+)
+
+ggplot(
+  rej_df_mnar,
+  aes(
+    x = n,
+    y = rate,
+    color = r_fac,
+    linetype = mech_fac,
+    group = interaction(r_fac, mech_fac)
+  )
+) +
+
+  # Nominalniveau
+  geom_hline(
+    yintercept = 0.05,
+    color = "grey50",
+    linetype = "dotted",
+    linewidth = 0.7
+  ) +
+
+  annotate(
+    "text",
+    x = max(rej_df_mnar$n) * 0.8,
+    y = 0.08,
+    label = "α = 5%",
+    color = "grey50",
+    size = 4
+  ) +
+
+  # Linien + Punkte
+  geom_line(linewidth = 1.0) +
+  geom_point(size = 2.8) +
+
+  # Farben nach r
+  scale_color_manual(
+    name = "Serial dependence",
+    values = c(
+      "r = 0"    = "black",
+      "r = 0.15" = "#5B8DB8",
+      "r = 0.35" = "#2C3E6B",
+      "r = 0.6"  = "#C0392B"
+    )
+  ) +
+
+  # Linientyp nach MNAR-Mechanismus
+  scale_linetype_manual(
+  name = "MNAR mechanism",
+  values = c(
+    "Increasing" = "solid",
+    "Decreasing" = "dashed"
+  ),
+  labels = c(
+    expression(P(O[t] == 1) %prop% X[t]),
+    expression(P(O[t] == 1) %prop% -X[t])
+  )
+) +
+
+  scale_x_continuous(
+    trans  = "log10",
+    breaks = c(50, 100, 250, 500, 1000, 2000),
+    name   = "n (log scale)"
+  ) +
+
+  scale_y_continuous(
+    limits = c(0, 1.05),
+    breaks = seq(0, 1, by = 0.25),
+    labels = percent,
+    name   = "Rejection rate"
+  ) +
+
+  labs(
+    title = expression(
+      paste(
+        "Rejection rate under MNAR missingness"
+      )
+    ),
+
+    subtitle =
+      "m = 3 , p = 0.2 , h = 1    π = 0.75"
+  ) +
+  guides(
+  color    = guide_legend(order = 1, keywidth = unit(1, "cm")),
+  linetype = guide_legend(order = 2, keywidth = unit(1, "cm"))
+  ) +
+
+  theme_minimal() +
+
+  theme(
+    plot.title = element_text(
+      size = 13,
+      face = "bold"
+    ),
+    axis.text.x        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 12, color = "gray20"),
+    axis.text.y        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 12, color = "gray20"),
+    plot.subtitle = element_text(
+      size = 9,
+      color = "grey40"
+    ),
+
+    legend.position = "right",
+
+    legend.title = element_text(
+      size = 8,
+      face = "bold"
+    ),
+
+    legend.text = element_text(size = 8),
+
+    panel.grid.minor = element_blank(),
+
+    axis.ticks.length = unit(2.5, "mm")
+  )
+
+  
+ggsave("Graphs/MNAR_kappa_rejection_rate.png", width = 5.5, height = 8)
+
+# ------------------------------------------------------------------------------
+# Konfidenzintervalle 
+# ------------------------------------------------------------------------------
+set.seed(42)
+
+kappa_inc_list <- lapply(n_grid, function(n) {
+  vals <- simulation_kappa_HA_MNAR(
+    n, m_val, p_val, r_val, pi_val,
+    h = h_val,
+    n_reps = 1000,
+    mechanism = "increasing"
+  )
+  data.frame(n = n, kappa_hat = vals, mech = "Increasing")
+})
+
+kappa_dec_list <- lapply(n_grid, function(n) {
+  vals <- simulation_kappa_HA_MNAR(
+    n, m_val, p_val, r_val, pi_val,
+    h = h_val,
+    n_reps = 1000,
+    mechanism = "decreasing"
+  )
+  data.frame(n = n, kappa_hat = vals, mech = "Decreasing")
+})
+
+kappa_MNAR_df <- do.call(rbind, c(kappa_inc_list, kappa_dec_list)) %>%
+  mutate(n = factor(n, levels = n_grid))
+
+kappa_MNAR_summary <- kappa_MNAR_df %>%
+  group_by(n, mech) %>%
+  summarise(
+    mean_kappa = mean(kappa_hat),
+    sd_kappa   = sd(kappa_hat),
+    .groups = "drop"
+  ) %>%
+  mutate(n_num = as.numeric(as.character(n)))
+
+ci_df <- data.frame(n_num = n_grid) %>%
+  rowwise() %>%
+  mutate(
+    sd_H0    = sqrt(asymp_var_kappa_H0(m_val, p_val, pi_val) / n_num),
+    ci_lower = -1.96 * sd_H0,
+    ci_upper =  1.96 * sd_H0
+  ) %>%
+  ungroup()
+ggplot() +
+
+  # H0 baseline
+  geom_hline(yintercept = 0,
+             color = "grey50",
+             linetype = "dotted") +
+  annotate("text",
+         x = max(n_grid) * 0.25, 
+         y = ci_df$ci_upper[nrow(ci_df)] - 0.01,
+         label = expression(paste("95% CI under ", H[0])),
+         color = "grey50", size = 5) +
+  # H0 CI ribbon
+  geom_ribbon(
+    data = ci_df,
+    aes(x = n_num, ymin = ci_lower, ymax = ci_upper),
+    fill = "Grey20",
+    alpha = 0.15
+  ) +
+
+  # MNAR ribbons (two scenarios)
+  geom_ribbon(
+    data = kappa_MNAR_summary,
+    aes(
+      x = n_num,
+      ymin = mean_kappa - 1.96 * sd_kappa,
+      ymax = mean_kappa + 1.96 * sd_kappa,
+      fill = mech
+    ),
+    alpha = 0.15
+  ) +
+
+  # MNAR mean lines
+  geom_line(
+    data = kappa_MNAR_summary,
+    aes(x = n_num, y = mean_kappa, color = mech),
+    linewidth = 0.9
+  ) +
+
+  geom_point(
+    data = kappa_MNAR_summary,
+    aes(x = n_num, y = mean_kappa, color = mech),
+    size = 2
+  ) +
+
+  # H0 bounds lines
+  geom_line(
+    data = ci_df,
+    aes(x = n_num, y = ci_upper),
+    color = "steelblue",
+    linetype = "dashed"
+  ) +
+
+  geom_line(
+    data = ci_df,
+    aes(x = n_num, y = ci_lower),
+    color = "steelblue",
+    linetype = "dashed"
+  ) +
+
+  geom_hline(
+    yintercept = true_kappa,
+    color = "black",
+    linetype = "dashed"
+  ) +
+  annotate("text",
+           x = max(n_grid) * 0.15,
+           y = true_kappa - 0.02,
+           label = expression(paste("True ", kappa[ord](h))),
+           color = "black", size = 5)  +
+  scale_x_continuous(
+    trans = "log10",
+    breaks = n_grid,
+    name = "n"
+  ) +
+
+  scale_y_continuous(
+    name = expression(hat(kappa)[ord](1))
+  ) +
+
+scale_fill_manual(
+  name   = "MNAR mechanism",
+  values = c(
+    "Increasing" = "steelblue",
+    "Decreasing" = "#C0392B"
+  ),
+  labels = c(
+    expression(P(O[t] == 1) %prop% X[t]),
+    expression(P(O[t] == 1) %prop% -X[t])
+  )
+) +
+guides(
+  color = "none",    # entfernt die color-Legende
+  fill  = guide_legend(title = "MNAR mechanism")  # behält nur fill
+) +
+
+  theme_minimal() +
+  theme(
+    legend.position = "right"
+  )
+
+ggsave("Graphs/MNAR_Kappa_H_A.png", width = 5.5, height = 8)
 # ------------------------------------------------------------------------------
 # Plot 2: Mittlerer Bias – MCAR vs. MAR
 # ------------------------------------------------------------------------------
+
 
 
 

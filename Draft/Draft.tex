@@ -2275,6 +2275,29 @@ persistent negative bias.
     \label{fig:bias-mnar}
 \end{figure}
 
+\begin{figure}[H]
+    \centering
+    \begin{minipage}[c]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, height = 0.7 \textwidth]{../Graphs/MNAR_Kappa_H_A.png}
+    \end{minipage}
+    \begin{minipage}[c]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth, height = 0.7 \textwidth]{../Graphs/MNAR_kappa_rejection_rate.png}
+    \end{minipage}
+    {\scriptsize {\fontspec{Arial} log(n)}}
+    \caption{\scriptsize
+        Left: Mean estimateS of $\hat{\kappa}(1)$ together with
+        $\pm 1.96$ standard deviations  for Scenario~A with MNAR missingness,
+        with the red (increasing) and blue (decreasing) ribbons corresponding to the two  MNAR mechanisms described in Section~\ref{sec:sim-setup},
+        compared to the 95\% confidence intervals under $H_0$.
+        Right: Rejection rate under $H_0$ (black) and $H_A$ (colours) for Scenario~A 
+        with varying serial dependence parameter $r \in \{0.15, 0.35, 0.6\}$,
+        marginal observation probability $\pi = 0.75$ and both MNAR mechanisms.
+        For both panels, $n \in \{50, 100, 250, 500, 1000, 2000\}$ and $B = 1000$ for all scenarios.}
+    \label{fig:kappa-H_A}
+\end{figure}
+
 \chapter{Extension to Nominal Processes}
 \label{chap:nominal}
 

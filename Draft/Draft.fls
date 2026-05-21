@@ -425,6 +425,12 @@ INPUT ..\Graphs\kappa_rejection_rate.png
 INPUT ..\Graphs\MAR_IOV.png
 INPUT ..\Graphs\MAR_IOV.png
 INPUT ..\Graphs\MAR_IOV.png
+INPUT ..\Graphs\MNAR_Kappa_H_A.png
+INPUT ..\Graphs\MNAR_Kappa_H_A.png
+INPUT ..\Graphs\MNAR_Kappa_H_A.png
+INPUT ..\Graphs\MNAR_kappa_rejection_rate.png
+INPUT ..\Graphs\MNAR_kappa_rejection_rate.png
+INPUT ..\Graphs\MNAR_kappa_rejection_rate.png
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\rm-lmbx12.tfm
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\euler\eufm10.tfm
 INPUT C:\Users\victo\AppData\Local\Programs\MiKTeX\fonts\tfm\public\lm\lmmib10.tfm
