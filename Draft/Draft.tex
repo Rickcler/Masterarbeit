@@ -2240,7 +2240,7 @@ the speed of convergence is substantially slower for $\pi = 0.75$ compared to $\
 The preceding results were obtained under the MCAR assumption. We
 now examine what happens when this assumption is violated.
 
-\paragraph{State-dependent missingness (MNAR).}
+\paragraph{IOV under MNAR.}
 Under the two MNAR mechanisms described in Section~\ref{sec:sim-setup},
 Figure~\ref{fig:bias-mnar} shows the simulated bias of
 $\widehat{\mathrm{IOV}}$ for Scenario~A across
@@ -2255,8 +2255,8 @@ Figure~\ref{fig:bias-mnar} from the narrowing ribbons and the absence
 of any convergence of the bias curves with growing $n$.
 The direction of the bias depends on the particular dependence
 structure between $X_t$ and $O_T$ together with features of the marginal 
-distribtution of $X_t$.
-Here, hen higher categories are more likely to be observed (blue ribbon),
+distribution of $X_t$.
+Here, when higher categories are more likely to be observed (blue ribbon),
 the upper tail of the distribution is over-represented. Given the
 right-skewed marginal distribution of Scenario~A, this artificially
 inflates the estimated dispersion, resulting in a persistent positive
@@ -2275,6 +2275,45 @@ persistent negative bias.
     \label{fig:bias-mnar}
 \end{figure}
 
+\paragraph{Cohen's $\kappa$ under MNAR.}
+To illustrate the effect of MNAR missingness on the test for serial dependence based on
+$\hat{\kappa}_{\mathrm{ord}}(h)$, Figure~\ref{fig:kappa-H_A-MNAR} uses the same two-panel
+format as in Figure~\ref{fig:kappa-H_A}, with the key differences being that we included
+the simulated results for both MNAR mechanisms (red and blue ribbons) in the left panel,
+and that we now show rejection rates under $H_A$ for both MNAR mechanisms in the right
+panel, while keeping the marginal observation probability $\pi = 0.75$ constant. We also
+included the rejection rates under $H_0$ (black line) to illustrate the effect of MNAR
+missingness on the level of the test. Otherwise, the same specifications for the scenarios,
+sample sizes, and number of replications are used as in Figure~\ref{fig:kappa-H_A}.
+
+A few observations are worth highlighting. First, the left panel seemingly implies that
+$\hat{\kappa}_{\mathrm{ord}}(1)$ is not consistent under MNAR missingness: for both
+mechanisms, the average estimate of $\hat{\kappa}_{\mathrm{ord}}(1)$ for $n \geq 250$
+does not further approach the true value $\kappa_{\mathrm{ord}}(1)$ (dashed line).
+Second, the direction of the asymptotic bias differs between the two MNAR mechanisms.
+This becomes apparent in the right panel: under the mechanism where
+$P(O_t = 1) \propto -X_t$, the test statistic converges considerably faster than under
+$P(O_t = 1) \propto X_t$. The precise mechanism driving this difference likely depends
+on an interplay between the marginal distribution of $X_t$ and the particular missingness
+mechanism, though the exact nature of this dependence warrants further investigation.
+Third, both panels suggest that the test based on $\hat{\kappa}_{\mathrm{ord}}(1)$
+remains consistent under MNAR missingness. In the left panel, for $n > 1000$ the two
+ribbons lie outside the 95\% confidence band under $H_0$, implying that $H_0$ would be
+rejected in more than 97.5\% of samples under the given scenario. In the right panel,
+rejection rates under $H_A$ approach 100\% for $n > 1000$ across both mechanisms, with
+the exception of the scenario with $r = 0.15$ and $P(O_t = 1) \propto X_t$, where the
+rejection rate remains around 35\% even at $n = 2000$. This demonstrates that a
+combination of weak serial dependence and an unfavorable MNAR mechanism can cause a
+substantial loss of power even at large sample sizes. Nevertheless, the power curve for
+this scenario remains strictly increasing, suggesting that the test would eventually
+achieve consistency as $n$ grows, albeit at a considerably slower rate than in the
+remaining scenarios. Under $H_0$ the difference between the two missingness mechanisms
+is even more pronounced: for the $P(O_t = 1) \propto - X_t$ mechanism, the rejection rate 
+for $n = 50$ is already below  the $5\%$ nominal level, and it further decreases with $n$, whereas
+for the $P(O_t = 1) \propto X_t$ mechanism, the rejection rate is around $20\%$ at $n = 50$ and 
+only approaches the nominal level very slowly, remaining above $15\%$ even at $n = 2000$. 
+This illustrates that MNAR missingness can lead to severe over-rejection of the test under $H_0$, 
+and that the severity of this effect depends on the particular MNAR mechanism at play. 
 \begin{figure}[H]
     \centering
     \begin{minipage}[c]{0.49\textwidth}
@@ -2295,7 +2334,7 @@ persistent negative bias.
         with varying serial dependence parameter $r \in \{0.15, 0.35, 0.6\}$,
         marginal observation probability $\pi = 0.75$ and both MNAR mechanisms.
         For both panels, $n \in \{50, 100, 250, 500, 1000, 2000\}$ and $B = 1000$ for all scenarios.}
-    \label{fig:kappa-H_A}
+    \label{fig:kappa-H_A_MNAR}
 \end{figure}
 
 \chapter{Extension to Nominal Processes}
@@ -2408,7 +2447,7 @@ Under the assumptions of Theorem~\ref{thm:clt_phat}:
 % here.
 
 \section{Missingness}
-
+\paragraph{Marginal measures}
 The amplitude modulation framework of Section~\ref{sec:Amp Mod} extends 
 to nominal processes without modification: the observation indicator 
 $O_t$ multiplies the binarization vector $\boldsymbol{Y}_t$ rather than 
@@ -2453,6 +2492,58 @@ given by
 \noindent As for
 \hyperref[thm:clt_fstarhat]{$\hat{\boldsymbol{f}}^*$},
 the second-order term in the Taylor expansion vanishes identically, implying that no second-order asymptotic bias occurs. The detailed calculations for the asymptotic variance and bias are provided in Appendix~\ref{app:pstar}.
+\paragraph{Serial dependence}
+The serial dependence measure $\kappa_{\mathrm{nom}}$ (recall Definition~\ref{def:cohens-kappa}) depends on the bivariate probabilities $p_{ij}(h)$.   
+Therefore, the corrected estimator $\hat{p}_{ij}^*(h)$ is defined in direct analogy to $\hat{f}_{ij}^*(h)$ from Section~\ref{sec:serial-dependence} as
+\[\hat{p}_{ij}^*(h) = \frac{\sum_{t=h+1}^{n}O_tO_{t-h}Y_{t,i}Y_{t-h, j}}{\sum_{t=h+1}^{n}O_tO_{t-h}}.\]
+We define $\boldsymbol{Y}^{(h)*}_n$ in direct analogy to $\boldsymbol{Z}^{(h)*}_n$ from Section~\ref{sec:serial-dependence} with 
+$Z_{t,i}$ replaced by $Y_{t,i}$ and $Z_{t-h, j}$ replaced by $Y_{t-h, j}^*$. The elements of the asymptotic covariance matrix 
+$\boldsymbol{\Sigma}_{\boldsymbol{Y}^{(h)*}}$ are computed in direct analogy to those of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$
+from Section~\ref{subsec:serial-general} with $Z_{t,i,}$, $f_i$, $f_{ij}(h)$ replaced by $Y_{t,i}$, $p_i$, $p_{ij}(h)$ and $(f_{\mathrm{min}\{i,j\}}- f_i f_j)$
+by $p_j(\delta_{i,j} - p_i)$ throughout. From here, the asymptotic normality of 
+\[\hat{\boldsymbol{p}}^{(h)*}:= (p_0, \ldots, p_m, p_{00}(h), \ldots, p_{mm}(h))^\top\]
+follows from the same argument delta method argument as in Theorem~\ref{thm:clt_fhat_h},
+with the results summarized in the following theorem: 
+\begin{theorem}[Asymptotic Normality of $\hat{\boldsymbol{p}}$]
+\label{thm:clt_pstarhat}
+Let the same assumptions regarding $X_t$ and $O_t$ hold as in Theorem~\ref{thm:clt_fhat_h}, except that $X_t$ is nominal instead of ordinal.
+Then $\hat{\boldsymbol{p}}^{(h)*}$ is consistent for $\boldsymbol{\mu}^{(h)*} := (p_0, \ldots, p_m, p_{00}(h), \ldots, p_{mm}(h))^\top$, and: 
+\[
+    \sqrt{n}\!\left(\hat{\boldsymbol{p}}^{(h)*} 
+    - \boldsymbol{\mu}^{(h)*}\right)
+    \xrightarrow{d} \mathcal{N}\!\left(\boldsymbol{0},\, 
+    \boldsymbol{\Sigma}_{\boldsymbol{p}^{(h)*}}\right),
+    \qquad
+    \boldsymbol{\Sigma}_{\boldsymbol{p}^{(h)*}} 
+    = \boldsymbol{G}\,\boldsymbol{\Sigma}_{\boldsymbol{Y}^{(h)*}}\,
+    \boldsymbol{G}^\top,
+\]
+where the Jacobian $\boldsymbol{G}_{2m+2\times 2(m+2)}$, evaluated at 
+$\boldsymbol{\mu}_{\boldsymbol{Y}^{(h)*}}$, is given by
+\begin{align*}
+    \boldsymbol{G} =
+    \begin{pmatrix}
+    0 & \frac{-p_0}{\pi} & \frac{1}{\pi}& 0 &\cdots&&\cdots & 0 \\
+    \vdots &\vdots & 0 &\ddots & \ddots &&& \vdots \\
+    0 & \frac{-p_{m}}{\pi}& \vdots & \ddots & \frac{1}{\pi} & & &\vdots\\
+    \frac{-p_{00}(h)}{\pi(h)} & 0 & & & & \frac{1}{\pi(h)}&\ddots&\vdots\\
+    \vdots & \vdots & \vdots & & & \ddots & \ddots&0\\
+    \frac{-p_{m,m}(h)}{\pi(h)} & 0 & 0 & \cdots& 
+    &\cdots & 0&\frac{1}{\pi(h)}      
+    \end{pmatrix}.
+\end{align*}\end{theorem}
+Once again, higher-order mixed moments appear in $\boldsymbol{\Sigma}_{\boldsymbol{Y}^{(h)*}}$, such that 
+closed form expression for the elements of $\boldsymbol{\Sigma}_{\hat{\boldsymbol{p}}^{(h)*}}$ and consequently 
+$\sigma_{\hat{\kappa}_{\mathrm{nom}}(h)}^2$ are not without further assumptions. However, under $H_0$ that $(X_t)$
+is i.i.d., the bivariate probabilities factorize as $p_{ij}(h) = p_ip_j$. The relevant higher-order mixed moments
+thus simplify as follows:
+\begin{align*}
+    &\mathrm{E}[Y_{t,i}Y_{t-h,i}Y_{t-k,j}Y_{t-k-h,j}] 
+    = \begin{cases}
+        \delta_{i,j} p_i^2 & \text{if } k = 0,\\
+        \delta_{i,j} p_i^3 & \text{if } k = h,\\
+    \end{cases}
+\end{align*}
 
 \begin{appendices}
 
