@@ -2537,13 +2537,38 @@ closed form expression for the elements of $\boldsymbol{\Sigma}_{\hat{\boldsymbo
 $\sigma_{\hat{\kappa}_{\mathrm{nom}}(h)}^2$ are not without further assumptions. However, under $H_0$ that $(X_t)$
 is i.i.d., the bivariate probabilities factorize as $p_{ij}(h) = p_ip_j$. The relevant higher-order mixed moments
 thus simplify as follows:
+
 \begin{align*}
     &\mathrm{E}[Y_{t,i}Y_{t-h,i}Y_{t-k,j}Y_{t-k-h,j}] 
     = \begin{cases}
         \delta_{i,j} p_i^2 & \text{if } k = 0,\\
         \delta_{i,j} p_i^3 & \text{if } k = h,\\
-    \end{cases}
+        p_i^2 p_j^2 & \text{else.} 
+    \end{cases}\\
+    &\mathrm{E}[Y_{t+k,i}Y_{t,j}Y_{t-h,j}] 
+    = \begin{cases}
+        \delta_{i,j} p_i^2 & \text{if } k = 0,\\
+        p_i p_j^2 & \text{else.} 
+    \end{cases}\\
+    &\mathrm{E}[Y_{t,i}Y_{t+k,j}Y_{t+k-h,j}] 
+    = \begin{cases}
+        \delta_{i,j} p_i^2 & \text{if } k = 0 \text{ or } h = k,\\
+        p_i  p_j^2 & \text{else.} 
+    \end{cases}\\
 \end{align*}
+We then once again apply these simplifications to the elements
+$\boldsymbol{symbol}(ix)$ and $\boldsymbol{symbol}(x)$ of $\boldsymbol{\Sigma}_{\boldsymbol{Y}^{(h)*}}$
+\begin{align*}
+    &\boldsymbol{(ix)}\quad  i = 0, \ldots, m, j = m+1, \ldots, 2m+2: \\
+    &\quad \mathrm{Cov}(O_t Y_{t,i},  O_tO_{t-h}Y_{t,j-m-1}Y_{t-h,j-m-1}) \\
+    &\quad \overset{H_0}{=} \pi(h) \partial_{i,j-m-1} p_i^2 - \pi(h) p_i^2 p_{j-m-1}^2 \\
+    &\qquad + \underbrace{\pi(h)\partial_{i,j-m-1}p_i^2 + \mathrm{E}[O_{t+h}O_t O_{t-h}]p_i p_{j-m-1}^2 - 2 \pi \pi(h)p_i p_{j-m-1}^2}_{h=k} \\
+    &\qquad +  p_i p_{j-m-1}^2 \sum_{\substack{k=1\\k\neq h}}^{\infty}  \left[\mathrm{E}[O_t O_{t+k} O_{t+k-h}] + \mathrm{E}[O_t O_{t+k} O_{t+k-h}] - 2\pi\pi(h)\right] \\
+    &\quad = 2\pi(h)\partial_{i,j-m-1} p_i^2 - \pi(h) p_i^2 p_{j-m-1}^2 - \pi(h)p_i p_{j-m-1}^2 \\
+    &\qquad + p_i p_{j-m-1}^2 \sum_{k\neq h}^{\infty}  \left[\mathrm{E}[O_t O_{t+k} O_{t+k-h}] + \mathrm{E}[O_t O_{t+k} O_{t-h}] - 2\pi\pi(h)\right]
+\end{align*}
+and use the delta method to obtain closed-form expressions for the asymptotic variance and bias of $\hat{\kappa}_{\mathrm{nom}}(h)$ under $H_0$. 
+The derivations are structurally identical to those of Theorem~\ref{thm:kappa-asymp} and are omitted here.
 
 \begin{appendices}
 
