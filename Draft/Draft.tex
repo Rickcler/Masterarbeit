@@ -2557,16 +2557,50 @@ thus simplify as follows:
     \end{cases}\\
 \end{align*}
 We then once again apply these simplifications to the elements
-$\boldsymbol{symbol}(ix)$ and $\boldsymbol{symbol}(x)$ of $\boldsymbol{\Sigma}_{\boldsymbol{Y}^{(h)*}}$
+$\boldsymbol{(ix)}$ and $\boldsymbol{(x)}$ of $\boldsymbol{\Sigma}_{\boldsymbol{Y}^{(h)*}}$
 \begin{align*}
-    &\boldsymbol{(ix)}\quad  i = 0, \ldots, m, j = m+1, \ldots, 2m+2: \\
+    &\boldsymbol{(\text{ix})}\quad  i = 0, \ldots, m, j = m+1, \ldots, 2m+2: \\
     &\quad \mathrm{Cov}(O_t Y_{t,i},  O_tO_{t-h}Y_{t,j-m-1}Y_{t-h,j-m-1}) \\
-    &\quad \overset{H_0}{=} \pi(h) \partial_{i,j-m-1} p_i^2 - \pi(h) p_i^2 p_{j-m-1}^2 \\
+    &\quad \overset{H_0}{=} \pi(h) \partial_{i,j-m-1} p_i^2 - \pi \pi(h) p_i p_{j-m-1}^2 \\
     &\qquad + \underbrace{\pi(h)\partial_{i,j-m-1}p_i^2 + \mathrm{E}[O_{t+h}O_t O_{t-h}]p_i p_{j-m-1}^2 - 2 \pi \pi(h)p_i p_{j-m-1}^2}_{h=k} \\
     &\qquad +  p_i p_{j-m-1}^2 \sum_{\substack{k=1\\k\neq h}}^{\infty}  \left[\mathrm{E}[O_t O_{t+k} O_{t+k-h}] + \mathrm{E}[O_t O_{t+k} O_{t+k-h}] - 2\pi\pi(h)\right] \\
-    &\quad = 2\pi(h)\partial_{i,j-m-1} p_i^2 - \pi(h) p_i^2 p_{j-m-1}^2 - \pi(h)p_i p_{j-m-1}^2 \\
-    &\qquad + p_i p_{j-m-1}^2 \sum_{k\neq h}^{\infty}  \left[\mathrm{E}[O_t O_{t+k} O_{t+k-h}] + \mathrm{E}[O_t O_{t+k} O_{t-h}] - 2\pi\pi(h)\right]
+    &\quad = 2\pi(h)\partial_{i,j-m-1} p_i^2 - \pi(h) p_i p_{j-m-1}^2 - \pi\pi(h)p_i p_{j-m-1}^2 \\
+    &\qquad + p_i p_{j-m-1}^2 \sum_{k= 1}^{\infty}  \left[\mathrm{E}[O_t O_{t+k} O_{t+k-h}] + \mathrm{E}[O_t O_{t+k} O_{t-h}] - 2\pi\pi(h)\right] \\
+    &\quad = 2\pi(h) (\partial_{i;j-m-1}p_i^2 - p_i p_{j-m-1}^2)+p_i p_{j-m-1}^2 \sigma_{-1;-2} \\
+    &\boldsymbol{(\text{x})}\quad  i = m+1, \ldots, 2m+2, j = m+1, \ldots, 2m+2: \\
+    &\quad \mathrm{Cov}(O_t O_{t-h}Y_{t,i-m-1}Y_{t-h,i-m-1},  O_tO_{t-h}Y_{t,j-m-1}Y_{t-h,j-m-1}) \\
+    &\quad \overset{H_0}{=} \pi(h) \partial_{{i-m-1},j-m-1} p_{i-m-1}^2 -  \pi(h)^2 p_{i-m-1}^2 p_{j-m-1}^2 \\
+    &\qquad + \underbrace{\mathrm{E}[O_t O_{t-h} O_{t+h}]\cdot \left(2\partial_{{i-m-1},j-m-1}p_{i-m-1}^3 \right) - 2\pi(h)^2 2p_{j-m-1}^2p^2_{i-m-1}}_{h=k} \\
+    &\qquad +  p_{i-m-1}^2 p_{j-m-1}^2 \sum_{\substack{k=1\\k\neq h}}^{\infty}  2\left[\mathrm{E}[O_t O_{t-h} O_{t+k} O_{t+k-h}]- \pi(h)^2\right] \\
+    &\quad = \pi(h) p_{i-m-1}^2 (\partial_{i-m-1, j-m-1}- \pi(h)p_{k-m-1}^2)+ 2\mathrm{E}[O_t O_{t-h} O_{t+h}]\cdot(\partial_{i-m-1, j-m-1}p_{i-m-1}^3 \\
+    &\qquad - p_{i-m-1}^2p_{j-m-1}^2)  +  p_{i-m-1}^2 p_{j-m-1}^2 \sum_{k=1}^{\infty}  2\left[\mathrm{E}[O_t O_{t-h} O_{t+k} O_{t+k-h}]- \pi(h)^2\right] \\
+    &\quad = \pi(h) p_{i-m-1}^2 (\partial_{i-m-1, j-m-1}- p_{j-m-1}^2)  \\
+    &\qquad +2\mathrm{E}[O_t O_{t-h} O_{t+h}]\cdot(\partial_{i-m-1, j-m-1}p_{i-m-1}^3- p_{i-m-1}^2p_{j-m-1}^2)+p_{i-m-1}^2 p_{j-m-1}^2\sigma^{(h)}_{-2; -2}  
 \end{align*}
+To now get explicit expressions for the elements $\sigma^{(h)*}$ of $\boldsymbol{\Sigma}_{\boldsymbol{p}^{(h)*}}$ we once again distinguish into the three cases 
+{\allowdisplaybreaks
+\begin{align*}
+    &\textbf{(i)}\ i,j = 0, \ldots, m: \\
+    &\quad \sigma^{(h)*}_{i,j}
+    = \frac{p_i p_j}{\pi^2} \sigma^{(h)}_{-1,-1} 
+    - \frac{p_j}{\pi^2} \sigma^{(h)}_{i,-1} 
+    - \frac{p_i}{\pi^2} \sigma^{(h)}_{-1,j} 
+    + \frac{1}{\pi^2} \sigma^{(h)}_{i,j} \\
+    &\quad = \frac{1}{\pi^2}(-p_i p_j \sigma^{(h)}_{-1,-1} + p_i p_j \sigma^{(h)}_{-1,-1} + \pi p_{j}(\partial_{i,j} - p_i) + \sum_{k=1}^{\infty}\pi(k)(f_{ij}(k) + f_{ji}(k) - 2f_i f_j)) \\
+    &\quad \overset{H_0}{=} \frac{1}{\pi} p_j(\delta_{i,j} - p_i).\\
+        %
+    &\textbf{(ii)}\ i = 0, \ldots, m\ j = m+1, \ldots, 2m+2  (j' = j - m): \\
+    &\quad \sigma^{(h)*}_{i,j}
+    = -\frac{p_{j'j'}(h)}{\pi(h)}\Bigl(\frac{- p_i}{\pi}\sigma^{(h)}_{-1,-2} + \frac{1}{\pi}\sigma_{i, -2}^{(h)}\Bigr)+ \frac{1}{\pi(h)}(-\frac{p_{i}}{\pi(h)}\sigma_{-1, j}+ \frac{1}{\pi}\sigma_{i, j}) \\
+    &\quad \overset{H_0}{=} \frac{1}{\pi(h)}(- \frac{p_i}{\pi(h)}p_{j'}^2 \sigma_{-2, -1}^{(h)} + \frac{1}{\pi} (2\pi(h)(\partial_{i, j'}p_i^2- p_i p_{j'}^2)+ p_ip_{j'}^2\sigma^{(h)}_{-1,-2}))\\    %
+    &\textbf{(iii)}\ i,j = m, \ldots, 2m-1 
+    \ (i' = i-m,\ j' = j-m): \\
+    &\quad \sigma^{(h)*}_{i,j}
+    = \frac{1}{\pi(h)^2}(f_{\min\{i', j'\}}- f_{i'} f_{j'})
+    \Bigl(\pi(h)(f_{\min\{i', j'\}}- f_{i'} f_{j'}) \\
+    &\qquad\qquad + 2\pi(h, 2h)f_{i'}f_{j'}\Bigr).
+\end{align*}}
+
 and use the delta method to obtain closed-form expressions for the asymptotic variance and bias of $\hat{\kappa}_{\mathrm{nom}}(h)$ under $H_0$. 
 The derivations are structurally identical to those of Theorem~\ref{thm:kappa-asymp} and are omitted here.
 
