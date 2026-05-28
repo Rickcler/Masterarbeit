@@ -1,18 +1,18 @@
 # Fdb version 4
-["bibtex Draft"] 1779963142.36232 "Draft.aux" "Draft.bbl" "Draft" 1779963198.12651 0
+["bibtex Draft"] 1779965928.70316 "Draft.aux" "Draft.bbl" "Draft" 1779965954.72016 0
   "./references.bib" 1779962490 3396 d15711575990903424e0baa8e1fed312 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/bibtex/bst/bibtex/apalike.bst" 1291972791 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "Draft.aux" 1779963186 30083 e6d9fed22ffd8d4460ae0c599b1347b5 "xelatex"
+  "Draft.aux" 1779965940 30021 436bf49d9bcc7a3edc7e7e54e079bfa0 "xelatex"
   (generated)
   "Draft.bbl"
   "Draft.blg"
   (rewritten before read)
-["xdvipdfmx"] 1779963189.56106 "Draft.xdv" "Draft.pdf" "Draft" 1779963198.15052 0
-  "Draft.xdv" 1779963186 847104 18bef78f54a5e99200133b7784f8cf75 "xelatex"
+["xdvipdfmx"] 1779965943.03893 "Draft.xdv" "Draft.pdf" "Draft" 1779965954.76079 0
+  "Draft.xdv" 1779965940 846112 6d933014fddaa128ee8fa03f0f393071 "xelatex"
   (generated)
   "Draft.pdf"
   (rewritten before read)
-["xelatex"] 1779963177.36895 "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" "Draft.xdv" "Draft" 1779963198.12705 0
+["xelatex"] 1779965929.34168 "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" "Draft.xdv" "Draft" 1779965954.7223 0
   "../Graphs/Bias_Presi_.png" 1776954898 32278 1b48e0dbc6dbb122b77c475a33bf48d1 ""
   "../Graphs/Bias_presi_no_n.png" 1776954728 16831 4d507b4f5d0cb7239bdfca8397200c7f ""
   "../Graphs/IOV_m10.png" 1778592514 52893 9fb87cbc903ece36d54f166025e367a1 ""
@@ -221,10 +221,10 @@
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/tex/latex/xpatch/xpatch.sty" 1585221260 8510 7803f78066c4f9d008405191a4b43073 ""
-  "Draft.aux" 1779963186 30083 e6d9fed22ffd8d4460ae0c599b1347b5 "xelatex"
-  "Draft.bbl" 1779963142 2359 0eb4293202081f848d1cb67a2f075adb "bibtex Draft"
-  "Draft.tex" 1779963175 156792 c2884a618d460e6585491d91138eedb8 ""
-  "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" 1779963175 156792 c2884a618d460e6585491d91138eedb8 ""
+  "Draft.aux" 1779965940 30021 436bf49d9bcc7a3edc7e7e54e079bfa0 "xelatex"
+  "Draft.bbl" 1779965929 2359 0eb4293202081f848d1cb67a2f075adb "bibtex Draft"
+  "Draft.tex" 1779965914 156741 2e66c0c7db26be274883ee0a5d202bb1 ""
+  "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" 1779965914 156741 2e66c0c7db26be274883ee0a5d202bb1 ""
   (generated)
   "Draft.aux"
   "Draft.log"

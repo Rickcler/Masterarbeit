@@ -1647,15 +1647,15 @@ simultaneously for several lags $h = 1, \ldots, H$.\\
 When testing simultaneously for $h = 1, \ldots, H$, a multiple testing 
 problem arises: even under the i.i.d.\ null hypothesis, the probability 
 of falsely rejecting at least one individual test exceeds the nominal 
-level $\alpha$. This quantity, known as the \emph{familywise error rate} 
-\citep[pp. 348-350]{lehmann_romano_2005}, grows with $H$. There are 
-various more or less conservative methods to control the familywise error rate, 
-such as the Bonferroni correction \citep[p. 350]{lehmann_romano_2005}, a more conservative test 
-that rejects if $|T_n(h)| > z_{\alpha/(2H)}$ for any $h$, or the 
-less conservative Holm-procedure \citep[p. 351]{lehmann_romano_2005}, which  orders 
-the $H$ $p$-values as $p_{(1)} \leq \ldots \leq p_{(H)}$ and 
-rejects the hypothesis associated with $p_{(k)}$ if 
-$p_{(l)} \leq \alpha/(H+1-l)$ for all $l \leq k$.
+level $\alpha$. This quantity, known as the \emph{familywise error rate}, 
+grows with $H$. There are various more or less conservative methods to 
+control it, such as the Bonferroni correction, which rejects if 
+$|T_n(h)| > z_{\alpha/(2H)}$ for any $h$, or the less conservative 
+Holm procedure, which orders the $H$ $p$-values as 
+$p_{(1)} \leq \ldots \leq p_{(H)}$ and rejects the hypothesis 
+associated with $p_{(k)}$ if $p_{(l)} \leq \alpha/(H+1-l)$ for all 
+$l \leq k$. For a comprehensive treatment of these and further 
+procedures, see \citet[pp.~348--351]{lehmann_romano_2005}.
 % \begin{remark}
 % The test can be visualized analogously to the sample autocorrelation
 % function (ACF): plotting $\hat{\kappa}_{\mathrm{ord}}(h)$ against
