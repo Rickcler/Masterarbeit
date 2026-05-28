@@ -1599,7 +1599,13 @@ and~\ref{thm:clt_fhat_h}) and the law of large numbers applied to
 the observation-process moments.\\
 Alternatively, one may test for serial independence of the observation 
 process $(O_t)$ using, for example, a portmanteau test such as the Ljung–Box 
-test (see \cite[Chapter~1.6]{brockwell_davis_2016}). If the null hypothesis of no serial dependence cannot
+test (see \cite[Chapter~1.6]{brockwell_davis_2016}). Note that the Ljung-Box test
+only tests for linear dependence structures and may fail to detect nonlinear dependence in $(O_t)$.
+Since higher moments of $O_t$ are directly determined by its first moment (since $O_t \in \{0,1\}$),
+the implied limitations of the Ljung-Box test for binary time series are less severe than for continuous-valued 
+time series. However, since there also may be dependence involving products like $O_t O_{t-h} O_{t+k}$
+that is not captured by the Ljung-Box test, the assumption of i.i.d. $O_t$ should be adopted with care.
+If the null hypothesis of no serial dependence cannot
 be rejected, it is justified to assume that $(O_t)$ is i.i.d., in which
 case the simplified variance expression in
 Remark~\ref{rem:iid_Ot} can be used. In this situation, only $\pi$
@@ -1637,7 +1643,19 @@ null hypothesis: rejection at any lag $h$ implies departure from
 i.i.d., but non-rejection at a single lag does not rule out 
 dependence at other lags or through off-diagonal bivariate 
 probabilities. In practice, the test is therefore applied 
-simultaneously for several lags $h = 1, \ldots, H$.
+simultaneously for several lags $h = 1, \ldots, H$.\\
+When testing simultaneously for $h = 1, \ldots, H$, a multiple testing 
+problem arises: even under the i.i.d.\ null hypothesis, the probability 
+of falsely rejecting at least one individual test exceeds the nominal 
+level $\alpha$. This quantity, known as the \emph{familywise error rate} 
+\citep[pp. 348-350]{lehmann_romano_2005}, grows with $H$. There are 
+various more or less conservative methods to control the familywise error rate, 
+such as the Bonferroni correction \citep[p. 350]{lehmann_romano_2005}, a more conservative test 
+that rejects if $|T_n(h)| > z_{\alpha/(2H)}$ for any $h$, or the 
+less conservative Holm-procedure \citep[p. 351]{lehmann_romano_2005}, which  orders 
+the $H$ $p$-values as $p_{(1)} \leq \ldots \leq p_{(H)}$ and 
+rejects the hypothesis associated with $p_{(k)}$ if 
+$p_{(l)} \leq \alpha/(H+1-l)$ for all $l \leq k$.
 % \begin{remark}
 % The test can be visualized analogously to the sample autocorrelation
 % function (ACF): plotting $\hat{\kappa}_{\mathrm{ord}}(h)$ against
@@ -2591,8 +2609,9 @@ To now get explicit expressions for the elements $\sigma^{(h)*}$ of $\boldsymbol
         %
     &\textbf{(ii)}\ i = 0, \ldots, m\ j = m+1, \ldots, 2m+2  (j' = j - m): \\
     &\quad \sigma^{(h)*}_{i,j}
-    = -\frac{p_{j'j'}(h)}{\pi(h)}\Bigl(\frac{- p_i}{\pi}\sigma^{(h)}_{-1,-2} + \frac{1}{\pi}\sigma_{i, -2}^{(h)}\Bigr)+ \frac{1}{\pi(h)}(-\frac{p_{i}}{\pi(h)}\sigma_{-1, j}+ \frac{1}{\pi}\sigma_{i, j}) \\
-    &\quad \overset{H_0}{=} \frac{1}{\pi(h)}(- \frac{p_i}{\pi(h)}p_{j'}^2 \sigma_{-2, -1}^{(h)} + \frac{1}{\pi} (2\pi(h)(\partial_{i, j'}p_i^2- p_i p_{j'}^2)+ p_ip_{j'}^2\sigma^{(h)}_{-1,-2}))\\    %
+    = -\frac{p_{j'j'}(h)}{\pi(h)}\Bigl(\frac{- p_i}{\pi}\sigma^{(h)}_{-1,-2} + \frac{1}{\pi}\sigma_{i, -2}^{(h)}\Bigr)+ \frac{1}{\pi(h)}(-\frac{p_{i}}{\pi}\sigma_{-1, j}+ \frac{1}{\pi}\sigma_{i, j}) \\
+    &\quad \overset{H_0}{=} \frac{1}{\pi(h)\pi}( p_i p_{j'}^2 \sigma_{-1, -2}^{(h)} - p_{j'}^2 \sigma_{i, -2}^{(h)*} - p_i\sigma_{-1, j}^{(h)} + \sigma_{ij})   \\
+    &\quad =\frac{1}{\pi(h)\pi}(2\pi(h)(\partial_{i,j'}p_i^2- p_i p_{j'}^2) + p_i p_{j'}^2\sigma_{-1, -2} - p_{i}p_{j'}^2\sigma_{-2, -2}^{(h)}) \\
     &\textbf{(iii)}\ i,j = m, \ldots, 2m-1 
     \ (i' = i-m,\ j' = j-m): \\
     &\quad \sigma^{(h)*}_{i,j}

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (MiKTeX 26.2) (preloaded format=xelatex 2026.4.16)  27 MAY 2026 14:51
+This is XeTeX, Version 3.141592653-2.6-0.999998 (MiKTeX 26.2) (preloaded format=xelatex 2026.4.16)  28 MAY 2026 12:12
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -826,20 +826,20 @@ Overfull \hbox (9.21454pt too wide) detected at line 1474
 [28] [29] [30]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1652.
+(hyperref)                removing `math shift' on input line 1670.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 1652.
+(hyperref)                removing `subscript' on input line 1670.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 1652.
+(hyperref)                removing `math shift' on input line 1670.
 
 [31]
 chapter 4.
 
-Overfull \hbox (14.41048pt too wide) in paragraph at lines 1721--1725
+Overfull \hbox (14.41048pt too wide) in paragraph at lines 1739--1743
 [] \TU/lmss/bx/n/12 Distributional properties.[][] \TU/lmr/m/n/12 The stationary marginal distribution of $\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 X[]\OT1/lmr/m/n/12 )$ \TU/lmr/m/n/12 is $[]\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 m; p\OT1/lmr/m/n/12 )$\TU/lmr/m/n/12 ,
  []
 
@@ -852,7 +852,7 @@ File: ../Graphs/kappa_to_h.png Graphic file (type bmp)
 File: ../Graphs/MarginalDistributions.png Graphic file (type bmp)
 <../Graphs/MarginalDistributions.png>
  [35]
-Overfull \hbox (12.65334pt too wide) in paragraph at lines 1862--1870
+Overfull \hbox (12.65334pt too wide) in paragraph at lines 1880--1888
 \TU/lmr/m/n/12 In each replication, the following quantities are computed from the observed data $\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 O[]X[]\OT1/lmr/m/n/12 )[]$\TU/lmr/m/n/12 :
  []
 
@@ -863,7 +863,7 @@ File: ../Graphs/Scaled_CLT.png Graphic file (type bmp)
 File: ../Graphs/Legend_Var.png Graphic file (type bmp)
 <../Graphs/Legend_Var.png>
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 1925.
+(Font)              <5> on input line 1943.
 [36]
 File: ../Graphs/Bias_presi_no_n.png Graphic file (type bmp)
 <../Graphs/Bias_presi_no_n.png>
@@ -884,7 +884,7 @@ File: ../Graphs/IOV_sd_m10.png Graphic file (type bmp)
 File: ../Graphs/legend_plot_IOV_sd.png Graphic file (type bmp)
 <../Graphs/legend_plot_IOV_sd.png>
 
-Underfull \hbox (badness 1337) in paragraph at lines 2085--2085
+Underfull \hbox (badness 1337) in paragraph at lines 2103--2103
 [][]\TU/lmr/m/n/8 Simulated vs. asymptotic standard deviation of $[]$ for both scenarios across $\OML/lmm/m/it/8 n \OMS/lmsy/m/n/8 2
  []
 
@@ -896,7 +896,7 @@ File: ../Graphs/Skew_m10.png Graphic file (type bmp)
 File: ../Graphs/legend_plot_IOV_sd.png Graphic file (type bmp)
 <../Graphs/legend_plot_IOV_sd.png>
 
-Underfull \hbox (badness 7362) in paragraph at lines 2118--2118
+Underfull \hbox (badness 7362) in paragraph at lines 2136--2136
 [][]\TU/lmr/m/n/8 Simulated vs. asymptotic standard deviation of $[]$ for both scenarios, across $\OML/lmm/m/it/8 n \OMS/lmsy/m/n/8 2
  []
 
@@ -942,13 +942,13 @@ Package fontspec Info:
 File: ../Graphs/MAR_IOV.png Graphic file (type bmp)
 <../Graphs/MAR_IOV.png>
 
-Overfull \hbox (7.24919pt too wide) in paragraph at lines 2244--2277
+Overfull \hbox (7.24919pt too wide) in paragraph at lines 2262--2295
 \TU/lmr/m/n/12 ure []4.11[] shows the simulated bias of $[]$ for Scenario A across $\OML/lmm/m/it/12 n \OMS/lmsy/m/n/12 2 f\OT1/lmr/m/n/12 50\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 100\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 250\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 500\OML/lmm/m/it/12 ; \OT1/lmr/m/n/12 1000\OMS/lmsy/m/n/12 g$
  []
 
 [42]
 
-LaTeX Warning: Reference `fig:kappa-H_A-MNAR' on page 43 undefined on input line 2280.
+LaTeX Warning: Reference `fig:kappa-H_A-MNAR' on page 43 undefined on input line 2298.
 
 [43]
 File: ../Graphs/MNAR_Kappa_H_A.png Graphic file (type bmp)
@@ -959,11 +959,11 @@ File: ../Graphs/MNAR_kappa_rejection_rate.png Graphic file (type bmp)
 chapter 5.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2358.
+(hyperref)                removing `math shift' on input line 2376.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2358.
+(hyperref)                removing `math shift' on input line 2376.
 
 [46
 
@@ -971,451 +971,451 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 chapter A.
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\begingroup' on input line 2612.
+(hyperref)                removing `\begingroup' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\<let>-command' on input line 2612.
+(hyperref)                removing `\<let>-command' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@nomath' on input line 2612.
+(hyperref)                removing `\@nomath' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\begingroup' on input line 2612.
+(hyperref)                removing `\begingroup' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\setbox' on input line 2612.
+(hyperref)                removing `\setbox' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2612.
+(hyperref)                removing `\z@' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2612.
+(hyperref)                removing `\hbox' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\thinmuskip' on input line 2612.
+(hyperref)                removing `\thinmuskip' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\medmuskip' on input line 2612.
+(hyperref)                removing `\medmuskip' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\m@ne' on input line 2612.
+(hyperref)                removing `\m@ne' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\thickmuskip' on input line 2612.
+(hyperref)                removing `\thickmuskip' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ne' on input line 2612.
+(hyperref)                removing `\@ne' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\setbox' on input line 2612.
+(hyperref)                removing `\setbox' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\tw@' on input line 2612.
+(hyperref)                removing `\tw@' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2612.
+(hyperref)                removing `\hbox' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\Sigma' on input line 2612.
+(hyperref)                removing `\Sigma' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2612.
+(hyperref)                removing `\mathsurround' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2612.
+(hyperref)                removing `\z@' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\Sigma' on input line 2612.
+(hyperref)                removing `\Sigma' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2612.
+(hyperref)                removing `\mathsurround' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2612.
+(hyperref)                removing `\z@' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\<def>-command' on input line 2612.
+(hyperref)                removing `\<def>-command' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@tempa' on input line 2612.
+(hyperref)                removing `\@tempa' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathchoice' on input line 2612.
+(hyperref)                removing `\mathchoice' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2612.
+(hyperref)                removing `\hbox' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2612.
+(hyperref)                removing `\mathsurround' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2612.
+(hyperref)                removing `\z@' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\displaystyle' on input line 2612.
+(hyperref)                removing `\displaystyle' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\Sigma' on input line 2612.
+(hyperref)                removing `\Sigma' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2612.
+(hyperref)                removing `\hbox' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2612.
+(hyperref)                removing `\mathsurround' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2612.
+(hyperref)                removing `\z@' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\textstyle' on input line 2612.
+(hyperref)                removing `\textstyle' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\Sigma' on input line 2612.
+(hyperref)                removing `\Sigma' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2612.
+(hyperref)                removing `\hbox' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2612.
+(hyperref)                removing `\mathsurround' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2612.
+(hyperref)                removing `\z@' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\scriptstyle' on input line 2612.
+(hyperref)                removing `\scriptstyle' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\Sigma' on input line 2612.
+(hyperref)                removing `\Sigma' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2612.
+(hyperref)                removing `\hbox' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2612.
+(hyperref)                removing `\mathsurround' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2612.
+(hyperref)                removing `\z@' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\scriptscriptstyle' on input line 2612.
+(hyperref)                removing `\scriptscriptstyle' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\Sigma' on input line 2612.
+(hyperref)                removing `\Sigma' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\endgroup' on input line 2612.
+(hyperref)                removing `\endgroup' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 2612.
+(hyperref)                removing `subscript' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\begingroup' on input line 2612.
+(hyperref)                removing `\begingroup' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\<let>-command' on input line 2612.
+(hyperref)                removing `\<let>-command' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@nomath' on input line 2612.
+(hyperref)                removing `\@nomath' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\begingroup' on input line 2612.
+(hyperref)                removing `\begingroup' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\setbox' on input line 2612.
+(hyperref)                removing `\setbox' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2612.
+(hyperref)                removing `\z@' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2612.
+(hyperref)                removing `\hbox' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\thinmuskip' on input line 2612.
+(hyperref)                removing `\thinmuskip' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\medmuskip' on input line 2612.
+(hyperref)                removing `\medmuskip' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\m@ne' on input line 2612.
+(hyperref)                removing `\m@ne' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\thickmuskip' on input line 2612.
+(hyperref)                removing `\thickmuskip' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ne' on input line 2612.
+(hyperref)                removing `\@ne' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\setbox' on input line 2612.
+(hyperref)                removing `\setbox' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\tw@' on input line 2612.
+(hyperref)                removing `\tw@' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2612.
+(hyperref)                removing `\hbox' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2612.
+(hyperref)                removing `\mathsurround' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2612.
+(hyperref)                removing `\z@' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2612.
+(hyperref)                removing `\mathsurround' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2612.
+(hyperref)                removing `\z@' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\<def>-command' on input line 2612.
+(hyperref)                removing `\<def>-command' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@tempa' on input line 2612.
+(hyperref)                removing `\@tempa' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathchoice' on input line 2612.
+(hyperref)                removing `\mathchoice' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2612.
+(hyperref)                removing `\hbox' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2612.
+(hyperref)                removing `\mathsurround' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2612.
+(hyperref)                removing `\z@' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\displaystyle' on input line 2612.
+(hyperref)                removing `\displaystyle' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2612.
+(hyperref)                removing `\hbox' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2612.
+(hyperref)                removing `\mathsurround' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2612.
+(hyperref)                removing `\z@' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\textstyle' on input line 2612.
+(hyperref)                removing `\textstyle' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2612.
+(hyperref)                removing `\hbox' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2612.
+(hyperref)                removing `\mathsurround' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2612.
+(hyperref)                removing `\z@' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\scriptstyle' on input line 2612.
+(hyperref)                removing `\scriptstyle' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2612.
+(hyperref)                removing `\hbox' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2612.
+(hyperref)                removing `\mathsurround' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2612.
+(hyperref)                removing `\z@' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\scriptscriptstyle' on input line 2612.
+(hyperref)                removing `\scriptscriptstyle' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\endgroup' on input line 2612.
+(hyperref)                removing `\endgroup' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 2612.
+(hyperref)                removing `superscript' on input line 2631.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2612.
+(hyperref)                removing `math shift' on input line 2631.
 
 [51
 
@@ -1425,528 +1425,528 @@ Overfull \vbox (9.12238pt too high) has occurred while \output is active []
  [52]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\begingroup' on input line 2647.
+(hyperref)                removing `\begingroup' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\<let>-command' on input line 2647.
+(hyperref)                removing `\<let>-command' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@nomath' on input line 2647.
+(hyperref)                removing `\@nomath' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\begingroup' on input line 2647.
+(hyperref)                removing `\begingroup' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\setbox' on input line 2647.
+(hyperref)                removing `\setbox' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2647.
+(hyperref)                removing `\z@' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2647.
+(hyperref)                removing `\hbox' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\thinmuskip' on input line 2647.
+(hyperref)                removing `\thinmuskip' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\medmuskip' on input line 2647.
+(hyperref)                removing `\medmuskip' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\m@ne' on input line 2647.
+(hyperref)                removing `\m@ne' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\thickmuskip' on input line 2647.
+(hyperref)                removing `\thickmuskip' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ne' on input line 2647.
+(hyperref)                removing `\@ne' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\setbox' on input line 2647.
+(hyperref)                removing `\setbox' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\tw@' on input line 2647.
+(hyperref)                removing `\tw@' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2647.
+(hyperref)                removing `\hbox' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\Sigma' on input line 2647.
+(hyperref)                removing `\Sigma' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2647.
+(hyperref)                removing `\mathsurround' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2647.
+(hyperref)                removing `\z@' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\Sigma' on input line 2647.
+(hyperref)                removing `\Sigma' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2647.
+(hyperref)                removing `\mathsurround' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2647.
+(hyperref)                removing `\z@' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\<def>-command' on input line 2647.
+(hyperref)                removing `\<def>-command' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@tempa' on input line 2647.
+(hyperref)                removing `\@tempa' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathchoice' on input line 2647.
+(hyperref)                removing `\mathchoice' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2647.
+(hyperref)                removing `\hbox' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2647.
+(hyperref)                removing `\mathsurround' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2647.
+(hyperref)                removing `\z@' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\displaystyle' on input line 2647.
+(hyperref)                removing `\displaystyle' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\Sigma' on input line 2647.
+(hyperref)                removing `\Sigma' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2647.
+(hyperref)                removing `\hbox' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2647.
+(hyperref)                removing `\mathsurround' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2647.
+(hyperref)                removing `\z@' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\textstyle' on input line 2647.
+(hyperref)                removing `\textstyle' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\Sigma' on input line 2647.
+(hyperref)                removing `\Sigma' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2647.
+(hyperref)                removing `\hbox' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2647.
+(hyperref)                removing `\mathsurround' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2647.
+(hyperref)                removing `\z@' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\scriptstyle' on input line 2647.
+(hyperref)                removing `\scriptstyle' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\Sigma' on input line 2647.
+(hyperref)                removing `\Sigma' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2647.
+(hyperref)                removing `\hbox' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2647.
+(hyperref)                removing `\mathsurround' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2647.
+(hyperref)                removing `\z@' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\scriptscriptstyle' on input line 2647.
+(hyperref)                removing `\scriptscriptstyle' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\Sigma' on input line 2647.
+(hyperref)                removing `\Sigma' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\endgroup' on input line 2647.
+(hyperref)                removing `\endgroup' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 2647.
+(hyperref)                removing `subscript' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\begingroup' on input line 2647.
+(hyperref)                removing `\begingroup' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\<let>-command' on input line 2647.
+(hyperref)                removing `\<let>-command' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@nomath' on input line 2647.
+(hyperref)                removing `\@nomath' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\begingroup' on input line 2647.
+(hyperref)                removing `\begingroup' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\setbox' on input line 2647.
+(hyperref)                removing `\setbox' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2647.
+(hyperref)                removing `\z@' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2647.
+(hyperref)                removing `\hbox' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\thinmuskip' on input line 2647.
+(hyperref)                removing `\thinmuskip' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\medmuskip' on input line 2647.
+(hyperref)                removing `\medmuskip' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\m@ne' on input line 2647.
+(hyperref)                removing `\m@ne' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\thickmuskip' on input line 2647.
+(hyperref)                removing `\thickmuskip' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@ne' on input line 2647.
+(hyperref)                removing `\@ne' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\setbox' on input line 2647.
+(hyperref)                removing `\setbox' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\tw@' on input line 2647.
+(hyperref)                removing `\tw@' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2647.
+(hyperref)                removing `\hbox' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2647.
+(hyperref)                removing `\mathsurround' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2647.
+(hyperref)                removing `\z@' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2647.
+(hyperref)                removing `\mathsurround' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2647.
+(hyperref)                removing `\z@' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\<def>-command' on input line 2647.
+(hyperref)                removing `\<def>-command' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@tempa' on input line 2647.
+(hyperref)                removing `\@tempa' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathchoice' on input line 2647.
+(hyperref)                removing `\mathchoice' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2647.
+(hyperref)                removing `\hbox' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2647.
+(hyperref)                removing `\mathsurround' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2647.
+(hyperref)                removing `\z@' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\displaystyle' on input line 2647.
+(hyperref)                removing `\displaystyle' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2647.
+(hyperref)                removing `\hbox' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2647.
+(hyperref)                removing `\mathsurround' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2647.
+(hyperref)                removing `\z@' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\textstyle' on input line 2647.
+(hyperref)                removing `\textstyle' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2647.
+(hyperref)                removing `\hbox' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2647.
+(hyperref)                removing `\mathsurround' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2647.
+(hyperref)                removing `\z@' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\scriptstyle' on input line 2647.
+(hyperref)                removing `\scriptstyle' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\hbox' on input line 2647.
+(hyperref)                removing `\hbox' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 2647.
+(hyperref)                removing `\mathsurround' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 2647.
+(hyperref)                removing `\z@' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\scriptscriptstyle' on input line 2647.
+(hyperref)                removing `\scriptscriptstyle' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\endgroup' on input line 2647.
+(hyperref)                removing `\endgroup' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 2647.
+(hyperref)                removing `superscript' on input line 2666.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2647.
+(hyperref)                removing `math shift' on input line 2666.
 
 
-Overfull \hbox (55.43958pt too wide) detected at line 2673
+Overfull \hbox (55.43958pt too wide) detected at line 2692
 [][][][][] \OT1/lmr/m/n/12 = [] [][]\OML/lmm/m/it/12 :
  []
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2710.
+(hyperref)                removing `math shift' on input line 2729.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 2710.
+(hyperref)                removing `subscript' on input line 2729.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2710.
+(hyperref)                removing `math shift' on input line 2729.
 
 [53]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2758.
+(hyperref)                removing `math shift' on input line 2777.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\kappa' on input line 2758.
+(hyperref)                removing `\kappa' on input line 2777.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2758.
+(hyperref)                removing `math shift' on input line 2777.
 
 [54]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2790.
+(hyperref)                removing `math shift' on input line 2809.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\kappa' on input line 2790.
+(hyperref)                removing `\kappa' on input line 2809.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2790.
+(hyperref)                removing `math shift' on input line 2809.
 
 
-LaTeX Warning: Reference `subsec:serial-H0' on page 55 undefined on input line 2794.
+LaTeX Warning: Reference `subsec:serial-H0' on page 55 undefined on input line 2813.
 
 
-Overfull \hbox (11.8054pt too wide) detected at line 2835
+Overfull \hbox (11.8054pt too wide) detected at line 2854
 []
  []
 
 [55]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2838.
+(hyperref)                removing `math shift' on input line 2857.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `subscript' on input line 2838.
+(hyperref)                removing `subscript' on input line 2857.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2838.
+(hyperref)                removing `math shift' on input line 2857.
 
 [56]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2877.
+(hyperref)                removing `math shift' on input line 2896.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 2877.
+(hyperref)                removing `superscript' on input line 2896.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 2877.
+(hyperref)                removing `math shift' on input line 2896.
 
 [57] (Draft.bbl [58]) [59
 
@@ -1964,12 +1964,12 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 28841 strings out of 402983
- 601814 string characters out of 5448482
+ 28844 strings out of 402983
+ 601895 string characters out of 5448482
  1187473 words of memory out of 5000000
- 57089 multiletter control sequences out of 15000+600000
+ 57092 multiletter control sequences out of 15000+600000
  702741 words of font info for 157 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  108i,19n,107p,11277b,535s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Draft.xdv (59 pages, 832656 bytes).
+Output written on Draft.xdv (59 pages, 847104 bytes).
