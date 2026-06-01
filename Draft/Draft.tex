@@ -667,58 +667,63 @@ failures, non-response in survey data, or dropout in longitudinal
 studies. Before modelling the statistical consequences of 
 missingness, it is useful to distinguish between different 
 mechanisms that may give rise to it, as these have fundamentally 
-different implications for estimation.
-
+different implications for estimation.\\
 The classical taxonomy of missing data mechanisms goes back to 
-\citet{Rubin1976}, who distinguished between three types based on 
-the dependence structure between the missingness and the underlying 
-data. While Rubin's framework was originally developed for 
-multivariate cross-sectional data, the core concepts translate 
-naturally to the time series setting when conditioning is extended 
-to the full history of the process. Denoting by $O_t \in \{0,1\}$ 
-the indicator of whether $X_t$ is observed (to be formally 
-introduced in Section~\ref{sec:Amp Mod}), and by 
-$\mathcal{F}_{t-1} := \sigma(X_s, O_s : s < t)$ the history up 
-to time $t$, the three mechanisms are defined as follows.
+\citet{Rubin1976} and \citet{little_rubin_2002}, who distinguished 
+between three types based on the dependence structure between the 
+missingness indicator and the underlying data. Let $\boldsymbol{X}^* 
+= (\boldsymbol{X}^{(o)}, \boldsymbol{X}^{(m)})$ denote the complete 
+data, partitioned into observed and missing components, and let 
+$\boldsymbol{O} = (O_1, \ldots, O_n)^\top$ be the vector of 
+missingness indicators. A probability model for the missingness 
+mechanism specifies the distribution of $\boldsymbol{O}$ conditional 
+on $\boldsymbol{X}^*$. Following \citet[Section~13]{diggle_2002}, 
+the three mechanisms are classified as follows.
 
 \begin{definition}[Missingness Mechanisms]
 \label{def:missingness}
-\begin{enumerate}[(i)]
-    \item \textbf{Missing Completely at Random (MCAR):}\label{def:mcar} The 
-    observation probability does not depend on the current or 
-    past values of the process:
-    \[P(O_t = 1 \mid X_t,\, \mathcal{F}_{t-1}) = \pi.\]
-
-    \item \textbf{Missing at Random (MAR):} The observation 
-    probability depends on the observed history, but not on the 
-    current (possibly unobserved) value:
-    \[P(O_t = 1 \mid X_t,\, \mathcal{F}_{t-1}) 
-    = P(O_t = 1 \mid \mathcal{F}_{t-1}).\]
-
-    \item \textbf{Missing Not at Random (MNAR):} The observation 
-    probability depends on the current value $X_t$, even after 
-    conditioning on the past:
+\begin{enumerate}
+    \item \textbf{Missing Completely at Random (MCAR):} 
+    $\boldsymbol{O}$ is independent of both the observed and the 
+    missing data:
     \[
-    P(O_t = 1 \mid X_t,\, \mathcal{F}_{t-1}) 
-    \neq P(O_t = 1 \mid \mathcal{F}_{t-1}).
+        f(\boldsymbol{o} \mid \boldsymbol{x}^{(o)}, 
+        \boldsymbol{x}^{(m)}) = f(\boldsymbol{o}).
     \]
+    \item \textbf{Missing at Random (MAR):} $\boldsymbol{O}$ is 
+    independent of the missing data, given the observed data:
+    \[
+        f(\boldsymbol{o} \mid \boldsymbol{x}^{(o)}, 
+        \boldsymbol{x}^{(m)}) = f(\boldsymbol{o} \mid 
+        \boldsymbol{x}^{(o)}).
+    \]
+    \item \textbf{Informative/ Missing Not at Random (MNAR):} The distribution 
+    of $\boldsymbol{O}$ depends on the missing data 
+    $\boldsymbol{x}^{(m)}$, even after conditioning on the 
+    observed data $\boldsymbol{x}^{(o)}$.
 \end{enumerate}
 \end{definition}
 
 \begin{remark}
-    While Rubin's framework was originally developed for i.i.d.\ data,
-    similar concepts have been considered in longitudinal and time series
-    settings (see, e.g., \citealp{diggle_2002}). The formulation adopted
-    here extends the conditioning to the full history of the process.
+While this classification was originally developed for multivariate 
+cross-sectional data \citep{Rubin1976}, it extends naturally to the 
+time series setting. In the sequential context considered here, the 
+conditioning on observed data is more naturally expressed through 
+the history $\mathcal{F}_{t-1} := \sigma(X_s, O_s : s < t)$, 
+leading to the time series formulation of Definition~\ref{def:missingness}: 
+MCAR corresponds to $P(O_t = 1 \mid X_t, \mathcal{F}_{t-1}) = \pi$, 
+MAR to $P(O_t = 1 \mid X_t, \mathcal{F}_{t-1}) = P(O_t = 1 \mid 
+\mathcal{F}_{t-1})$, and MNAR to the case where this equality fails.
 \end{remark}
 
 The assumption under which the subsequent results are derived is 
 that $(O_t)$ and $(X_t)$ are \emph{independent}, which corresponds 
 to the MCAR case. This is the strongest of the three assumptions 
-and implies in particular that the corrected estimator $\hat{f}^*$ 
-introduced in Section~\ref{sec:Amp Mod} is consistent. Under MAR 
-or MNAR, the independence assumption fails and estimators may 
-be biased and inconsistent — as illustrated later in Section~\ref{sec:mnar}.
+and implies in particular that the corrected estimator 
+$\hat{\boldsymbol{f}}^*$ introduced in Section~\ref{sec:Amp Mod} 
+is consistent. Under MAR or MNAR, the independence assumption 
+fails and estimators may be biased and inconsistent — as 
+illustrated later in Section~\ref{sec:mnar}.
 
 \section{Amplitude Modulation}\label{sec:Amp Mod}
 \subsection*{Definition of the observation process}
@@ -2610,18 +2615,51 @@ To now get explicit expressions for the elements $\sigma^{(h)*}$ of $\boldsymbol
     &\textbf{(ii)}\ i = 0, \ldots, m\ j = m+1, \ldots, 2m+2  (j' = j - m): \\
     &\quad \sigma^{(h)*}_{i,j}
     = -\frac{p_{j'j'}(h)}{\pi(h)}\Bigl(\frac{- p_i}{\pi}\sigma^{(h)}_{-1,-2} + \frac{1}{\pi}\sigma_{i, -2}^{(h)}\Bigr)+ \frac{1}{\pi(h)}(-\frac{p_{i}}{\pi}\sigma_{-1, j}+ \frac{1}{\pi}\sigma_{i, j}) \\
-    &\quad \overset{H_0}{=} \frac{1}{\pi(h)\pi}( p_i p_{j'}^2 \sigma_{-1, -2}^{(h)} - p_{j'}^2 \sigma_{i, -2}^{(h)*} - p_i\sigma_{-1, j}^{(h)} + \sigma_{ij})   \\
-    &\quad =\frac{1}{\pi(h)\pi}(2\pi(h)(\partial_{i,j'}p_i^2- p_i p_{j'}^2) + p_i p_{j'}^2\sigma_{-1, -2} - p_{i}p_{j'}^2\sigma_{-2, -2}^{(h)}) \\
+    &\quad \overset{H_0}{=} \frac{1}{\pi(h)\pi}( p_i p_{j'}^2 \sigma_{-1, -2}^{(h)} - p_{j'}^2 p_i\sigma_{-1, -2}^{(h)*} - p_i p_{j'}^2\sigma_{-1, -2}^{(h)} + \sigma_{ij})   \\
+    &\quad =\frac{1}{\pi(h)\pi}(\sigma_{i,j}-p_{j'}^2p_i \sigma_{-1, -2}^{(h)*}) \\
     &\textbf{(iii)}\ i,j = m, \ldots, 2m-1 
     \ (i' = i-m,\ j' = j-m): \\
     &\quad \sigma^{(h)*}_{i,j}
-    = \frac{1}{\pi(h)^2}(f_{\min\{i', j'\}}- f_{i'} f_{j'})
-    \Bigl(\pi(h)(f_{\min\{i', j'\}}- f_{i'} f_{j'}) \\
-    &\qquad\qquad + 2\pi(h, 2h)f_{i'}f_{j'}\Bigr).
-\end{align*}}
+    = -\frac{p_{j',j'}(h)}{\pi(h)}\left(\frac{-p_{i'i'}(h)}{\pi(h)}\sigma_{-2, -2}^{(h)}+ \frac{1}{\pi(h)}\sigma_{i, -2}^{(h)}\right) + \frac{1}{\pi(h)}\left(\frac{-p_{i',i'}(h)}{\pi(h)}\sigma_{-2, j}^{(h)}+ \frac{1}{\pi(h)}\sigma_{i, j}^{(h)}\right)\\
+    &\quad \overset{H_0}{=} \frac{1}{\pi(h)^2} \left( p_{i'}^2 p_{j'}^2 \sigma_{-2, -2}^{(h)} - p_{i'}^2 p_{j'}^2 \sigma_{-2, -2}^{(h)} - p_{i'}^2 p_{j'}^2 \sigma_{-2, -2}^{(h)}  + \sigma^{(h)}_{i,j} \right) \\
+    &\quad = \frac{1}{\pi(h)^2}  \left(\sigma_{ij} -p_{i'}^2 p_{j'}^2 \sigma_{-2, -2}^{(h)}\right).
+\end{align*}
 
-and use the delta method to obtain closed-form expressions for the asymptotic variance and bias of $\hat{\kappa}_{\mathrm{nom}}(h)$ under $H_0$. 
-The derivations are structurally identical to those of Theorem~\ref{thm:kappa-asymp} and are omitted here.
+From here, we once again use the delta method to obtain closed-form expressions for the asymptotic variance and bias of $\hat{\kappa}_{\mathrm{nom}}(h) )= \frac{A}{B}$ under $H_0$,
+where $A = \sum_{j = 0}^{m}(p_{jj}(h)-p_j^2)$ and $B= 1- \sum_{i = 0}^{m} p_i^2$. The corresponding 
+Jacobian is given by
+\[\boldsymbol{D}_\kappa:= (d_{1,0},\ldots, d_{1, m}, d_{2, 0},\ldots, d_{2, m})\]
+where for $i = 0, \ldots, m$:
+\begin{align*}
+    d_{1,i} &= \frac{\partial \kappa_{\mathrm{nom}}}{\partial p_i} = \frac{-2p_i}{B} + \frac{2p_i A}{B^2},\\
+    d_{2,i} &= \frac{\partial \kappa_{\mathrm{nom}}}{\partial p_{ii}(h)} = \frac{1}{B}.
+\end{align*}
+Hence, the asymptotic variance of $\hat{\kappa}_{\mathrm{nom}}(h)$ under $H_0$ is given by
+
+
+\begin{align*}
+    \boldsymbol{D}_\kappa \boldsymbol{\Sigma}_{\boldsymbol{p}^{(h)*}} \boldsymbol{D}_\kappa^\top
+    &= \sum_{i,j=0}^{m} d_{1,i}\,d_{1,j}\,\sigma^{(h)*}_{i,j}
+    + 2\sum_{i,j=0}^{m} d_{1,i}\,d_{2,j}\,\sigma^{(h)*}_{i,\,j+m+1}
+    + \sum_{i,j=0}^{m} d_{2,i}\,d_{2,j}\,\sigma^{(h)*}_{i+m+1,\,j+m+1} \\
+    &= \sum_{i,j=0}^{m} \left(\frac{-2 p_i}{B} + \frac{2 p_i A}{B^2}\right) \left(\frac{-2 p_j}{B} + \frac{2 p_j A}{B^2}\right)\,\sigma^{(h)*}_{i,j} \\
+    &\quad + 2\sum_{i,j=0}^{m} \left(\frac{-2 p_i}{B} + \frac{2 p_i A}{B^2}\right)\frac{1}{B}\,\sigma^{(h)*}_{i,\,j+m} 
+    + \sum_{i,j=0}^{m} \frac{1}{B^2}\,\sigma^{(h)*}_{i+m+1,\,j+m+1} \\
+    &\overset{H_0}{=} \frac{1}{B^2}\left(4\sum_{i,j=0}^{m} p_i p_j \,\sigma^{(h)*}_{i,j}
+    - 4\sum_{i,j=0}^{m} p_i \,\sigma^{(h)*}_{i,\, j+m+1} 
+    + \sum_{i,j=0}^{m} \,\sigma^{(h)*}_{i+m+1,\,j+m+1}\right) \\
+    &= \frac{1}{B^2}\biggl(
+        4\sum_{i,j=0}^{m} p_i p_j \frac{1}{\pi}p_j(\partial_{i,j}-p_i)\,
+        + 4\sum_{i,j=0}^{m} p_i \,\frac{1}{\pi\,\pi(h)}\bigl(\sigma^{(h)}_{i, j+m +1 }
+            - p_j^2 p_i\,\sigma^{(h)}_{-1,-2}\bigr)\\
+       & \quad + \sum_{i,j=0}^{m} \frac{1}{\pi(h)^2}\,(\sigma^{(h)}_{i+m+1, j+m+1} - p_i^2 p_j^2 \sigma^{(h)}_{-2, -2})
+      \biggr) \\
+    &= \frac{1}{B^2}\biggl(
+        \frac{4}{\pi}\sum_{i,j=0}^{m} p_i p_j^2 (\partial_{i,j}-p_i)\,
+        + \frac{4}{\pi\,\pi(h)}\sum_{i,j=0}^{m} 2\pi(h)p_i(\partial_{i,j}p_i^2 - p_i p_j^2) \\
+        &\quad + \frac{1}{\pi(h)^2}\sum_{i,j = 0}^{m}(\pi(h)p_i^2(\partial_{i,j}- 2p_j^2) + 2\pi(h, 2h)\partial_{i,j}p_i^3 - p_i^2 p_j^2)\biggr) \\
+    &= 
+\end{align*}
 
 \begin{appendices}
 
@@ -2633,7 +2671,7 @@ The derivations are structurally identical to those of Theorem~\ref{thm:kappa-as
 In this section we provide the detailed computations of the elements \textbf{(ii)} and \textbf{(iii)} of the asymptotic covariance matrix $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{*}}$.
 \begin{align*}
     &\textbf{(ii)}\ j > i = -1: \\
-    &\quad \mathrm{Cov}(O_t, O_tZ_{t,j}) 
+    &\quad \mathrm{Cov}(O_t, O_t  Z_{t,j}) 
     + 2\sum_{h=1}^\infty \mathrm{Cov}(O_t, O_{t+h}Z_{t+h,j}) \\
     &\quad \overset{\perp}{=} 
     \left(\mathrm{E}[O_t^2]\mathrm{E}[Z_{t,j}] - \mathrm{E}[O_t]^2\mathrm{E}[Z_{t,j}]\right) \\
@@ -2645,22 +2683,22 @@ In this section we provide the detailed computations of the elements \textbf{(ii
     = f_j\!\left(\pi(1-\pi) + 2\sum_{h=1}^{\infty}\gamma_O(h)\right) \\
     &\quad = f_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1} \\[2ex]
     &\textbf{(iii)}\ i,j \geq 0: \\
-    &\quad \mathrm{Cov}(O_tZ_{t,i}, O_tZ_{t,j}) 
-    + \sum_{h=1}^{\infty}\bigl[\mathrm{Cov}(O_tZ_{t,i}, O_{t+h}Z_{t+h,j}) 
-    + \mathrm{Cov}(O_{t+h}Z_{t+h,i}, O_tZ_{t,j})\bigr] \\
+    &\quad \mathrm{Cov}(O_t Z_{t,i}, O_t Z_{t,j}) 
+    + \sum_{h=1}^{\infty}\bigl[\mathrm{Cov}(O_t Z_{t,i}, O_{t+h} Z_{t+h,j}) 
+    + \mathrm{Cov}(O_{t+h}Z_{t+h,i}, O_t Z_{t,j})\bigr] \\
     &\quad \overset{\perp}{=} 
     \bigl(\mathrm{E}[O_t^2]\mathrm{E}[Z_{t,i}Z_{t,j}] - \mathrm{E}[O_t]^2 \mathrm{E}[Z_{t,i}] \mathrm{E}[Z_{t,j}]\bigr) \\
     &\qquad + \sum_{h=1}^{\infty}\bigl[
     \mathrm{E}[O_tO_{t+h}]\mathrm{E}[Z_{t,i}Z_{t+h,j}] - \mathrm{E}[O_t]\mathrm{E}[O_{t+h}] \mathrm{E}[Z_{t,i}] \mathrm{E}[Z_{t+h,j}]\\
-    &\qquad + \mathrm{E}[O_tO_{t+h}]\mathrm{E}[Z_{t,j}Z_{t+h,i}] - \mathrm{E}[O_t]\mathrm{E}[O_{t+h}] \mathrm{E}[Z_{t,j}] \mathrm{E}[Z_{t+h,i}]
+    &\qquad + \mathrm{E}[O_t O_{t+h}]\mathrm{E}[Z_{t,j}Z_{t+h,i}] - \mathrm{E}[O_t]\mathrm{E}[O_{t+h}] \mathrm{E}[Z_{t,j}] \mathrm{E}[Z_{t+h,i}]
     \bigr]\\
     &\quad = \bigl(\pi f_{\mathrm{min}\{i,j\}} - \pi^2 f_if_j\bigr) 
     + \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h) + f_{ji}(h)) - 2\pi^2 f_if_j \\
     &\qquad + 2f_if_j\sum_{h=1}^{\infty} \gamma_O(h) - 2f_if_j\sum_{h=1}^{\infty} \gamma_{O}(h) + f_i f_j \pi - f_i f_j \pi  \\
-    &\quad = f_if_j \pi(1-\pi) + f_if_j\sum_{h=1}^{\infty} \gamma_O(h) + \pi(f_{\mathrm{min}\{i,j\}} - f_i f_j) \\
+    &\quad = f_if_j \pi(1-\pi) + f_i f_j\sum_{h=1}^{\infty} \gamma_O(h) + \pi(f_{\mathrm{min}\{i,j\}} - f_i f_j) \\
     &\qquad + \sum_{h=1}^{\infty} \left(\pi(h)(f_{ij}(h) + f_{ji}(h)) - 2f_if_j(\gamma_O(h) + \pi^2)\right)  \\
-    &\quad = f_if_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1} 
-    + \pi(f_{\mathrm{min}\{i,j\}} - f_if_j)  
+    &\quad = f_i f_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1} 
+    + \pi(f_{\mathrm{min}\{i,j\}} - f_i f_j)  
     + \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h) + f_{ji}(h) - 2f_if_j)
 \end{align*}
 \section{Derivation of the Asymptotic Covariance Matrix~$\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$}\label{app:derivation_covariance}
