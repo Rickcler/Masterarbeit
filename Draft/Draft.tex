@@ -2615,14 +2615,15 @@ To now get explicit expressions for the elements $\sigma^{(h)*}$ of $\boldsymbol
     &\textbf{(ii)}\ i = 0, \ldots, m\ j = m+1, \ldots, 2m+2  (j' = j - m): \\
     &\quad \sigma^{(h)*}_{i,j}
     = -\frac{p_{j'j'}(h)}{\pi(h)}\Bigl(\frac{- p_i}{\pi}\sigma^{(h)}_{-1,-2} + \frac{1}{\pi}\sigma_{i, -2}^{(h)}\Bigr)+ \frac{1}{\pi(h)}(-\frac{p_{i}}{\pi}\sigma_{-1, j}+ \frac{1}{\pi}\sigma_{i, j}) \\
-    &\quad \overset{H_0}{=} \frac{1}{\pi(h)\pi}( p_i p_{j'}^2 \sigma_{-1, -2}^{(h)} - p_{j'}^2 p_i\sigma_{-1, -2}^{(h)*} - p_i p_{j'}^2\sigma_{-1, -2}^{(h)} + \sigma_{ij})   \\
-    &\quad =\frac{1}{\pi(h)\pi}(\sigma_{i,j}-p_{j'}^2p_i \sigma_{-1, -2}^{(h)*}) \\
+    &\quad \overset{H_0}{=} \frac{1}{\pi(h)\pi}( p_i p_{j'}^2 \sigma_{-1, -2}^{(h)} - p_{j'}^2 p_i\sigma_{-1, -2}^{(h)} - p_i p_{j'}^2\sigma_{-1, -2}^{(h)} + 2\pi(h)(\partial_{i,j}p_i^2-p_ip_j^2) + p_i p_j^2\sigma_{-1, -2}^{(h)}))   \\
+    &\quad =\frac{2}{\pi}(\partial_{i,j}p_i^2-p_i p_j^2) = 2 p_j \sigma^{(h)*}_{i, j-m-1} \\
     &\textbf{(iii)}\ i,j = m, \ldots, 2m-1 
     \ (i' = i-m,\ j' = j-m): \\
     &\quad \sigma^{(h)*}_{i,j}
     = -\frac{p_{j',j'}(h)}{\pi(h)}\left(\frac{-p_{i'i'}(h)}{\pi(h)}\sigma_{-2, -2}^{(h)}+ \frac{1}{\pi(h)}\sigma_{i, -2}^{(h)}\right) + \frac{1}{\pi(h)}\left(\frac{-p_{i',i'}(h)}{\pi(h)}\sigma_{-2, j}^{(h)}+ \frac{1}{\pi(h)}\sigma_{i, j}^{(h)}\right)\\
     &\quad \overset{H_0}{=} \frac{1}{\pi(h)^2} \left( p_{i'}^2 p_{j'}^2 \sigma_{-2, -2}^{(h)} - p_{i'}^2 p_{j'}^2 \sigma_{-2, -2}^{(h)} - p_{i'}^2 p_{j'}^2 \sigma_{-2, -2}^{(h)}  + \sigma^{(h)}_{i,j} \right) \\
-    &\quad = \frac{1}{\pi(h)^2}  \left(\sigma_{ij} -p_{i'}^2 p_{j'}^2 \sigma_{-2, -2}^{(h)}\right).
+    &\quad = \frac{1}{\pi(h)^2}  \left(\sigma_{ij}^{(h)} -p_{i'}^2 p_{j'}^2 \sigma_{-2, -2}^{(h)}\right) \\
+    &\quad = \frac{1}{\pi(h)^2}\bigl(\pi(h)p_{i'}^2(\partial_{i',j'} - p_{j'}^2) + 2\pi(h, 2h) (\partial_{i',j'} p_{i'}^3- p_{i'}p_{j'}^2)\bigr).
 \end{align*}
 
 From here, we once again use the delta method to obtain closed-form expressions for the asymptotic variance and bias of $\hat{\kappa}_{\mathrm{nom}}(h) )= \frac{A}{B}$ under $H_0$,
@@ -2649,16 +2650,14 @@ Hence, the asymptotic variance of $\hat{\kappa}_{\mathrm{nom}}(h)$ under $H_0$ i
     - 4\sum_{i,j=0}^{m} p_i \,\sigma^{(h)*}_{i,\, j+m+1} 
     + \sum_{i,j=0}^{m} \,\sigma^{(h)*}_{i+m+1,\,j+m+1}\right) \\
     &= \frac{1}{B^2}\biggl(
-        4\sum_{i,j=0}^{m} p_i p_j \frac{1}{\pi}p_j(\partial_{i,j}-p_i)\,
-        + 4\sum_{i,j=0}^{m} p_i \,\frac{1}{\pi\,\pi(h)}\bigl(\sigma^{(h)}_{i, j+m +1 }
-            - p_j^2 p_i\,\sigma^{(h)}_{-1,-2}\bigr)\\
-       & \quad + \sum_{i,j=0}^{m} \frac{1}{\pi(h)^2}\,(\sigma^{(h)}_{i+m+1, j+m+1} - p_i^2 p_j^2 \sigma^{(h)}_{-2, -2})
+        4\sum_{i,j=0}^{m} p_i p_j \sigma^{(h)*}_{i,j}\,
+        - 8\sum_{i,j=0}^{m} p_i p_j \sigma^{(h)*}_{i,j}
+        + \frac{1}{\pi(h)^2} \sum_{i,j=0}^{m} \bigl(\,\pi(h)p_i^2(\partial_{i,j} - p_j^2) \\
+    &\quad + 2\pi(h, 2h)(\partial_{i,j}p_i^3 - p_i^2 p_j^2)\bigr)
       \biggr) \\
-    &= \frac{1}{B^2}\biggl(
-        \frac{4}{\pi}\sum_{i,j=0}^{m} p_i p_j^2 (\partial_{i,j}-p_i)\,
-        + \frac{4}{\pi\,\pi(h)}\sum_{i,j=0}^{m} 2\pi(h)p_i(\partial_{i,j}p_i^2 - p_i p_j^2) \\
-        &\quad + \frac{1}{\pi(h)^2}\sum_{i,j = 0}^{m}(\pi(h)p_i^2(\partial_{i,j}- 2p_j^2) + 2\pi(h, 2h)\partial_{i,j}p_i^3 - p_i^2 p_j^2)\biggr) \\
-    &= 
+    &= \frac{1}{B^2}\biggl(\frac{1}{\pi(h)}\bigl(\sum_{i,j = 0}^{m}p_i^2(\partial_{i,j} - p_j^2) + 2 \frac{\pi(h,2h)}{\pi(h)} (\partial_{i,j}p_i^3- p_i^2p_j^2)\bigr)
+    -  \frac{4}{\pi} \sum_{i,j = 0}^{m} p_i^2 p_j (\partial_{i,j}- p_i)\biggr) \\
+    &= \frac{1}{1-\sum_{i=1}^{m}p_i^2} \frac{1}{\pi(h)} \sum_{i, j = 0}^{m}p_i^2 (\partial_{i,j}-p_j)
 \end{align*}
 
 \begin{appendices}
