@@ -2925,11 +2925,36 @@ Section~\ref{sec:fstar_hat}.
 The serial dependence measure $\kappa_{\mathrm{nom}}$ (recall Definition~\ref{def:cohens-kappa}) depends on the bivariate probabilities $p_{ij}(h)$.   
 Therefore, the corrected estimator $\hat{p}_{ij}^*(h)$ is defined in direct analogy to $\hat{f}_{ij}^*(h)$ from Section~\ref{sec:serial-dependence} as
 \[\hat{p}_{ij}^*(h) = \frac{\sum_{t=h+1}^{n}O_t O_{t-h}Y_{t,i}Y_{t-h,j}}{\sum_{t=h+1}^{n}O_t O_{t-h}}.\]
-We define $\boldsymbol{Y}^{(h)*}_n$ in direct analogy to $\boldsymbol{Z}^{(h)*}_n$ from Section~\ref{sec:serial-dependence} with 
-$Z_{t,i}$ replaced by $Y_{t,i}$ and $Z_{t-h,j}$ replaced by $Y_{t-h,j}^*$. The elements of the asymptotic covariance matrix 
-$\boldsymbol{\Sigma}_{\boldsymbol{Y}^{(h)*}}$ are computed in direct analogy to those of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$
+We define $\boldsymbol{Y}^{(h)*}_n$ in direct analogy to $\boldsymbol{Z}^{(h)*}_n$ from Section~\ref{sec:serial-dependence}:
+\begin{align*}
+    \boldsymbol{Y}^{(h)*}_t 
+    &= \left(
+        Y_{t,-2}^{(h)*},\;
+        Y_{t, -1}^{(h)*},\;
+        \overbrace{\ldots,\, Y_{t,i}^{(h)*},\, \ldots}^{i=0,\,\ldots,\,m},\;
+        \overbrace{\ldots,\, Y_{t,m+1+j}^{(h)*},\, \ldots}^{j=0,\,\ldots,\,m}
+       \right)^\top\\
+    &:= \left(
+        O_t O_{t-h},\;
+        \underbrace{O_t,\, \ldots,\, O_{t} Y_{t,i},\, \ldots}_{=\,\boldsymbol{Y}^*_t},\;
+        \ldots,\, O_t O_{t-h} Y_{t,j} Y_{t-h,j},\, \ldots
+        \right)^\top.
+\end{align*}
+The consistency of $\bar{\boldsymbol{Y}}^{(h)*}_n$ follows from the same argument as in Section~\ref{sec:serial-dependence}. 
+The elements of the asymptotic covariance matrix $\boldsymbol{\Sigma}_{\boldsymbol{Y}^{(h)*}}$ are 
+computed in direct analogy to those of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$
 from Section~\ref{subsec:serial-general} with $Z_{t,i}$, $f_i$, $f_{ij}(h)$ replaced by $Y_{t,i}$, $p_i$, $p_{ij}(h)$ and $(f_{\mathrm{min}\{i,j\}}- f_i f_j)$
-by $p_j(\delta_{ij} - p_i)$ throughout. From here, the asymptotic normality of 
+by $p_j(\delta_{ij} - p_i)$ throughout. For $i, j = 0, ..., m $, the individual elements are given by 
+\begin{align*}
+    &\sigma_{-2-2}^{(h)} = \pi(h)(1-\pi(h)) + 2 \sum_{k=1}^{\infty}Cov(O_t O_{t-h}) \\
+    &\sigma_{-1, -2}^{(h)} = (1-\pi)\pi(h)\sum_{k=1}^{\infty} [\mathrm{E}(O_t O_{t-h}O_{t+k})\mathrm{E}(O_t O_{t+k}O_{t+k-h})-2\pi \pi(h)] \\
+    &\sigma_{-2 j}^{(h)} = p_j \sigma_{-2 -1}^{(h)} \quad \sigma_{-2 (m+1+j)}^{(h)} = p_{jj}(h) \sigma_{-2 2}^{(h)} \quad \sigma_{-1 -1}^{(h)} = \pi(1-\pi) + 2 \sum_{k=1}^{\infty} \gamma_O(k) \\
+    &\sigma_{-1 j}^{(h)} = p_j \sigma_{-1 -1}^{(h)} \quad \sigma_{-1 (m+1+j)}^{(h)} = p_{jj}(h) \sigma_{-1 2}^{(h)} \\
+    &\sigma_{ij} =p_i p_j \sigma_{-1 -1}^{(h)} + \pi p_i(\partial_{ij} - p_j) + \sum_{k = 1}^{\infty}\pi(k)(p_{ij}(k)+ p_{ji}(k)- 2p_ip_j) \\   
+    &\sigma_{i(j+m+1)} =\pi(h) E[Y_{t, i}Y_{t-h, i}Y_{t, j}Y_{t-h, j}]- \pi(h)^2f_{ii}(h)f_{jj}(h) + \sum_{k = 1}^{\infty} 
+        \mathrm{E}[O_t O_{t-h} O_{t+k} O_{t+k-h}]\bigl(\mathrm[Y_{t,i}Y_{t-h,i}Y_{t+k,j}Y_{t+k-h,j}]\bigr)\\
+\end{align*}
+From here, the asymptotic normality of 
 \[\hat{\boldsymbol{p}}^{(h)*}:= (p_0, \ldots, p_m, p_{00}(h), \ldots, p_{mm}(h))^\top\]
 follows from the same delta-method argument as in Theorem~\ref{thm:clt_fhat_h},
 with the following results:\\ 
