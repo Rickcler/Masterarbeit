@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (MiKTeX 26.2) (preloaded format=xelatex 2026.4.16)  3 JUN 2026 14:49
+This is XeTeX, Version 3.141592653-2.6-0.999998 (MiKTeX 26.2) (preloaded format=xelatex 2026.4.16)  5 JUN 2026 10:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1955,17 +1955,17 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 2924.
 
 
-Overfull \hbox (111.14467pt too wide) detected at line 2956
+Overfull \hbox (45.02579pt too wide) detected at line 2963
 []
  []
 
 [56]
-Overfull \hbox (40.75214pt too wide) in paragraph at lines 2958--2963
+Overfull \hbox (40.75214pt too wide) in paragraph at lines 2963--2968
 \TU/lmr/m/n/12 nominal instead of ordinal. Then $[][]$ is consistent for $[][] \OT1/lmr/m/n/12 := (\OML/lmm/m/it/12 p[]; [] ; p[]; p[]\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 h\OT1/lmr/m/n/12 )\OML/lmm/m/it/12 ; [] ; p[]\OT1/lmr/m/n/12 (\OML/lmm/m/it/12 h\OT1/lmr/m/n/12 ))[]$\TU/lmr/m/n/12 ,
  []
 
 [57] [58] [59]
-Overfull \hbox (21.18544pt too wide) detected at line 3092
+Overfull \hbox (21.18544pt too wide) detected at line 3095
 []
  []
 
@@ -1990,4 +1990,4 @@ Here is how much of TeX's memory you used:
  1348 hyphenation exceptions out of 8191
  108i,19n,107p,11277b,537s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Draft.xdv (61 pages, 876556 bytes).
+Output written on Draft.xdv (61 pages, 879456 bytes).

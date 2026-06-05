@@ -1266,8 +1266,8 @@ O_tO_{t-h}Z_{t, (j-m)}Z_{t-h, (j-m)})\bigr] \\
 &\qquad + \sum_{k=1}^{\infty}
 \mathrm{E}[O_tO_{t-h}O_{t+k}O_{t+k-h}]\,\bigl[
 \mathrm{E}[Z_{t,(i-m)}Z_{t-h, (i-m)}Z_{t+k, (j-m)}Z_{t+k-h, (j-m)}] \\
-&\qquad + \mathrm{E}[Z_{t+k, (i-m)}Z_{t+k-h, (i-m)}Z_{t, (j-m)}Z_{t-h, (j-m)}]
-- 2f_{(i-m)(i-m)}(h)\,f_{(j-m)(j-m)}(h)\bigr]
+&\qquad + \mathrm{E}[Z_{t+k, (i-m)}Z_{t+k-h, (i-m)}Z_{t, (j-m)}Z_{t-h, (j-m)}]\bigr]
+- 2\pi(h)^2 f_{(i-m)(i-m)}(h)\,f_{(j-m)(j-m)}(h)
 \end{align*}}
 Note that cases \textbf{(v)}, \textbf{(vi)} and \textbf{(viii)} coincide with cases 
 \textbf{(i)-(iii)} from $\boldsymbol{\Sigma}_{\boldsymbol{Z}*}$ of Proposition~\ref{prop:clt_zstar}. Also note that cases \textbf{(i)--(viii)} admit fully explicit closed-form 
@@ -2938,25 +2938,30 @@ We define $\boldsymbol{Y}^{(h)*}_n$ in direct analogy to $\boldsymbol{Z}^{(h)*}_
         O_t O_{t-h},\;
         \underbrace{O_t,\, \ldots,\, O_{t} Y_{t,i},\, \ldots}_{=\,\boldsymbol{Y}^*_t},\;
         \ldots,\, O_t O_{t-h} Y_{t,j} Y_{t-h,j},\, \ldots
-        \right)^\top.
+        \right)^\top
 \end{align*}
+and accordingly $\hat{\boldsymbol{p}}^{(h)*}$ in direct analogy to $\hat{\boldsymbol{f}}^{(h)*}$ from Section~\ref{sec:serial-dependence} as
+\[\hat{\boldsymbol{p}}^{(h)*} := \left(\hat{p}_0^{*}, \ldots, \hat{p}_m^{*}, \hat{p}_{00}(h)^{*}, \ldots, \hat{p}_{mm}(h)^{*}\right)^\top.\]
+
 The consistency of $\bar{\boldsymbol{Y}}^{(h)*}_n$ follows from the same argument as in Section~\ref{sec:serial-dependence}. 
 The elements of the asymptotic covariance matrix $\boldsymbol{\Sigma}_{\boldsymbol{Y}^{(h)*}}$ are 
 computed in direct analogy to those of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$
 from Section~\ref{subsec:serial-general} with $Z_{t,i}$, $f_i$, $f_{ij}(h)$ replaced by $Y_{t,i}$, $p_i$, $p_{ij}(h)$ and $(f_{\mathrm{min}\{i,j\}}- f_i f_j)$
-by $p_j(\delta_{ij} - p_i)$ throughout. For $i, j = 0, ..., m $, the individual elements are given by 
+by $p_j(\delta_{ij} - p_i)$ throughout. Also recall that $\partial_{i,j} = \mathbb{I}_{i = j}$ is the Kronecker Delta. For $i, j = 0, ..., m $, the individual elements are given by 
 \begin{align*}
-    &\sigma_{-2-2}^{(h)} = \pi(h)(1-\pi(h)) + 2 \sum_{k=1}^{\infty}Cov(O_t O_{t-h}) \\
-    &\sigma_{-1, -2}^{(h)} = (1-\pi)\pi(h)\sum_{k=1}^{\infty} [\mathrm{E}(O_t O_{t-h}O_{t+k})\mathrm{E}(O_t O_{t+k}O_{t+k-h})-2\pi \pi(h)] \\
-    &\sigma_{-2 j}^{(h)} = p_j \sigma_{-2 -1}^{(h)} \quad \sigma_{-2 (m+1+j)}^{(h)} = p_{jj}(h) \sigma_{-2 2}^{(h)} \quad \sigma_{-1 -1}^{(h)} = \pi(1-\pi) + 2 \sum_{k=1}^{\infty} \gamma_O(k) \\
-    &\sigma_{-1 j}^{(h)} = p_j \sigma_{-1 -1}^{(h)} \quad \sigma_{-1 (m+1+j)}^{(h)} = p_{jj}(h) \sigma_{-1 2}^{(h)} \\
-    &\sigma_{ij} =p_i p_j \sigma_{-1 -1}^{(h)} + \pi p_i(\partial_{ij} - p_j) + \sum_{k = 1}^{\infty}\pi(k)(p_{ij}(k)+ p_{ji}(k)- 2p_ip_j) \\   
-    &\sigma_{i(j+m+1)} =\pi(h) E[Y_{t, i}Y_{t-h, i}Y_{t, j}Y_{t-h, j}]- \pi(h)^2f_{ii}(h)f_{jj}(h) + \sum_{k = 1}^{\infty} 
-        \mathrm{E}[O_t O_{t-h} O_{t+k} O_{t+k-h}]\bigl(\mathrm[Y_{t,i}Y_{t-h,i}Y_{t+k,j}Y_{t+k-h,j}]\bigr)\\
+    &\textbf{(i) }\sigma_{-2-2}^{(h)} = \pi(h)(1-\pi(h)) + 2 \sum_{k=1}^{\infty}Cov(O_t O_{t-h}) \\
+    &\textbf{(ii) }\sigma_{-1, -2}^{(h)} = (1-\pi)\pi(h)\sum_{k=1}^{\infty} [\mathrm{E}(O_t O_{t-h}O_{t+k})\mathrm{E}(O_t O_{t+k}O_{t+k-h})-2\pi \pi(h)] \\
+    &\textbf{(iii) }\sigma_{-2 j}^{(h)} = p_j \sigma_{-2 -1}^{(h) } \quad \textbf{(iv) }\sigma_{-2 (m+1+j)}^{(h)} = p_{jj}(h) \sigma_{-2 2}^{(h)} \quad \textbf{(v) }\sigma_{-1 -1}^{(h)} = \pi(1-\pi) + 2 \sum_{k=1}^{\infty} \gamma_O(k) \\
+    &\textbf{(vi) }\sigma_{-1 j}^{(h)} = p_j \sigma_{-1 -1}^{(h)} \quad \textbf{(vii) }\sigma_{-1 (m+1+j)}^{(h)} = p_{jj}(h) \sigma_{-1 2}^{(h)} \\
+    &\textbf{(viii) }\sigma_{ij}^{(h)} = p_i p_j \sigma_{-1 -1}^{(h)} + \pi p_i(\partial_{ij} - p_j) + \sum_{k = 1}^{\infty}\pi(k)(p_{ij}(k)+ p_{ji}(k)- 2p_ip_j) \\   
+    &\textbf{(ix) }\sigma_{i(j+m+1)}^{(h)} =\pi(h) E[Y_{t, i}Y_{t-h, i}Y_{t, j}Y_{t-h, j}]- \pi(h)^2f_{ii}(h)f_{jj}(h) + \sum_{k = 1}^{\infty} \bigl(\mathrm{E}[O_t O_{t-h} O_{t+k} O_{t+k-h}]\\
+    &\quad\cdot \mathrm{E}[Y_{t,i}Y_{t-h,i}Y_{t+k,j}Y_{t+k-h,j}] + \mathrm{E}[O_{t+k}O_{t}O_{t-h}]\mathrm{E}[Y_{t+k, i}Y_{t, j}Y_{t-h, j}]- 2\pi\pi(h) p_i p_{jj}(h) \bigr) \\
+    &\textbf{(x) } \sigma_{(i+m+1)(j+m+1)} = \pi(h)\,\mathrm{E}[Y_{t,i}Y_{t-h, i}Y_{t, j}Y_{t-h, j}] - 
+    \pi(h)^2\, p_{ii}(h)\, p_{jj}(h) + \sum_{k=1}^{\infty} \bigl(\mathrm{E}[O_t O_{t-h} O_{t+k} O_{t+k-h}]\\
+    &\quad \bigl[\mathrm{E}[Y_{t,i}Y_{t-h, i}Y_{t+k, j}Y_{t+k-h, j}] 
+    + \mathrm{E}[Y_{t+k, i}Y_{t+k-h, i}Y_{t, j}Y_{t-h, j}]\bigr]- 2\pi(h)^2 p_{ii}(h)\,p_{jj}(h)\bigr)
 \end{align*}
-From here, the asymptotic normality of 
-\[\hat{\boldsymbol{p}}^{(h)*}:= (p_0, \ldots, p_m, p_{00}(h), \ldots, p_{mm}(h))^\top\]
-follows from the same delta-method argument as in Theorem~\ref{thm:clt_fhat_h},
+From here, the asymptotic normality of $\hat{\boldsymbol{p}}^{(h)*}$ follows from the same delta-method argument as in Theorem~\ref{thm:clt_fhat_h},
 with the following results:\\ 
 Let the same assumptions regarding $X_t$ and $O_t$ hold as in Theorem~\ref{thm:clt_fhat_h}, except that $X_t$ is nominal instead of ordinal.
 Then $\hat{\boldsymbol{p}}^{(h)*}$ is consistent for $\boldsymbol{\mu}^{(h)*} := (p_0, \ldots, p_m, p_{00}(h), \ldots, p_{mm}(h))^\top$, and: 
@@ -2984,7 +2989,7 @@ $\boldsymbol{\mu}_{\boldsymbol{Y}^{(h)*}}$, is given by
     &\cdots & 0&\frac{1}{\pi(h)}      
     \end{pmatrix}.
 \end{align*}
-Once again, higher-order mixed moments appear in $\boldsymbol{\Sigma}_{\boldsymbol{Y}^{(h)*}}$, such that 
+Once again, higher-order mixed moments appear in the elements \textbf{(ix)} and \textbf{(ix)} off $\boldsymbol{\Sigma}_{\boldsymbol{Y}^{(h)*}}$, such that 
 closed form expression for the elements of $\boldsymbol{\Sigma}_{\hat{\boldsymbol{p}}^{(h)*}}$ and consequently 
 $\sigma_{\hat{\kappa}_{\mathrm{nom}}(h)}^2$ are not tractable without further assumptions. However, under $H_0$ that $(X_t)$
 is i.i.d., the bivariate probabilities factorize as $p_{ij}(h) = p_i p_j$. The relevant higher-order mixed moments
@@ -3012,16 +3017,14 @@ We then once again apply these simplifications to the elements
 \textbf{(ix)} and \textbf{(x)} of $\boldsymbol{\Sigma}_{\boldsymbol{Y}^{(h)*}}$
 \begin{align*}
     &\textbf{(ix)}\quad  i = 0, \ldots, m, j = m+1, \ldots, 2m+2: \\
-    &\quad \mathrm{Cov}(O_t Y_{t,i},  O_t O_{t-h}Y_{t,j-m-1}Y_{t-h,j-m-1}) \\
-    &\quad \overset{H_0}{=} \pi(h) \partial_{ij-m-1} p_i^2 - \pi \pi(h) p_i p_{j-m-1}^2 \\
+    &\sigma_{ij}^{(h)*} \overset{H_0}{=} \pi(h) \partial_{ij-m-1} p_i^2 - \pi \pi(h) p_i p_{j-m-1}^2 \\
     &\qquad + \underbrace{\pi(h)\partial_{ij-m-1}p_i^2 + \mathrm{E}[O_{t+h}O_t O_{t-h}]p_i p_{j-m-1}^2 - 2 \pi \pi(h)p_i p_{j-m-1}^2}_{h=k} \\
     &\qquad +  p_i p_{j-m-1}^2 \sum_{\substack{k=1\\k\neq h}}^{\infty}  \left[\mathrm{E}[O_t O_{t+k} O_{t+k-h}] + \mathrm{E}[O_t O_{t+k} O_{t+k-h}] - 2\pi\pi(h)\right] \\
     &\quad = 2\pi(h)\partial_{ij-m-1} p_i^2 - \pi(h) p_i p_{j-m-1}^2 - \pi\pi(h)p_i p_{j-m-1}^2 \\
     &\qquad + p_i p_{j-m-1}^2 \sum_{k= 1}^{\infty}  \left[\mathrm{E}[O_t O_{t+k} O_{t+k-h}] + \mathrm{E}[O_t O_{t+k} O_{t-h}] - 2\pi\pi(h)\right] \\
     &\quad = 2\pi(h) (\partial_{i;j-m-1}p_i^2 - p_i p_{j-m-1}^2)+p_i p_{j-m-1}^2 \sigma_{-1;-2} \\
     &\textbf{(x)}\quad  i = m+1, \ldots, 2m+2, j = m+1, \ldots, 2m+2: \\
-    &\quad \mathrm{Cov}(O_t O_{t-h}Y_{t,i-m-1}Y_{t-h,i-m-1},  O_t O_{t-h}Y_{t,j-m-1}Y_{t-h,j-m-1}) \\
-    &\quad \overset{H_0}{=} \pi(h) \partial_{{i-m-1},j-m-1} p_{i-m-1}^2 -  \pi(h)^2 p_{i-m-1}^2 p_{j-m-1}^2\\
+    &\sigma_{ij}^{(h)*} \overset{H_0}{=} \pi(h) \partial_{{i-m-1},j-m-1} p_{i-m-1}^2 -  \pi(h)^2 p_{i-m-1}^2 p_{j-m-1}^2\\
     &\qquad + \underbrace{\mathrm{E}[O_t O_{t-h} O_{t+h}]\cdot \left(2\partial_{{i-m-1},j-m-1}p_{i-m-1}^3 \right) - 2\pi(h)^2 2p_{j-m-1}^2p^2_{i-m-1}}_{h=k} \\
     &\qquad +  p_{i-m-1}^2 p_{j-m-1}^2 \sum_{\substack{k=1\\k\neq h}}^{\infty}  2\left[\mathrm{E}[O_t O_{t-h} O_{t+k} O_{t+k-h}]- \pi(h)^2\right] \\
     &\quad = \pi(h) p_{i-m-1}^2 (\partial_{i-m-1j-m-1}- \pi(h)p_{k-m-1}^2)+ 2\mathrm{E}[O_t O_{t-h} O_{t+h}]\cdot(\partial_{i-m-1j-m-1}p_{i-m-1}^3 \\
