@@ -6,10 +6,228 @@
 
 source("00_setup.R")
 load("Masterarbeit.RData")
+#------------------------------------------------------------------------------
+# Figure 4.1: Cohen's Kappa of BinAR(1) for different values of r
+#------------------------------------------------------------------------------
+
+m <- 10         # Anzahl der Versuche (Zustandsraum {0,...,m})
+p <- 0.45        # Erfolgswahrscheinlichkeit der marginalen Binomialverteilung
+r_vals <- c(-0.5, -0.2, 0.2, 0.4, 0.6, 0.8, 0.95)   # verschiedene Autokorrelationsparameter
+max_h <- 100  
+
+kappa_matrix <- matrix(NA, nrow = max_h, ncol = length(r_vals))
+colnames(kappa_matrix) <- paste0("r = ", r_vals)
+
+for (i in seq_along(r_vals)) {
+  r <- r_vals[i]
+  for (h in 1:max_h) {
+    kappa_matrix[h, i] <- kappa_ord(m, p, r, h)
+  }
+}
+
+h_werte <- 1:max_h 
+df <- data.frame(h = h_werte, kappa_matrix, check.names = FALSE)   # Spalten: h, r1, r2, ...
+
+
+df_long <- pivot_longer(df, 
+                        cols = -h,          # alle Spalten außer 'h' werden umgeformt
+                        names_to = "r", 
+                        values_to = "kappa")
+
+# 2. Plot
+Cohens_Plot <- ggplot(df_long, aes(x = h, y = kappa, color = r)) +
+  geom_line() +          # Linien
+  geom_point() +         # Punkte (optional)
+  labs(x = "h", 
+       y = "\u03BA(h)",
+       color = "r-Values",
+       title = "\u03BA(h) in relation to h",
+       subtitle = "BinAR(1) with p = 0.45, m = 10 over multiple r-Values") +
+  theme_minimal() +
+  coord_fixed(ratio = 40)
+print(Cohens_Plot)
+ggsave("Graphs/Cohens_Kappa_by_h.png", Cohens_Plot + theme(legend.position = "none"), width = 8, height = 6)
+
+#------------------------------------------------------------------------------
+# Figure 4.2: Maginal Distribution 
+#------------------------------------------------------------------------------
+
+# Masterarbeit
+scen_A <- data.frame(
+  scenario = "Scenario A\nm = 3, p = 0.20, r = 0.35",
+  category = 0:3,
+  pmf      = dbinom(0:3,  size = 3,  prob = 0.20),
+  cdf      = pbinom(0:3,  size = 3,  prob = 0.20)
+)
+
+scen_B <- data.frame(
+  scenario = "Scenario B\nm = 10, p = 0.45, r = 0.50",
+  category = 0:10,
+  pmf      = dbinom(0:10, size = 10, prob = 0.45),
+  cdf      = pbinom(0:10, size = 10, prob = 0.45)
+)
+
+plot_dist_df <- bind_rows(scen_A, scen_B) %>%
+  mutate(
+    scenario = factor(scenario, levels = c(
+      "Scenario A\nm = 3, p = 0.20, r = 0.35",
+      "Scenario B\nm = 10, p = 0.45, r = 0.50"
+    )),
+    category = factor(category)
+  )
+
+p_pmf <- ggplot(plot_dist_df, aes(x = category, y = pmf)) +
+  geom_col(fill = "grey70", color = "grey40", width = 0.6) +
+  geom_text(aes(label = round(pmf, 3)),
+            vjust = -0.4, size = 2.8, color = "grey30") +
+  facet_wrap(~ scenario, scales = "free_x") +
+  scale_y_continuous(limits = c(0, 0.60), name = "Probability") +
+  scale_x_discrete(name = "Category") +
+  labs(title = "Marginal PMF") +
+  theme_minimal() +
+  theme(strip.text = element_text(size = 10, face = "bold"),
+        panel.grid.major.x = element_blank(),
+        plot.title = element_text(size = 11))
+
+p_cdf_dist <- ggplot(plot_dist_df, aes(x = category, y = cdf)) +
+  geom_col(fill = "grey70", color = "grey40", width = 0.6) +
+  geom_text(aes(label = round(cdf, 3)),
+            vjust = -0.4, size = 2.8, color = "grey30") +
+  geom_hline(yintercept = 0.5, linetype = "dashed",
+             color = "steelblue", linewidth = 0.6) +
+  annotate("text", x = 0.6, y = 0.52,
+           label = "0.5", color = "steelblue", size = 3) +
+  facet_wrap(~ scenario, scales = "free_x") +
+  scale_y_continuous(limits = c(0, 1.05), name = "Cumulative Probability") +
+  scale_x_discrete(name = "Category") +
+  labs(title = "Marginal CDF") +
+  theme_minimal() +
+  theme(strip.text = element_text(size = 10, face = "bold"),
+        panel.grid.major.x = element_blank(),
+        plot.title = element_text(size = 11))
+
+MarginalsPlot <- p_pmf / p_cdf_dist +
+  plot_annotation(
+    title    = "Marginal distributions of the two simulation scenarios",
+    subtitle = "Top: PMF    Bottom: CDF    Dashed line: 0.5",
+    theme    = theme(
+      plot.title    = element_text(size = 13, face = "bold"),
+      plot.subtitle = element_text(size = 10, color = "grey40")
+    )
+  )
+
+print(MarginalsPlot)
+ggsave("Graphs/MarginalsPlot.png", MarginalsPlot, width = 8, height = 8)
+#------------------------------------------------------------------------------
+# Figures 4.3 and 4.4: Bias and CLT 
+#------------------------------------------------------------------------------
+theory_df_2 <- data.frame(
+  n    = seq(2, 1000, by = 1),
+  diff = sapply(seq(2, 1000, by = 1), function(n_val)
+    -(4 / (10 * n_val)) * sum(diag(Sigma_raw)))
+)
+
+mean_df_2 <- sim_data_2 %>%
+  dplyr::group_by(n) %>%
+  dplyr::summarise(
+  mean_scaled_bias = mean(scaled_bias, na.rm = TRUE),
+  mean_diff        = mean(diff,        na.rm = TRUE),
+  se = sd(scaled_bias, na.rm = TRUE),
+  .groups = "drop"
+) %>%
+  dplyr::mutate(mean_scaled_diff = (mean_diff * n))
+Marginal <- pbinom(0:9, size = 10, prob = 0.3)
+
+
+Var_Iov <- 0
+for (i in 1:10) {
+  for (j in 1:10) {
+    Var_Iov <- Var_Iov + (1- 2 * Marginal[i])*(1- 2 * Marginal[j])*Sigma_raw[i, j]
+  }
+}
+
+SD_Iov <- sqrt((16 / 10^2) * Var_Iov)
+
+
+# Figure 4.3 left: CLT-Dichte unscaled
+unscaled_CLT_plot <- ggplot(sim_data, aes(x = diff, fill = factor(n))) +
+  geom_density(alpha = 0.4) +
+  labs(x = expression(Bias(IOV))) +
+  theme_minimal() +
+  theme(legend.position = "none")
+print(unscaled_CLT_plot)
+ggsave("Graphs/CLT_unscaled.png", unscaled_CLT_plot + theme(legend.position = "none"), width = 8, height = 5)
+
+
+# Figure 4.3 right: CLT-Dichte scaled
+scaled_CLT_plot <- ggplot(sim_data, aes(x = scaled_CLT, fill = factor(n))) +
+  geom_density(alpha = 0.4) +
+  stat_function(
+    fun  = dnorm,
+    args = list(mean = 0,
+                sd   = SD_Iov),
+    linetype = "dashed"
+  ) +
+  labs(x = expression(Bias(IOV))) +
+  theme_minimal() +
+  theme(legend.position = "none")
+print(scaled_CLT_plot)
+ggsave("Graphs/CLT_scaled.png", scaled_CLT_plot + theme(legend.position = "none"), width = 8, height = 5)
+
+
+# Figure 4.4 left: Mittlerer Bias unscaled
+unscaled_bias_plot <- ggplot(mean_df_2, aes(x = n, y = mean_diff)) +
+  geom_line(data = theory_df_2, aes(x = n, y = diff),
+            color = "steelblue", linetype = "dashed", linewidth = 0.8) +
+  geom_line() +
+  geom_point(size = 2) +
+  labs(
+    title    = "Mean bias as a function of n",
+    subtitle = "",
+    x = "n",
+    y = expression(Mean(hat(IOV) - IOV))
+  ) +
+  theme_minimal()
+
+print(unscaled_bias_plot)
+ggsave("Graphs/Bias_unscaled.png", unscaled_bias_plot + theme(legend.position = "none"), width = 8, height = 5)
+
+
+# Figure 4.4 right: Mittlerer Bias scaled
+
+scaled_bias_plot <- ggplot(mean_df_2, aes(x = n, y = mean_scaled_diff)) +
+  
+  # Punkte
+  geom_point(size = 1.5, color = "black") +
+  
+  # schwarze Linie (empirisch)
+  geom_line(color = "black", linewidth = 0.5) +
+  
+  # rote Glättung (wie im Plot)
+  geom_smooth(method = "loess", se = FALSE,
+              color = "red", linewidth = 1) +
+  
+  # theoretischer Grenzwert (horizontal)
+  geom_hline(
+    yintercept = -(4 / 10) * sum(diag(Sigma_raw)),
+    linetype = "dashed",
+    color = "steelblue"
+  ) +
+  
+  labs(
+    x = "n",
+    y = expression(n %.% Mean(hat(IOV) - IOV))
+  ) +
+  
+  theme_minimal()
+
+print(scaled_bias_plot)
+ggsave("Graphs/Bias_scaled.png", scaled_bias_plot + theme(legend.position = "none"), width = 8, height = 5)
 
 # ------------------------------------------------------------------------------
-# Hilfsfunktionen
+# Figures 4.5 - 4.8: Comparisonplots IOV, Skew, Cohen's K 
 # ------------------------------------------------------------------------------
+
 
 #' Bereitet subset + x-Positionen für Vergleichs-Plots vor
 #' @param data       combined_df
@@ -160,9 +378,9 @@ comparison_plot <- function(subset, y_var, ymin_var, ymax_var,
     )
 }
 
-# ------------------------------------------------------------------------------
-# combined_df aufbauen
-# ------------------------------------------------------------------------------
+
+# Combined_df aufbauen
+
 
 combined_df <- rbind(asymp_df, sim_df)
 
@@ -173,134 +391,136 @@ combined_df <- combined_df %>%
     true_C1   = 0
   )
 
-# ==============================================================================
-# Plot-Block A: MCAR / pi_h == 0, beide pi-Werte
-# ==============================================================================
 
+# Plot-Block A (Figure 4.5, 4.7, 4.8): Vergleichsplots für pi in {1, 0.75} und r_pi == 0 (MCAR)
 
-prep_A <- prepare_comparison_subset(
+### Scenario A
+
+prep_A1 <- prepare_comparison_subset(
   combined_df,
   filter_expr   = (p == 0.2 & r_pi == 0), # hier p 0.2 oder 0.45 wählen
   group_var_name = "pi"
 )
-sub_A         <- prep_A$subset
-t_IOV_A       <- sub_A$true_IOV[1]
-t_Skew_A      <- sub_A$true_Skew[1]
-m_A <- sub_A$m[1]; p_A <- sub_A$p[1]; r_A <- sub_A$r[1]
-sub_A$true_C1 <- 0
-sub_A$IOV_centered <- sub_A$mean_IOV - t_IOV_A
-sub_A$IOV_lower_centered <- sub_A$lower_IOV - t_IOV_A
-sub_A$IOV_upper_centered <- sub_A$upper_IOV - t_IOV_A
+
+sub_A1         <- prep_A1$subset
+t_IOV_A1       <- sub_A1$true_IOV[1]
+t_Skew_A1      <- sub_A1$true_Skew[1]
+m_A1 <- sub_A1$m[1]; p_A1 <- sub_A1$p[1]; r_A1 <- sub_A1$r[1]
+sub_A1$true_C1 <- 0
+sub_A1$IOV_centered <- sub_A1$mean_IOV - t_IOV_A1
+sub_A1$IOV_lower_centered <- sub_A1$lower_IOV - t_IOV_A1
+sub_A1$IOV_upper_centered <- sub_A1$upper_IOV - t_IOV_A1
 
 # IOV
 IOV_plot <- comparison_plot(
-  sub_A, "IOV_centered", "IOV_lower_centered", "IOV_upper_centered",
+  sub_A1, "IOV_centered", "IOV_lower_centered", "IOV_upper_centered",
   true_val      = 0,
-  group_centers = prep_A$group_centers,
-  x_labels      = prep_A$x_labels,
+  group_centers = prep_A1$group_centers,
+  x_labels      = prep_A1$x_labels,
   y_label       = "IOV Value",
   title = "Scenario A",
   subtitle = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  MCAR",
-                          m_A, p_A, r_A),
+                          m_A1, p_A1, r_A1),
   ylim_offset   = c(-0.10, 0.06), # anpassen je nach p
   group_var     = "pi"
 )
 print(IOV_plot)
-ggsave(sprintf("Graphs/iov_m%d.png", m_A), IOV_plot + theme(legend.position = "none"), width = 8, height = 5)
+ggsave(sprintf("Graphs/iov_m%d.png", m_A1), IOV_plot + theme(legend.position = "none"), width = 8, height = 5)
 
 # Skew
 Skew_plot <- comparison_plot(
-  sub_A, "mean_Skew", "lower_Skew", "upper_Skew",
-  true_val      = t_Skew_A,
-  group_centers = prep_A$group_centers,
-  x_labels      = prep_A$x_labels,
+  sub_A1, "mean_Skew", "lower_Skew", "upper_Skew",
+  true_val      = t_Skew_A1,
+  group_centers = prep_A1$group_centers,
+  x_labels      = prep_A1$x_labels,
   title         = "Scenario A",
   y_label       = "Skewness Value",
   subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  MCAR",
-                          m_A, p_A, r_A),
+                          m_A1, p_A1, r_A1),
   ylim_offset   = c(-0.10, 0.1), # anpassen je nach p
   group_var     = "pi"
 )
 print(Skew_plot)
-ggsave(sprintf("Graphs/skew_m%d.png", m_A), Skew_plot + theme(legend.position = "none"), width = 8, height = 5)
+ggsave(sprintf("Graphs/skew_m%d.png", m_A1), Skew_plot + theme(legend.position = "none"), width = 8, height = 5)
 
 Cohens_plot <- comparison_plot(
-  sub_A, "mean_C", "lower_C", "upper_C",
+  sub_A1, "mean_C", "lower_C", "upper_C",
   true_val      = 0,
-  group_centers = prep_A$group_centers,
-  x_labels      = prep_A$x_labels,
+  group_centers = prep_A1$group_centers,
+  x_labels      = prep_A1$x_labels,
   title         = "Scenario A",
   y_label       = "Cohen's κ lag(1)",
   subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = 0  |  MCAR",
-                          m_A, p_A),
+                          m_A1, p_A1, r_A1),
   ylim_offset   = c(-0.275, 0.26), # anpassen je nach p
   group_var     = "pi"
 )
 print(Cohens_plot)
-ggsave(sprintf("Graphs/kappa_m%d.png", m_A), Cohens_plot + theme(legend.position = "none"), width = 8, height = 5)
+ggsave(sprintf("Graphs/kappa_m%d.png", m_A1), Cohens_plot + theme(legend.position = "none"), width = 8, height = 5)
 
 
+### Scenario B
 
-prep_A <- prepare_comparison_subset(
+prep_B1 <- prepare_comparison_subset(
   combined_df,
   filter_expr   = (p == 0.45 & r_pi == 0), # hier p 0.2 oder 0.45 wählen
   group_var_name = "pi"
 )
-sub_A         <- prep_A$subset
-t_IOV_A       <- sub_A$true_IOV[1]
-t_Skew_A      <- sub_A$true_Skew[1]
-m_A <- sub_A$m[1]; p_A <- sub_A$p[1]; r_A <- sub_A$r[1]
-sub_A$true_C1 <- 0
-sub_A$IOV_centered <- sub_A$mean_IOV - t_IOV_A
-sub_A$IOV_lower_centered <- sub_A$lower_IOV - t_IOV_A
-sub_A$IOV_upper_centered <- sub_A$upper_IOV - t_IOV_A
+sub_B1         <- prep_B1$subset
+t_IOV_B1       <- sub_B1$true_IOV[1]
+t_Skew_B1      <- sub_B1$true_Skew[1]
+m_B1 <- sub_B1$m[1]; p_B1 <- sub_B1$p[1]; r_B1 <- sub_B1$r[1]
+sub_B1$true_C1 <- 0
+sub_B1$IOV_centered <- sub_B1$mean_IOV - t_IOV_B1
+sub_B1$IOV_lower_centered <- sub_B1$lower_IOV - t_IOV_B1
+sub_B1$IOV_upper_centered <- sub_B1$upper_IOV - t_IOV_B1
 
 # IOV
 IOV_plot <- comparison_plot(
-  sub_A, "IOV_centered", "IOV_lower_centered", "IOV_upper_centered",
+  sub_B1, "IOV_centered", "IOV_lower_centered", "IOV_upper_centered",
   true_val      = 0,
-  group_centers = prep_A$group_centers,
-  x_labels      = prep_A$x_labels,
+  group_centers = prep_B1$group_centers,
+  x_labels      = prep_B1$x_labels,
   y_label       = "IOV Value",
   title = "Scenario B",
   subtitle = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  MCAR",
-                     m_A, p_A, r_A),
+                     m_B1, p_B1, r_B1),
   ylim_offset   = c(-0.10, 0.06), # anpassen je nach p
   group_var     = "pi"
 )
 print(IOV_plot)
-ggsave(sprintf("Graphs/iov_m%d.png", m_A), IOV_plot + theme(legend.position = "none"), width = 8, height = 5)
+ggsave(sprintf("Graphs/iov_m%d.png", m_B1), IOV_plot + theme(legend.position = "none"), width = 8, height = 5)
 
 # Skew
 Skew_plot <- comparison_plot(
-  sub_A, "mean_Skew", "lower_Skew", "upper_Skew",
-  true_val      = t_Skew_A,
-  group_centers = prep_A$group_centers,
-  x_labels      = prep_A$x_labels,
+  sub_B1, "mean_Skew", "lower_Skew", "upper_Skew",
+  true_val      = t_Skew_B1,
+  group_centers = prep_B1$group_centers,
+  x_labels      = prep_B1$x_labels,
   title         = "Scenario B",
   subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  MCAR",
-                          m_A, p_A, r_A),
+                          m_B1, p_B1, r_B1),
   y_label       = "Skewness Value",
   ylim_offset   = c(-0.10, 0.1), # anpassen je nach p
   group_var     = "pi"
 )
 print(Skew_plot)
-ggsave(sprintf("Graphs/skew_m%d.png", m_A), Skew_plot + theme(legend.position = "none"), width = 8, height = 5)
+ggsave(sprintf("Graphs/skew_m%d.png", m_B1), Skew_plot + theme(legend.position = "none"), width = 8, height = 5)
 
 Cohens_plot <- comparison_plot(
-  sub_A, "mean_C", "lower_C", "upper_C",
+  sub_B1, "mean_C", "lower_C", "upper_C",
   true_val      = 0,
-  group_centers = prep_A$group_centers,
-  x_labels      = prep_A$x_labels,
+  group_centers = prep_B1$group_centers,
+  x_labels      = prep_B1$x_labels,
   title         = "Scenario B",
   y_label       = "Cohen's κ lag(1)",
   subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = 0  |  MCAR",
-                          m_A, p_A),
+                          m_B1, p_B1, r_B1),
   ylim_offset   = c(-0.275, 0.26), # anpassen je nach p
   group_var     = "pi"
 )
 print(Cohens_plot)
-ggsave(sprintf("Graphs/kappa_m%d.png", m_A), Cohens_plot + theme(legend.position = "none"), width = 8, height = 5)
+ggsave(sprintf("Graphs/kappa_m%d.png", m_B1), Cohens_plot + theme(legend.position = "none"), width = 8, height = 5)
 
 # Legende
 p <- Skew_plot
@@ -316,87 +536,70 @@ ggsave(
   height = 1
 )
 
-# Cohen's K
-Cohens_plot <- comparison_plot(
-  sub_A, "mean_C", "lower_C", "upper_C",
-  true_val      = 0,
-  group_centers = prep_A$group_centers,
-  x_labels      = prep_A$x_labels,
-  title         = sprintf("BinAR(1): m = %d, p = %.2f, r = 0  |  MCAR",
-                          m_A, p_A),
-  y_label       = "Cohen's κ lag(1)",
-  subtitle      = "",
-  ylim_offset   = c(-0.275, 0.26), # anpassen je nach p
-  group_var     = "pi"
-)
-print(Cohens_plot)
-ggsave(sprintf("Graphs/kappa_m%d.png", m_A), Cohens_plot, width = 8, height = 5)
 
-# ==============================================================================
-# Plot-Block B: Serielle Abhängigkeit in Missingness, pi == 0.75
-# ==============================================================================
+# Plot-Block B (Figure 4.6): IOV with serial dependence in Missingness, pi == 0.75
 
 
-# Scenario A
-prep_B <- prepare_comparison_subset(
+### Scenario A
+prep_A2 <- prepare_comparison_subset(
   combined_df,
   filter_expr    = (r_pi %in% c(0.2, 0.75) & pi == 0.75 & m == 3),
   group_var_name = "r_pi"
 )
-sub_B    <- prep_B$subset
-t_IOV_B  <- sub_B$true_IOV[1]
-t_Skew_B <- sub_B$true_Skew[1]
-m_B <- sub_B$m[1]; p_B <- sub_B$p[1]; r_B <- sub_B$r[1]
+sub_A2 <- prep_A2$subset
+t_IOV_A2  <- sub_A2$true_IOV[1]
+t_Skew_A2 <- sub_A2$true_Skew[1]
+m_A2 <- sub_A2$m[1]; p_A2 <- sub_A2$p[1]; r_A2 <- sub_A2$r[1]
 
-sub_B$IOV_centered <- sub_B$mean_IOV - t_IOV_B
-sub_B$IOV_lower_centered <- sub_B$lower_IOV - t_IOV_B
-sub_B$IOV_upper_centered <- sub_B$upper_IOV - t_IOV_B
+sub_A2$IOV_centered <- sub_A2$mean_IOV - t_IOV_A2
+sub_A2$IOV_lower_centered <- sub_A2$lower_IOV - t_IOV_A2  
+sub_A2$IOV_upper_centered <- sub_A2$upper_IOV - t_IOV_A2
 # IOV
 IOV_sd_plot <- comparison_plot(
-  sub_B, "IOV_centered", "IOV_lower_centered", "IOV_upper_centered",
+  sub_A2, "IOV_centered", "IOV_lower_centered", "IOV_upper_centered",
   true_val      = 0,
-  group_centers = prep_B$group_centers,
-  x_labels      = prep_B$x_labels,
+  group_centers = prep_A2$group_centers,
+  x_labels      = prep_A2$x_labels,
   title         = "Scenario A", # C
   y_label       = "IOV Value",
   subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  π = 0.75",
-                          m_B, p_B, r_B),
+                          m_A2, p_A2, r_A2),
   ylim_offset   = c(-0.10, 0.06), # m = 3 -> , m = 10 -> c(-0.07, 0.035)
   group_var     = "r_pi"
 )
 print(IOV_sd_plot + theme(legend.position = "none"))
-ggsave(sprintf("Graphs/IOV_sd_m%d.png", m_B), IOV_sd_plot + theme(legend.position = "none"), width = 8, height = 5)
+ggsave(sprintf("Graphs/IOV_sd_m%d.png", m_A2), IOV_sd_plot + theme(legend.position = "none"), width = 8, height = 5)
 
 
-# Scenario B
-prep_B <- prepare_comparison_subset(
+### Scenario B
+prep_B2 <- prepare_comparison_subset(
   combined_df,
   filter_expr    = (r_pi %in% c(0.2, 0.75) & pi == 0.75 & m == 10),
   group_var_name = "r_pi"
 )
-sub_B    <- prep_B$subset
-t_IOV_B  <- sub_B$true_IOV[1]
-t_Skew_B <- sub_B$true_Skew[1]
-m_B <- sub_B$m[1]; p_B <- sub_B$p[1]; r_B <- sub_B$r[1]
+sub_B2    <- prep_B2$subset
+t_IOV_B2  <- sub_B2$true_IOV[1]
+t_Skew_B2 <- sub_B2$true_Skew[1]
+m_B2 <- sub_B2$m[1]; p_B2 <- sub_B2$p[1]; r_B2 <- sub_B2$r[1]
 
-sub_B$IOV_centered <- sub_B$mean_IOV - t_IOV_B
-sub_B$IOV_lower_centered <- sub_B$lower_IOV - t_IOV_B
-sub_B$IOV_upper_centered <- sub_B$upper_IOV - t_IOV_B
+sub_B2$IOV_centered <- sub_B2$mean_IOV - t_IOV_B2
+sub_B2$IOV_lower_centered <- sub_B2$lower_IOV - t_IOV_B2
+sub_B2$IOV_upper_centered <- sub_B2$upper_IOV - t_IOV_B2
 # IOV
 IOV_sd_plot <- comparison_plot(
-  sub_B, "IOV_centered", "IOV_lower_centered", "IOV_upper_centered",
+  sub_B2, "IOV_centered", "IOV_lower_centered", "IOV_upper_centered",
   true_val      = 0,
-  group_centers = prep_B$group_centers,
-  x_labels      = prep_B$x_labels,
+  group_centers = prep_B2$group_centers,
+  x_labels      = prep_B2$x_labels,
   title         = "Scenario B", # C
   y_label       = "IOV Value",
   subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  π = 0.75",
-                          m_B, p_B, r_B),
+                          m_B2, p_B2, r_B2),
   ylim_offset   = c(-0.10, 0.06), # m = 3 -> , m = 10 -> c(-0.07, 0.035)
   group_var     = "r_pi"
 )
 print(IOV_sd_plot)
-ggsave(sprintf("Graphs/IOV_sd_m%d.png", m_B), IOV_sd_plot + theme(legend.position = "none"), width = 8, height = 5)
+ggsave(sprintf("Graphs/IOV_sd_m%d.png", m_B2), IOV_sd_plot + theme(legend.position = "none"), width = 8, height = 5)
 
 
 
@@ -413,128 +616,7 @@ ggsave(
   width = 8,
   height = 1
 )
-# Skew
-comparison_plot(
-  sub_B, "mean_Skew", "lower_Skew", "upper_Skew",
-  true_val      = t_Skew_B,
-  group_centers = prep_B$group_centers,
-  x_labels      = prep_B$x_labels,
-  title         = "Comparison of Asymptotic vs Simulated Skewness Results\n(Serially Dependent Missingness)",
-  y_label       = "Skewness Value",
-  subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  π = 0.75",
-                          m_B, p_B, r_B),
-  ylim_offset   = c(-0.15, 0.15),
-  group_var     = "r_pi"
-)
 
-# Cohen's K
-comparison_plot(
-  sub_B, "mean_C", "lower_C", "upper_C",
-  true_val      = 0,
-  group_centers = prep_B$group_centers,
-  x_labels      = prep_B$x_labels,
-  title         = "Comparison of Asymptotic vs Simulated Cohen's κ lag(1)\n(Serially Dependent Missingness)",
-  y_label       = "Cohen's κ lag(1)",
-  subtitle      = sprintf("BinAR(1): m = %d, p = %.2f, r = %.2f  |  π = 0.75",
-                          m_B, p_B, r_B),
-  ylim_offset   = c(-0.3, 0.3),
-  group_var     = "pi_h"
-)
-
-# ==============================================================================
-# Plot-Block C: Bias und CLT
-# ==============================================================================
-
-# Theoretische Bias-Kurve
-theory_df_2 <- data.frame(
-  n    = seq(2, 1000, by = 1),
-  diff = sapply(seq(2, 1000, by = 1), function(n_val)
-    -(4 / (10 * n_val)) * sum(diag(Sigma_raw)))
-)
-
-mean_df_2 <- sim_data_2 %>%
-  dplyr::group_by(n) %>%
-  dplyr::summarise(
-  mean_scaled_bias = mean(scaled_bias, na.rm = TRUE),
-  mean_diff        = mean(diff,        na.rm = TRUE),
-  se = sd(scaled_bias, na.rm = TRUE),
-  .groups = "drop"
-) %>%
-  dplyr::mutate(mean_scaled_diff = (mean_diff * n))
-Marginal <- pbinom(0:9, size = 10, prob = 0.3)
-
-
-Var_Iov <- 0
-for (i in 1:10) {
-  for (j in 1:10) {
-    Var_Iov <- Var_Iov + (1- 2 * Marginal[i])*(1- 2 * Marginal[j])*Sigma_raw[i, j]
-  }
-}
-
-SD_Iov <- sqrt((16 / 10^2) * Var_Iov)
-
-
-# Plot C1: CLT-Dichte unscaled
-ggplot(sim_data, aes(x = diff, fill = factor(n))) +
-  geom_density(alpha = 0.4) +
-  labs(x = expression(Bias(IOV))) +
-  theme_minimal() +
-  theme(legend.position = "none")
-
-# Plot C2: CLT-Dichte scaled
-ggplot(sim_data, aes(x = scaled_CLT, fill = factor(n))) +
-  geom_density(alpha = 0.4) +
-  stat_function(
-    fun  = dnorm,
-    args = list(mean = 0,
-                sd   = SD_Iov),
-    linetype = "dashed"
-  ) +
-  labs(x = expression(Bias(IOV))) +
-  theme_minimal() +
-  theme(legend.position = "none")
-
-# Plot C3: Mittlerer Bias unscaled
-ggplot(mean_df_2, aes(x = n, y = mean_diff)) +
-  geom_line(data = theory_df_2, aes(x = n, y = diff),
-            color = "steelblue", linetype = "dashed", linewidth = 0.8) +
-  geom_line() +
-  geom_point(size = 2) +
-  labs(
-    title    = "Mean bias as a function of n",
-    subtitle = "Dashed: theoretical bias  −4/(mn) · tr(Σ)\nBinAR(1): m = 10, p = 0.3, r = 0.2, π = 0.75",
-    x = "n",
-    y = expression(Mean(hat(IOV) - IOV))
-  ) +
-  theme_minimal()
-
-# Plot C4: Mittlerer Bias scaled
-
-ggplot(mean_df_2, aes(x = n, y = mean_scaled_diff)) +
-  
-  # Punkte
-  geom_point(size = 1.5, color = "black") +
-  
-  # schwarze Linie (empirisch)
-  geom_line(color = "black", linewidth = 0.5) +
-  
-  # rote Glättung (wie im Plot)
-  geom_smooth(method = "loess", se = FALSE,
-              color = "red", linewidth = 1) +
-  
-  # theoretischer Grenzwert (horizontal)
-  geom_hline(
-    yintercept = -(4 / 10) * sum(diag(Sigma_raw)),
-    linetype = "dashed",
-    color = "steelblue"
-  ) +
-  
-  labs(
-    x = "n",
-    y = expression(n %.% Mean(hat(IOV) - IOV))
-  ) +
-  
-  theme_minimal()
 #====================================================
 # Plot-Block D: Geschätzte CDF-Komponenten
 # ==============================================================================

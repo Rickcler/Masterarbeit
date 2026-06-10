@@ -170,6 +170,27 @@ lag_h_joint_cdf <- function(m, p, r, h = 1) {
 }
 
 
+# Computation of Cohens ordinal Kappa for given h
+# κ_ord(h) = (∑_{j=0}^{m-1} (f_{jj}(h) - f_j^2)) / (∑_{i=0}^{m-1} f_i (1-f_i))
+#' @param m  Binomial parameter
+#' @param p  Success probability
+#' @param r  Thinning parameter
+#' @param h  Lag
+kappa_ord <- function(m, p, r, h) {
+  # gemeinsame CDF für Lag h
+  joint_cdf <- lag_h_joint_cdf(m, p, r, h)
+  # Randwahrscheinlichkeiten (stationär, daher gleich)
+  marg_cdf <- pbinom(0:m, m, p)
+  # Summe über j = 0 ... m-1
+  idx <- 1:m   # entspricht Werten 0,1,...,m-1
+  f_jj <- sapply(idx, function(j) joint_cdf[j, j])   # Diagonalelemente
+  f_j  <- marg_cdf[idx]                              # Randwahrscheinlichkeiten
+  # Zähler und Nenner
+  numerator   <- sum(f_jj - f_j^2)
+  denominator <- sum(f_j * (1 - f_j))
+  return(numerator / denominator)
+}
+
 # ------------------------------------------------------------------------------
 # Long-run Covariance Matrices
 # ------------------------------------------------------------------------------

@@ -1788,7 +1788,7 @@ and positive at even lags, while its absolute value decays
 exponentially to zero as $h \to \infty$.
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth, height = 6cm]{../Graphs/kappa_to_h.png}
+    \includegraphics[width=\textwidth, height = 6cm]{../Graphs/Cohens_Kappa_by_h.png}
     \caption{Cohen's $\kappa_{\mathrm{ord}}(h)$ for different values of $r$.}
     \label{fig:kappa-profile}
 \end{figure}
@@ -1838,7 +1838,8 @@ while in the second variant it decreases linearly with $X_t$, i.e.
 \[
 \pi_t = \pi_{\text{high}} - (\pi_{\text{high}} - \pi_{\text{low}})\frac{X_t}{m}.
 \]
-We will also write $P(O_t = 1) \propto X_t$ and $P(O_t = 1) \propto - X_t$ to refer to the former and the latter, respectively. 
+To be able to reference both mechanisms in a more concise way, we will write $P(O_t = 1) \propto X_t$ 
+and $P(O_t = 1) \propto - X_t$ to refer to the increasing and decreasing versions, respectively. 
 The parameters $\pi_{\text{low}}$ and $\pi_{\text{high}}$ define the minimum and maximum observation probabilities, 
 respectively, and therefore determine the range in which $\pi_t$ can vary. In both cases,
 \[
@@ -1864,8 +1865,8 @@ qualitatively different settings:
 \end{itemize}
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth, height = 6cm]{../Graphs/MarginalDistributions.png}
-    \caption{Marginal CDFS of the two simulation scenarios.}
+    \includegraphics[width=\textwidth, height = 0.75 \textwidth]{../Graphs/MarginalsPlot.png}
+    \caption{Marginal distribution of the two simulation scenarios.}
     \label{fig:marginal-dist}
 \end{figure}
 The PMF's and CDFs for both scenarios are shown in Figure~\ref{fig:marginal-dist}. 
@@ -1923,7 +1924,7 @@ $\pi = 0.75$.\\
     \centering
     \begin{minipage}[c]{0.42\textwidth}
         \centering
-        \includegraphics[width=\textwidth, height = \textwidth]{../Graphs/unscaled_CLT.png}
+        \includegraphics[width=\textwidth, height = \textwidth]{../Graphs/CLT_unscaled.png}
     \end{minipage}
     \begin{minipage}[c]{0.05\textwidth}
         \centering
@@ -1931,7 +1932,7 @@ $\pi = 0.75$.\\
     \end{minipage}
     \begin{minipage}[c]{0.42\textwidth}
         \centering
-        \includegraphics[width=\textwidth, height = \textwidth]{../Graphs/Scaled_CLT.png}
+        \includegraphics[width=\textwidth, height = \textwidth]{../Graphs/CLT_scaled.png}
     \end{minipage}
         \begin{minipage}[c]{0.05\textwidth}
         \centering
@@ -1994,7 +1995,7 @@ approximation.
     \centering
     \begin{minipage}[c]{0.42\textwidth}
         \centering
-        \includegraphics[width=0.85\textwidth]{../Graphs/Bias_presi_no_n.png}
+        \includegraphics[width=0.85\textwidth]{../Graphs/Bias_unscaled.png}
     \end{minipage}
     \begin{minipage}[c]{0.05\textwidth}
         \centering
@@ -2002,7 +2003,7 @@ approximation.
     \end{minipage}
     \begin{minipage}[c]{0.42\textwidth}
         \centering
-        \includegraphics[width=0.85\textwidth]{../Graphs/Bias_Presi_.png}
+        \includegraphics[width=0.85\textwidth]{../Graphs/Bias_scaled.png}
     \end{minipage}
     \caption{\scriptsize Left: Mean from simulation (solid) and theoretical approximation (dashed) of
     $(\widehat{\mathrm{IOV}} - \mathrm{IOV})$. Right: the same quantities rescaled by a 
@@ -2134,7 +2135,7 @@ scenarios hold as for the IOV.
     
     \vspace{0.1cm}
 
-    \includegraphics[width=0.55\textwidth]{../Graphs/legend_plot_IOV_sd.png}
+    \includegraphics[width=0.55\textwidth]{../Graphs/legend_plot_IOV_Skew.png}
     \caption{\scriptsize Simulated vs.\ asymptotic standard deviation of
     $\widehat{\mathrm{skew}}$ for both scenarios, across $n \in \{50,100,250,500,1000\}$ and
     $\pi \in \{0.75, 1\}$.}
@@ -2174,7 +2175,7 @@ its greater marginal dispersion.
 
     \vspace{0.1cm}
 
-    \includegraphics[width=0.55\textwidth]{../Graphs/legend_plot_IOV_sd.png}
+    \includegraphics[width=0.55\textwidth]{../Graphs/legend_plot_IOV_Skew.png}
     \caption{\scriptsize Simulated vs.\ asymptotic standard deviation of
     $\widehat{\kappa}(1)$ for both scenarios across $n \in \{50,100,250,500,1000\}$ and
     $\pi \in \{0.75, 1\}$.}
@@ -2411,9 +2412,8 @@ given by
 \end{theorem}
 \section{Asymptotic Properties of the IQV}
 
-Since $\mathrm{IQV}(\boldsymbol{p}) = \frac{m+1}{m}(1 -
-\sum_{i=0}^m p_i^2)$ is quadratic in $\boldsymbol{p}$, all
-derivatives of order three and higher vanish identically, and the
+Since $\mathrm{IQV}(\boldsymbol{p}) $ is a quadratic polynomial in $\boldsymbol{p}$, all
+third- and higher-order partial derivatives vanish. Consequently, the
 second-order Taylor expansion is exact. The Jacobian and Hessian are
 \[
     \boldsymbol{j}_{\mathrm{IQV}}
@@ -2494,12 +2494,12 @@ asymptotic covariance matrix $\boldsymbol{\Sigma}_{\hat{\boldsymbol{p}}^*}$
 takes the same form as \hyperref[thm:clt_fstarhat]{$\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}}^*}$} with $f_i$, $f_{ij}(h)$ 
 replaced by $p_i$, $p_{ij}(h)$ and $(f_{\mathrm{min}\{i,j\}}- f_i f_j)$ by $p_j(\delta_{ij} - p_i)$ throughout. 
 The results are summarized in the following theorem: 
-\begin{theorem}[Asymptotic Normality of $\hat{\boldsymbol{p}^*}$]
+\begin{theorem}[Asymptotic Normality of $\hat{\boldsymbol{p}}^*$]
 \label{thm:clt_pstarhat}
 Let the same assumptions regarding $X_t$ and $O_t$ hold as in Theorem~\ref{thm:clt_fstarhat}, except that $X_t$ is nominal instead of ordinal. Then
 the corrected estimator $\hat{\boldsymbol{p}}^*$ (Definition \ref{def:p_starhat}) satisifies the following multivariate CLT: 
 \[
-    \sqrt{n}\bigl(\hat{\boldsymbol{p}^*} - \boldsymbol{p}\bigr)
+    \sqrt{n}\bigl(\hat{\boldsymbol{p}}^* - \boldsymbol{p}\bigr)
     \xrightarrow[n\to\infty]{d}
     \mathcal{N}\bigl(\boldsymbol{0},\, \boldsymbol{\Sigma}_{\boldsymbol{p}^*}\bigr),
 \]
@@ -2527,8 +2527,9 @@ probabilities $p_{ij}(h)$. We therefore define the bias-corrected estimator
 \]
 which is the direct analogue of $\hat f_{ij}^*(h)$ from Section~\ref{sec:serial-dependence}. Using the same arguments as for ordinal data,
 we define 
-\[\hat{\boldsymbol{p}}^{(h)*} = (\hat{p}^*_0, \ldots, \hat{p}^*_m, \hat{p}^*_{00}(h),  \ldots, \hat{p}^{*}_{mm}(h))^\top.\]
+\[\hat{\boldsymbol{p}}^{(h)*} := (\hat{p}^*_0, \ldots, \hat{p}^*_m, \hat{p}^*_{00}(h),  \ldots, \hat{p}^{*}_{mm}(h))^\top.\]
 From here, one obtains the following multivariate central limit theorem:
+\vspace{0.5cm}
 \begin{proposition}[Asymptotic normality of $\hat{\boldsymbol{p}}^{(h)*}$]\label{prop:clt_phat_h}
 Let the assumptions of Theorem~\ref{thm:clt_fstarhat} hold, except that $X_t$ is nominal instead of ordinal. Then 
 $\hat{\boldsymbol{p}}^{(h)*}$ is consistent for $\boldsymbol{\mu}^{(h)*}$, 
@@ -2543,8 +2544,8 @@ and
     = \boldsymbol{G}\,\boldsymbol{\Sigma}_{\boldsymbol{Y}^{(h)*}}\,
     \boldsymbol{G}^\top,
 \]
-\end{proposition}
-Under $H_0$, where $(X_t)$ is i.i.d., the joint probabilities factorize as
+\end{proposition}\vspace{1cm}
+\noindent Under $H_0$, where $(X_t)$ is i.i.d., the joint probabilities factorize as
 \[
 p_{ij}(h)=p_ip_j,
 \]
@@ -2572,7 +2573,7 @@ following hold as $n\to\infty$:
     \[
         \sigma^2_\kappa =
         \frac{1}{(1-\sum_{i=1}^{m}p_i^2)^2} \frac{1}{\pi(h)} \sum_{i, j = 0}^{m}p_j^2 
-        (\partial_{ij}-p_i)\bigl(\partial_{ij} +  p_i (1+ 2\frac{\pi(h, 2h)}{\pi(h)} -
+        (\delta_{ij}-p_i)\bigl(\delta_{ij} +  p_i (1+ 2\frac{\pi(h, 2h)}{\pi(h)} -
          4\frac{\pi(h)}{\pi})\bigr).
     \]
     \item \textbf{Finite-sample bias.} The bias of 
@@ -2588,7 +2589,7 @@ following hold as $n\to\infty$:
     \]
 \end{enumerate}
 \end{theorem}
-The derivation, including the simplification of the higher-order mixed moments under $H_0$, the explicit 
+\noindent The derivation, including the simplification of the higher-order mixed moments under $H_0$, the explicit 
 covariance matrix entries, and the delta-method calculations, is provided in Appendix~\ref{app:nominal-serial}.
 \begin{appendices}
 
@@ -2634,18 +2635,16 @@ In this section we provide the detailed computations of the elements \textbf{(ii
 
 In this section, we provide the detailed derivation of the elements of 
 the asymptotic covariance matrix 
-$\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$.
-
+$\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$.\\
 By the multivariate delta method, the asymptotic covariance matrix of 
 $\sqrt{n}(\hat{\boldsymbol{f}}^{(h)*} - \mu)$ is given by
 \[
 \boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}} 
 = \boldsymbol{G}\,\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}\,\boldsymbol{G}^\top.
 \]
-
 Carrying out the matrix multiplication row by row yields
 \[
-\boldsymbol{G}\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}} \boldsymbol{G}^\top
+\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}} 
 =
 \begin{pmatrix}
 \frac{- f_0}{\pi} \sigma^{(h)}_{-1-2} + \frac{1}{\pi} \sigma^{(h)}_{0-2} & \cdots & \frac{-f_0}{\pi} \sigma^{(h)}_{-12m-1} +  \frac{1}{\pi} \sigma^{(h)}_{02m-1} \\
@@ -2657,7 +2656,6 @@ Carrying out the matrix multiplication row by row yields
 \end{pmatrix}
 \boldsymbol{G}^\top.
 \]
-
 To obtain explicit expressions for the entries 
 $\sigma^{(h)*}_{ij}$, we distinguish three cases depending on whether 
 the indices correspond to marginal or bivariate components:
@@ -2745,15 +2743,16 @@ formula yields
 In this section, we derive the partial derivatives of $d_{1i}$ with respect to $f_j$. 
 
 \subsection*{Case $i = j$}
-{\allowdisplaybreaks \tiny
+{\allowdisplaybreaks 
 \begin{align*}
  & \frac{\partial d_{1i}}{\partial f_i} 
-    =  \frac{\partial }{\partial f_i} \left(\frac{-2f_i }{\sum_{k=0}^{m-1}f_k(1-f_k)} - \frac{\left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} + \frac{2f_i\left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\right)\\
-    &\quad = 
-        \frac{-2 \left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)+ 2f_i(1- 2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{-2f_i \left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2 - \left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(\sum_{k=0}^{m-1}f_k(1-f_k))(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^4}\\
-    &\qquad  + \frac{\left(2\left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right) - 4f_i f_i \right)(\sum_{k=0}^{m-1}f_k(1-f_k))^2 - 2f_i\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(\sum_{k=0}^{m-1}f_k(1-f_k))(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^4} \\
-    &\quad = \frac{-2}{\sum_{k=0}^{m-1}f_k(1-f_k)} + \frac{2f_i(1- 2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} + \frac{2f_i}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} + \frac{2f_i\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^3} \\
-    &\qquad + \frac{2\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right) - 4f_i f_i}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^3}  \\
+    =  \frac{\partial }{\partial f_i} \left(\frac{-2f_i }{\sum_{k=0}^{m-1}f_k(1-f_k)}- \frac{\left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} + \frac{2f_i\left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\right)\\
+    &\quad = \frac{-2 \left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)+ 2f_i(1- 2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} \\
+    &\qquad - \frac{-2f_i \left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2 - \left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(\sum_{k=0}^{m-1}f_k(1-f_k))(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^4}\\
+    &\qquad  + \frac{\left(2\left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right) - 4f_i f_i \right)(\sum_{k=0}^{m-1}f_k(1-f_k))^2 }{(\sum_{k=0}^{m-1}f_k(1-f_k))^4} \\
+    &\qquad - \frac{ 2f_i\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(\sum_{k=0}^{m-1}f_k(1-f_k))(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^4} \\
+    &\quad = \frac{-2}{\sum_{k=0}^{m-1}f_k(1-f_k)}  + \frac{2f_i}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} + \frac{2f_i\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^3} \\
+    &\qquad + \frac{2\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right) - 4f_i f_i}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} + \frac{2f_i(1- 2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^3}  \\
     &\quad = \frac{2f_i - 4f_i^2 + 2f_i + 2f_i\kappa(h)2(1-2f_i) - 4f_i^2 - \kappa(h)2(1-2f_i)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{2(1- \kappa(h))}{\sum_{k=0}^{m-1}f_k(1-f_k)} \\
     &\quad = \frac{4f_i -8f_i^2+ \kappa (h)(2(3f_i -1 -2 f_i^2))}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{2(1- \kappa(h))}{\sum_{k=0}^{m-1}f_k(1-f_k)}\\
     &\quad \overset{H_0}{=} 2 \left(\frac{2f_i -4f_i^2}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} -\frac{1}{\sum_{k=0}^{m-1}f_k(1-f_k)}\right)
@@ -2764,7 +2763,8 @@ In this section, we derive the partial derivatives of $d_{1i}$ with respect to $
 \begin{align*}
     & \frac{\partial d_{1i}}{\partial f_j} 
     =  \frac{\partial }{\partial f_j} \left(\frac{-2f_i }{\sum_{k=0}^{m-1}f_k(1-f_k)} - \frac{\left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} + \frac{2f_i\left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right)}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}\right)\\
-    &\quad = \frac{2f_i(1-2f_j)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2}-  \frac{-2f_j \left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2 - \left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(\sum_{k=0}^{m-1}f_k(1-f_k))(1-2f_j)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^4} \\
+    &\quad = \frac{2f_i(1-2f_j)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2}-  \frac{-2f_j \left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2 }{(\sum_{k=0}^{m-1}f_k(1-f_k))^4} \\
+    &\qquad + \frac{\left(\sum_{k=0}^{m-1}f_{kk}(h)-f_k^2\right)2(\sum_{k=0}^{m-1}f_k(1-f_k))(1-2f_j)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^4} \\
     &\qquad + 2f_i \frac{-2f_j(\sum_{k=0}^{m-1}f_k(1-f_k))^2- \left(\sum_{k=0}^{m-1}(f_{kk}(h)-f_k^2)\right) 2(\sum_{k=0}^{m-1}f_k(1-f_k))(1-2f_j)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^4}\\ 
     &\quad = \frac{2f_i(1-2f_j)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} + \frac{2f_j}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} + \frac{(1-2f_j)\kappa(h)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} \\
     &\qquad - \frac{4 f_i f_j}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} - \frac{4f_i(1-2 f_j)\kappa(h)}{(\sum_{k=0}^{m-1}f_k(1-f_k))^2} \\
@@ -2773,11 +2773,11 @@ In this section, we derive the partial derivatives of $d_{1i}$ with respect to $
 \end{align*}}
 
 
-\section{Bias $\kappa(h)$}
+\section{Bias $\kappa_{\mathrm{ord}}(h)$}
 \label{app:Bias}
 Using the Hessian elements derived above and the elements of 
 $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ from 
-Section~\ref{subsec:serial-H0}, the diagonal elements of 
+Section~\ref{subsec:serial-testing}, the diagonal elements of 
 $\boldsymbol{H}_\kappa\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ 
 are given by
 \begin{align*}
@@ -2798,7 +2798,7 @@ $\sigma^{(h)*}_{im+l} = 2f_l\sigma^{(h)*}_{il}$ from case
 \textbf{(ii)} of $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ 
 and using symmetry $\sigma^{(h)*}_{il} = \sigma^{(h)*}_{li}$:
 \begin{align*}
-    \mathrm{Bias}(\hat{\kappa}_{\mathrm{ord}})
+    \mathrm{Bias}(\hat{\kappa}_{\mathrm{ord}}(h))
     &= \frac{1}{2}\mathrm{tr}(\boldsymbol{H}_{\kappa}\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}})
     = \frac{1}{2}\sum_{i=0}^{2m-1}\left[\boldsymbol{H}_{\kappa}
     \boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}\right]_{ii} \\
@@ -2816,9 +2816,9 @@ and using symmetry $\sigma^{(h)*}_{il} = \sigma^{(h)*}_{li}$:
              {\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} 
         - \frac{\sum_{i,l=0}^{m-1}(1-2f_i)\sigma_{im+l}^{(h)*}}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
     &= -\frac{\frac{1}{\pi}\sum_{i=0}^{m-1}(f_i- f_i^2)}{\sum_{k=0}^{m-1}f_k(1-f_k)} +  \frac{\sum_{i,l = 0}^{m-1}(f_i + f_l - 4f_i f_l)\sigma_{li}^{(h)*}- \sum_{i,l=0}^{m-1}(1-2f_i)2f_l\sigma^{(h)*}_{li}}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
-    &= -\frac{1}{\pi} + \frac{\sum_{i,l = 0}^{m-1}\left(f_i + f_l - 4f_i f_l - 2f_l+ 4 f_j f_l \right)\sigma^{(h)*}_{li}}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2}
-    = -\frac{1}{\pi} + \frac{\overbrace{\sum_{i,l = 0}^{m-1}\left(f_i - f_l \right)}^{=0}\sigma^{(h)*}_{li}}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
-    &= -\frac{1}{\pi}\end{align*}
+    &= -\frac{1}{\pi} + \frac{\sum_{i,l = 0}^{m-1}\left(f_i + f_l - 4f_i f_l - 2f_l+ 4 f_j f_l \right)\sigma^{(h)*}_{li}}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} \\
+    &= -\frac{1}{\pi} + \frac{\overbrace{\sum_{i,l = 0}^{m-1}\left(f_i - f_l \right)}^{=0}\sigma^{(h)*}_{li}}{\left(\sum_{k=0}^{m-1}f_k(1-f_k)\right)^2} 
+    = -\frac{1}{\pi}\end{align*}
 
 
 \section{Derivation of $\hat{\kappa}_{\mathrm{ord}}$ under i.i.d. missingness}\label{app:var-kappa-iid}
@@ -2922,7 +2922,19 @@ Hence, $\hat{\boldsymbol{p}}^*$ is unbiased to order $n^{-1}$ under
 MCAR, in direct analogy to the ordinal result of
 Section~\ref{sec:fstar_hat}.
 \section{Asymptotics of $\hat{\kappa}_{\mathrm{nom}}(h)$}\label{app:nominal-serial}
-The serial dependence measure $\kappa_{\mathrm{nom}}$ (recall Definition~\ref{def:cohens-kappa}) depends on the bivariate probabilities $p_{ij}(h)$.   
+In this section, we consider inference for serial dependence in nominal data with missingness, focusing on $\kappa_{\mathrm{nom}}(h)$. We proceed analogously to Section \ref{sec:serial-dependence} by first deriving the asymptotic distributions of the corrected estimator $\hat{\boldsymbol{p}}^{(h)*}$ and the corresponding estimator $\hat{\kappa}_{\mathrm{nom}}(h)$ under the general model.\\
+As before, there is an asymmetry between
+\[
+H_0: \kappa_{\mathrm{nom}}(h)=0
+\qquad\text{and}\qquad
+H_A: \kappa_{\mathrm{nom}}(h)\neq 0,
+\]
+since closed-form expressions for the asymptotic variance and finite-sample bias of $\hat{\kappa}_{\mathrm{nom}}(h)$ are available only under $H_0$. We therefore derive these expressions separately.\\
+As in the ordinal case, the resulting asymptotic variance and bias under $H_0$ can be used to construct a bias-corrected test statistic for serial dependence, which remains consistent under $H_A$.
+Since the derivations are entirely analogous to those in the ordinal setting (Sections~\ref{subsec:serial-testing}~and~\ref{subsec:serial-HA}), we omit the details here.
+
+\paragraph{Distribution under the general model}
+The serial dependence measure $\kappa_{\mathrm{nom}}(h)$ (recall Definition~\ref{def:cohens-kappa}) depends on the bivariate probabilities $p_{ij}(h)$.   
 Therefore, the corrected estimator $\hat{p}_{ij}^*(h)$ is defined in direct analogy to $\hat{f}_{ij}^*(h)$ from Section~\ref{sec:serial-dependence} as
 \[\hat{p}_{ij}^*(h) = \frac{\sum_{t=h+1}^{n}O_t O_{t-h}Y_{t,i}Y_{t-h,j}}{\sum_{t=h+1}^{n}O_t O_{t-h}}.\]
 We define $\boldsymbol{Y}^{(h)*}_n$ in direct analogy to $\boldsymbol{Z}^{(h)*}_n$ from Section~\ref{sec:serial-dependence}:
@@ -2943,28 +2955,31 @@ We define $\boldsymbol{Y}^{(h)*}_n$ in direct analogy to $\boldsymbol{Z}^{(h)*}_
 and accordingly $\hat{\boldsymbol{p}}^{(h)*}$ in direct analogy to $\hat{\boldsymbol{f}}^{(h)*}$ from Section~\ref{sec:serial-dependence} as
 \[\hat{\boldsymbol{p}}^{(h)*} := \left(\hat{p}_0^{*}, \ldots, \hat{p}_m^{*}, \hat{p}_{00}(h)^{*}, \ldots, \hat{p}_{mm}(h)^{*}\right)^\top.\]
 
-The consistency of $\bar{\boldsymbol{Y}}^{(h)*}_n$ follows from the same argument as in Section~\ref{sec:serial-dependence}. 
+The consistency of $\bar{\boldsymbol{Y}}^{(h)*}_n$ follows from the same argument as that of $\bar{\boldsymbol{Z}}^{(h)*}_n$ in Section~\ref{sec:serial-dependence}. 
 The elements of the asymptotic covariance matrix $\boldsymbol{\Sigma}_{\boldsymbol{Y}^{(h)*}}$ are 
 computed in direct analogy to those of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$
 from Section~\ref{subsec:serial-general} with $Z_{t,i}$, $f_i$, $f_{ij}(h)$ replaced by $Y_{t,i}$, $p_i$, $p_{ij}(h)$ and $(f_{\mathrm{min}\{i,j\}}- f_i f_j)$
-by $p_j(\delta_{ij} - p_i)$ throughout. Also recall that $\partial_{i,j} = \mathbb{I}_{i = j}$ is the Kronecker Delta. For $i, j = 0, ..., m $, the individual elements are given by 
+by $p_j(\delta_{ij} - p_i)$ throughout. Also recall that $\delta_{ij} = \mathbb{I}_{i = j}$ is the Kronecker Delta. For $i, j = 0, \ldots, m $, the individual elements are given by 
 \begin{align*}
     &\textbf{(i) }\sigma_{-2-2}^{(h)} = \pi(h)(1-\pi(h)) + 2 \sum_{k=1}^{\infty}Cov(O_t O_{t-h}) \\
     &\textbf{(ii) }\sigma_{-1, -2}^{(h)} = (1-\pi)\pi(h)\sum_{k=1}^{\infty} [\mathrm{E}(O_t O_{t-h}O_{t+k})\mathrm{E}(O_t O_{t+k}O_{t+k-h})-2\pi \pi(h)] \\
     &\textbf{(iii) }\sigma_{-2 j}^{(h)} = p_j \sigma_{-2 -1}^{(h) } \quad \textbf{(iv) }\sigma_{-2 (m+1+j)}^{(h)} = p_{jj}(h) \sigma_{-2 2}^{(h)} \quad \textbf{(v) }\sigma_{-1 -1}^{(h)} = \pi(1-\pi) + 2 \sum_{k=1}^{\infty} \gamma_O(k) \\
     &\textbf{(vi) }\sigma_{-1 j}^{(h)} = p_j \sigma_{-1 -1}^{(h)} \quad \textbf{(vii) }\sigma_{-1 (m+1+j)}^{(h)} = p_{jj}(h) \sigma_{-1 2}^{(h)} \\
-    &\textbf{(viii) }\sigma_{ij}^{(h)} = p_i p_j \sigma_{-1 -1}^{(h)} + \pi p_i(\partial_{ij} - p_j) + \sum_{k = 1}^{\infty}\pi(k)(p_{ij}(k)+ p_{ji}(k)- 2p_ip_j) \\   
+    &\textbf{(viii) }\sigma_{ij}^{(h)} = p_i p_j \sigma_{-1 -1}^{(h)} + \pi p_i(\delta_{ij} - p_j) + \sum_{k = 1}^{\infty}\pi(k)(p_{ij}(k)+ p_{ji}(k)- 2p_ip_j) \\   
     &\textbf{(ix) }\sigma_{i(j+m+1)}^{(h)} =\pi(h) E[Y_{t, i}Y_{t-h, i}Y_{t, j}Y_{t-h, j}]- \pi(h)^2f_{ii}(h)f_{jj}(h) + \sum_{k = 1}^{\infty} \bigl(\mathrm{E}[O_t O_{t-h} O_{t+k} O_{t+k-h}]\\
     &\quad\cdot \mathrm{E}[Y_{t,i}Y_{t-h,i}Y_{t+k,j}Y_{t+k-h,j}] + \mathrm{E}[O_{t+k}O_{t}O_{t-h}]\mathrm{E}[Y_{t+k, i}Y_{t, j}Y_{t-h, j}]- 2\pi\pi(h) p_i p_{jj}(h) \bigr) \\
-    &\textbf{(x) } \sigma_{(i+m+1)(j+m+1)} = \pi(h)\,\mathrm{E}[Y_{t,i}Y_{t-h, i}Y_{t, j}Y_{t-h, j}] - 
-    \pi(h)^2\, p_{ii}(h)\, p_{jj}(h) + \sum_{k=1}^{\infty} \bigl(\mathrm{E}[O_t O_{t-h} O_{t+k} O_{t+k-h}]\\
-    &\quad \bigl[\mathrm{E}[Y_{t,i}Y_{t-h, i}Y_{t+k, j}Y_{t+k-h, j}] 
-    + \mathrm{E}[Y_{t+k, i}Y_{t+k-h, i}Y_{t, j}Y_{t-h, j}]\bigr]- 2\pi(h)^2 p_{ii}(h)\,p_{jj}(h)\bigr)
+    &\textbf{(x) } \sigma^{(h)}_{(i+m+1)(j+m+1)} = \pi(h)\,\mathrm{E}[Y_{t,i}Y_{t-h, i}Y_{t, j}Y_{t-h, j}] - 
+    \pi(h)^2\, p_{ii}(h)\, p_{jj}(h) \\
+    &\quad + \sum_{k=1}^{\infty} \bigl(\mathrm{E}[O_t O_{t-h} O_{t+k} O_{t+k-h}]\bigl[\mathrm{E}[Y_{t,i}Y_{t-h, i}Y_{t+k, j}Y_{t+k-h, j}] 
+    + \mathrm{E}[Y_{t+k, i}Y_{t+k-h, i}Y_{t, j}Y_{t-h, j}]\bigr]\\
+    & \quad - 2\pi(h)^2 p_{ii}(h)\,p_{jj}(h)\bigr)
 \end{align*}
 From here, the asymptotic normality of $\hat{\boldsymbol{p}}^{(h)*}$ follows from the same delta-method argument as in Theorem~\ref{thm:clt_fhat_h},
 with the following results:\\ 
 Let the same assumptions regarding $X_t$ and $O_t$ hold as in Theorem~\ref{thm:clt_fhat_h}, except that $X_t$ is nominal instead of ordinal.
-Then $\hat{\boldsymbol{p}}^{(h)*}$ is consistent for $\boldsymbol{\mu}^{(h)*} := (p_0, \ldots, p_m, p_{00}(h), \ldots, p_{mm}(h))^\top$, and: 
+Then $\hat{\boldsymbol{p}}^{(h)*}$ is consistent for 
+\[\boldsymbol{\mu}^{(h)*} := (p_0, \ldots, p_m, p_{00}(h), \ldots, p_{mm}(h))^\top,\] 
+and: 
 \[
     \sqrt{n}\!\left(\hat{\boldsymbol{p}}^{(h)*} 
     - \boldsymbol{\mu}^{(h)*}\right)
@@ -2975,8 +2990,12 @@ Then $\hat{\boldsymbol{p}}^{(h)*}$ is consistent for $\boldsymbol{\mu}^{(h)*} :=
     = \boldsymbol{G}\,\boldsymbol{\Sigma}_{\boldsymbol{Y}^{(h)*}}\,
     \boldsymbol{G}^\top,
 \]
-where the Jacobian $\boldsymbol{G}_{2m+2\times 2(m+2)}$, evaluated at 
-$\boldsymbol{\mu}_{\boldsymbol{Y}^{(h)*}}$, is given by
+where $\boldsymbol{G}$ is the Jacobian of the function $\boldsymbol{g}$ defined by
+\[g_i(\boldsymbol{Y}^{(h)*}_{t}) \begin{cases}
+    Y_{t, i}/ Y_{t, -1}& \text{ if } i \leq m \\
+    Y_{t, i}/ Y_{t, -2}& \text{ if } i > m  
+\end{cases}, \text{ for } i = 0, \ldots ,2 m +2,\]
+evaluated at $\boldsymbol{\mu}_{\boldsymbol{Y}^{(h)*}}$:
 \begin{align*}
     \boldsymbol{G} =
     \begin{pmatrix}
@@ -2989,6 +3008,8 @@ $\boldsymbol{\mu}_{\boldsymbol{Y}^{(h)*}}$, is given by
     &\cdots & 0&\frac{1}{\pi(h)}      
     \end{pmatrix}.
 \end{align*}
+
+\paragraph{Asymptotics under $H_0$}
 Once again, higher-order mixed moments appear in the elements \textbf{(ix)} and \textbf{(ix)} off $\boldsymbol{\Sigma}_{\boldsymbol{Y}^{(h)*}}$, such that 
 closed form expression for the elements of $\boldsymbol{\Sigma}_{\hat{\boldsymbol{p}}^{(h)*}}$ and consequently 
 $\sigma_{\hat{\kappa}_{\mathrm{nom}}(h)}^2$ are not tractable without further assumptions. However, under $H_0$ that $(X_t)$
@@ -3015,24 +3036,24 @@ thus simplify as follows:
 \end{align*}
 We then once again apply these simplifications to the elements
 \textbf{(ix)} and \textbf{(x)} of $\boldsymbol{\Sigma}_{\boldsymbol{Y}^{(h)*}}$
-\begin{align*}
+{\allowdisplaybreaks\begin{align*}
     &\textbf{(ix)}\quad  i = 0, \ldots, m, j = m+1, \ldots, 2m+2: \\
-    &\sigma_{ij}^{(h)*} \overset{H_0}{=} \pi(h) \partial_{ij-m-1} p_i^2 - \pi \pi(h) p_i p_{j-m-1}^2 \\
-    &\qquad + \underbrace{\pi(h)\partial_{ij-m-1}p_i^2 + \mathrm{E}[O_{t+h}O_t O_{t-h}]p_i p_{j-m-1}^2 - 2 \pi \pi(h)p_i p_{j-m-1}^2}_{h=k} \\
+    &\sigma_{ij}^{(h)*} \overset{H_0}{=} \pi(h) \delta_{ij-m-1} p_i^2 - \pi \pi(h) p_i p_{j-m-1}^2 \\
+    &\qquad + \underbrace{\pi(h)\delta_{ij-m-1}p_i^2 + \mathrm{E}[O_{t+h}O_t O_{t-h}]p_i p_{j-m-1}^2 - 2 \pi \pi(h)p_i p_{j-m-1}^2}_{h=k} \\
     &\qquad +  p_i p_{j-m-1}^2 \sum_{\substack{k=1\\k\neq h}}^{\infty}  \left[\mathrm{E}[O_t O_{t+k} O_{t+k-h}] + \mathrm{E}[O_t O_{t+k} O_{t+k-h}] - 2\pi\pi(h)\right] \\
-    &\quad = 2\pi(h)\partial_{ij-m-1} p_i^2 - \pi(h) p_i p_{j-m-1}^2 - \pi\pi(h)p_i p_{j-m-1}^2 \\
+    &\quad = 2\pi(h)\delta_{ij-m-1} p_i^2 - \pi(h) p_i p_{j-m-1}^2 - \pi\pi(h)p_i p_{j-m-1}^2 \\
     &\qquad + p_i p_{j-m-1}^2 \sum_{k= 1}^{\infty}  \left[\mathrm{E}[O_t O_{t+k} O_{t+k-h}] + \mathrm{E}[O_t O_{t+k} O_{t-h}] - 2\pi\pi(h)\right] \\
-    &\quad = 2\pi(h) (\partial_{i;j-m-1}p_i^2 - p_i p_{j-m-1}^2)+p_i p_{j-m-1}^2 \sigma_{-1;-2} \\
+    &\quad = 2\pi(h) (\delta_{i;j-m-1}p_i^2 - p_i p_{j-m-1}^2)+p_i p_{j-m-1}^2 \sigma_{-1;-2} \\
     &\textbf{(x)}\quad  i = m+1, \ldots, 2m+2, j = m+1, \ldots, 2m+2: \\
-    &\sigma_{ij}^{(h)*} \overset{H_0}{=} \pi(h) \partial_{{i-m-1},j-m-1} p_{i-m-1}^2 -  \pi(h)^2 p_{i-m-1}^2 p_{j-m-1}^2\\
-    &\qquad + \underbrace{\mathrm{E}[O_t O_{t-h} O_{t+h}]\cdot \left(2\partial_{{i-m-1},j-m-1}p_{i-m-1}^3 \right) - 2\pi(h)^2 2p_{j-m-1}^2p^2_{i-m-1}}_{h=k} \\
+    &\sigma_{ij}^{(h)*} \overset{H_0}{=} \pi(h) \delta_{{i-m-1},j-m-1} p_{i-m-1}^2 -  \pi(h)^2 p_{i-m-1}^2 p_{j-m-1}^2\\
+    &\qquad + \underbrace{\mathrm{E}[O_t O_{t-h} O_{t+h}]\cdot \left(2\delta_{{i-m-1},j-m-1}p_{i-m-1}^3 \right) - 2\pi(h)^2 2p_{j-m-1}^2p^2_{i-m-1}}_{h=k} \\
     &\qquad +  p_{i-m-1}^2 p_{j-m-1}^2 \sum_{\substack{k=1\\k\neq h}}^{\infty}  2\left[\mathrm{E}[O_t O_{t-h} O_{t+k} O_{t+k-h}]- \pi(h)^2\right] \\
-    &\quad = \pi(h) p_{i-m-1}^2 (\partial_{i-m-1j-m-1}- \pi(h)p_{k-m-1}^2)+ 2\mathrm{E}[O_t O_{t-h} O_{t+h}]\cdot(\partial_{i-m-1j-m-1}p_{i-m-1}^3 \\
+    &\quad = \pi(h) p_{i-m-1}^2 (\delta_{i-m-1j-m-1}- \pi(h)p_{k-m-1}^2)+ 2\mathrm{E}[O_t O_{t-h} O_{t+h}]\cdot(\delta_{i-m-1j-m-1}p_{i-m-1}^3 \\
     &\qquad - p_{i-m-1}^2p_{j-m-1}^2)  +  p_{i-m-1}^2 p_{j-m-1}^2 \sum_{k=1}^{\infty}  2\left[\mathrm{E}[O_t O_{t-h} O_{t+k} O_{t+k-h}]- \pi(h)^2\right] \\
-    &\quad = \pi(h) p_{i-m-1}^2 (\partial_{i-m-1j-m-1}- p_{j-m-1}^2)  \\
-    &\qquad +2\mathrm{E}[O_t O_{t-h} O_{t+h}]\cdot(\partial_{i-m-1j-m-1}p_{i-m-1}^3- p_{i-m-1}^2p_{j-m-1}^2)+p_{i-m-1}^2 p_{j-m-1}^2\sigma^{(h)}_{-2; -2}  
+    &\quad = \pi(h) p_{i-m-1}^2 (\delta_{i-m-1j-m-1}- p_{j-m-1}^2)  \\
+    &\qquad +2\mathrm{E}[O_t O_{t-h} O_{t+h}]\cdot(\delta_{i-m-1j-m-1}p_{i-m-1}^3- p_{i-m-1}^2p_{j-m-1}^2)+p_{i-m-1}^2 p_{j-m-1}^2\sigma^{(h)}_{-2; -2}  
 \end{align*}
-To now get explicit expressions for the elements $\sigma^{(h)*}$ of $\boldsymbol{\Sigma}_{\boldsymbol{p}^{(h)*}}$ we once again distinguish into the three cases 
+}To now get explicit expressions for the elements of $\boldsymbol{\Sigma}_{\boldsymbol{p}^{(h)*}}$ we once again distinguish into the three cases 
 \allowdisplaybreaks
 \begin{align*}
     &\textbf{(i)}\ i,j = 0, \ldots, m: \\
@@ -3041,26 +3062,25 @@ To now get explicit expressions for the elements $\sigma^{(h)*}$ of $\boldsymbol
     - \frac{p_j}{\pi^2} \sigma^{(h)}_{i-1} 
     - \frac{p_i}{\pi^2} \sigma^{(h)}_{-1j} 
     + \frac{1}{\pi^2} \sigma^{(h)}_{ij} \\
-    &\quad = \frac{1}{\pi^2}(-p_i p_j \sigma^{(h)}_{-1-1} + p_i p_j \sigma^{(h)}_{-1-1} + \pi p_{j}(\partial_{ij} - p_i) + \sum_{k=1}^{\infty}\pi(k)(f_{ij}(k) + f_{ji}(k) - 2f_i f_j)) \\
+    &\quad = \frac{1}{\pi^2}(-p_i p_j \sigma^{(h)}_{-1-1} + p_i p_j \sigma^{(h)}_{-1-1} + \pi p_{j}(\delta_{ij} - p_i) + \sum_{k=1}^{\infty}\pi(k)(f_{ij}(k) + f_{ji}(k) - 2f_i f_j)) \\
     &\quad \overset{H_0}{=} \frac{1}{\pi} p_j(\delta_{ij} - p_i).\\
         %
     &\textbf{(ii)}\ i = 0, \ldots, m\ j = m+1, \ldots, 2m+2  (j' = j - m-1): \\
     &\quad \sigma^{(h)*}_{ij}
     = -\frac{p_{j'j'}(h)}{\pi(h)}\Bigl(\frac{- p_i}{\pi}\sigma^{(h)}_{-1-2} + \frac{1}{\pi}\sigma_{i-2}^{(h)}\Bigr)+ \frac{1}{\pi(h)}(-\frac{p_{i}}{\pi}\sigma_{-1j}^{(h)}+ \frac{1}{\pi}\sigma_{ij}^{(h)}) \\
-    &\quad \overset{H_0}{=} \frac{1}{\pi(h)\pi}( p_i p_{j'}^2 \sigma_{-1-2}^{(h)} - p_{j'}^2 p_i\sigma_{-1-2}^{(h)} - p_i p_{j'}^2\sigma_{-1-2}^{(h)} + 2\pi(h)(\partial_{ij}p_i^2-p_i p_{j'}^2) + p_i p_{j'}^2\sigma_{-1-2}^{(h)}))   \\
-    &\quad =\frac{2}{\pi}(\partial_{ij}p_i^2-p_i p_{j'}^2) = 2 p_{j'} \sigma^{(h)*}_{ij'} \\
+    &\quad \overset{H_0}{=} \frac{1}{\pi(h)\pi}( p_i p_{j'}^2 \sigma_{-1-2}^{(h)} - p_{j'}^2 p_i\sigma_{-1-2}^{(h)} - p_i p_{j'}^2\sigma_{-1-2}^{(h)} + 2\pi(h)(\delta_{ij}p_i^2-p_i p_{j'}^2) + p_i p_{j'}^2\sigma_{-1-2}^{(h)}))   \\
+    &\quad =\frac{2}{\pi}(\delta_{ij}p_i^2-p_i p_{j'}^2) = 2 p_{j'} \sigma^{(h)*}_{ij'} \\
     &\textbf{(iii)}\ i,j = m+1, \ldots, 2m+2 
     \ (i' = i-m-1,\ j' = j-m-1): \\
     &\quad \sigma^{(h)*}_{ij}
     = -\frac{p_{j'j'}(h)}{\pi(h)}\left(\frac{-p_{i'i'}(h)}{\pi(h)}\sigma_{-2-2}^{(h)}+ \frac{1}{\pi(h)}\sigma_{i-2}^{(h)}\right) + \frac{1}{\pi(h)}\left(\frac{-p_{i'i'}(h)}{\pi(h)}\sigma_{-2j}^{(h)}+ \frac{1}{\pi(h)}\sigma_{ij}^{(h)}\right)\\
     &\quad \overset{H_0}{=} \frac{1}{\pi(h)^2} \left( p_{i'}^2 p_{j'}^2 \sigma_{-2 -2}^{(h)} - p_{i'}^2 p_{j'}^2 \sigma_{-2 -2}^{(h)} - p_{i'}^2 p_{j'}^2 \sigma_{-2 -2}^{(h)}  + \sigma^{(h)}_{ij} \right) \\
     &\quad = \frac{1}{\pi(h)^2}  \left(\sigma_{ij}^{(h)} -p_{i'}^2 p_{j'}^2 \sigma_{-2-2}^{(h)}\right) \\
-    &\quad = \frac{1}{\pi(h)^2}\bigl(\pi(h)p_{j'}^2(\partial_{i'j'} - p_{i'}^2) + 2\pi(h, 2h) (\partial_{i'j'} p_{j'}^3- p_{i'}^2p_{j'}^2)\bigr) \\
-    &\quad = \frac{1}{\pi(h)^2}\bigl(\pi(h)p_{j'}^2\partial_{i'j'} - \pi(h)p_{i'}^2 p_{j'}^2 + 2\pi(h, 2h)\partial_{i'j'} p_{j'}^3 - 2\pi(h, 2h) p_{i'}^2 p_{j'}^2\bigr) \\
-    &\quad = \frac{1}{\pi(h)^2}\bigl(\pi(h)p_{j'}^2(\partial_{i'j'} - p_{i'})(\partial_{i'j'} + p_{i'}) + 2\pi(h, 2h) p_{j'}^2p_{i'}(\partial_{i'j'}  - p_{i'})\bigr)\\
-    &\quad = \frac{1}{\pi(h)^2}(\partial_{i'j'} - p_{i'})p_{j'}^2\bigl(\pi(h)(\partial_{i'j'} + p_{i'}) + 2\pi(h, 2h) p_{i'}\bigr) \\
+    &\quad = \frac{1}{\pi(h)^2}\bigl(\pi(h)p_{j'}^2(\delta_{i'j'} - p_{i'}^2) + 2\pi(h, 2h) (\delta_{i'j'} p_{j'}^3- p_{i'}^2p_{j'}^2)\bigr) \\
+    &\quad = \frac{1}{\pi(h)^2}\bigl(\pi(h)p_{j'}^2\delta_{i'j'} - \pi(h)p_{i'}^2 p_{j'}^2 + 2\pi(h, 2h)\delta_{i'j'} p_{j'}^3 - 2\pi(h, 2h) p_{i'}^2 p_{j'}^2\bigr) \\
+    &\quad = \frac{1}{\pi(h)^2}\bigl(\pi(h)p_{j'}^2(\delta_{i'j'} - p_{i'})(\delta_{i'j'} + p_{i'}) + 2\pi(h, 2h) p_{j'}^2p_{i'}(\delta_{i'j'}  - p_{i'})\bigr)\\
+    &\quad = \frac{1}{\pi(h)^2}(\delta_{i'j'} - p_{i'})p_{j'}^2\bigl(\pi(h)(\delta_{i'j'} + p_{i'}) + 2\pi(h, 2h) p_{i'}\bigr) \\
 \end{align*}
-
 From here, we once again use the delta method to obtain closed-form expressions for the asymptotic variance and bias of $\hat{\kappa}_{\mathrm{nom}}(h) )= \frac{A}{B}$ under $H_0$,
 where $A = \sum_{j = 0}^{m}(p_{jj}(h)-p_j^2)$ and $B= 1- \sum_{i = 0}^{m} p_i^2$. The corresponding 
 Jacobian is given by
@@ -3087,13 +3107,83 @@ Hence, the asymptotic variance of $\hat{\kappa}_{\mathrm{nom}}(h)$ under $H_0$ i
     &= \frac{1}{B^2}\biggl(
         4\sum_{i,j=0}^{m} p_i p_j \sigma^{(h)*}_{ij}\,
         - 8\sum_{i,j=0}^{m} p_i p_j \sigma^{(h)*}_{ij}
-        + \frac{1}{\pi(h)^2} \sum_{i,j=0}^{m} (\partial_{ij}-p_i)p_j^2\bigl(\,\pi(h)(\partial_{ij} + p_i) \\    
-        &\quad + 2\pi(h, 2h)p_i\bigr)
+        + \frac{1}{\pi(h)^2} \sum_{i,j=0}^{m} (\delta_{ij}-p_i)p_j^2 \\    
+        &\quad \cdot \bigl(\,\pi(h)(\delta_{ij} + p_i) +  2\pi(h, 2h)p_i\bigr)
       \biggr) \\
     &= \frac{1}{(1-\sum_{i=1}^{m}p_i^2)^2} \frac{1}{\pi(h)} \sum_{i, j = 0}^{m}p_j^2 
-        (\partial_{ij}-p_i)\bigl(\partial_{ij} +  p_i (1+ 2\frac{\pi(h, 2h)}{\pi(h)} - 4\frac{\pi(h)}{\pi})\bigr)
+        (\delta_{ij}-p_i)\bigl(\delta_{ij} +  p_i (1+ 2\frac{\pi(h, 2h)}{\pi(h)} - 4\frac{\pi(h)}{\pi})\bigr).
 \end{align*} 
-
+\noindent For the bias we once again first need the Hessian of $\kappa_{\mathrm{nom}}(h)$ evaluated at $\boldsymbol{\mu}^{(h)*}$.
+\begin{align*}
+    h_{1i, 1j} &= \frac{\partial d_{1i}}{\partial p_j} = \frac{\partial}{\partial p_j} \bigl(\frac{-2p_i}{B} + \frac{2p_i A}{B^2}\bigr) 
+    =\begin{cases} \frac{-2}{B} - \frac{8 p_i^2}{B^2} -2 \kappa_{ \mathrm{nom}}(h) (\frac{1}{B} - \frac{2p_i^2}{B^2})  & \text{if } i = j,\\
+          -2(1-\kappa_{\mathrm{nom}}(h))\frac{4p_i p_j}{B^2} & \text{else.}
+    \end{cases}, \\
+    h_{1i, 2j} &= \frac{\partial d_{1i}}{\partial p_{jj}(h)} = \frac{2 p_i}{B^2},
+    \quad h_{2i, 1j} = \frac{\partial d_{2i}}{\partial p_{j}} =  \frac{2p_j}{B^2},
+    \quad h_{2i, 2j} = \frac{\partial d_{2i}}{\partial p_{jj}(h)} = 0.
+\end{align*}
+Where $h_{1i, 1j}$ is computed as follows 
+\begin{align*}
+\frac{\partial d_{1i}}{\partial p_j}
+&=
+\frac{\partial}{\partial p_j}
+\left(
+\frac{-2p_i}{B}
++
+\frac{2p_iA}{B^2}
+\right).
+\end{align*}
+\[
+\begin{aligned}
+i=j:\qquad
+\frac{\partial d_{1i}}{\partial p_i}
+&=
+\frac{-2}{B}
+-\frac{4p_i^2+2A+4p_i^2}{B^2}
+-\frac{2p_iA\,2B(-2p_i)}{B^4} \\
+&=
+\frac{-2}{B}
+-\frac{8p_i^2}{B^2}
+-2\kappa_{\mathrm{nom}}(h)
+\left(
+\frac{1}{B}
+-\frac{2p_i^2}{B^2}
+\right),
+\\[1em]
+i\neq j:\qquad
+\frac{\partial d_{1i}}{\partial p_j}
+&=
+\frac{-4p_ip_j}{B^2}
++
+2p_i
+\left(
+\frac{-2p_j}{B^2}
+-\frac{A\,2B(-2p_j)}{B^4}
+\right) \\
+&=
+-2\bigl(1-\kappa_{\mathrm{nom}}(h)\bigr)
+\frac{4p_ip_j}{B^2}.
+\end{aligned}
+\]
+Under $H_0$ we have $\kappa_{\mathrm{nom}}(h) = 0$ and therefore $h_{1i, 1j}$ simplifies:
+\[h_{1i, 1j}\overset{H_0}{=}\begin{cases} \frac{-2 }{B} - \frac{8p_i^2}{B^2}& \text{if } i = j,\\
+          \frac{-8 p_i p_j }{B^2} & \text{else.}
+    \end{cases}\]
+A bias correction of order $n^{-1}$ can be derived using a taylor expansion of $\kappa_{\mathrm{nom}}$ around $\boldsymbol{\mu}^{(h)*}$.
+Using Lemma~\ref{lem:quadform} and the fact that $\sigma^{(h)*}_{i\,(j+m+1)} = 2 p_j \sigma^{(h)*}_{ij}$ from case \textbf{(ii)}, the bias reduces to
+\begin{align*}
+    \mathrm{Bias}(\hat{\kappa}_{\mathrm{nom}}(h))
+    &=\frac{1}{2}\mathrm{tr}\bigl[\boldsymbol{H}_\kappa\boldsymbol{\Sigma}_{\boldsymbol{p}^{(h)*}}\bigr]
+    =\frac{1}{2}\sum_{i=0}^{2m+2}\bigl[\boldsymbol{H}_\kappa\boldsymbol{\Sigma}_{\boldsymbol{p}^{(h)*}}\bigr]_{ii}\\
+    &=\frac{1}{2}\Biggl[\sum_{i,  j =0}^{m}h_{1i,1j}\sigma^{(h)*}_{ij}+h_{1i,2j}\sigma^{(h)*}_{i(j+m+1)}
+    +h_{2i,1j}\sigma^{(h)*}_{(i+m+1)j}\Biggr] \\
+    &= \frac{1}{2}\Biggl[\sum_{i = 0}^{m}(\frac{-2}{B} - \frac{8p_i^2}{B^2}) \frac{1}{\pi}p_i(1-p_i)
+     + \sum_{\substack{i,j = 0\\ i \neq j}}^{m} \frac{-8 p_i p_j }{B^2} \frac{1}{\pi}p_j(0-p_i) \\
+    &\quad + 2 \sum_{i, j = 0}^{m} \frac{2p_i}{B^2} 2p_j \frac{1}{\pi} (\delta p_i -  p_i p_j) \Biggr] \\
+    &= \frac{1}{  \pi}\biggl[\sum_{i = 0}^{m} \biggl(\frac{- p_i + p_i^2 }{B} - \frac{4 p_i^3 + 4 p_i^4 }{B^2} + \frac{4p_i^3- 4p_i^4}{B^2}\biggr) \biggr] \\
+    &= \frac{1}{\pi} \frac{-B}{B} = - \frac{1}{\pi}
+\end{align*}
 
 \end{appendices}
 
