@@ -85,7 +85,7 @@ Regardless of whether we consider a simple categorical process with few categori
         f_i := P(X_t \le s_i).
     \]
 
-    For ordinal data, it is sufficient to consider the cumulative probabilities of the categories $0, \ldots , m-1$ since the cumulative probability of the last category $m$ is always equal to 1. \\
+    When working with $\boldsymbol{f}$ it is sufficient to consider the cumulative probabilities of the categories $0, \ldots , m-1$ since the cumulative probability of the last category $m$ is always equal to 1. \\
 
     Although one could equivalently estimate the PMF and derive the CDF from it, representing ordinal data through the CDF is often more convenient as it this form that is used to compute metrics for location and dispersion.
 
@@ -167,7 +167,7 @@ For ordinal data, this corresponds to a CDF vector $\mathbf{f}$ of the form
 \ldots,
 \begin{pmatrix} 0 \\ 0 \\ \vdots \\ 1 \end{pmatrix}
 \right\}
-:= \{\boldsymbol{c}_0,\ldots,\boldsymbol{c}_m\} \subset [0,1]^{m+1}.
+:= \{\boldsymbol{c}_0,\ldots,\boldsymbol{c}_m\} \subset [0,1]^{m}.
 \]
 In each of these cases, every component $f_i$ satisfies $f_i \in \{0,1\}$, and thus
 \[
@@ -231,7 +231,7 @@ category; with all intermediate categories having probability zero.
 This results in a CDF vector,
 
 \[
-\mathbf{f} = \left(\tfrac{1}{2}, \tfrac{1}{2}, \ldots, \tfrac{1}{2}\right)^\top.
+\boldsymbol{f} = \left(\tfrac{1}{2}, \tfrac{1}{2}, \ldots, \tfrac{1}{2}\right)^\top.
 \]
 Then
 \[
@@ -254,7 +254,6 @@ Taking the derivative of $g(f_i) := f_i(1-f_i)$  and setting it to zero yields:
 1 - 2 f_i &\overset{!}{=} 0, \\
 f_i &= \frac{1}{2}.
 \end{align*}
-
 Since $g(f_i=0) = g(f_i = 1)=0$, the function is concave and this critical point is indeed the global maximum.
 Since it has been already shown that $\mathrm{IOV}(\boldsymbol{f} = (\frac{1}{2}, \ldots, \frac{1}{2})^T) = 1$, it directly follows that
 \[
@@ -320,20 +319,20 @@ and therefore $\mathrm{IQV}$ attains its maximal value at the uniform distributi
 
 The marginal distribution of a categorical time series captures the long-run 
 frequencies of the individual categories, but contains no information about the 
-temporal structure of the process. To describe how the process evolves over time, 
+temporal structure of the process. To describe how the process behaves over time, 
 measures of serial dependence are required.\\
 For real-valued processes, the autocorrelation function (ACF) is the standard 
 tool for quantifying temporal dependence \citep[see Section 1.4]{brockwell_davis_2016}. However, the ACF is not directly applicable 
 to categorical data, since it relies on the existence of meaningful arithmetic 
 operations on the observed values. For nominal data, such operations are undefined, 
 and for ordinal data they are questionable, as the categories carry no numerical meaning beyond their ordering.\\
-Dependence measures for categorical time series are typically constructed 
+Instead, serial dependence measures for categorical time series are typically constructed 
 from the bivariate lag-$h$ probabilities introduced in Definition \ref{def:biv_probs}. 
 Under serial independence, these would factorize as $f_{ij}(h) = f_if_j$ and 
 $p_{ij}(h) = p_ip_j$ respectively. Measures for serial dependence are naturally 
 constructed by quantifying the deviation of the bivariate probabilities from this 
 independence benchmark.\\
-Natural and widely used measures of serial dependence are the ordinal 
+Natural and widely used measures of serial dependence for categorical data are the ordinal 
 and nominal versions of Cohen's $\kappa$ \citep[p. 130]{Weiss2018}, which compare the joint 
 probabilities to those expected under independence. For lag $h$, they 
 are defined as
@@ -350,12 +349,12 @@ are defined as
            {1-\sum_{i=0}^{m} p_i^2}.
 \]
 \end{definition}
-The numerator of each measure sums the diagonal deviations $f_{jj}(h) - f_j^2$
+\noindent The numerator of each measure sums the diagonal deviations $f_{jj}(h) - f_j^2$
 (resp.\ $p_{jj}(h) - p_j^2$), which capture the excess probability of observing
 the same category at times $t$ and $t+h$ relative to what would be expected under
 independence. The denominator normalizes the numerator by a measure of marginal dispersion:
 for the ordinal version it equals $\frac{m}{4}\cdot\mathrm{IOV}$, and for the
-nominal version it is equal to $\frac{m}{m+1}\cdot \mathrm{IQV}$. This ensures that $\kappa(h)$ is invariant to
+nominal version it is equal to $\frac{m}{m+1}\cdot \mathrm{IQV}$. This ensures that the measures are invariant to
 the overall level of dispersion in the marginal distribution. For both measures, positive values indicate that the process tends to remain in the same
 category across lag $h$, while negative values indicate a tendency to switch
 categories.\\
@@ -381,7 +380,7 @@ $j$, i.e.\ when the process never remains in the same category across lag $h$:
 which depends on the marginal distribution and equals $-1$ only in the special case
 of a uniform marginal. For the ordinal version, the lower bound takes an analogous
 form but involves the cumulative probabilities $f_j$.
-\chapter{Samples Measures}
+\chapter{Sample Measures}
 \section{Estimation of Marginal Distributions}
 To estimate the marginal (cumulative) probabilities, we express the
 relative frequencies through a binarization of the original process
@@ -410,9 +409,12 @@ The marginal CDF and PMF vectors are estimated by the corresponding sample means
 
 \section{Asymptotics of the marginal estimator}
 To derive the asymptotic distribution of $\hat{\boldsymbol{f}}$ and
-$\hat{\boldsymbol{p}}$, a central limit theorem for dependent data is
-required. Since independence is not assumed, we impose weak dependence
-conditions on the original process $(X_t)$.\\
+$\hat{\boldsymbol{p}}$, a central limit theorem is
+required. Although the derivations for the ordinal and nominal cases follow the same general strategy, 
+they differ in several technical details. Therefore, we will mainly focus on the ordinal case and its 
+asymptotic results in the following sections. The corresponding results for the nominal case are analogous 
+and are presented in Chapter~\ref{chap:nominal}. Since independence is not assumed, we impose weak dependence
+conditions on the original process $(X_t)$. \\
 Specifically, $(X_t)_{t \in \mathbb{Z}}$ is assumed to be strictly
 stationary (recall Definition \ref{def:Stationarity}) and $\alpha$-mixing with exponentially decaying coefficients.\\
 \begin{definition}[$\alpha$-Mixing with Exponential Decay]\label{def:mixing}
@@ -435,7 +437,7 @@ i.e., there exist constants $C > 0$ and $\rho \in (0,1)$ such that
 \end{equation}
 \end{definition}
 \noindent
-The indicator mappings
+We now want to show that the estimator $\hat{\boldsymbol{f}}$ also satisifies these dependence assumptions. The indicator mappings
 \[
 g_i(X_t) := \mathbb{I}\{X_t \le s_i\},
 \qquad

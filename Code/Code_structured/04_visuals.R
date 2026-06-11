@@ -290,93 +290,6 @@ prepare_comparison_subset <- function(data, filter_expr, group_var_name) {
   list(subset = subset, group_centers = group_centers, x_labels = x_labels)
 }
 
-#' Generischer Vergleichs-Plot (IOV, Skew oder Cohen's K)
-#' @param subset        Vorbereitetes subset mit x_pos
-#' @param y_var         String: Spaltenname der y-Variable (z.B. "mean_IOV")
-#' @param ymin_var      String: untere Fehlerbalken-Spalte
-#' @param ymax_var      String: obere Fehlerbalken-Spalte
-#' @param true_val      Wahrer Parameterwert (horizontale Linie)
-#' @param group_centers Mittelpunkte der x-Gruppen
-#' @param x_labels      Beschriftungen der x-Gruppen
-#' @param title         Plot-Titel
-#' @param y_label       y-Achsenbeschriftung
-#' @param subtitle      Plot-Untertitel
-#' @param ylim_offset   c(unten, oben) relativ zum wahren Wert
-#' @param group_var     String: Variable für Shape-Ästhetik
-comparison_plot <- function(subset, y_var, ymin_var, ymax_var,
-                            true_val, group_centers, x_labels,
-                            title, y_label, subtitle,
-                            ylim_offset = c(-0.125, 0.075),
-                            group_var = "pi") {
-  legend_label <- switch(
-    group_var,
-    "pi"   = expression(pi),
-    "r_pi" = expression(r[pi]),
-    "pi_h" = expression(pi[h]),
-    group_var
-  )
-  n_groups   <- length(group_centers)
-  rect_xmin  <- c(0.5, seq(2.5, by = 2, length.out = n_groups - 1))
-  rect_xmax  <- c(seq(2.5, by = 2, length.out = n_groups - 1),
-                  max(subset$x_pos) + 0.5)
-
-  ggplot(subset, aes(x = x_pos, y = .data[[y_var]],
-                     color = type,
-                     shape = factor(.data[[group_var]]))) +
-    annotate("rect",
-             xmin  = rect_xmin[seq(1, n_groups, by = 2)],
-             xmax  = rect_xmax[seq(1, n_groups, by = 2)],
-             ymin  = -Inf, ymax = Inf,
-             alpha = 0.05, fill = "gray90") +
-    geom_hline(yintercept = true_val,
-               color = "darkgreen", linetype = "dashed",
-               linewidth = 1, alpha = 0.7) +
-    geom_line(aes(group = interaction(n, .data[[group_var]])),
-              color = "gray50", linetype = "dashed",
-              alpha = 0.5,
-              position = position_dodge(width = 0.2)) +
-    geom_point(size = 3.5, position = position_dodge(width = 0.2)) +
-    geom_errorbar(aes(ymin = .data[[ymin_var]], ymax = .data[[ymax_var]]),
-                  width = 0.15, linewidth = 0.8,
-                  position = position_dodge(width = 0.2)) +
-    scale_x_continuous(breaks = group_centers, labels = x_labels,
-                       expand = expansion(mult = 0.1)) +
-    scale_color_manual(
-      values = c("Asymptotic" = "#E41A1C", "Simulation" = "#377EB8"),
-      name   = "Method"
-    ) +
-    scale_shape_manual(
-      values = setNames(c(16, 17, 15, 18),
-                        as.character(sort(unique(subset[[group_var]])))),
-      name   = legend_label
-    ) +
-    coord_cartesian(ylim = c(true_val + ylim_offset[1],
-                             true_val + ylim_offset[2])) +
-    labs(title = title, subtitle = subtitle,
-         x = "", y = "") +
-    theme_minimal() +
-    theme(
-      plot.title         = element_text(hjust = 0.5, face = "bold", size = 20),
-      plot.subtitle      = element_text(hjust = 0.5, color = "gray40"),
-      axis.text.x        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 12, color = "gray20"),
-      axis.text.y        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 14, color = "gray20"),
-      legend.position    = "bottom",
-      legend.box         = "horizontal",      # Legendenblöcke nebeneinander
-      legend.direction   = "horizontal",        # Items innerhalb je vertikal
-      legend.spacing.x   = unit(1, "cm"),     # Abstand zwischen den Blöcken
-      legend.text        = element_text(size = 18),
-      legend.title       = element_text(size = 20, face = "bold"),
-      legend.key.size    = unit(0.6, "cm"),
-      panel.grid.major.x = element_blank(),
-      panel.grid.minor.x = element_blank(),
-      panel.border       = element_rect(color = "gray80", fill = NA,
-                                        linewidth = 0.5)
-    ) +
-    guides(
-      color = guide_legend(order = 1, override.aes = list(size = 4)),
-      shape = guide_legend(order = 2, override.aes = list(size = 4))
-    )
-}
 
 
 # Combined_df aufbauen
@@ -392,10 +305,11 @@ combined_df <- combined_df %>%
   )
 
 
-# Plot-Block A (Figure 4.5, 4.7, 4.8): Vergleichsplots für pi in {1, 0.75} und r_pi == 0 (MCAR)
+# Plot-Block A (Figure 4.5, 4.7, 4.8): Comparisonplots for pi in {1, 0.75} and r_pi == 0 (MCAR)
 
 ### Scenario A
 
+##### Datapreparation 
 prep_A1 <- prepare_comparison_subset(
   combined_df,
   filter_expr   = (p == 0.2 & r_pi == 0), # hier p 0.2 oder 0.45 wählen
@@ -411,7 +325,9 @@ sub_A1$IOV_centered <- sub_A1$mean_IOV - t_IOV_A1
 sub_A1$IOV_lower_centered <- sub_A1$lower_IOV - t_IOV_A1
 sub_A1$IOV_upper_centered <- sub_A1$upper_IOV - t_IOV_A1
 
-# IOV
+
+
+# IOV (Figure 4.5)
 IOV_plot <- comparison_plot(
   sub_A1, "IOV_centered", "IOV_lower_centered", "IOV_upper_centered",
   true_val      = 0,
@@ -427,7 +343,7 @@ IOV_plot <- comparison_plot(
 print(IOV_plot)
 ggsave(sprintf("Graphs/iov_m%d.png", m_A1), IOV_plot + theme(legend.position = "none"), width = 8, height = 5)
 
-# Skew
+# Skew (Figure 4.7)
 Skew_plot <- comparison_plot(
   sub_A1, "mean_Skew", "lower_Skew", "upper_Skew",
   true_val      = t_Skew_A1,
@@ -443,6 +359,7 @@ Skew_plot <- comparison_plot(
 print(Skew_plot)
 ggsave(sprintf("Graphs/skew_m%d.png", m_A1), Skew_plot + theme(legend.position = "none"), width = 8, height = 5)
 
+# Cohen's κ (Figure 4.8)
 Cohens_plot <- comparison_plot(
   sub_A1, "mean_C", "lower_C", "upper_C",
   true_val      = 0,
@@ -461,6 +378,8 @@ ggsave(sprintf("Graphs/kappa_m%d.png", m_A1), Cohens_plot + theme(legend.positio
 
 ### Scenario B
 
+##### Datapreparation
+
 prep_B1 <- prepare_comparison_subset(
   combined_df,
   filter_expr   = (p == 0.45 & r_pi == 0), # hier p 0.2 oder 0.45 wählen
@@ -475,7 +394,7 @@ sub_B1$IOV_centered <- sub_B1$mean_IOV - t_IOV_B1
 sub_B1$IOV_lower_centered <- sub_B1$lower_IOV - t_IOV_B1
 sub_B1$IOV_upper_centered <- sub_B1$upper_IOV - t_IOV_B1
 
-# IOV
+# IOV (Figure 4.5)
 IOV_plot <- comparison_plot(
   sub_B1, "IOV_centered", "IOV_lower_centered", "IOV_upper_centered",
   true_val      = 0,
@@ -491,7 +410,7 @@ IOV_plot <- comparison_plot(
 print(IOV_plot)
 ggsave(sprintf("Graphs/iov_m%d.png", m_B1), IOV_plot + theme(legend.position = "none"), width = 8, height = 5)
 
-# Skew
+# Skew (Figure 4.7)
 Skew_plot <- comparison_plot(
   sub_B1, "mean_Skew", "lower_Skew", "upper_Skew",
   true_val      = t_Skew_B1,
@@ -507,6 +426,7 @@ Skew_plot <- comparison_plot(
 print(Skew_plot)
 ggsave(sprintf("Graphs/skew_m%d.png", m_B1), Skew_plot + theme(legend.position = "none"), width = 8, height = 5)
 
+# Cohen's κ (Figure 4.8)
 Cohens_plot <- comparison_plot(
   sub_B1, "mean_C", "lower_C", "upper_C",
   true_val      = 0,
@@ -522,7 +442,7 @@ Cohens_plot <- comparison_plot(
 print(Cohens_plot)
 ggsave(sprintf("Graphs/kappa_m%d.png", m_B1), Cohens_plot + theme(legend.position = "none"), width = 8, height = 5)
 
-# Legende
+# Legende (Figures 4.5, 4.7, 4.8)
 p <- Skew_plot
 legend <- get_legend(
   p + theme(legend.position = "bottom")
@@ -541,6 +461,8 @@ ggsave(
 
 
 ### Scenario A
+
+##### Datapreparation
 prep_A2 <- prepare_comparison_subset(
   combined_df,
   filter_expr    = (r_pi %in% c(0.2, 0.75) & pi == 0.75 & m == 3),
@@ -554,7 +476,9 @@ m_A2 <- sub_A2$m[1]; p_A2 <- sub_A2$p[1]; r_A2 <- sub_A2$r[1]
 sub_A2$IOV_centered <- sub_A2$mean_IOV - t_IOV_A2
 sub_A2$IOV_lower_centered <- sub_A2$lower_IOV - t_IOV_A2  
 sub_A2$IOV_upper_centered <- sub_A2$upper_IOV - t_IOV_A2
-# IOV
+
+
+# IOV (Figure 4.6)
 IOV_sd_plot <- comparison_plot(
   sub_A2, "IOV_centered", "IOV_lower_centered", "IOV_upper_centered",
   true_val      = 0,
@@ -570,8 +494,9 @@ IOV_sd_plot <- comparison_plot(
 print(IOV_sd_plot + theme(legend.position = "none"))
 ggsave(sprintf("Graphs/IOV_sd_m%d.png", m_A2), IOV_sd_plot + theme(legend.position = "none"), width = 8, height = 5)
 
-
 ### Scenario B
+
+##### Datapreparation
 prep_B2 <- prepare_comparison_subset(
   combined_df,
   filter_expr    = (r_pi %in% c(0.2, 0.75) & pi == 0.75 & m == 10),
@@ -585,7 +510,8 @@ m_B2 <- sub_B2$m[1]; p_B2 <- sub_B2$p[1]; r_B2 <- sub_B2$r[1]
 sub_B2$IOV_centered <- sub_B2$mean_IOV - t_IOV_B2
 sub_B2$IOV_lower_centered <- sub_B2$lower_IOV - t_IOV_B2
 sub_B2$IOV_upper_centered <- sub_B2$upper_IOV - t_IOV_B2
-# IOV
+
+# IOV (Figure 4.6)
 IOV_sd_plot <- comparison_plot(
   sub_B2, "IOV_centered", "IOV_lower_centered", "IOV_upper_centered",
   true_val      = 0,
@@ -616,75 +542,226 @@ ggsave(
   width = 8,
   height = 1
 )
-
-#====================================================
-# Plot-Block D: Geschätzte CDF-Komponenten
+# ==============================================================================
+# Figure 4.9: Rejection rates under H_0 for uncorrected vs. bias-corrected test statistic
 # ==============================================================================
 
-true_cdf <- pbinom(0:2, size = 3, prob = 0.20)
-true_df  <- data.frame(
-  category = paste0("f_", 0:2),
-  true_cdf = true_cdf
-)
-
-Sigma_cdf <- Sigma_Star(m = 3, p = 0.20, r = 0.35, pi = 0.75, pi_h = 0)
-
-est_df <- cdf_df %>%
-  pivot_longer(cols = starts_with("f_"),
-               names_to = "category", values_to = "value") %>%
-  pivot_wider(names_from = statistic, values_from = value) %>%
-  mutate(n = factor(n, levels = sort(unique(as.numeric(as.character(n))))))
-
-asymp_cdf_df <- do.call(rbind, lapply(unique(est_df$n), function(ni) {
-  ni_num <- as.numeric(as.character(ni))
-  data.frame(
-    category = paste0("f_", 0:2),
-    n        = factor(ni, levels = levels(est_df$n)),
-    asymp_sd = sqrt(diag(Sigma_cdf) / ni_num),
-    true_cdf = true_cdf
-  )
-}))
-
-plot_cdf_df <- bind_rows(
-  est_df %>%
-    mutate(type = "Simulation", ymin = mean - sd, ymax = mean + sd),
-  asymp_cdf_df %>%
-    rename(mean = true_cdf) %>%
-    mutate(type = "Asymptotic",
-           ymin = mean - asymp_sd,
-           ymax = mean + asymp_sd)
-) %>%
-  mutate(type = factor(type, levels = c("Simulation", "Asymptotic")))
-
-ggplot(plot_cdf_df, aes(x = category, color = n, linetype = type)) +
-  geom_bar(
-    data = true_df,
-    aes(x = category, y = true_cdf),
-    inherit.aes = FALSE,
-    stat = "identity", fill = "grey85", color = "grey60", width = 0.7
+ggplot(rej_H0_df,
+       aes(x        = n,
+           y        = rejection_rate,
+           color    = estimator,
+           group    = estimator)) +
+  # Nominalniveau
+  geom_hline(yintercept = alpha_test,
+             color     = "grey40",
+             linetype  = "dashed",
+             linewidth = 0.7) +
+  annotate("text",
+           x     = 40,
+           y     = alpha_test - 0.008,
+           label = "Nominal level (5%)",
+           color = "grey40",
+           size  = 3.5) +
+  # Kurven
+  geom_line(linewidth = 0.9) +
+  geom_point(size = 2.5) +
+  facet_wrap(~ scenario, ncol = 2) +
+  scale_color_manual(
+    name   = "Test statistic",
+    values = c("Uncorrected"    = "#2C3E6B",
+               "Bias-corrected" = "#C0392B")
+  )  +
+  scale_x_log10(name = "log(n)") +
+  scale_y_continuous(
+    limits = c(0, 0.1),
+    breaks = seq(0, 0.20, by = 0.05),
+    labels = scales::percent_format(accuracy = 1),
+    name   = "Empirical rejection frequency"
   ) +
-  geom_linerange(aes(ymin = ymin, ymax = ymax),
-                 position = position_dodge(width = 0.7),
-                 linewidth = 0.8) +
-  geom_point(aes(y = mean),
-             position = position_dodge(width = 0.7),
-             size = 2) +
-  scale_color_grey(name = "n", start = 0.7, end = 0.1) +
-  scale_linetype_manual(
-    name   = "Std. Deviation",
-    values = c("Simulation" = "solid", "Asymptotic" = "dotted")
-  ) +
-  guides(linetype = guide_legend(
-    override.aes = list(linewidth = 1, size = 0, color = "black")
-  )) +
-  scale_y_continuous(limits = c(0, 1), name = "Cumulative Probability") +
-  scale_x_discrete(name = "CDF Component") +
   labs(
-    title    = "Estimated vs. True CDF",
-    subtitle = expression(m == 3 ~ "," ~ p == 0.20 ~ "," ~ r == 0.35 ~
-                          "," ~ pi == 0.75)
+    title    = expression(
+      paste("Empirical rejection frequency under ",
+            H[0], "  (", alpha, " = 5%)")
+    )
   ) +
-  theme_minimal()
+  theme_minimal() +
+  theme(
+    plot.title       = element_text(size = 13, face = "bold"),
+    plot.subtitle    = element_text(size = 11,  color = "grey40"),
+    plot.caption     = element_text(size = 9,  color = "grey50",
+                                    face = "italic"),
+    legend.position  = "bottom",
+    legend.title     = element_text(size = 10, face = "bold"),
+    legend.text      = element_text(size = 9),
+    strip.text       = element_text(size = 11, face = "bold"),
+    panel.grid.minor = element_blank()
+  ) +
+  guides(
+    color    = guide_legend(order = 1),
+    linetype = guide_legend(order = 2)
+  )
+
+ggsave("Graphs/rejection_H0_level.png", width = 10, height = 5)
+
+# ------------------------------------------------------------------------------
+# Figure 4.10: Consistency of Cohen's κ under H_A 
+# ------------------------------------------------------------------------------
+
+### Left Plot (with Confidence Ribbons)
+ggplot() +
+  # H_0-Nulllinie
+  geom_hline(yintercept = 0,
+             color = "grey50", linetype = "dotted", linewidth = 0.6) +
+  # 95%-Konfidenzband unter H_0
+  geom_ribbon(data = ci_df,
+              aes(x = n_num, ymin = ci_lower, ymax = ci_upper),
+              fill = "steelblue", alpha = 0.15) +
+  geom_line(data = ci_df,
+            aes(x = n_num, y = ci_upper),
+            color = "steelblue", linetype = "dashed", linewidth = 0.7) +
+  geom_line(data = ci_df,
+            aes(x = n_num, y = ci_lower),
+            color = "steelblue", linetype = "dashed", linewidth = 0.7) +
+  annotate("text",
+         x = max(n_grid) * 0.25, 
+         y = ci_df$ci_upper[nrow(ci_df)] - 0.01,
+         label = expression(paste("95% CI under ", H[0])),
+         color = "steelblue", size = 5) +
+  # Wahres kappa unter H_A
+  geom_hline(yintercept = true_kappa,
+             color = "#C0392B", linetype = "dashed", linewidth = 0.8) +
+  annotate("text",
+           x = max(n_grid) * 0.15,
+           y = true_kappa + 0.05,
+           label = expression(paste("True ", kappa[ord](h))),
+           color = "#C0392B", size = 5) +
+  # Simulierte Mittelwerte unter H_A
+  geom_ribbon(data = kappa_summary,
+              aes(x = n_num,
+                  ymin = mean_kappa - (1.96 * sd_kappa),
+                  ymax = mean_kappa + (1.96 * sd_kappa)),
+              fill = "grey40", alpha = 0.2) +
+  geom_line(data = kappa_summary,
+            aes(x = n_num, y = mean_kappa),
+            linewidth = 0.9, color = "black") +
+  geom_point(data = kappa_summary,
+             aes(x = n_num, y = mean_kappa),
+             size = 2.5, color = "black") +
+  scale_x_continuous(
+    breaks = n_grid_rej,
+    trans  = "log10",
+    name   = ""
+  ) +
+  scale_y_continuous(
+    name = expression(hat(kappa)[ord](1))
+  ) +
+  labs(
+    title    = expression(
+      paste("Consistency of ", hat(kappa)[ord](1),
+            " under ", H[A], " — 95% CI under ", H[0])
+    ),
+    subtitle = bquote(
+      m == .(m_val) ~ "," ~
+      p == .(p_val) ~ "," ~
+      r == .(r_val) ~ "," ~
+      pi == .(pi_val) ~ "," ~
+      h == .(h_val) ~
+      "   Black: mean ± 1.96SD under" ~ H[A] ~
+      "   Blue band: 95% CI under" ~ H[0]
+    )
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 12, color = "gray20"),
+    axis.text.y        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 14, color = "gray20"),
+    plot.title    = element_text(size = 13, face = "bold"),
+    plot.subtitle = element_text(size = 9, color = "grey40"),
+    plot.caption  = element_text(size = 9, color = "grey50", face = "italic"),
+    axis.ticks.length = unit(2.5, "mm")
+  )
+
+ggsave("Graphs/Kappa_H_A.png", width = 5.5, height = 8)
+
+
+### Right Plot (Rejection Rates)
+
+ggplot(rej_df,
+       aes(x     = n,
+           y     = rate,
+           color = r_fac,
+           linetype = pi_fac,
+           group = label)) +
+  # 5%-Nominalniveau
+  geom_hline(yintercept = 0.05,
+             color = "grey50", linetype = "dotted", linewidth = 0.6) +
+  annotate("text",
+           x = max(n_grid_rej) * 0.85, y = 0.07,
+           label = "α = 5%",
+           color = "grey50", size = 3.5) +
+  # 100%-Referenzlinie
+  geom_hline(yintercept = 1.00,
+             color = "grey80", linetype = "solid", linewidth = 0.4) +
+  # Kurven
+  geom_line(linewidth = 0.9) +
+  geom_point(size = 2.5) +
+  scale_color_manual(
+    name   = "Serial dependence",
+    values = c("r = 0.15" = "#5B8DB8",
+               "r = 0.35" = "#2C3E6B",
+               "r = 0.6" = "#C0392B"),
+    #labels = c(
+    #  expression(r == 0.15 ~ "(weak)"),
+    #  expression(r == 0.35 ~ "(moderate)"),
+    #  expression(r == 0.60 ~ "(strong)")
+    #)
+  ) +
+  scale_linetype_manual(
+    name   = "Observation probability",
+    values = c("π = 1"    = "solid",
+               "π = 0.75" = "dashed")
+    )+
+  scale_x_continuous(
+    breaks = n_grid_rej,
+    trans  = "log10",
+    name   = ""
+  ) +
+  scale_y_continuous(
+    limits = c(0, 1.05),
+    breaks = seq(0, 1, by = 0.25),
+    labels = scales::percent,
+    name   = "Rejection rate"
+  ) +
+  labs(
+    title    = expression(
+      paste("Rejection rate of ", hat(kappa)[ord](h),
+            " test under ", H[A], "  (α = 5%)")
+    ),
+    subtitle = bquote(
+      m == .(m_val) ~ "," ~
+      p == .(p_val) ~ "," ~
+      h == .(h_val) ~
+      "   Solid: π = 1   Dashed: π = 0.75   Dotted: nominal level"
+    )
+  ) +
+  theme_minimal() +
+  guides(
+  color    = guide_legend(order = 1, keywidth = unit(1, "cm")),
+  linetype = guide_legend(order = 2, keywidth = unit(1, "cm"))
+  ) +
+  theme(
+    plot.title    = element_text(size = 13, face = "bold"),
+    plot.subtitle = element_text(size = 9,  color = "grey40"),
+    axis.text.x        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 12, color = "gray20"),
+    axis.text.y        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 12, color = "gray20"),
+    legend.position = "right",
+    legend.title    = element_text(size = 8, face = "bold"),
+    legend.text     = element_text(size = 7),
+    panel.grid.minor = element_blank(),
+    axis.ticks.length = unit(2.5, "mm")
+  )
+
+ggsave("Graphs/kappa_rejection_rate.png", width = 5.5, height = 8)
+
 
 # ==============================================================================
 # Plot-Block E: Marginale Verteilungen der Simulationsszenarien
@@ -868,4 +945,5 @@ p_pmf / p_cdf_dist +
 
 ggsave("Graphs/marginal_distributions_talk.pdf",
        width = 11, height = 7, units = "in", dpi = 300)
+
 

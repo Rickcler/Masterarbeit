@@ -93,7 +93,34 @@ biv_probs_e <- function(m, data, O, n, h = 1) {
   return(biv_probs)
 }
 
+#' Compute rejection rate for kappa_ord test at alpha = 0.05
+#' under H_A for a given scenario and n_grid
+#' @param n       Time series length
+#' @param m       Binomial parameter
+#' @param p       Success probability
+#' @param r       Thinning parameter (> 0 for H_A)
+#' @param pi      Observation probability
+#' @param h       Lag
+#' @param alpha   Significance level
+#' @param n_reps  Number of replications
+rejection_rate <- function(n, m, p, r, pi, h = 1,
+                            alpha = 0.05, n_reps = 1000) {
+  # Kritischer Wert aus asymptotischer Varianz unter H_0
+  sd_H0    <- sqrt(asymp_var_kappa_H0(m, p, pi) / n)
+  crit_val <- qnorm(1 - alpha / 2) * sd_H0
 
+  kappa_vals <- simulation_kappa_HA(n, m, p, r, pi,
+                                     h = h, n_reps = n_reps)
+  mean(abs(kappa_vals) > crit_val, na.rm = TRUE)
+}
+
+
+#' Rejection rate from raw simulation results
+#' @param kappa_vals  Vector of simulated kappa values
+#' @param crit        Critical value
+rejection_from_vals <- function(kappa_vals, crit) {
+  mean(abs(kappa_vals) > crit, na.rm = TRUE)
+}
 # ------------------------------------------------------------------------------
 # True Parameter Functions
 # ------------------------------------------------------------------------------
@@ -114,6 +141,13 @@ true_Skew <- function(m, p) {
   (2 / m) * sum(F - 1)
 }
 
+# True kappa unter H_A (aus geschlossener Form)
+true_kappa_HA <- function(m, p, r, h = 1) {
+  f    <- pbinom(0:(m - 1), size = m, prob = p)
+  cdf  <- lag_h_joint_cdf(m, p, r, h = h)
+  f_ii <- diag(cdf)[1:m]  # f_{ii}(h) fuer i = 0,...,m-1
+  sum(f_ii - f^2) / sum(f * (1 - f))
+}
 
 # ------------------------------------------------------------------------------
 # Joint Distribution Functions (BinAR(1))
@@ -301,6 +335,34 @@ Cohens_asymptotic_iid <- function(n, pi, m, marginal_cdf) {
 }
 
 
+#' Asymptotic variance of kappa_ord under H_0 and i.i.d. O_t
+#' @param m   Binomial parameter
+#' @param p   Success probability
+#' @param pi  Observation probability
+asymp_var_kappa_H0 <- function(m, p, pi) {
+  f <- pbinom(0:(m - 1), size = m, prob = p)
+  B <- sum(f * (1 - f))
+
+  # Doppelsumme Term 1: (f_min{i,j} - f_i f_j)^2
+  term1 <- 0
+  term2 <- 0
+  for (i in 0:(m - 1)) {
+    for (j in 0:(m - 1)) {
+      fmin   <- f[min(i, j) + 1]
+      fi     <- f[i + 1]
+      fj     <- f[j + 1]
+      delta  <- fmin - fi * fj
+      term1  <- term1 + delta^2
+      term2  <- term2 + fi * fj * delta
+    }
+  }
+
+  var_kappa <- (1 / pi^2) * term1 / B^2 +
+               2 * ((1 - pi) / pi^2) * term2 / B^2
+  return(var_kappa)
+}
+
+
 # ------------------------------------------------------------------------------
 # Simulation Functions
 # ------------------------------------------------------------------------------
@@ -471,4 +533,127 @@ simulation_raw <- function(n, m, p, r, pi, n_reps = N_REPS) {
   results$r  <- r
   results$pi <- pi
   return(results)
+}
+
+
+#' Simulation: returns raw kappa estimates under H_A (r > 0)
+#' @param n      Time series length
+#' @param m      Binomial parameter
+#' @param p      Success probability
+#' @param r      Thinning parameter (> 0 for H_A)
+#' @param pi     Observation probability
+#' @param h      Lag for kappa
+#' @param n_reps Number of replications
+simulation_kappa_HA <- function(n, m, p, r, pi, h = 1, n_reps = 1000) {
+  kappa_vals <- numeric(n_reps)
+
+  for (rep in 1:n_reps) {
+    count_process   <- generate_binar1(n, m, p, r)
+    Missing_process <- generate_O(n, pi)
+
+    observed        <- count_process[Missing_process == 1]
+    CDF_obs         <- marginal_probs_e(m, observed, length(observed))
+    biv             <- biv_probs_e(m, count_process, Missing_process, n, h = h)
+
+    denom <- sum(CDF_obs * (1 - CDF_obs))
+    if (denom > 0) {
+      kappa_vals[rep] <- sum(biv - CDF_obs^2) / denom
+    } else {
+      kappa_vals[rep] <- NA
+    }
+  }
+  return(kappa_vals)
+}
+
+
+# ------------------------------------------------------------------------------
+# Plot Functions
+# ------------------------------------------------------------------------------
+
+#' Generischer Vergleichs-Plot (IOV, Skew oder Cohen's K)
+#' @param subset        Vorbereitetes subset mit x_pos
+#' @param y_var         String: Spaltenname der y-Variable (z.B. "mean_IOV")
+#' @param ymin_var      String: untere Fehlerbalken-Spalte
+#' @param ymax_var      String: obere Fehlerbalken-Spalte
+#' @param true_val      Wahrer Parameterwert (horizontale Linie)
+#' @param group_centers Mittelpunkte der x-Gruppen
+#' @param x_labels      Beschriftungen der x-Gruppen
+#' @param title         Plot-Titel
+#' @param y_label       y-Achsenbeschriftung
+#' @param subtitle      Plot-Untertitel
+#' @param ylim_offset   c(unten, oben) relativ zum wahren Wert
+#' @param group_var     String: Variable für Shape-Ästhetik
+comparison_plot <- function(subset, y_var, ymin_var, ymax_var,
+                            true_val, group_centers, x_labels,
+                            title, y_label, subtitle,
+                            ylim_offset = c(-0.125, 0.075),
+                            group_var = "pi") {
+  legend_label <- switch(
+    group_var,
+    "pi"   = expression(pi),
+    "r_pi" = expression(r[pi]),
+    "pi_h" = expression(pi[h]),
+    group_var
+  )
+  n_groups   <- length(group_centers)
+  rect_xmin  <- c(0.5, seq(2.5, by = 2, length.out = n_groups - 1))
+  rect_xmax  <- c(seq(2.5, by = 2, length.out = n_groups - 1),
+                  max(subset$x_pos) + 0.5)
+
+  ggplot(subset, aes(x = x_pos, y = .data[[y_var]],
+                     color = type,
+                     shape = factor(.data[[group_var]]))) +
+    annotate("rect",
+             xmin  = rect_xmin[seq(1, n_groups, by = 2)],
+             xmax  = rect_xmax[seq(1, n_groups, by = 2)],
+             ymin  = -Inf, ymax = Inf,
+             alpha = 0.05, fill = "gray90") +
+    geom_hline(yintercept = true_val,
+               color = "darkgreen", linetype = "dashed",
+               linewidth = 1, alpha = 0.7) +
+    geom_line(aes(group = interaction(n, .data[[group_var]])),
+              color = "gray50", linetype = "dashed",
+              alpha = 0.5,
+              position = position_dodge(width = 0.2)) +
+    geom_point(size = 3.5, position = position_dodge(width = 0.2)) +
+    geom_errorbar(aes(ymin = .data[[ymin_var]], ymax = .data[[ymax_var]]),
+                  width = 0.15, linewidth = 0.8,
+                  position = position_dodge(width = 0.2)) +
+    scale_x_continuous(breaks = group_centers, labels = x_labels,
+                       expand = expansion(mult = 0.1)) +
+    scale_color_manual(
+      values = c("Asymptotic" = "#E41A1C", "Simulation" = "#377EB8"),
+      name   = "Method"
+    ) +
+    scale_shape_manual(
+      values = setNames(c(16, 17, 15, 18),
+                        as.character(sort(unique(subset[[group_var]])))),
+      name   = legend_label
+    ) +
+    coord_cartesian(ylim = c(true_val + ylim_offset[1],
+                             true_val + ylim_offset[2])) +
+    labs(title = title, subtitle = subtitle,
+         x = "", y = "") +
+    theme_minimal() +
+    theme(
+      plot.title         = element_text(hjust = 0.5, face = "bold", size = 20),
+      plot.subtitle      = element_text(hjust = 0.5, color = "gray40"),
+      axis.text.x        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 12, color = "gray20"),
+      axis.text.y        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 14, color = "gray20"),
+      legend.position    = "bottom",
+      legend.box         = "horizontal",      # Legendenblöcke nebeneinander
+      legend.direction   = "horizontal",        # Items innerhalb je vertikal
+      legend.spacing.x   = unit(1, "cm"),     # Abstand zwischen den Blöcken
+      legend.text        = element_text(size = 18),
+      legend.title       = element_text(size = 20, face = "bold"),
+      legend.key.size    = unit(0.6, "cm"),
+      panel.grid.major.x = element_blank(),
+      panel.grid.minor.x = element_blank(),
+      panel.border       = element_rect(color = "gray80", fill = NA,
+                                        linewidth = 0.5)
+    ) +
+    guides(
+      color = guide_legend(order = 1, override.aes = list(size = 4)),
+      shape = guide_legend(order = 2, override.aes = list(size = 4))
+    )
 }

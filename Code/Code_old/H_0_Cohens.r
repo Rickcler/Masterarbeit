@@ -17,12 +17,6 @@ scenarios_H0 <- data.frame(
             "Scenario B  (m = 10, p = 0.45)")
 )
 
-#' Rejection rate from raw simulation results
-#' @param kappa_vals  Vector of simulated kappa values
-#' @param crit        Critical value
-rejection_from_vals <- function(kappa_vals, crit) {
-  mean(abs(kappa_vals) > crit, na.rm = TRUE)
-}
 
 set.seed(42)
 rej_H0_list <- lapply(1:nrow(scenarios_H0), function(s) {
@@ -87,63 +81,3 @@ rej_H0_df <- do.call(rbind, rej_H0_list) %>%
     scenario = factor(scenario, levels = scenarios_H0$label)
   )
 
-# ==============================================================================
-# Plot
-# ==============================================================================
-
-ggplot(rej_H0_df,
-       aes(x        = n,
-           y        = rejection_rate,
-           color    = estimator,
-           group    = estimator)) +
-  # Nominalniveau
-  geom_hline(yintercept = alpha_test,
-             color     = "grey40",
-             linetype  = "dashed",
-             linewidth = 0.7) +
-  annotate("text",
-           x     = 40,
-           y     = alpha_test - 0.008,
-           label = "Nominal level (5%)",
-           color = "grey40",
-           size  = 3.5) +
-  # Kurven
-  geom_line(linewidth = 0.9) +
-  geom_point(size = 2.5) +
-  facet_wrap(~ scenario, ncol = 2) +
-  scale_color_manual(
-    name   = "Test statistic",
-    values = c("Uncorrected"    = "#2C3E6B",
-               "Bias-corrected" = "#C0392B")
-  )  +
-  scale_x_log10(name = "log(n)") +
-  scale_y_continuous(
-    limits = c(0, 0.1),
-    breaks = seq(0, 0.20, by = 0.05),
-    labels = scales::percent_format(accuracy = 1),
-    name   = "Empirical rejection frequency"
-  ) +
-  labs(
-    title    = expression(
-      paste("Empirical rejection frequency under ",
-            H[0], "  (", alpha, " = 5%)")
-    )
-  ) +
-  theme_minimal() +
-  theme(
-    plot.title       = element_text(size = 13, face = "bold"),
-    plot.subtitle    = element_text(size = 11,  color = "grey40"),
-    plot.caption     = element_text(size = 9,  color = "grey50",
-                                    face = "italic"),
-    legend.position  = "bottom",
-    legend.title     = element_text(size = 10, face = "bold"),
-    legend.text      = element_text(size = 9),
-    strip.text       = element_text(size = 11, face = "bold"),
-    panel.grid.minor = element_blank()
-  ) +
-  guides(
-    color    = guide_legend(order = 1),
-    linetype = guide_legend(order = 2)
-  )
-
-ggsave("Graphs/rejection_H0_level.png", width = 10, height = 5)
