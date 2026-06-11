@@ -413,8 +413,9 @@ $\hat{\boldsymbol{p}}$, a central limit theorem is
 required. Although the derivations for the ordinal and nominal cases follow the same general strategy, 
 they differ in several technical details. Therefore, we will mainly focus on the ordinal case and its 
 asymptotic results in the following sections. The corresponding results for the nominal case are analogous 
-and are presented in Chapter~\ref{chap:nominal}. Since independence is not assumed, we impose weak dependence
-conditions on the original process $(X_t)$. \\
+and are presented in Chapter~\ref{chap:nominal}. \\ 
+Since independence is not assumed, we impose weak dependence
+conditions on the original process $(X_t)$.
 Specifically, $(X_t)_{t \in \mathbb{Z}}$ is assumed to be strictly
 stationary (recall Definition \ref{def:Stationarity}) and $\alpha$-mixing with exponentially decaying coefficients.\\
 \begin{definition}[$\alpha$-Mixing with Exponential Decay]\label{def:mixing}
@@ -541,17 +542,17 @@ where $\boldsymbol{\Sigma}_Z = (\sigma_{Z;ij})_{i,j=0,\ldots,m-1}$ is given by
 \end{equation}
 \end{theorem}
 \section{Asymptotic Properties of Sample Dispersion Measures}
-\subsection*{IOV}
 We can now use this information of the asymptotic distribution of $\hat{\boldsymbol{f}}$ to compute the asymptotic properties of sample measures that are based on $\hat{\boldsymbol{f}}$. According to the multivariate delta method \citep[Chapter~3]{VanderVaart1998} a random variable $G^* := g^*(\boldsymbol{\Theta^*})$, where $\boldsymbol{\Theta^*} \in \mathbb{R}^{m}$, $\sqrt{n}(\boldsymbol{\Theta^*} - \boldsymbol{\Theta})\overset{asy.}{\sim} \mathcal{N}(0, \boldsymbol{\Sigma^*})$ and  $g^*: \mathbb{R}^m\rightarrow \mathbb{R}$ is a continuously differentiable function, satisfies
 \[\sqrt{n}(G^* - g^*(\boldsymbol{\Theta})) \overset{asy.}{\sim} \mathcal{N}(0, \boldsymbol{j\Sigma^* j^{\top}} )\]
 where $\boldsymbol{j}$ is the Jacobian and where $j_i =  \frac{\partial g^*(\boldsymbol{\Theta})}{\partial \theta_i}$. \\
-Since we have shown that $\boldsymbol{\hat{f}}$ is asymptotically normal we can use this to derive the asymptotic properties of sample measures like the IOV. The respective Jacobian is given by:
+\subsection*{IOV}
+Since we have shown that $\boldsymbol{\hat{f}}$ is asymptotically normal we can set $\boldsymbol{\Theta^*} = \hat{\boldsymbol{f}}$ and use this to derive the asymptotic properties of sample measures like the IOV by setting $g^*: \mathbb{R}^m \rightarrow \mathbb{R}, \quad g^*(\hat{\boldsymbol{f}}) = \mathrm{IOV}(\hat{\boldsymbol{f}})$. The respective Jacobian is given by:
 \begin{align*}
 \boldsymbol{j}_{\mathrm{IOV}} &= \left(\frac{\partial \mathrm{IOV}(\boldsymbol{f})}{\partial f_0 }, \ldots, \frac{\partial \mathrm{IOV}(\boldsymbol{f})}{\partial f_{m-1} }\right) = \frac{4}{m}\left((1- 2 f_0), \ldots,(1-2f_{m-1}) \right)
 \end{align*}
 which leads to an asymptotic variance of the IOV:
 \begin{align*}
-    \sqrt{n}\mathrm{Var}(\widehat{IOV(\boldsymbol{f})}) &\overset{asy.}{=} \boldsymbol{j}_{\mathrm{IOV}} \boldsymbol{\Sigma}_Z \boldsymbol{j}_{\mathrm{IOV}}^{\top} = \sum_{i, ~j =0}^{m-1}  \frac{4(1- 2 f_i)}{m} \frac{4(1- 2 f_j)}{m} \sigma_{\boldsymbol{Z}; i,j}\\
+    \sqrt{n}\mathrm{Var}(\widehat{IOV(\boldsymbol{f})}) &\overset{asy.}{=} \boldsymbol{j}_{\mathrm{IOV}} \boldsymbol{\Sigma}_Z \boldsymbol{j}_{\mathrm{IOV}}^{\top} = \sum_{i, ~j =0}^{m-1}  \frac{4(1- 2 f_i)}{m} \frac{4(1- 2 f_j)}{m} \sigma_{\boldsymbol{Z}; ij}\\
     &= \frac{16}{m^2} \sum_{i,j = 0}^{m-1} (1-2f_i)(1- 2 f_j) \sigma_{\boldsymbol{Z}; ij}
 \end{align*}
 However, since $IOV$ is not a linear function, the first-order delta method only provides information about the asymptotic distribution and variance, not on the finite-sample bias:
@@ -594,8 +595,7 @@ $\mathrm{E}[\boldsymbol{u}] = \boldsymbol{0}$, it follows that
 = \mathrm{tr}(\boldsymbol{A}\,\mathrm{Cov}(\boldsymbol{u})). \qedhere
 \]
 \end{proof}
-
-Since $\mathrm{E}(\boldsymbol{j}_{\mathrm{IOV}} (\hat{\boldsymbol{f}} - \boldsymbol{f})) = 0$,
+\noindent Since $\mathrm{E}(\boldsymbol{j}_{\mathrm{IOV}} (\hat{\boldsymbol{f}} - \boldsymbol{f})) = 0$,
 the finite-sample bias is given by
 \begin{align*}
     \mathrm{Bias}(\mathrm{IOV}(\hat{\boldsymbol{f}})) 
@@ -607,9 +607,7 @@ the finite-sample bias is given by
     \frac{1}{n}\boldsymbol{\Sigma}_Z\right) \\
     &= -\frac{4}{mn} \sum_{i=0}^{m-1} \sigma_{\boldsymbol{Z};\,i,i}.
 \end{align*}
-
-
-This implies that the bias is strictly negative and only depends on the marginal variances 
+\noindent This implies that the bias is strictly negative and only depends on the marginal variances 
 $\sigma_{\boldsymbol{Z}; i,i}$ of the individual estimators $f_i$,  not on the covariances. 
 The results are summarized in the following theorem: \\
 \begin{theorem}[Asymptotic Distribution of $\widehat{\mathrm{IOV}}$]\label{thm:iov_asymp}
@@ -661,8 +659,7 @@ Since $\mathrm{skew}$ is linear in $\boldsymbol{f}$, the Hessian vanishes and th
 estimator is exactly unbiased for all $n$.
 \end{proposition}
 \chapter{Introducing Missingness}
-\section{Missingness Mechanisms}
-
+\section{Missingness Mechanisms}\label{sec:missingness}
 In many applied settings, categorical time series are not fully 
 observed. Individual time points may be missing due to sensor 
 failures, non-response in survey data, or dropout in longitudinal 
@@ -714,8 +711,7 @@ MCAR corresponds to $P(O_t = 1 \mid X_t, \mathcal{F}_{t-1}) = \pi$,
 MAR to $P(O_t = 1 \mid X_t, \mathcal{F}_{t-1}) = P(O_t = 1 \mid 
 \mathcal{F}_{t-1})$, and MNAR to the case where this equality fails.
 \end{remark}
-
-The assumption under which the subsequent results are derived is 
+\noindent The assumption under which the subsequent results are derived is 
 that $(O_t)$ and $(X_t)$ are \emph{independent}, which corresponds 
 to the MCAR case. This is the strongest of the three assumptions 
 and implies in particular that the corrected estimator 
@@ -744,7 +740,7 @@ We then define the naive estimator of $\boldsymbol{f}$ as:
 To assess the performance of this naive estimator we compute its expectation
 \[\mathrm{E}[\hat{\boldsymbol{\mathfrak{f}}}] = \frac{1}{n} \sum_{t = 1}^{n} \mathrm{E}[O_t\boldsymbol{Z_t}] = \frac{1}{n} \sum_{t = 1}^{n} \mathrm{E}[\boldsymbol{Z_t} \mathrm{E}[O_t|\boldsymbol{Z}_t]],\]
 where the last equality follows from the law of iterated expectations.\\
-The dependence structure between $(O_t)_t$ and $(\boldsymbol{Z}_t)_t$ (or equivalently $(X_t)_t$) is crucial. Under the assumption of independence (see Definition~\ref{def:missingness}, part MCAR), the expression simplifies to
+The dependence structure between $(O_t)_t$ and $(\boldsymbol{Z}_t)_t$ (or equivalently $(X_t)_t$) is crucial. Under the assumption of independence (see Section~\ref{sec:missingness}, part MCAR), the expression simplifies to
 \[\frac{1}{n} \sum_{t = 1}^{n} \mathrm{E}[\boldsymbol{Z_t} \mathrm{E}[O_t|\boldsymbol{Z}_t]] = \frac{1}{n}\sum_{t=1}^{n} \mathrm{E}[\boldsymbol{Z}_t]  \mathrm{E}[O_t] = \left(\frac{1}{n} \sum_{t=1}^{n} \mathrm{E}[O_t]\right) \boldsymbol{f} \]
 \subsection*{The missingness corrected estimator}
 \begin{definition}[Corrected Estimator of $\boldsymbol{f}$]\label{def:correctedest}
@@ -1781,7 +1777,7 @@ Definition~\ref{def:cohens-kappa}. Figure~\ref{fig:kappa-profile}
 illustrates the serial dependence structure of the BinAR(1) process 
 by displaying the analytically computed values of 
 $\kappa_{\mathrm{ord}}(h)$ as a function of the lag $h$ for 
-Scenario B with $r \in \{-0.5, -0.2,0.2, 0.4 0.6, 0.8, 0.95  \}$. 
+Scenario B with $r \in \{-0.5, -0.2,0.2, 0.4,  0.6, 0.8, 0.95  \}$. 
 For $r > 0$, the curves decay exponentially with $h$, 
 with the rate of decay decreasing for higher values of $r$ — 
 reflecting the stronger persistence of the process. For $r < 0$, 
@@ -2010,7 +2006,7 @@ approximation.
     \caption{\scriptsize Left: Mean from simulation (solid) and theoretical approximation (dashed) of
     $(\widehat{\mathrm{IOV}} - \mathrm{IOV})$. Right: the same quantities rescaled by a 
     factor of $n$. For
-    $n \in N_{\text{fine}}$ and \hyperref[scen:B]{Scenario~B} with $\pi = 0.75$. Based on
+    $n \in \{2, 3, 5, 10, 15, 25, 37, 50, 75, 100, 150, 200, 375, 500, 750, 1000\}$ and \hyperref[scen:B]{Scenario~B} with $\pi = 0.75$. Based on
     $B = 20{,}000$ replications.}
     \label{fig:iov_bias_n_scaled}
 \end{figure}
@@ -2293,9 +2289,9 @@ persistent negative bias.
 \begin{figure}[htbp]
     \centering
     \includegraphics[height=\textwidth]{../Graphs/MAR_IOV.png}    
-    \caption{\scriptsize Simulated vs.\ asymptotic standard deviation of
-    Simulated bias of $\hat{IOV}$ under MNAR missingness for Scenario A, 
-    across $n\in \{50, 100, 250, 500, 1000\}$ and $\pi = 0.75$. $O_t$ and $X_t$
+    \caption{\scriptsize Simulated distribution of $\hat{IOV}$  
+    under MNAR missingness (dashed lines and colored ribbons) compared to the asymptotic results under MCAR (black line and ribbon) , 
+    for Scenario Aacross $n\in \{50, 100, 250, 500, 1000\}$ and $\pi = 0.75$. $O_t$ and $X_t$
     are related as described in Section~\ref{sec:sim-setup}.}
     \label{fig:bias-mnar}
 \end{figure}
