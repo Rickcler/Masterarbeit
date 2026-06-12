@@ -2526,7 +2526,7 @@ probabilities $p_{ij}(h)$. We therefore define the bias-corrected estimator
 which is the direct analogue of $\hat f_{ij}^*(h)$ from Section~\ref{sec:serial-dependence}. Using the same arguments as for ordinal data,
 we define 
 \[\hat{\boldsymbol{p}}^{(h)*} := (\hat{p}^*_0, \ldots, \hat{p}^*_m, \hat{p}^*_{00}(h),  \ldots, \hat{p}^{*}_{mm}(h))^\top.\]
-From here, one obtains the following multivariate central limit theorem:
+From here, one obtains the following multivariate central limit theorem (see Appendix~\ref{app:nominal-serial} for the detailed derivation):
 \vspace{0.5cm}
 \begin{proposition}[Asymptotic normality of $\hat{\boldsymbol{p}}^{(h)*}$]\label{prop:clt_phat_h}
 Let the assumptions of Theorem~\ref{thm:clt_fstarhat} hold, except that $X_t$ is nominal instead of ordinal. Then 
@@ -2588,7 +2588,13 @@ following hold as $n\to\infty$:
 \end{enumerate}
 \end{theorem}
 \noindent The derivation, including the simplification of the higher-order mixed moments under $H_0$, the explicit 
-covariance matrix entries, and the delta-method calculations, is provided in Appendix~\ref{app:nominal-serial}.
+covariance matrix entries, and the delta-method calculations, is provided in Appendix~\ref{app:nominal-serial}.\\
+In an exactly analogous way as for ordinal data (see Section~\ref{subsec:serial-testing}) a test for serial dependence on a given lag $h$
+based on $\hat{\kappa}_{\mathrm{nom}}(h)$ may be constructed. The test statistic is given by
+\[T_n(h):= \frac{\sqrt{n}\hat{\kappa}_{\mathrm{nom}}(h)}{\sigma_{\kappa}}.\] 
+The consistency of the test under $H_A$ follows from the consistency of $\hat{p}_i^{*}$ and $\hat{p}_{ii}^{(h)*}$
+combined with the same continuous mapping argument as for ordinal data (see Section~\ref{subsec:serial-HA}).
+
 \begin{appendices}
 
 % \renewcommand{\thesection}{\Alph{section}}
@@ -2633,9 +2639,12 @@ In this section we provide the detailed computations of the elements \textbf{(ii
 
 In this section, we provide the detailed derivation of the elements of 
 the asymptotic covariance matrix 
-$\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$.\\
+$\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ under the assumption $H_0$ that $(X_t)$ is i.i.d.\\
 By the multivariate delta method, the asymptotic covariance matrix of 
-$\sqrt{n}(\hat{\boldsymbol{f}}^{(h)*} - \mu)$ is given by
+$\sqrt{n}(\hat{\boldsymbol{f}}^{(h)*} - \boldsymbol{\mu_{\boldsymbol{f}^{(h)*}}})$, 
+where 
+\[\boldsymbol{\mu}_{\boldsymbol{f}^{(h)*}} = (f_0, \ldots, f_{m-1}, f_{00}(h), \ldots, f_{(m-1)(m-1)}(h))^{\top} \]
+is given by 
 \[
 \boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}} 
 = \boldsymbol{G}\,\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}\,\boldsymbol{G}^\top.
@@ -2656,7 +2665,8 @@ Carrying out the matrix multiplication row by row yields
 \]
 To obtain explicit expressions for the entries 
 $\sigma^{(h)*}_{ij}$, we distinguish three cases depending on whether 
-the indices correspond to marginal or bivariate components:
+the indices correspond to marginal or bivariate components. Recall that under $H_0$ 
+the bivariate probabilities factorize as $f_{ij}(h) = f_i f_j$ for all $i,j$ and $h$:
 
 {\allowdisplaybreaks
 \begin{align*}
@@ -2685,13 +2695,12 @@ the indices correspond to marginal or bivariate components:
     \ (i' = i-m,\ j' = j-m): \\
     &\quad \sigma^{(h)*}_{ij}
     = \frac{1}{\pi(h)^2}(f_{\min\{i', j'\}}- f_{i'} f_{j'})
-    \Bigl(\pi(h)(f_{\min\{i', j'\}}- f_{i'} f_{j'}) \\
-    &\qquad\qquad + 2\pi(h, 2h)f_{i'}f_{j'}\Bigr).
+    \Bigl(\pi(h)(f_{\min\{i', j'\}}- f_{i'} f_{j'})  + 2\pi(h, 2h)f_{i'}f_{j'}\Bigr).
 \end{align*}}
 
 \section{Asymptotic Variance of $\hat{\kappa}_{\mathrm{ord}}(h)$}\label{app:var-kappa}
 
-We derive the asymptotic variance $\sigma^2_\kappa = 
+In this section, we derive the asymptotic variance $\sigma^2_\kappa = 
 \boldsymbol{D}_\kappa \boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}} 
 \boldsymbol{D}_\kappa^\top$ under $H_0$. Plugging the derivatives 
 $d_{1;i}$ and $d_{2;i}$ and the elements of 
@@ -2739,6 +2748,7 @@ formula yields
 
 \section{Hessian $\kappa(h)$}\label{app:Hessian}
 In this section, we derive the partial derivatives of $d_{1i}$ with respect to $f_j$. 
+We distinguish the cases $i = j$ and $i \neq j$ since the expressions differ substantially: 
 
 \subsection*{Case $i = j$}
 {\allowdisplaybreaks 
@@ -2793,8 +2803,8 @@ are given by
 \end{align*}
 Summing over all diagonal elements and substituting 
 $\sigma^{(h)*}_{im+l} = 2f_l\sigma^{(h)*}_{il}$ from case 
-\textbf{(ii)} of $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ 
-and using symmetry $\sigma^{(h)*}_{il} = \sigma^{(h)*}_{li}$:
+\textbf{(ii)} of $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$, 
+using the symmetry $\sigma^{(h)*}_{il} = \sigma^{(h)*}_{li}$ and Lemma~\ref{lem:quadform} we have :
 \begin{align*}
     \mathrm{Bias}(\hat{\kappa}_{\mathrm{ord}}(h))
     &= \frac{1}{2}\mathrm{tr}(\boldsymbol{H}_{\kappa}\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}})
@@ -2820,7 +2830,11 @@ and using symmetry $\sigma^{(h)*}_{il} = \sigma^{(h)*}_{li}$:
 
 
 \section{Derivation of $\hat{\kappa}_{\mathrm{ord}}$ under i.i.d. missingness}\label{app:var-kappa-iid}
-In this section we provide the detailed computations of the simplified version of $\hat{\kappa}_{\mathrm{ord}}$ under i.i.d. missingness, which is given by
+In this section we provide the detailed computations of the simplified version of the variance of $\hat{\kappa}_{\mathrm{ord}}$ under i.i.d. missingness. Recall that this implies
+\[
+    \pi(h) = \pi^2, \qquad \pi(h, 2h) = \pi^3.
+\]
+For the simplified variance term we then have
 \begin{align*}
     \sigma^2_\kappa &=
         \frac{
@@ -2891,8 +2905,7 @@ follows by the same matrix multiplication as in
 Section~\ref{sec:fstar_hat} that the elements of
 $\boldsymbol{\Sigma}_{\hat{\boldsymbol{p}}^*}$ are obtained from those
 of $\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}}^*}$ by the same
-substitution.
-
+substitution.\\
 For the bias, the Hessian of $g_j$ evaluated at
 $\boldsymbol{\mu}_{\boldsymbol{Y}^*}$ is sparse, with non-zero entries
 \[
@@ -2952,7 +2965,6 @@ We define $\boldsymbol{Y}^{(h)*}_n$ in direct analogy to $\boldsymbol{Z}^{(h)*}_
 \end{align*}
 and accordingly $\hat{\boldsymbol{p}}^{(h)*}$ in direct analogy to $\hat{\boldsymbol{f}}^{(h)*}$ from Section~\ref{sec:serial-dependence} as
 \[\hat{\boldsymbol{p}}^{(h)*} := \left(\hat{p}_0^{*}, \ldots, \hat{p}_m^{*}, \hat{p}_{00}(h)^{*}, \ldots, \hat{p}_{mm}(h)^{*}\right)^\top.\]
-
 The consistency of $\bar{\boldsymbol{Y}}^{(h)*}_n$ follows from the same argument as that of $\bar{\boldsymbol{Z}}^{(h)*}_n$ in Section~\ref{sec:serial-dependence}. 
 The elements of the asymptotic covariance matrix $\boldsymbol{\Sigma}_{\boldsymbol{Y}^{(h)*}}$ are 
 computed in direct analogy to those of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$
