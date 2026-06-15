@@ -17,6 +17,12 @@ Brockwell, P.~J. and Davis, R.~A. (2016).
 \newblock {\em Time Series: Theory and Methods}.
 \newblock Springer, New York, NY, USA, 3 edition.
 
+\bibitem[Chang et~al., 1984]{Chang1984}
+Chang, T.-J., Kavvas, M.~L., and Delleur, J.~W. (1984).
+\newblock Daily precipitation modeling by discrete autoregressive moving
+  average processes.
+\newblock {\em Water Resources Research}, 20(5):565--580.
+
 \bibitem[Diggle et~al., 2002]{diggle_2002}
 Diggle, P.~J., Heagerty, P., Liang, K.-Y., and Zeger, S.~L. (2002).
 \newblock {\em Analysis of Longitudinal Data}.
@@ -58,6 +64,11 @@ Rubin, D.~B. (1976).
 \newblock Inference and missing data.
 \newblock {\em Biometrika}, 63(3):581--592.
 
+\bibitem[Stoffer et~al., 2000]{Stoffer2000}
+Stoffer, D.~S., Tyler, D.~E., and Wendt, D.~A. (2000).
+\newblock The spectral envelope and its applications.
+\newblock {\em Statistical Science}, 15(3):224--253.
+
 \bibitem[van~der Vaart, 1998]{VanderVaart1998}
 van~der Vaart, A.~W. (1998).
 \newblock {\em Asymptotic Statistics}.
@@ -68,5 +79,11 @@ van~der Vaart, A.~W. (1998).
 Wei\ss, C.~H. (2018).
 \newblock {\em An Introduction to Discrete-Valued Time Series}.
 \newblock Wiley.
+
+\bibitem[Weiß, 2021]{weiss2021categorical}
+Weiß, C.~H. (2021).
+\newblock Analyzing categorical time series in the presence of missing
+  observations.
+\newblock {\em Statistics in Medicine}, 40(21):4675--4690.
 
 \end{thebibliography}

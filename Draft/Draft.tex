@@ -35,7 +35,96 @@
 
 \begin{document}
 
-\chapter{Distributional Properties of Categorical Processes}
+\chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
+
+Categorical time series arise naturally in many empirical disciplines. 
+In the social sciences, survey respondents repeatedly assess their 
+satisfaction on an ordered scale; in medicine, patient outcomes are often recorded on categorical scales,
+as in the study of sleep states by \citet{Stoffer2000}; in 
+meteorology, daily precipitation rates may be analyzed as ordered 
+categories with temporal dependence like in \citet{Chang1984}. What these settings have 
+in common is that the observed variable at each time point takes 
+values in a finite set of categories, and that successive observations 
+are not independent. The statistical analysis of such data requires 
+tools that are tailored to the categorical nature of the observations 
+and that account for the temporal dependence structure of the process. \\
+Categorical time series are a special case of the broader class of 
+discrete-valued time series surveyed by \citet{Weiss2018}. However, while 
+certain discrete valued processes, like count-valued processes, 
+may  admit a natural numerical interpretation that 
+allows arithmetic operations on the observed values, categorical 
+variables generally don't carry any such meaning. Consider school grades 
+as a typical example. Although the categories are often labelled numerically, 
+these labels merely reflect the underlying ordering and do not support meaningful 
+arithmetic operations. Consequently, standard tools such as means, variances, or 
+autocorrelations are generally inappropriate and must be replaced by measures tailored to categorical data.\\
+Missing observations are a common challenge across empirical 
+disciplines. In cross-sectional surveys, respondents may refuse to 
+answer certain questions or give incomplete responses; in automated 
+monitoring systems, sensor failures or transmission errors render 
+individual time points unobservable. In longitudinal surveys, respondents 
+may forget or be unavailable during certain waves of data collection. 
+Ignoring such gaps and computing naive estimators from the observed 
+data alone can introduce substantial bias and lead to wrong conclusions. 
+The classical taxonomy of missingness mechanisms, introduced by 
+\citet{Rubin1976} and further developed by \citet{little_rubin_2002}, 
+provides the conceptual foundation for a principled treatment of 
+incomplete data. While many of these ideas carry over conceptually to the time series 
+setting, the sequential structure of categorical processes and the 
+absence of meaningful arithmetic operations call for a dedicated 
+treatment that respects the specific nature of the data. 
+However, although the statistical analysis of complete categorical time series
+is well established, considerably less attention has been devoted to situations 
+in which observations are missing.\\
+The starting point for the present thesis is the work of 
+\citet{weiss2021categorical}, who addresses the analysis of 
+categorical time series in the presence of missing observations --- 
+a setting for which only limited methodological results had previously been available. 
+Both ordinal and nominal processes are considered, 
+and solutions are developed for the analysis of marginal and serial 
+properties under missingness. This is achieved by adapting the concept 
+of amplitude modulation to the categorical setting: a binary process 
+$(O_t)$ runs concurrently with the categorical process $(X_t)$, with 
+$O_t = 1$ indicating that $X_t$ is observed and $O_t = 0$ indicating 
+that it is missing. Furthermore, closed-form 
+expressions for the asymptotic distributions of the derived statistics are 
+obtained. Throughout most of the theoretical development,
+missingness is assumed to occur completely at random,
+implying independence between the observation process and the
+underlying categorical process.\\
+The present thesis builds on this foundation in several ways. First, 
+we provide a more explicit and self-contained derivation of the 
+asymptotic results, spelling out the underlying mixing assumptions and 
+the CLT arguments in full detail. Second, we conduct an extensive 
+Monte Carlo simulation study that goes beyond the illustrations in 
+\citet{weiss2021categorical} by systematically investigating the 
+finite-sample behavior and the rate of convergence of the proposed 
+estimators. Third, we examine the effect of serially dependent 
+missingness, where $(O_t)$ is no longer i.i.d.\ but follows a 
+stationary binary Markov chain, and study how temporal dependence in 
+the observation process affects the asymptotic variance of the 
+estimators. Finally, we investigate the robustness of the proposed 
+methods under violations of the assumption of independence of $O_t$ and $X_t$, considering 
+state-dependent missingness mechanisms where the probability of 
+observation depends on the current value of the underlying process 
+$(X_t)$.\\
+The thesis is structured as follows. \Cref{chap:distributional} 
+presents the theoretical framework for categorical time series, by introducing 
+basic concepts that relate to time-series, like  stationarity, as well as 
+concepts that are specific to categorical data, like measures of location and 
+dispersion, and Cohen's $\kappa$ as a measure of serial dependence. 
+\Cref{chap:sample} develops estimators for the relevant measures based on counting relative frequencies, 
+and develops the asymptotic theory for these sample-based quantities in the fully observed case. 
+\Cref{chap:missingness} introduces the amplitude modulation framework, 
+derives the corrected estimators and their asymptotic properties, and 
+develops the hypothesis test for serial independence. 
+\Cref{chap:simulation} presents the simulation study. 
+\Cref{chap:nominal} presents the corresponding theory for nominal processes. 
+Technical derivations are collected in the Appendix.
+
+
+\chapter{Distributional Properties of Categorical Processes}\label{chap:distributional}
 % Bradley Buch - Introduction to strong mixing conditions (Fernleihe; Kapitel 5)
 % Zu Messbarenfunktionen: Klenke, Bauer (MaÃŸtheorie; Wahrscheinlichkeitstheorie; Messbare Abbildungen S. 52 Indikatorfunktion), Georgii, MaÃŸ und Wahrscheinlichkeitstheorie, Brockwell: Theory and Methodes, Shao Mathematical statistics
 % Cramer Wolt Methode um zu begrÃ¼nden warum sich CLT auf MehrdimensionalitÃ¤t Ã¼bertrÃ¤gt.
@@ -380,7 +469,7 @@ $j$, i.e.\ when the process never remains in the same category across lag $h$:
 which depends on the marginal distribution and equals $-1$ only in the special case
 of a uniform marginal. For the ordinal version, the lower bound takes an analogous
 form but involves the cumulative probabilities $f_j$.
-\chapter{Sample Measures}
+\chapter{Sample Measures}\label{chap:sample}
 \section{Estimation of Marginal Distributions}
 To estimate the marginal (cumulative) probabilities, we express the
 relative frequencies through a binarization of the original process
@@ -658,7 +747,7 @@ Under the assumptions of Theorem~\ref{thm:clt_fhat}:
 Since $\mathrm{skew}$ is linear in $\boldsymbol{f}$, the Hessian vanishes and the
 estimator is exactly unbiased for all $n$.
 \end{proposition}
-\chapter{Introducing Missingness}
+\chapter{Introducing Missingness}\label{chap:missingness}
 \section{Missingness Mechanisms}\label{sec:missingness}
 In many applied settings, categorical time series are not fully 
 observed. Individual time points may be missing due to sensor 
