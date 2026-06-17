@@ -59,6 +59,13 @@ Little, R. J.~A. and Rubin, D.~B. (2002).
 \newblock Wiley Series in Probability and Statistics. Wiley, Hoboken, NJ, 2
   edition.
 
+\bibitem[Parzen, 1963]{Parzen1963}
+Parzen, E. (1963).
+\newblock On spectral analysis with missing observations and amplitude
+  modulation.
+\newblock {\em Sankhy{\=a}: The Indian Journal of Statistics, Series A},
+  25(4):383--392.
+
 \bibitem[Rubin, 1976]{Rubin1976}
 Rubin, D.~B. (1976).
 \newblock Inference and missing data.

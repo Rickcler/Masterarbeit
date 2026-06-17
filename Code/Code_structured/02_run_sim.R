@@ -31,7 +31,7 @@ scenarios <- scenarios[
 rownames(scenarios) <- NULL
 
 # ------------------------------------------------------------------------------
-# Szenarien: MAR
+# Szenarien: MAR & MNAR
 # ------------------------------------------------------------------------------
 
 scenarios_MAR <- expand.grid(
@@ -48,6 +48,16 @@ scenarios_MAR <- scenarios_MAR[
   (scenarios_MAR$m == 10 & scenarios_MAR$p == 0.45 & scenarios_MAR$r == 0.50),
 ]
 rownames(scenarios_MAR) <- NULL
+
+
+# Scenarios
+scenarios_mnar <- expand.grid(
+  r = c(0.00, 0.15, 0.35, 0.6),
+  mechanism = c("increasing", "decreasing"),
+  stringsAsFactors = FALSE
+)
+# Simulation
+n_grid_mnar <- c(50, 100, 250, 500, 1000, 2000)
 
 # ------------------------------------------------------------------------------
 # Hauptsimulationen
@@ -92,6 +102,62 @@ results_MAR_inv <- apply(scenarios_MAR, 1, function(row) {
     pi_high = as.numeric(row["pi_high"])
   )
 })
+
+# Figure 4.12 left plot
+set.seed(42)
+
+kappa_inc_list <- lapply(n_grid, function(n) {
+  vals <- simulation_kappa_HA_MNAR(
+    n, m_val, p_val, r_val, pi_val,
+    h = h_val,
+    n_reps = 1000,
+    mechanism = "increasing"
+  )
+  data.frame(n = n, kappa_hat = vals, mech = "Increasing")
+})
+
+kappa_dec_list <- lapply(n_grid, function(n) {
+  vals <- simulation_kappa_HA_MNAR(
+    n, m_val, p_val, r_val, pi_val,
+    h = h_val,
+    n_reps = 1000,
+    mechanism = "decreasing"
+  )
+  data.frame(n = n, kappa_hat = vals, mech = "Decreasing")
+})
+
+# Figure 4.12 right plot
+set.seed(42)
+rej_list_mnar <- lapply(1:nrow(scenarios_mnar), function(s) {
+
+  sc <- scenarios_mnar[s, ]
+
+  rates <- sapply(n_grid_mnar, function(n) {
+
+    rejection_rate_MNAR(
+      n          = n,
+      m          = 3,
+      p          = 0.20,
+      r          = sc$r,
+      pi_low     = 0.5,
+      pi_high    = 0.9,
+      h          = 1,
+      alpha      = 0.05,
+      n_reps     = 1000,
+      mechanism  = sc$mechanism
+    )
+  })
+
+  data.frame(
+    n = n_grid_mnar,
+    rate = rates,
+    r = sc$r,
+    mechanism = sc$mechanism
+  )
+})
+
+
+rej_df_mnar <- do.call(rbind, rej_list_mnar)
 
 # ------------------------------------------------------------------------------
 # Ergebnisse in Data Frames
@@ -150,7 +216,7 @@ sim_data$scaled_CLT  <- sqrt(sim_data$n) * sim_data$diff
 sim_data$scaled_bias <- sim_data$n       * sim_data$diff
 
 # Feinere n-Gitter für Bias-Kurve
-set.seed(SEED)
+set.seed(42)
 sim_data_2 <- do.call(rbind, lapply(
   c(2, 3, 5, 10, 15, 25, 37, 50, 75, 100, 150, 200, 375, 500, 750, 1000),
   function(n_val) simulation_raw(n_val, 10, 0.3, 0.2, 0.75, n_reps  = 50000)

@@ -121,6 +121,43 @@ rejection_rate <- function(n, m, p, r, pi, h = 1,
 rejection_from_vals <- function(kappa_vals, crit) {
   mean(abs(kappa_vals) > crit, na.rm = TRUE)
 }
+
+# Rejection Rate
+rejection_rate_MNAR <- function(
+    n,
+    m,
+    p,
+    r,
+    pi_low = 0.5,
+    pi_high = 0.9,
+    h = 1,
+    alpha = 0.05,
+    n_reps = 1000,
+    mechanism = c("increasing", "decreasing")
+) {
+
+  mechanism <- match.arg(mechanism)
+
+  # asymptotischer kritischer Wert
+  sd_H0 <- sqrt(asymp_var_kappa_H0(m, p, pi = 0.75) / n)
+
+  crit_val <- qnorm(1 - alpha / 2) * sd_H0
+
+  kappa_vals <- simulation_kappa_HA_MNAR(
+    n         = n,
+    m         = m,
+    p         = p,
+    r         = r,
+    pi_low    = pi_low,
+    pi_high   = pi_high,
+    h         = h,
+    n_reps    = n_reps,
+    mechanism = mechanism
+  )
+
+  mean(abs(kappa_vals) > crit_val, na.rm = TRUE)
+}
+
 # ------------------------------------------------------------------------------
 # True Parameter Functions
 # ------------------------------------------------------------------------------
@@ -565,6 +602,70 @@ simulation_kappa_HA <- function(n, m, p, r, pi, h = 1, n_reps = 1000) {
   return(kappa_vals)
 }
 
+simulation_kappa_HA_MNAR <- function(
+    n, m, p, r,
+    pi_low = 0.5,
+    pi_high = 0.9,
+    h = 1,
+    n_reps = 1000,
+    mechanism = c("increasing", "decreasing")
+) {
+
+  mechanism <- match.arg(mechanism)
+
+  kappa_vals <- numeric(n_reps)
+
+  for(rep in 1:n_reps) {
+
+    # abhängiger Prozess
+    count_process <- generate_binar1(n, m, p, r)
+
+    # MNAR Missingness
+    O_t <- switch(
+      mechanism,
+
+      increasing =
+        generate_O_MAR(
+          count_process,
+          m,
+          pi_low,
+          pi_high
+        ),
+
+      decreasing =
+        generate_O_MAR_inv(
+          count_process,
+          m,
+          pi_low,
+          pi_high
+        )
+    )
+
+    # geschätzte CDF
+    CDF_hat <- marginal_probs_e(
+      m,
+      count_process[O_t == 1],
+      sum(O_t)
+    )
+
+    # geschätzte biv probs
+    biv_hat <- biv_probs_e(
+      m,
+      count_process,
+      O_t,
+      n,
+      h = h
+    )
+
+    # Cohen-Kappa-artige Statistik
+    num <- sum(biv_hat - CDF_hat^2)
+    den <- sum(CDF_hat * (1 - CDF_hat))
+
+    kappa_vals[rep] <- num / den
+  }
+
+  kappa_vals
+}
 
 # ------------------------------------------------------------------------------
 # Plot Functions

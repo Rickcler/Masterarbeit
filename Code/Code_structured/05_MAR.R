@@ -108,6 +108,7 @@ plt <- ggplot(compare_df,
   ) +
   theme_minimal() +
   theme(legend.position = "bottom")
+print(plt)
 ggsave("Graphs/iov_mnar.png", width = 8, height = 5)
 # ------------------------------------------------------------------------------
 # Plot 2: Mittlerer Bias – MCAR vs. MAR
@@ -558,7 +559,7 @@ ggsave("Graphs/MNAR_Kappa_H_A.png", width = 5.5, height = 8)
 
 
 
-Sigma_mcar <- Sigma_Star(m = 3, p = 0.20, r = 0.35, pi = 0.75, pi_h = 0)
+Sigma_mcar <- Sigma_Star(m = 3, p = 0.20, r = 0.35, pi = 0.75, r_pi = 0)
 
 theory_bias <- data.frame(
   n    = seq(50, 1000, by = 1),

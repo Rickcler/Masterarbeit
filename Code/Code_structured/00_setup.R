@@ -4,13 +4,14 @@
 # ==============================================================================
 
 # Pakete (einmalig installieren falls nötig)
-# install.packages(c("dplyr", "tidyr", "ggplot2", "patchwork", "cowplot"))
+# install.packages(c("dplyr", "tidyr", "ggplot2", "patchwork", "cowplot", "scales"))
 
 library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(patchwork)
 library(cowplot)
+library(scales)
 
 
 # Globale Simulationsparameter

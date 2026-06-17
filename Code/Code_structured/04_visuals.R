@@ -6,6 +6,8 @@
 
 source("00_setup.R")
 load("Masterarbeit.RData")
+
+
 #------------------------------------------------------------------------------
 # Figure 4.1: Cohen's Kappa of BinAR(1) for different values of r
 #------------------------------------------------------------------------------
@@ -195,7 +197,25 @@ ggsave("Graphs/Bias_unscaled.png", unscaled_bias_plot + theme(legend.position = 
 
 # Figure 4.4 right: Mittlerer Bias scaled
 
-scaled_bias_plot <- ggplot(mean_df_2, aes(x = n, y = mean_scaled_diff)) +
+band_df_2 <- sim_data_2 %>%
+  group_by(n) %>%
+  summarise(
+    B                = sum(!is.na(IOV)),
+    mean_scaled_diff = unique(n) * mean(IOV - IOV_true, na.rm = TRUE),
+    sd_IOV           = sd(IOV, na.rm = TRUE),
+    se_scaled_diff   = unique(n) * sd_IOV / sqrt(B)
+  ) %>%
+  ungroup()
+
+IOV_true <- (4 / 10) * sum(f_true * (1 - f_true))
+scaled_bias_plot <- ggplot(band_df_2, aes(x = n, y = mean_scaled_diff)) +
+  
+  # 95%-Konfidenzintervall des Monte-Carlo-Mittelwerts (vertikale Linien)
+  geom_errorbar(
+    aes(ymin = mean_scaled_diff - 1.96 * se_scaled_diff,
+        ymax = mean_scaled_diff + 1.96 * se_scaled_diff),
+    width = 0, color = "grey50"
+  ) +
   
   # Punkte
   geom_point(size = 1.5, color = "black") +
@@ -203,11 +223,11 @@ scaled_bias_plot <- ggplot(mean_df_2, aes(x = n, y = mean_scaled_diff)) +
   # schwarze Linie (empirisch)
   geom_line(color = "black", linewidth = 0.5) +
   
-  # rote Glättung (wie im Plot)
+  # rote Glättung
   geom_smooth(method = "loess", se = FALSE,
               color = "red", linewidth = 1) +
   
-  # theoretischer Grenzwert (horizontal)
+  # theoretischer Grenzwert
   geom_hline(
     yintercept = -(4 / 10) * sum(diag(Sigma_raw)),
     linetype = "dashed",
@@ -220,6 +240,7 @@ scaled_bias_plot <- ggplot(mean_df_2, aes(x = n, y = mean_scaled_diff)) +
   ) +
   
   theme_minimal()
+
 
 print(scaled_bias_plot)
 ggsave("Graphs/Bias_scaled.png", scaled_bias_plot + theme(legend.position = "none"), width = 8, height = 5)
@@ -763,187 +784,378 @@ ggplot(rej_df,
 ggsave("Graphs/kappa_rejection_rate.png", width = 5.5, height = 8)
 
 
-# ==============================================================================
-# Plot-Block E: Marginale Verteilungen der Simulationsszenarien
-# ================ge==============================================================
+# ------------------------------------------------------------------------------
+# Figure 4.11: IOV under MNAR 
+# ------------------------------------------------------------------------------
 
-# Masterarbeit
-scen_A <- data.frame(
-  scenario = "Scenario A\nm = 3, p = 0.20, r = 0.35",
-  category = 0:3,
-  pmf      = dbinom(0:3,  size = 3,  prob = 0.20),
-  cdf      = pbinom(0:3,  size = 3,  prob = 0.20)
+# MCAR: direkt aus sim_df (m=3, p=0.20, r=0.35, pi=0.75, pi_h=0)
+mcar_df <- sim_df %>%
+  filter(m == 3, p == 0.20, r == 0.35, pi == 0.75, r_pi == 0) %>%
+  mutate(mechanism = "MCAR") %>%
+  select(n, mechanism, mean_IOV, sd_IOV, mean_Skew, sd_Skew, mean_C, sd_C)
+
+# MAR: Szenarien für m=3, p=0.20, r=0.35 aus results_MAR
+mar_idx <- which(
+  scenarios_MAR$m == 3 &
+  scenarios_MAR$p == 0.20 &
+  scenarios_MAR$r == 0.35
 )
 
-scen_B <- data.frame(
-  scenario = "Scenario B\nm = 10, p = 0.45, r = 0.50",
-  category = 0:10,
-  pmf      = dbinom(0:10, size = 10, prob = 0.45),
-  cdf      = pbinom(0:10, size = 10, prob = 0.45)
-)
+mar_df <- do.call(rbind, lapply(seq_along(mar_idx), function(i) {
+  idx <- mar_idx[i]
+  s   <- results_MAR[[idx]]$summary
+  data.frame(
+    n         = scenarios_MAR$n[idx],
+    mechanism = "MAR",
+    mean_IOV  = s["mean", "IOV"],
+    sd_IOV    = s["sd",   "IOV"],
+    mean_Skew = s["mean", "Skew"],
+    sd_Skew   = s["sd",   "Skew"],
+    mean_C    = s["mean", "lag1_Cohen"],
+    sd_C      = s["sd",   "lag1_Cohen"]
+  )
+}))
 
-plot_dist_df <- bind_rows(scen_A, scen_B) %>%
+# MAR (inv.)
+mar_inv_df <- do.call(rbind, lapply(seq_along(mar_idx), function(i) {
+  idx <- mar_idx[i]
+  s   <- results_MAR_inv[[idx]]$summary
+  data.frame(
+    n         = scenarios_MAR$n[idx],
+    mechanism = "MAR (inv.)",
+    mean_IOV  = s["mean", "IOV"],
+    sd_IOV    = s["sd",   "IOV"],
+    mean_Skew = s["mean", "Skew"],
+    sd_Skew   = s["sd",   "Skew"],
+    mean_C    = s["mean", "lag1_Cohen"],
+    sd_C      = s["sd",   "lag1_Cohen"]
+  )
+}))
+
+compare_df <- bind_rows(mcar_df, mar_df, mar_inv_df) %>%
   mutate(
-    scenario = factor(scenario, levels = c(
-      "Scenario A\nm = 3, p = 0.20, r = 0.35",
-      "Scenario B\nm = 10, p = 0.45, r = 0.50"
-    )),
-    category = factor(category)
+    mechanism = factor(mechanism,
+                       levels = c("MCAR", "MAR", "MAR (inv.)")),
+    n = as.numeric(as.character(n))
   )
 
-p_pmf <- ggplot(plot_dist_df, aes(x = category, y = pmf)) +
-  geom_col(fill = "grey70", color = "grey40", width = 0.6) +
-  geom_text(aes(label = round(pmf, 3)),
-            vjust = -0.4, size = 2.8, color = "grey30") +
-  facet_wrap(~ scenario, scales = "free_x") +
-  scale_y_continuous(limits = c(0, 0.60), name = "Probability") +
-  scale_x_discrete(name = "Category") +
-  labs(title = "Marginal PMF") +
-  theme_minimal() +
-  theme(strip.text = element_text(size = 10, face = "bold"),
-        panel.grid.major.x = element_blank(),
-        plot.title = element_text(size = 11))
+true_iov  <- true_IOV(m = 3, p = 0.20)
+true_skew <- true_Skew(m = 3, p = 0.20)
 
-p_cdf_dist <- ggplot(plot_dist_df, aes(x = category, y = cdf)) +
-  geom_col(fill = "grey70", color = "grey40", width = 0.6) +
-  geom_text(aes(label = round(cdf, 3)),
-            vjust = -0.4, size = 2.8, color = "grey30") +
-  geom_hline(yintercept = 0.5, linetype = "dashed",
-             color = "steelblue", linewidth = 0.6) +
-  annotate("text", x = 0.6, y = 0.52,
-           label = "0.5", color = "steelblue", size = 3) +
-  facet_wrap(~ scenario, scales = "free_x") +
-  scale_y_continuous(limits = c(0, 1.05), name = "Cumulative Probability") +
-  scale_x_discrete(name = "Category") +
-  labs(title = "Marginal CDF") +
-  theme_minimal() +
-  theme(strip.text = element_text(size = 10, face = "bold"),
-        panel.grid.major.x = element_blank(),
-        plot.title = element_text(size = 11))
+compare_df$mean_bias        <- compare_df$mean_IOV - true_iov
+compare_df$mean_scaled_bias <- compare_df$n * compare_df$mean_bias
 
-p_pmf / p_cdf_dist +
-  plot_annotation(
-    title    = "Marginal distributions of the two simulation scenarios",
-    subtitle = "Top: PMF    Bottom: CDF    Dashed line: 0.5",
-    theme    = theme(
-      plot.title    = element_text(size = 13, face = "bold"),
-      plot.subtitle = element_text(size = 10, color = "grey40")
-    )
-  )
-# Vortrag
+# Manuelle Farbpalette (konsistent über alle Plots)
+mech_colors    <- c("MCAR" = "black", "MAR" = "steelblue",
+                    "MAR (inv.)" = "tomato")
+mech_linetypes <- c("MCAR" = "solid", "MAR" = "dashed",
+                    "MAR (inv.)" = "dotdash")
 
-# Farbpalette für Vortrag
-col_primary   <- "#2C3E6B"   # dunkles Blau
-col_secondary <- "#5B8DB8"   # mittleres Blau
-col_accent    <- "#E8EEF4"   # sehr helles Blau (Hintergrund Balken)
-col_text      <- "#2C2C2C"
-col_grid      <- "#E5E5E5"
-
-
-scen_A <- data.frame(
-  scenario = "Scenario A",
-  category = 0:3,
-  pmf      = dbinom(0:3,  size = 3,  prob = 0.20),
-  cdf      = pbinom(0:3,  size = 3,  prob = 0.20)
-)
-
-scen_B <- data.frame(
-  scenario = "Scenario B",
-  category = 0:10,
-  pmf      = dbinom(0:10, size = 10, prob = 0.45),
-  cdf      = pbinom(0:10, size = 10, prob = 0.45)
-)
-
-plot_dist_df <- bind_rows(scen_A, scen_B) %>%
-  mutate(
-    scenario = factor(scenario, levels = c("Scenario A", "Scenario B")),
-    category = factor(category)
-  )
-# Einheitliches Vortrag-Theme
-theme_talk <- function() {
-  theme_minimal(base_size = 14) +
-    theme(
-      # Hintergrund
-      plot.background  = element_rect(fill = "white", color = NA),
-      panel.background = element_rect(fill = "white", color = NA),
-      panel.grid.major = element_line(color = col_grid, linewidth = 0.4),
-      panel.grid.minor = element_blank(),
-      panel.grid.major.x = element_blank(),
-      # Titel
-      plot.title    = element_text(size = 16, face = "bold",
-                                   color = col_primary, margin = margin(b = 4)),
-      plot.subtitle = element_text(size = 12, color = "grey50",
-                                   margin = margin(b = 10)),
-      # Achsen
-      axis.title    = element_text(size = 12, color = col_text),
-      axis.text     = element_text(size = 11, color = col_text),
-      axis.ticks    = element_blank(),
-      # Facetten
-      strip.text    = element_text(size = 13, face = "bold",
-                                   color = col_primary),
-      strip.background = element_rect(fill = col_accent, color = NA),
-      # Legende
-      legend.position  = "bottom",
-      legend.title     = element_text(size = 11, face = "bold"),
-      legend.text      = element_text(size = 11),
-      # Ränder
-      plot.margin = margin(12, 16, 12, 16)
-    )
-}
-
-p_pmf <- ggplot(plot_dist_df, aes(x = category, y = pmf)) +
-  geom_col(fill = col_secondary, color = "white",
-           width = 0.65, alpha = 0.85) +
-  geom_text(aes(label = sprintf("%.3f", pmf)),
-            vjust = -0.5, size = 3.5,
-            color = col_primary, fontface = "bold") +
-  facet_wrap(~ scenario, scales = "free_x") +
-  scale_y_continuous(
-    limits = c(0, 0.68),
-    expand = c(0, 0),
-    name   = "Probability"
+MNAR_IOV_plt <- ggplot(compare_df,
+       aes(x = n, y = mean_IOV, color = mechanism,
+           linetype = mechanism, group = mechanism)) +
+  geom_hline(yintercept = true_iov,
+             color = "grey40", linetype = "dashed", linewidth = 0.7) +
+  annotate("text", x = 55, y = true_iov + 0.005,
+           label = "True IOV", color = "grey40", size = 3, hjust = 0) +
+  geom_ribbon(aes(ymin = mean_IOV - sd_IOV,
+                  ymax = mean_IOV + sd_IOV,
+                  fill = mechanism),
+              alpha = 0.12, color = NA) +
+  geom_line(linewidth = 0.8) +
+  geom_point(size = 2) +
+  scale_color_manual(name   = "Missingness mechanism",
+                     values = mech_colors) +
+  scale_fill_manual(name    = "Missingness mechanism",
+                    values  = mech_colors) +
+  scale_linetype_manual(name   = "Missingness mechanism",
+                        values = mech_linetypes) +
+  scale_x_continuous(breaks = UNIQUE_N, trans = "log10") +
+  labs(
+    title    = "Mean estimated IOV under MCAR, MAR, and inverted MAR",
+    subtitle = expression(
+      m == 3 ~ "," ~ p == 0.20 ~ "," ~ r == 0.35 ~ "   Shaded: ±1 SD"
+    ),
+    x = "n (log scale)",
+    y = expression(Mean(widehat(IOV)))
   ) +
-  scale_x_discete(name = "Category") +
-  labs(title = "Marginal PMF") +
-  theme_talk()
+  theme_minimal() +
+  theme(legend.position = "bottom")
+print(MNAR_IOV_plt)
 
-p_cdf_dist <- ggplot(plot_dist_df, aes(x = category, y = cdf)) +
-  geom_col(fill = col_secondary, color = "white",
-           width = 0.65, alpha = 0.85) +
-  geom_text(aes(label = sprintf("%.3f", cdf)),
-            vjust = -0.5, size = 3.5,
-            color = col_primary, fontface = "bold") +
+ggsave(
+  "Graphs/iov_mnar.png",
+  MNAR_IOV_plt,
+  width = 8,
+  height = 5
+)
+# ------------------------------------------------------------------------------
+# Figure 4.12: Serial dependence under MNAR 
+# ------------------------------------------------------------------------------
+
+# Left Plot - Confidence Intervalls 
+kappa_MNAR_df <- do.call(rbind, c(kappa_inc_list, kappa_dec_list)) %>%
+  mutate(n = factor(n, levels = n_grid))
+
+kappa_MNAR_summary <- kappa_MNAR_df %>%
+  group_by(n, mech) %>%
+  summarise(
+    mean_kappa = mean(kappa_hat),
+    sd_kappa   = sd(kappa_hat),
+    .groups = "drop"
+  ) %>%
+  mutate(n_num = as.numeric(as.character(n)))
+
+ci_df <- data.frame(n_num = n_grid) %>%
+  rowwise() %>%
+  mutate(
+    sd_H0    = sqrt(asymp_var_kappa_H0(m_val, p_val, pi_val) / n_num),
+    ci_lower = -1.96 * sd_H0,
+    ci_upper =  1.96 * sd_H0
+  ) %>%
+  ungroup()
+ggplot() +
+
+  # H0 baseline
+  geom_hline(yintercept = 0,
+             color = "grey50",
+             linetype = "dotted") +
   annotate("text",
-           x = 0.55, y = 0.54,
-           label = "0.5",
-           color = "#C0392B",
-           size  = 4,
-           fontface = "bold") +
-  facet_wrap(~ scenario, scales = "free_x") +
-  scale_y_continuous(
-    limits = c(0, 1.10),
-    expand = c(0, 0),
-    name   = "Cumulative Probability"
+         x = max(n_grid) * 0.25, 
+         y = ci_df$ci_upper[nrow(ci_df)] - 0.01,
+         label = expression(paste("95% CI under ", H[0])),
+         color = "grey50", size = 5) +
+  # H0 CI ribbon
+  geom_ribbon(
+    data = ci_df,
+    aes(x = n_num, ymin = ci_lower, ymax = ci_upper),
+    fill = "Grey20",
+    alpha = 0.15
   ) +
-  scale_x_discrete(name = "Category") +
-  labs(title = "Marginal CDF") +
-  theme_talk()
 
-p_pmf / p_cdf_dist +
-  plot_annotation(
-    theme = theme(
-      plot.title = element_text(
-        size     = 17,
-        face     = "bold",
-        color    = col_primary,
-        margin   = margin(b = 8)
-      ),
-      plot.background = element_rect(fill = "white", color = NA)
+  # MNAR ribbons (two scenarios)
+  geom_ribbon(
+    data = kappa_MNAR_summary,
+    aes(
+      x = n_num,
+      ymin = mean_kappa - 1.96 * sd_kappa,
+      ymax = mean_kappa + 1.96 * sd_kappa,
+      fill = mech
+    ),
+    alpha = 0.15
+  ) +
+
+  # MNAR mean lines
+  geom_line(
+    data = kappa_MNAR_summary,
+    aes(x = n_num, y = mean_kappa, color = mech),
+    linewidth = 0.9
+  ) +
+
+  geom_point(
+    data = kappa_MNAR_summary,
+    aes(x = n_num, y = mean_kappa, color = mech),
+    size = 2
+  ) +
+
+  # H0 bounds lines
+  geom_line(
+    data = ci_df,
+    aes(x = n_num, y = ci_upper),
+    color = "steelblue",
+    linetype = "dashed"
+  ) +
+
+  geom_line(
+    data = ci_df,
+    aes(x = n_num, y = ci_lower),
+    color = "steelblue",
+    linetype = "dashed"
+  ) +
+
+  geom_hline(
+    yintercept = true_kappa,
+    color = "black",
+    linetype = "dashed"
+  ) +
+  annotate("text",
+           x = max(n_grid) * 0.15,
+           y = true_kappa - 0.02,
+           label = expression(paste("True ", kappa[ord](h))),
+           color = "black", size = 5)  +
+  scale_x_continuous(
+    trans = "log10",
+    breaks = n_grid,
+    name = ""
+  ) +
+
+  scale_y_continuous(
+    name = expression(hat(kappa)[ord](1))
+  ) +
+
+scale_fill_manual(
+  name   = "MNAR mechanism",
+  values = c(
+    "Increasing" = "steelblue",
+    "Decreasing" = "#C0392B"
+  ),
+  labels = c(
+    expression(P(O[t] == 1) %prop% X[t]),
+    expression(P(O[t] == 1) %prop% -X[t])
+  )
+) +
+guides(
+  color = "none",    # entfernt die color-Legende
+  fill  = guide_legend(title = "MNAR mechanism")  # behält nur fill
+) +
+
+  theme_minimal() +
+    theme(
+    plot.title = element_text(
+      size = 13,
+      face = "bold"
+    ),
+    axis.text.x        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 12, color = "gray20"),
+    axis.text.y        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 12, color = "gray20"),
+    plot.subtitle = element_text(
+      size = 9,
+      color = "grey40"
+    ))
+
+ggsave("Graphs/MNAR_Kappa_H_A.png", width = 5.5, height = 8)
+
+# Right Plot - Rejection Rates 
+rej_df_mnar <- rej_df_mnar %>%
+  mutate(
+    r_fac = factor(
+      paste0("r = ", r),
+      levels = c("r = 0", "r = 0.15", "r = 0.35", "r = 0.6")
+    ),
+    mech_fac = factor(
+      mechanism,
+      levels = c("increasing", "decreasing"),
+      labels = c(
+        "Increasing",
+        "Decreasing"
+      )
     )
-  ) &
-  theme(plot.background = element_rect(fill = "white", color = NA))
+  )
 
-ggsave("Graphs/marginal_distributions_talk.pdf",
-       width = 11, height = 7, units = "in", dpi = 300)
+mech_fac = factor(
+  mechanism,
+  levels = c("increasing", "decreasing"),
+  labels = c(
+    "Increasing",
+    "Decreasing"
+  )
+)
 
+ggplot(
+  rej_df_mnar,
+  aes(
+    x = n,
+    y = rate,
+    color = r_fac,
+    linetype = mech_fac,
+    group = interaction(r_fac, mech_fac)
+  )
+) +
 
+  # Nominalniveau
+  geom_hline(
+    yintercept = 0.05,
+    color = "grey50",
+    linetype = "dotted",
+    linewidth = 0.7
+  ) +
+
+  annotate(
+    "text",
+    x = max(rej_df_mnar$n) * 0.8,
+    y = 0.08,
+    label = "α = 5%",
+    color = "grey50",
+    size = 4
+  ) +
+
+  # Linien + Punkte
+  geom_line(linewidth = 1.0) +
+  geom_point(size = 2.8) +
+
+  # Farben nach r
+  scale_color_manual(
+    name = "Serial dependence",
+    values = c(
+      "r = 0"    = "black",
+      "r = 0.15" = "#5B8DB8",
+      "r = 0.35" = "#2C3E6B",
+      "r = 0.6"  = "#C0392B"
+    )
+  ) +
+
+  # Linientyp nach MNAR-Mechanismus
+  scale_linetype_manual(
+  name = "MNAR mechanism",
+  values = c(
+    "Increasing" = "solid",
+    "Decreasing" = "dashed"
+  ),
+  labels = c(
+    expression(P(O[t] == 1) %prop% X[t]),
+    expression(P(O[t] == 1) %prop% -X[t])
+  )
+) +
+
+  scale_x_continuous(
+    trans  = "log10",
+    breaks = c(50, 100, 250, 500, 1000, 2000),
+    name   = ""
+  ) +
+
+  scale_y_continuous(
+    limits = c(0, 1.05),
+    breaks = seq(0, 1, by = 0.25),
+    labels = percent,
+    name   = "Rejection rate"
+  ) +
+
+  labs(
+    title = "",
+
+    subtitle =
+      "m = 3 , p = 0.2 , h = 1    π = 0.75"
+  ) +
+  guides(
+  color    = guide_legend(order = 1, keywidth = unit(1, "cm")),
+  linetype = guide_legend(order = 2, keywidth = unit(1, "cm"))
+  ) +
+
+  theme_minimal() +
+
+  theme(
+    plot.title = element_text(
+      size = 13,
+      face = "bold"
+    ),
+    axis.text.x        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 12, color = "gray20"),
+    axis.text.y        = element_text(angle = 0, hjust = 0.5, vjust = 1, size = 12, color = "gray20"),
+    plot.subtitle = element_text(
+      size = 9,
+      color = "grey40"
+    ),
+
+    legend.position = "right",
+
+    legend.title = element_text(
+      size = 8,
+      face = "bold"
+    ),
+
+    legend.text = element_text(size = 8),
+
+    panel.grid.minor = element_blank(),
+
+    axis.ticks.length = unit(2.5, "mm")
+  )
+
+ggsave("Graphs/MNAR_kappa_rejection_rate.png", width = 5.5, height = 8)

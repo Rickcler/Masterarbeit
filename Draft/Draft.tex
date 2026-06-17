@@ -9,6 +9,8 @@
 \usepackage{tikz}
 \usepackage{float}
 \usepackage{fontspec}
+
+\usepackage{showframe}
 % Theorem-Definitionen
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{proposition}[theorem]{Proposition}
@@ -34,6 +36,34 @@
 \bibliographystyle{apalike}
 
 \begin{document}
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+Categorical time series arise in numerous applied settings, yet the analysis of such
+data in the presence of missing observations has received comparatively little
+methodological attention. Building on the amplitude modulation framework introduced
+by \citet{weiss2021categorical}, this thesis develops asymptotic theory for distributional
+measures of ordinal and nominal categorical time series under missingness. For both
+the Index of Ordinal Variation (IOV) and the Index of Qualitative Variation (IQV), as
+well as for the ordinal and nominal versions of Cohen's $\kappa$ as a measure of
+serial dependence, missingness-corrected estimators are introduced and their
+asymptotic normality is established under exponentially decaying $\alpha$-mixing
+conditions. The delta method is used to derive closed-form expressions for the
+asymptotic variance and the leading-order finite-sample bias of these estimators, and
+a hypothesis test for serial independence based on the corrected $\kappa$-estimator is
+constructed, whose asymptotic null distribution is available in closed form while
+consistency under the alternative is established more generally. An extensive Monte
+Carlo simulation study based on the BinAR(1) process confirms the accuracy of the
+derived asymptotic approximations already at moderate sample sizes and investigates
+the estimators' rate of convergence. While the theoretical development assumes that
+missingness occurs completely at random (MCAR), the simulation study also examines
+serially dependent missingness that remains independent of the underlying process, as
+well as two state-dependent mechanisms in which the observation probability depends on
+the current value of the process, violating MCAR (MNAR). The results show that the
+corrected estimators and the proposed test perform well under MCAR but can become
+severely biased and lead to incorrect inference once missingness depends on the
+underlying process, underscoring both the usefulness of the amplitude modulation
+approach and the importance of carefully assessing the MCAR assumption in practice.
 
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
@@ -800,7 +830,7 @@ MCAR corresponds to $P(O_t = 1 \mid X_t, \mathcal{F}_{t-1}) = \pi$,
 MAR to $P(O_t = 1 \mid X_t, \mathcal{F}_{t-1}) = P(O_t = 1 \mid 
 \mathcal{F}_{t-1})$, and MNAR to the case where this equality fails.
 \end{remark}
-\noindent The assumption under which the subsequent results are derived is 
+\noindent Following \citet{weiss2021categorical}, the assumption under which the subsequent results are derived is 
 that $(O_t)$ and $(X_t)$ are \emph{independent}, which corresponds 
 to the MCAR case. This is the strongest of the three assumptions 
 and implies in particular that the corrected estimator 
@@ -811,7 +841,10 @@ illustrated later in Section~\ref{sec:mnar}.
 
 \section{Amplitude Modulation}\label{sec:Amp Mod}
 \subsection*{Definition of the observation process}
-To model the missingness, the concept of \textbf{amplitude modulation} is employed. This approach models missingness through a binary stochastic process $(O_t)_t$ that runs concurrently with the main process $(X_t)_t$ and modulates its "amplitude"  in a binary manner:
+To model the missingness, the concept of \textbf{amplitude modulation} --
+originally introduced by \citet{Parzen1963} in the context of spectral
+analysis of time series with missing observations, and adapted to the
+categorical setting by \citet{Weiss2021} -- is employed.. This approach models missingness through a binary stochastic process $(O_t)_t$ that runs concurrently with the main process $(X_t)_t$ and modulates its "amplitude"  in a binary manner:
 
 \[
 O_t \in \{0,1\} \quad \forall t
@@ -836,7 +869,7 @@ The dependence structure between $(O_t)_t$ and $(\boldsymbol{Z}_t)_t$ (or equiva
 \subsection*{The missingness corrected estimator}
 \begin{definition}[Corrected Estimator of $\boldsymbol{f}$]\label{def:correctedest}
 Since $\mathrm{E}[\hat{\boldsymbol{\mathfrak{f}}}]$ deviates from $\boldsymbol{f}$
-by the factor $\frac{1}{n}\sum_{t=1}^{n}\mathrm{E}[O_t]$, the corrected estimator
+by the factor $\frac{1}{n}\sum_{t=1}^{n}\mathrm{E}[O_t]$, the corrected estimator, as proposed by \citet{weiss2021categorical}, 
 of $\boldsymbol{f}$ is defined as
 \[
     \hat{\boldsymbol{f}}^*
@@ -995,13 +1028,17 @@ where
 \begin{align*}
     \sigma_{\hat{\boldsymbol{f}}^*; i, j}  &= (-\frac{f_j}{\pi}) (-\frac{f_i}{\pi}\sigma_{\boldsymbol{Z}^*; -1, -1} + \frac{1}{\pi} \sigma_{\boldsymbol{Z}^*; i, -1}) + \frac{1}{\pi}(-\frac{f_{i}}{\pi}\sigma_{\boldsymbol{Z}^*; -1, j}+ \frac{1}{\pi} \sigma_{\boldsymbol{Z}^*; i, j}) \\
     &= \frac{f_j f_i }{\pi^2} \sigma_{\boldsymbol{Z}^*; -1, -1} - \frac{f_j}{\pi^2} \sigma_{\boldsymbol{Z}^*; i, -1} - \frac{f_i}{\pi^2}\sigma_{\boldsymbol{Z}^*; -1, j} + \frac{1}{\pi^2} \sigma_{\boldsymbol{Z}^*; i, j} \\
-    &= \frac{1}{\pi^2}\left(f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} - f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} - f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} + \sigma_{\boldsymbol{Z}^*; i, j}\right) = \frac{1}{\pi^2}(\sigma_{\boldsymbol{Z}^*; i, j}-f_if_j \sigma_{\boldsymbol{Z}^*; -1, -1}) \\
-    &= \frac{1}{\pi^2}\left(\left[f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} + \pi(f_{\min \{i,j\}}- f_if_j) + \sum_{h=1}^{\infty}\pi(h)f_{ij}(h)+f_{ji}(h)-2f_if_j\right]- f_if_j \sigma_{\boldsymbol{Z}^*; -1, -1}\right) \\
+    &= \frac{1}{\pi^2}\left(f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} - f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} - f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} + \sigma_{\boldsymbol{Z}^*; i, j}\right) \\
+    &= \frac{1}{\pi^2}(\sigma_{\boldsymbol{Z}^*; i, j}-f_if_j \sigma_{\boldsymbol{Z}^*; -1, -1}) \\
+    &= \frac{1}{\pi^2}\biggl(\left[f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} + \pi(f_{\min \{i,j\}}- f_if_j) + \sum_{h=1}^{\infty}\pi(h)f_{ij}(h)+f_{ji}(h)-2f_if_j\right] \\
+    &\quad - f_if_j \sigma_{\boldsymbol{Z}^*; -1, -1}\biggr) \\
     &= \underbrace{\frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j) }_{\mathrm{lag}(0)}+ \frac{1}{\pi^2}\sum_{h=1}^{\infty}\underbrace{\pi(h)(f_{ij}(h)+f_{ji}(h)-2f_if_j)}_{\mathrm{lag}(h)}
 \end{align*}
 Here, the lag-0 term captures the contemporaneous covariance structure of the
 observed process, while the lag-$h$ terms accumulate the serial dependence
-across all lags $h \geq 1$.
+across all lags $h \geq 1$. While the asymptotic normality of $\hat{\boldsymbol{f}}^*$
+is also established by \citet{Weiss2021}, the derivations above make the underlying 
+mixing conditions and the Cramér–Wold argument fully explicit.
 \subsection*{Bias analysis}
 Since $g_j$ is not a linear function of $\boldsymbol{Z}_t^*$, the bias of order
 $O(n^{-1})$ is computable using a second-order Taylor expansion. The Hessian of $g_j$ evaluated in $\boldsymbol{\mu}_{\boldsymbol{Z}^*}$ is given by
@@ -1075,7 +1112,9 @@ $\hat{\boldsymbol{f}}^*$ vanishes and the asymptotic covariance only depends on 
 \section{Asymptotic marginal properties}
 The asymptotic properties of marginal statistics based on $\hat{\boldsymbol{f}}^*$
 follow directly from the delta method, in exact analogy to the complete-data case.
-The following results are for the IOV and the skew. However, the derivations for other marginal statistics are analogous. 
+The following results correspond to Theorem 2 in \citet{weiss2021categorical}. For clarity, we 
+present the asymptotic properties of the IOV and the skew separately, although both 
+follow from the same application of the delta method: 
 \begin{corollary}[Asymptotic distribution of $\mathrm{IOV}(\hat{\boldsymbol{f}}^*)$]\label{cor:iov_missing}
 Under the conditions of Theorem~\ref{thm:clt_fstarhat}, the delta method argument from Theorem~\ref{thm:iov_asymp} 
 carries over to the missing-data case with $\boldsymbol{\Sigma}_Z$ replaced by
@@ -1146,9 +1185,9 @@ motivates the corrected estimator
     = \frac{\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} 
       O_t\, O_{t-h}\, Z_{t,i}\, Z_{t-h,j}}
       {\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} O_t\, O_{t-h}}
-    =: \hat{\mathfrak{f}}_{ij}(h) \big/ \overline{OO}_{\,h}.
+    =: \hat{\mathfrak{f}}_{ij}(h) \big/ \overline{OO}_{\,h},
 \]
-As in Section~\ref{sec:Amp Mod}, the properties of this estimator 
+which is also proposed by \citet[p.~4683]{weiss2021categorical}. As in Section~\ref{sec:Amp Mod}, the properties of this estimator 
 depend on whether $(O_t)$ is deterministic or stochastic. If $(O_t)$ 
 is deterministic, the corrected estimator is exactly unbiased. In the 
 stochastic case, both numerator and denominator are random and depend 
@@ -1246,7 +1285,7 @@ are then given as follows:
 + 2\sum_{k=1}^\infty \mathrm{Cov}(O_tO_{t-h}, O_{t+k}O_{t+k-h}) \\
 &\quad = \pi(h)(1-\pi(h)) 
 + 2\sum_{k=1}^{\infty}\bigl(
-\mathrm{E}[O_tO_{t-h}O_{t+k}O_{t+k-h}] - \pi(h)^2\bigr) \\[2ex]
+\mathrm{E}[O_tO_{t-h}O_{t+k}O_{t+k-h}] - \pi(h)^2\bigr) =: \sigma^{(h)}_{-2-2} \\[2ex]
 %
 &\textbf{(ii)}\ i = -2,\ j = -1: \\
 &\quad \mathrm{Cov}(O_tO_{t-h}, O_t) 
@@ -1286,16 +1325,16 @@ O_t O_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)})\bigr] \\
 &\quad \overset{\perp}{=} 
 \mathrm{E}[O_t^2O_{t-h}^2]\,\mathrm{E}[Z_{t,(j-m)}Z_{t-h,(j-m)}] 
 - \pi(h)^2\,f_{(j-m)(j-m)}(h)\\
-&\qquad + \sum_{k=1}^{\infty}
+&\qquad + \sum_{k=1}^{\infty} \biggl(
 \mathrm{E}[O_tO_{t-h}O_{t+k}O_{t+k-h}]\,\bigl[
 \mathrm{E}[Z_{t+k, (j-m)}Z_{t+k-h, (j-m)}]
-+ \mathrm{E}[Z_{t,(j-m)}Z_{t-h, (j-m)}]\bigr]
-- 2\pi(h)^2\,f_{(j-m)(j-m)}(h)\\
++ \mathrm{E}[Z_{t,(j-m)}Z_{t-h, (j-m)}]\bigr]\\
+&\qquad - 2\pi(h)^2\,f_{(j-m)(j-m)}(h) \biggr)\\
 &\quad = f_{(j-m)(j-m)}(h)\Bigl(\pi(h)(1-\pi(h)) 
 + 2\sum_{k=1}^{\infty}\bigl[
 \mathrm{E}[O_tO_{t-h}O_{t+k}O_{t+k-h}]
-- \pi(h)^2\bigr]\Bigr)
-=: f_{(j-m)(j-m)}(h)\,\sigma^{(h)}_{-2-2}\\[2ex]
+- \pi(h)^2\bigr]\Bigr)\\
+&\quad =: f_{(j-m)(j-m)}(h)\,\sigma^{(h)}_{-2-2}\\[2ex]
 %
 &\textbf{(v)}\ i = j = -1: \\
 &\quad \mathrm{Var}(O_t) + 2\sum_{k=1}^\infty\mathrm{Cov}(O_t, O_{t+k}) 
@@ -1312,8 +1351,8 @@ O_t O_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)})\bigr] \\
 &\textbf{(vii)}\ i = -1,\ j = m, \ldots, 2m-1: \\
 &\quad \mathrm{Cov}(O_t,\, O_tO_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)}) \\
 &\qquad + \sum_{k=1}^\infty\bigl[
-\mathrm{Cov}(O_t,\, O_{t+k}O_{t+k-h}Z_{t+k, (j-m)}Z_{t+k-h, (j-m)})
-+ \mathrm{Cov}(O_{t+k},\, 
+\mathrm{Cov}(O_t,\, O_{t+k}O_{t+k-h}Z_{t+k, (j-m)}Z_{t+k-h, (j-m)}) \\
+&\qquad + \mathrm{Cov}(O_{t+k},\, 
 O_tO_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)})\bigr] \\
 &\quad \overset{\perp}{=} 
 f_{(j-m)(j-m)}(h)\Bigl((1-\pi)\pi(h)
@@ -1364,10 +1403,11 @@ O_tO_{t-h}Z_{t, (j-m)}Z_{t-h, (j-m)})\bigr] \\
 \mathrm{E}[Z_{t,(i-m)}Z_{t-h, (i-m)}Z_{t+k, (j-m)}Z_{t+k-h, (j-m)}] \\
 &\qquad + \mathrm{E}[Z_{t+k, (i-m)}Z_{t+k-h, (i-m)}Z_{t, (j-m)}Z_{t-h, (j-m)}]\bigr]
 - 2\pi(h)^2 f_{(i-m)(i-m)}(h)\,f_{(j-m)(j-m)}(h)
-\end{align*}}
+\end{align*}}\noindent
 Note that cases \textbf{(v)}, \textbf{(vi)} and \textbf{(viii)} coincide with cases 
-\textbf{(i)-(iii)} from $\boldsymbol{\Sigma}_{\boldsymbol{Z}*}$ of Proposition~\ref{prop:clt_zstar}. Also note that cases \textbf{(i)--(viii)} admit fully explicit closed-form 
-expressions, whereas cases \textbf{(ix)} and \textbf{(x)} involve 
+\textbf{(i)-(iii)} from $\boldsymbol{\Sigma}_{\boldsymbol{Z}*}$ of Proposition~\ref{prop:clt_zstar}. 
+Also note that cases \textbf{(i)--(viii)} admit fully explicit closed-form 
+expressions withouth additional assumtions, whereas cases \textbf{(ix)} and \textbf{(x)} involve 
 third- and fourth-order mixed moments of $(X_t)$ — such as 
 $\mathrm{E}[Z_{t,i}Z_{t,(j-m)}Z_{t-h, (j-m)}]$ — that do not simplify 
 further without additional assumptions on the dependence structure 
@@ -1607,7 +1647,7 @@ symmetry $\sigma^{(h)*}_{il} = \sigma^{(h)*}_{li}$, yields
     \overset{H_0}{=} -\frac{1}{n\pi}.
 \]
 The detailed calculation is carried out in Appendix~\ref{app:Bias}.
-The results are summarized in the following theorem.
+The results, that correspond to Theorem~3 in \citet{weiss2021categorical}, are summarized in the following theorem.
 
 \begin{theorem}[Asymptotic distribution and bias of 
 $\hat{\kappa}_{\mathrm{ord}}(h)$]
@@ -2182,7 +2222,7 @@ closer inspection can a slight increase in the standard deviation be observed.
 Even under much stronger serial dependence ($r_\pi = 0.75$), the effect remains 
 limited, with only a slight increase in the standard deviations.
 This serves to illustrate that the dispersion of $\widehat{IOV}$ is primarily
-driven by the marginal distributions of $X_t$ and $O_T$, and not an any serial 
+driven by the marginal distributions of $X_t$ and $O_t$, and not an any serial 
 dependence structure.
 
 \begin{figure}[H]
@@ -2373,7 +2413,7 @@ this inconsistency through the delta method — as is clearly visible in
 Figure~\ref{fig:bias-mnar} from the narrowing ribbons and the absence
 of any convergence of the bias curves with growing $n$.
 The direction of the bias depends on the particular dependence
-structure between $X_t$ and $O_T$ together with features of the marginal 
+structure between $X_t$ and $O_t$ together with features of the marginal 
 distribution of $X_t$.
 Here, when higher categories are more likely to be observed (blue ribbon),
 the upper tail of the distribution is over-represented. Given the
@@ -2541,29 +2581,6 @@ Under the assumptions of Theorem~\ref{thm:clt_phat}:
 \end{enumerate}
 \end{proposition}
 
-% \section{Serial Dependence: Nominal Cohen's $\kappa$}
-
-% For nominal processes, serial dependence is measured by 
-% $\kappa_{\mathrm{nom}}(h)$ (recall Definition~\ref{def:cohens-kappa}). 
-% Its sample analogue is
-% \[
-%     \hat{\kappa}_{\mathrm{nom}}(h) 
-%     := \frac{\sum_{j=0}^{m}\bigl(\hat{p}_{jj}(h) - \hat{p}_j^2\bigr)}
-%            {1 - \sum_{i=0}^{m}\hat{p}_i^2},
-% \]
-% where $\hat{p}_{jj}(h)$ denotes the corrected estimator of the 
-% diagonal bivariate probability $p_{jj}(h)$, defined in direct analogy 
-% to $\hat{f}^*_{jj}(h)$ from Section~\ref{sec:serial-dependence} with 
-% $Z_{tj}$ replaced by $Y_{tj}$ throughout. The asymptotic theory for 
-% $\hat{\kappa}_{\mathrm{nom}}(h)$ proceeds in exact analogy to 
-% Section~\ref{subsec:serial-H0}: under $H_0$ that $(X_t)$ is i.i.d., 
-% the bivariate probabilities factorize as $p_{ij}(h) = p_ip_j$, which 
-% eliminates the higher-order mixed moments and yields closed-form 
-% expressions for the asymptotic variance and finite-sample bias of 
-% $\hat{\kappa}_{\mathrm{nom}}(h)$. The derivations are structurally 
-% identical to those of Theorem~\ref{thm:kappa-asymp} and are omitted 
-% here.
-
 \section{Missingness}
 \paragraph{Marginal measures}
 The amplitude modulation framework of Section~\ref{sec:Amp Mod} extends 
@@ -2618,8 +2635,8 @@ probabilities $p_{ij}(h)$. We therefore define the bias-corrected estimator
 \[
 \hat{p}_{ij}^*(h)
 =
-\frac{\sum_{t=h+1}^{n}O_tO_{t-h}Y_{t,i}Y_{t-h,j}}
-     {\sum_{t=h+1}^{n}O_tO_{t-h}},
+\frac{\sum_{t=h+1}^{n}O_t O_{t-h}Y_{t,i}Y_{t-h,j}}
+     {\sum_{t=h+1}^{n}O_t O_{t-h}},
 \]
 which is the direct analogue of $\hat f_{ij}^*(h)$ from Section~\ref{sec:serial-dependence}. Using the same arguments as for ordinal data,
 we define 
@@ -2692,6 +2709,93 @@ based on $\hat{\kappa}_{\mathrm{nom}}(h)$ may be constructed. The test statistic
 \[T_n(h):= \frac{\sqrt{n}\hat{\kappa}_{\mathrm{nom}}(h)}{\sigma_{\kappa}}.\] 
 The consistency of the test under $H_A$ follows from the consistency of $\hat{p}_i^{*}$ and $\hat{p}_{ii}^{(h)*}$
 combined with the same continuous mapping argument as for ordinal data (see Section~\ref{subsec:serial-HA}).
+
+\chapter*{Conclusion and Outlook}
+\addcontentsline{toc}{chapter}{Conclusion and Outlook}
+
+This thesis developed asymptotic theory for the estimation of 
+distributional characteristics of categorical time series under 
+partial observability, building on and extending the amplitude 
+modulation framework of \citet{weiss2021categorical}. For ordinal 
+processes, we established the asymptotic normality of the 
+missingness-corrected estimator $\hat{\boldsymbol{f}}^*$ under 
+general dependence conditions, derived the resulting 
+asymptotic properties of the IOV and skewness estimators via the 
+delta method, and obtained explicit formulas to approximate the finite-sample bias. 
+For the analysis of serial dependence, we constructed a 
+corrected estimator of the bivariate lag-$h$ probabilities, derived 
+the closed-form asymptotic variance of $\hat{\kappa}_{\mathrm{ord}}(h)$ 
+under the null hypothesis of serial independence, and showed that the 
+resulting test remains consistent under the alternative. All results 
+were extended to nominal processes, where the PMF and the IQV take 
+the role of the CDF and the IOV, respectively. The accompanying Monte 
+Carlo simulation study, based on the BinAR(1) process, confirmed the 
+accuracy of the asymptotic approximations already at moderate sample 
+sizes and illustrated the importance of the dependence assumptions by showing 
+how the asymptotic approximations deteriorate when these assumptions 
+are violated. \\
+Several limitations of the present work point to natural directions 
+for future research.
+
+\paragraph{Asymptotic theory under $H_A$.} As discussed in 
+\Cref{subsec:serial-testing}, the asymptotic variance of 
+$\hat{\kappa}_{\mathrm{ord}}(h)$ is only available in closed form 
+under the null hypothesis of serial independence, since the i.i.d.\ 
+assumption on $(X_t)$ eliminates the higher-order mixed moments that 
+otherwise appear in $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$. 
+Consequently, no confidence interval for the true value 
+$\kappa_{\mathrm{ord}}(h)$ can currently be constructed under the 
+alternative. A natural extension would be to impose additional 
+structure on $(X_t)$ --- specifically by assuming some general model 
+under which the relevant higher-order moments become tractable.  Care 
+must be taken, however, to strike a reasonable balance between 
+tractability and generality: the chosen model should be specific 
+enough to permit closed-form expressions for the relevant moments, 
+yet general enough to remain practically relevant rather than being 
+tailored to a narrow and largely artificial special case.
+
+\paragraph{Missingness beyond MCAR.} The asymptotic theory developed 
+in this thesis rests on the assumption that $(O_t)$ and $(X_t)$ are 
+independent, corresponding to the MCAR case from \Cref{sec:missingness}. The simulation results 
+in \Cref{sec:mnar} demonstrate that this assumption is not merely a 
+technical convenience: if the independence assumption is violated, 
+the corrected estimators $\hat{\boldsymbol{f}}^*$ and $\hat{\boldsymbol{f}}^{(h)*}$ 
+are no longer consistent, and the resulting bias propagates to
+plug-in estimators like the IOV and $\hat{\kappa}_{\mathrm{ord}}(h)$. 
+Modelling missingness under MNAR is inherently difficult, since by 
+definition the missingness mechanism depends on precisely the values 
+that are unobserved. Under MAR, however, where the observation 
+probability depends only on the observed values, or, more specifically for time series,
+on the observed history of the process, a 
+formal asymptotic theory appears feasible under suitable model 
+assumptions. A natural next step could therefore be to develop such a 
+theory for the MAR case, where the observation probability is allowed 
+to depend on the history of the process but not on the missing values 
+themselves.
+
+\paragraph{Extensions to multivariate and mixed-type processes.} 
+The present thesis focuses on a single categorical process $(X_t)$ 
+observed under missingness. A complementary direction for future research 
+would be to consider multivariate categorical time series, where several categorical 
+variables are observed jointly at each time point and may be subject 
+to missingness individually or jointly. This raises new questions 
+regarding the appropriate notion of serial and cross-sectional 
+dependence, as well as the interplay between the missingness 
+mechanisms of the different component processes. A further direction 
+would be to study mixed-type multivariate time series, in which some 
+components are categorical and others are continuous or count-valued, 
+again under partial observability. Such settings are common in 
+applied contexts --- for instance large panel surveys that record categorical questions
+alongside continuous measurements --- and would require 
+combining the framework developed here with the existing asymptotic 
+theory for missingness in metric time series.\\
+Taken together, the results of this thesis provide a rigorous 
+foundation for the analysis of categorical time series under 
+partial observability and clarify both the strengths and the limits 
+of the amplitude modulation framework. The simulation evidence on 
+MNAR sensitivity, in particular, underscores that the plausibility of 
+the MCAR assumption should be carefully assessed in any applied 
+setting before the proposed estimators are used for inference.
 
 \begin{appendices}
 
@@ -3069,13 +3173,15 @@ computed in direct analogy to those of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)
 from Section~\ref{subsec:serial-general} with $Z_{t,i}$, $f_i$, $f_{ij}(h)$ replaced by $Y_{t,i}$, $p_i$, $p_{ij}(h)$ and $(f_{\mathrm{min}\{i,j\}}- f_i f_j)$
 by $p_j(\delta_{ij} - p_i)$ throughout. Also recall that $\delta_{ij} = \mathbb{I}_{i = j}$ is the Kronecker Delta. For $i, j = 0, \ldots, m $, the individual elements are given by 
 \begin{align*}
-    &\textbf{(i) }\sigma_{-2-2}^{(h)} = \pi(h)(1-\pi(h)) + 2 \sum_{k=1}^{\infty}Cov(O_t O_{t-h}) \\
-    &\textbf{(ii) }\sigma_{-1, -2}^{(h)} = (1-\pi)\pi(h)\sum_{k=1}^{\infty} [\mathrm{E}(O_t O_{t-h}O_{t+k})\mathrm{E}(O_t O_{t+k}O_{t+k-h})-2\pi \pi(h)] \\
-    &\textbf{(iii) }\sigma_{-2 j}^{(h)} = p_j \sigma_{-2 -1}^{(h) } \quad \textbf{(iv) }\sigma_{-2 (m+1+j)}^{(h)} = p_{jj}(h) \sigma_{-2 2}^{(h)} \quad \textbf{(v) }\sigma_{-1 -1}^{(h)} = \pi(1-\pi) + 2 \sum_{k=1}^{\infty} \gamma_O(k) \\
+    &\textbf{(i) }\sigma_{-2-2}^{(h)} = \pi(h)(1-\pi(h)) + 2 \sum_{k=1}^{\infty} \biggl(\mathrm{E}[O_t O_{t-h}O_{t+k}O_{t+k-h}] -2\pi(h)^2\biggr) \\
+    &\textbf{(ii) }\sigma_{-1, -2}^{(h)} = (1-\pi)\pi(h)\sum_{k=1}^{\infty} [\mathrm{E}[O_t O_{t-h}O_{t+k}]\mathrm{E}+[O_t O_{t+k}O_{t+k-h}]-2\pi \pi(h)] \\
+    &\textbf{(iii) }\sigma_{-2 j}^{(h)} = p_j \sigma_{-2 -1}^{(h) } \quad \textbf{(iv) }\sigma_{-2 (m+1+j)}^{(h)} = p_{jj}(h) \sigma_{-2 2}^{(h)} \quad \\
+    &\textbf{(v) }\sigma_{-1 -1}^{(h)} = \pi(1-\pi) + 2 \sum_{k=1}^{\infty} \gamma_O(k) \\
     &\textbf{(vi) }\sigma_{-1 j}^{(h)} = p_j \sigma_{-1 -1}^{(h)} \quad \textbf{(vii) }\sigma_{-1 (m+1+j)}^{(h)} = p_{jj}(h) \sigma_{-1 2}^{(h)} \\
     &\textbf{(viii) }\sigma_{ij}^{(h)} = p_i p_j \sigma_{-1 -1}^{(h)} + \pi p_i(\delta_{ij} - p_j) + \sum_{k = 1}^{\infty}\pi(k)(p_{ij}(k)+ p_{ji}(k)- 2p_ip_j) \\   
-    &\textbf{(ix) }\sigma_{i(j+m+1)}^{(h)} =\pi(h) E[Y_{t, i}Y_{t-h, i}Y_{t, j}Y_{t-h, j}]- \pi(h)^2f_{ii}(h)f_{jj}(h) + \sum_{k = 1}^{\infty} \bigl(\mathrm{E}[O_t O_{t-h} O_{t+k} O_{t+k-h}]\\
-    &\quad\cdot \mathrm{E}[Y_{t,i}Y_{t-h,i}Y_{t+k,j}Y_{t+k-h,j}] + \mathrm{E}[O_{t+k}O_{t}O_{t-h}]\mathrm{E}[Y_{t+k, i}Y_{t, j}Y_{t-h, j}]- 2\pi\pi(h) p_i p_{jj}(h) \bigr) \\
+    &\textbf{(ix) }\sigma_{i(j+m+1)}^{(h)} =\pi(h) E[Y_{t, i}Y_{t-h, i}Y_{t, j}Y_{t-h, j}]- \pi(h)^2f_{ii}(h)f_{jj}(h) \\
+    & \quad + \sum_{k = 1}^{\infty} \bigl(\mathrm{E}[O_t O_{t-h} O_{t+k} O_{t+k-h}]\cdot \mathrm{E}[Y_{t,i}Y_{t-h,i}Y_{t+k,j}Y_{t+k-h,j}] \\
+    &\quad + \mathrm{E}[O_{t+k}O_{t}O_{t-h}]\mathrm{E}[Y_{t+k, i}Y_{t, j}Y_{t-h, j}] - 2\pi\pi(h) p_i p_{jj}(h) \bigr) \\
     &\textbf{(x) } \sigma^{(h)}_{(i+m+1)(j+m+1)} = \pi(h)\,\mathrm{E}[Y_{t,i}Y_{t-h, i}Y_{t, j}Y_{t-h, j}] - 
     \pi(h)^2\, p_{ii}(h)\, p_{jj}(h) \\
     &\quad + \sum_{k=1}^{\infty} \bigl(\mathrm{E}[O_t O_{t-h} O_{t+k} O_{t+k-h}]\bigl[\mathrm{E}[Y_{t,i}Y_{t-h, i}Y_{t+k, j}Y_{t+k-h, j}] 
