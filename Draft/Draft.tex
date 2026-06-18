@@ -35,7 +35,47 @@
 
 \bibliographystyle{apalike}
 
+
 \begin{document}
+
+% ---------- Titelseite ----------
+\begin{titlepage}
+    \centering
+    {\large Otto-Friedrich-Universität Bamberg \par}
+    \vspace{0.2cm}
+    {\large Fakultät Sozial- und Wirtschaftswissenschaften \par}
+    \vspace{0.2cm}
+    {\large Lehrstuhl für Mathematik in den Wirstschaftswissenschaften \par}
+    \vspace{2cm}
+
+    {\Large\bfseries Master's Thesis \par}
+    \vspace{1.5cm}
+
+    {\huge\bfseries Analyzing Categorical Time Series\\
+    in the Presence of Missing Observations \par}
+    \vspace{2cm}
+
+    {\large submitted by \par}
+    {\Large Victor Minig \par}
+    \vspace{0.3cm}
+    {\large Matriculation Number: 2155996 \par}
+    \vspace{1cm}
+
+    {\large Master's Program: Survey Statistics and Data Analysis \par}
+    \vspace{1cm}
+    {\large First Supervisor: Prof.\ Dr.\ Anne Leucht \par}
+    \vspace{2cm}
+
+    {\large Bamberg, \today \par}
+\end{titlepage}
+
+% ---------- Inhaltsverzeichnis ----------
+\pagenumbering{roman}
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
@@ -44,21 +84,16 @@ data in the presence of missing observations has received comparatively little
 methodological attention. Building on the amplitude modulation framework introduced
 by \citet{weiss2021categorical}, this thesis develops asymptotic theory for distributional
 measures of ordinal and nominal categorical time series under missingness. For both
-the Index of Ordinal Variation (IOV) and the Index of Qualitative Variation (IQV), as
-well as for the ordinal and nominal versions of Cohen's $\kappa$ as a measure of
-serial dependence, missingness-corrected estimators are introduced and their
-asymptotic normality is established under exponentially decaying $\alpha$-mixing
-conditions. The delta method is used to derive closed-form expressions for the
+measures of marginal dispersion, as well as for measures of serial dependence, 
+missingness-corrected estimators are introduced and their asymptotic normality is established 
+under certain dependency conditions. The delta method is used to derive closed-form expressions for the
 asymptotic variance and the leading-order finite-sample bias of these estimators, and
 a hypothesis test for serial independence based on the corrected $\kappa$-estimator is
-constructed, whose asymptotic null distribution is available in closed form while
-consistency under the alternative is established more generally. An extensive Monte
-Carlo simulation study based on the BinAR(1) process confirms the accuracy of the
-derived asymptotic approximations already at moderate sample sizes and investigates
+constructed. An extensive Monte Carlo simulation study based on the BinAR(1) process 
+confirms the accuracy of the derived asymptotic approximations already at moderate sample sizes and investigates
 the estimators' rate of convergence. While the theoretical development assumes that
 missingness occurs completely at random (MCAR), the simulation study also examines
-serially dependent missingness that remains independent of the underlying process, as
-well as two state-dependent mechanisms in which the observation probability depends on
+two state-dependent mechanisms in which the observation probability depends on
 the current value of the process, violating MCAR (MNAR). The results show that the
 corrected estimators and the proposed test perform well under MCAR but can become
 severely biased and lead to incorrect inference once missingness depends on the
@@ -989,7 +1024,7 @@ The Jacobian of $\boldsymbol{g}(\boldsymbol{x})$ evaluated at $\boldsymbol{x} = 
     \vdots & \vdots & \ddots & \ddots & 0\\
     -\frac{f_{m-1}}{\pi}& 0 &\ldots& 0 & \frac{1}{\pi}
 \end{pmatrix}\]
-Then, following the delta method, we have the following result
+Then, following the delta method, we have the following result that corresponds to Theorem~1 in \citet{weiss2021categorical}: 
 \begin{theorem}[Asymptotic Normality of $\hat{\boldsymbol{f}}^*$]\label{thm:clt_fstarhat}
 Let $(X_t)$ be a strictly stationary, ordinal process that is $\alpha$-mixing with exponentially decaying
 coefficients. Let the modulating process $(O_t)$ also be strictly stationary and $\alpha$-mixing with exponentially decaying coefficients, with moments $\mathrm{E}[O_t] = \pi > 0$ and $\mathrm{E}[O_h O_0] = \pi(h) > 0$. Furthermore, let $(O_t)$ and $(X_t)$ be independent, where $X_t$ is observed if $O_t = 1$. Then the corrected estimator from Definition~\ref{def:correctedest} satisfies the following multivariate CLT:
@@ -1226,8 +1261,8 @@ $2m-1$: the component at index $-2$ captures the product $O_tO_{t-h}$,
 the components at indices $-1$ through $m-1$ coincide with 
 $\boldsymbol{Z}_t^*$ from Section~\ref{sec:Amp Mod}, and the remaining 
 components at indices $m$ through $2m-1$ capture the lag-$h$ interaction 
-terms $O_tO_{t-h}Z_{t,i}Z_{t-h,j}$. Since $\kappa_{\mathrm{ord}}$ 
-depends only on the diagonal frequencies $\hat{f}^*_{jj}(h)$, it 
+terms $O_t O_{t-h}Z_{t,i}Z_{t-h,i}$. Since $\kappa_{\mathrm{ord}}$ 
+depends only on the diagonal frequencies $\hat{f}^*_{ii}(h)$, it 
 suffices to include the corresponding diagonal components in 
 $\boldsymbol{Z}_t^{(h)*}$. Should one wish to study a dependence 
 measure that also involves off-diagonal frequencies $\hat{f}^*_{ij}(h)$ 
@@ -1316,25 +1351,24 @@ are then given as follows:
 + \mathrm{E}[O_tO_{t+k}O_{t+k-h}] - 2\pi\pi(h)\bigr]\Bigr)
 = f_j\,\sigma^{(h)}_{-2-1}\\[2ex]
 %
-&\textbf{(iv)}\ i = -2,\ j = m, \ldots, 2m-1: \\
-&\quad \mathrm{Cov}(O_tO_{t-h},\, O_tO_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)}) \\
-&\qquad + \sum_{k=1}^{\infty}\bigl[
-\mathrm{Cov}(O_tO_{t-h},\, O_{t+k}O_{t+k-h}Z_{t+k, (j-m)}Z_{t+k-h,(j-m)}) \\
-&\qquad + \mathrm{Cov}(O_{t+k}O_{t+k-h},\, 
-O_t O_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)})\bigr] \\
+&\textbf{(iv)}\ i = -2,\ j = m, \ldots, 2m-1 \quad (j'=j-m):\\ 
+&\quad \mathrm{Cov}(O_tO_{t-h},\, O_tO_{t-h}Z_{t,j'}Z_{t-h,j'}) + \sum_{k=1}^{\infty}\biggl[
+\mathrm{Cov}(O_tO_{t-h},\, O_{t+k}O_{t+k-h}Z_{t+k, j'}Z_{t+k-h,j'}) \\
+ &\qquad + \mathrm{Cov}(O_{t+k}O_{t+k-h},\, 
+O_t O_{t-h}Z_{t,j'}Z_{t-h,j'})\biggr] \\
 &\quad \overset{\perp}{=} 
 \mathrm{E}[O_t^2O_{t-h}^2]\,\mathrm{E}[Z_{t,(j-m)}Z_{t-h,(j-m)}] 
-- \pi(h)^2\,f_{(j-m)(j-m)}(h)\\
+- \pi(h)^2\,f_{j'j'}(h)\\
 &\qquad + \sum_{k=1}^{\infty} \biggl(
-\mathrm{E}[O_tO_{t-h}O_{t+k}O_{t+k-h}]\,\bigl[
-\mathrm{E}[Z_{t+k, (j-m)}Z_{t+k-h, (j-m)}]
-+ \mathrm{E}[Z_{t,(j-m)}Z_{t-h, (j-m)}]\bigr]\\
-&\qquad - 2\pi(h)^2\,f_{(j-m)(j-m)}(h) \biggr)\\
-&\quad = f_{(j-m)(j-m)}(h)\Bigl(\pi(h)(1-\pi(h)) 
+\mathrm{E}[O_tO_{t-h}O_{t+k}O_{t+k-h}]\,\biggl[
+\mathrm{E}[Z_{t+k, j'}Z_{t+k-h, j'}]
++ \mathrm{E}[Z_{t,j'}Z_{t-h, j'}]\biggr]
+ - 2\pi(h)^2\,f_{j'j'}(h) \biggr)\\
+&\quad = f_{j'j'}(h)\Bigl(\pi(h)(1-\pi(h)) 
 + 2\sum_{k=1}^{\infty}\bigl[
 \mathrm{E}[O_tO_{t-h}O_{t+k}O_{t+k-h}]
 - \pi(h)^2\bigr]\Bigr)\\
-&\quad =: f_{(j-m)(j-m)}(h)\,\sigma^{(h)}_{-2-2}\\[2ex]
+&\quad =: f_{j'j'}(h)\,\sigma^{(h)}_{-2-2}\\[2ex]
 %
 &\textbf{(v)}\ i = j = -1: \\
 &\quad \mathrm{Var}(O_t) + 2\sum_{k=1}^\infty\mathrm{Cov}(O_t, O_{t+k}) 
@@ -1348,18 +1382,17 @@ O_t O_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)})\bigr] \\
 + \mathrm{Cov}(O_{t+k}, O_tZ_{t,j})\bigr]
 = f_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1}\\[2ex]
 %
-&\textbf{(vii)}\ i = -1,\ j = m, \ldots, 2m-1: \\
-&\quad \mathrm{Cov}(O_t,\, O_tO_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)}) \\
+&\textbf{(vii)}\ i = -1,\ j = m, \ldots, 2m-1 \quad  (j'=j-m): \\
+&\quad \mathrm{Cov}(O_t,\, O_tO_{t-h}Z_{t,j'}Z_{t-h,j'}) \\
 &\qquad + \sum_{k=1}^\infty\bigl[
-\mathrm{Cov}(O_t,\, O_{t+k}O_{t+k-h}Z_{t+k, (j-m)}Z_{t+k-h, (j-m)}) \\
-&\qquad + \mathrm{Cov}(O_{t+k},\, 
-O_tO_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)})\bigr] \\
+\mathrm{Cov}(O_t,\, O_{t+k}O_{t+k-h}Z_{t+k, j'}Z_{t+k-h, j'})
+ + \mathrm{Cov}(O_{t+k},\, O_tO_{t-h}Z_{t,j'}Z_{t-h,j'})\bigr] \\
 &\quad \overset{\perp}{=} 
-f_{(j-m)(j-m)}(h)\Bigl((1-\pi)\pi(h)
+f_{j'j'}(h)\Bigl((1-\pi)\pi(h)
 + \sum_{k=1}^\infty\bigl[
 \mathrm{E}[O_tO_{t+k}O_{t+k-h}] 
 + \mathrm{E}[O_tO_{t+k}O_{t-h}] - 2\pi\pi(h)\bigr]\Bigr)\\
-&\quad = f_{(j-m)(j-m)}(h)\,\sigma^{(h)}_{-2-1}\\[2ex]
+&\quad = f_{j'j'}(h)\,\sigma^{(h)}_{-2-1}\\[2ex]
 %
 &\textbf{(viii)}\ i,j = 0, \ldots, m-1: \\
 &\quad \mathrm{Cov}(O_tZ_{t,i}, O_tZ_{t,j}) 
@@ -1371,45 +1404,44 @@ f_{(j-m)(j-m)}(h)\Bigl((1-\pi)\pi(h)
 + \pi(f_{\min\{i,j\}}-f_if_j)  
 + \sum_{k=1}^{\infty}\pi(k)\bigl(f_{ij}(k)+f_{ji}(k)-2f_if_j\bigr)\\[2ex]
 %
-&\textbf{(ix)}\ i = 0, \ldots, m-1,\ j = m, \ldots, 2m-1: \\
-&\quad \mathrm{Cov}(O_tZ_{t,i},\, O_tO_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)}) \\
-&\qquad + \sum_{k=1}^{\infty}\bigl[
-\mathrm{Cov}(O_tZ_{t,i},\, O_{t+k}O_{t+k-h}Z_{t+k, (j-m)}Z_{t+k-h, (j-m)}) \\
+&\textbf{(ix)}\ i = 0, \ldots, m-1,\ j = m, \ldots, 2m-1\quad  (j'=j-m): \\
+&\quad \mathrm{Cov}(O_tZ_{t,i},\, O_tO_{t-h}Z_{t,j'}Z_{t-h,j'})  \sum_{k=1}^{\infty}\bigl[
+\mathrm{Cov}(O_tZ_{t,i},\, O_{t+k}O_{t+k-h}Z_{t+k, j'}Z_{t+k-h, j'}) \\
 &\qquad + \mathrm{Cov}(O_{t+k}Z_{t+k,i},\, 
-O_tO_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)})\bigr] \\
+O_tO_{t-h}Z_{t,j'}Z_{t-h,j'})\bigr] \\
 &\quad \overset{\perp}{=}
-\pi(h)\,\mathrm{E}[Z_{t,i}Z_{t,(j-m)}Z_{t-h,(j-m)}] 
-- \pi\pi(h)\,f_i\,f_{(j-m)(j-m)}(h) \\
-&\qquad + \sum_{k=1}^{\infty}\bigl[
+\pi(h)\,\mathrm{E}[Z_{t,i}Z_{t,j'}Z_{t-h,j'}] 
+- \pi\pi(h)\,f_i\,f_{j'j'}(h) 
+ + \sum_{k=1}^{\infty}\bigl[
 \mathrm{E}[O_tO_{t+k}O_{t+k-h}]\,
-\mathrm{E}[Z_{t,i}Z_{t+k, (j-m)}Z_{t+k-h, (j-m)}] \\
+\mathrm{E}[Z_{t,i}Z_{t+k, j'}Z_{t+k-h, j'}] \\
 &\qquad + \mathrm{E}[O_{t+k}O_tO_{t-h}]\,
-\mathrm{E}[Z_{t+k,i}Z_{t,(j-m)}Z_{t-h, (j-m)}] 
-- 2\pi\pi(h)\,f_i\,f_{(j-m)(j-m)}(h)\bigr]\\[2ex]
+\mathrm{E}[Z_{t+k,i}Z_{t,j'}Z_{t-h, j'}] 
+- 2\pi\pi(h)\,f_i\,f_{j'j'}(h)\bigr]\\[2ex]
 %
-&\textbf{(x)}\ i,j = m, \ldots, 2m-1: \\
-&\quad \mathrm{Cov}(O_tO_{t-h}Z_{t,(i-m)}Z_{t-h,(i-m)},\, 
-O_t O_{t-h}Z_{t,(j-m)}Z_{t-h,(j-m)}) \\
+&\textbf{(x)}\ i,j = m, \ldots, 2m-1 \quad (j'=j-m,~ i' = i-m): \\
+&\quad \mathrm{Cov}(O_tO_{t-h}Z_{t,i'}Z_{t-h,i'},\, 
+O_t O_{t-h}Z_{t,j'}Z_{t-h,j'}) \\
 &\qquad + \sum_{k=1}^{\infty}\bigl[
-\mathrm{Cov}(O_tO_{t-h}Z_{t,(i-m)}Z_{t-h,(i-m)},\, 
-O_{t+k}O_{t+k-h}Z_{t+k, (j-m)}Z_{t+k-h, (j-m)}) \\
-&\qquad + \mathrm{Cov}(O_{t+k}O_{t+k-h}Z_{t+k, (i-m)}Z_{t+k-h, (i-m)},\, 
-O_tO_{t-h}Z_{t, (j-m)}Z_{t-h, (j-m)})\bigr] \\
+\mathrm{Cov}(O_tO_{t-h}Z_{t,i'}Z_{t-h,i'},\, 
+O_{t+k}O_{t+k-h}Z_{t+k, j'}Z_{t+k-h, j'}) \\
+&\qquad + \mathrm{Cov}(O_{t+k}O_{t+k-h}Z_{t+k, i'}Z_{t+k-h, i'},\, 
+O_tO_{t-h}Z_{t, j'}Z_{t-h, j'})\bigr] \\
 &\quad \overset{\perp}{=}
-\pi(h)\,\mathrm{E}[Z_{t,(i-m)}Z_{t-h, (i-m)}Z_{t, (j-m)}Z_{t-h, (j-m)}] 
-- \pi(h)^2\,f_{(i-m)(i-m)}(h)\,f_{(j-m)(j-m)}(h)\\
+\pi(h)\,\mathrm{E}[Z_{t,i'}Z_{t-h, i'}Z_{t, j'}Z_{t-h, j'}] 
+- \pi(h)^2\,f_{i'i'}(h)\,f_{j'j'}(h)\\
 &\qquad + \sum_{k=1}^{\infty}
 \mathrm{E}[O_tO_{t-h}O_{t+k}O_{t+k-h}]\,\bigl[
-\mathrm{E}[Z_{t,(i-m)}Z_{t-h, (i-m)}Z_{t+k, (j-m)}Z_{t+k-h, (j-m)}] \\
-&\qquad + \mathrm{E}[Z_{t+k, (i-m)}Z_{t+k-h, (i-m)}Z_{t, (j-m)}Z_{t-h, (j-m)}]\bigr]
-- 2\pi(h)^2 f_{(i-m)(i-m)}(h)\,f_{(j-m)(j-m)}(h)
+\mathrm{E}[Z_{t,i'}Z_{t-h, i'}Z_{t+k, j'}Z_{t+k-h, j'}] \\
+&\qquad + \mathrm{E}[Z_{t+k, i'}Z_{t+k-h, i'}Z_{t, j'}Z_{t-h, j'}]\bigr]
+- 2\pi(h)^2 f_{i'i'}(h)\,f_{j'j'}(h)
 \end{align*}}\noindent
 Note that cases \textbf{(v)}, \textbf{(vi)} and \textbf{(viii)} coincide with cases 
 \textbf{(i)-(iii)} from $\boldsymbol{\Sigma}_{\boldsymbol{Z}*}$ of Proposition~\ref{prop:clt_zstar}. 
 Also note that cases \textbf{(i)--(viii)} admit fully explicit closed-form 
 expressions withouth additional assumtions, whereas cases \textbf{(ix)} and \textbf{(x)} involve 
 third- and fourth-order mixed moments of $(X_t)$ — such as 
-$\mathrm{E}[Z_{t,i}Z_{t,(j-m)}Z_{t-h, (j-m)}]$ — that do not simplify 
+$\mathrm{E}[Z_{t,i}Z_{t,j'}Z_{t-h, j'}]$ — that do not simplify 
 further without additional assumptions on the dependence structure 
 of $(X_t)$.\\
 To obtain the joint asymptotic distribution of $\hat{f}^*_i$ and 
@@ -1751,7 +1783,7 @@ needs to be estimated, which can improve numerical stability of the
 plug-in estimator. If, however, serial dependence is detected, the
 general estimator based on $\hat{\pi}(h)$ and
 $\hat{\pi}(h,2h)$ should be preferred.\\
-The test statistic is
+The test statistic as proposed by \citet{weiss2021categorical} is
 \[
     T_n(h) := \frac{\sqrt{n}\,\hat{\kappa}_{\mathrm{ord}}(h)}
                    {\hat{\sigma}_\kappa},
@@ -1848,11 +1880,13 @@ assumption.
 \section{Setup and Design}
 \label{sec:sim-setup}
 
+The setup of this simulation study extends the illustrative simulations in \citet{weiss2021categorical} by considering a substantially 
+broader range of sample sizes, both scenarios simultaneously, and additional missingness mechanisms beyond i.i.d.\ Bernoulli observations.
 \subsection*{Data generating process}
 
 All simulations are based on the BinAR(1) process as described in 
 \citet[Section~3.3]{Weiss2018}, which serves as a flexible and tractable 
-model for ordinal categorical time series with controllable serial dependence.
+model for ordinal categorical time series with controllable serial dependence. Note that 
 
 \paragraph{Model definition.}
 The BinAR(1) process is parameterized by the number of categories 
@@ -2503,7 +2537,8 @@ The theoretical framework developed in the preceding chapters was
 presented for ordinal categorical processes, where the natural ordering 
 of the categories allows the marginal distribution to be represented 
 through the CDF vector $\boldsymbol{f}$ and its sample analogue 
-$\hat{\boldsymbol{f}}$. For nominal processes, no such ordering exists, 
+$\hat{\boldsymbol{f}}$, as also considered by \citet{weiss2021categorical}. 
+For nominal processes, no such ordering exists, 
 and the marginal distribution is instead characterized by the PMF vector 
 $\boldsymbol{p}$ and its estimator $\hat{\boldsymbol{p}}$ (recall 
 Definition~\ref{def:empirical_estimators}). Since both estimators are sample 
