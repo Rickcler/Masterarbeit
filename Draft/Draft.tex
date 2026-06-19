@@ -343,7 +343,7 @@ f_i(1 - f_i) \overset{!}{=} 0 \quad \forall i.
 \]
 This is only possible if $f_i \in \{0,1\}$ for all $i$, which implies
 $\mathbf{f} \in \{\boldsymbol{e}_0,\ldots,\boldsymbol{e}_m\}$.
-Hence, $\mathrm{IOV}=0$ holds \emph{exactly} for a degenerate one-point distribution.\\
+Hence, $\mathrm{IOV}=0$ holds \emph{exactly} for a degenerate one-point distribution.\\\\
 \textit{Part (i), nominal case.} % dein bestehender Beweis fÃ¼r IQV=0
 A degenerate (one--point) distribution assigns all probability mass to a single
 category $s_j \in S$, which corresponds to a PMF vector of the form
@@ -376,8 +376,7 @@ Conversely, if $\mathrm{IQV} = 0$, then
 As all probabilities satisfy $0 \leq p_i \leq 1$, it follows that \[
 p_i^2 \leq p_i \quad \forall p_i, \text{ and } p_i^2 < p_i \quad \forall p_i \notin \{0,1\}.
 \]
-Since $\sum_{i=1}^{m}p_i = 1$, it follows that the only way $\sum_i p_i^2 = 1$ can hold is if exactly one $p_i$ equals 1 and all others are 0. In other words, the distribution is degenerate and $\boldsymbol{p} \in \{\boldsymbol{e}_0,\ldots, \boldsymbol{e}_{m}\}$.
-
+Since $\sum_{i=1}^{m}p_i = 1$, it follows that the only way $\sum_i p_i^2 = 1$ can hold is if exactly one $p_i$ equals 1 and all others are 0. In other words, the distribution is degenerate and $\boldsymbol{p} \in \{\boldsymbol{e}_0,\ldots, \boldsymbol{e}_{m}\}$.\\
 \textit{Part (ii), ordinal case.} % dein bestehender Beweis fÃ¼r IOV=1
 Dispersion of an ordinal variable is maximal when half of the
 probability mass lies in the lowest category and half in the highest
@@ -413,7 +412,6 @@ Since it has been already shown that $\mathrm{IOV}(\boldsymbol{f} = (\frac{1}{2}
 \[
 \mathrm{IOV}(\boldsymbol{f}) = 1 \Leftrightarrow \boldsymbol{f} = (\frac{1}{2}, \ldots, \frac{1}{2})^\top
 \]
-
 \textit{Part (ii), nominal case.} % dein bestehender Beweis fÃ¼r IQV=1
 For nominal data, maximal dispersion is attained when probability mass is distributed uniformly across all $m+1$ categories, i.e.
 \[
@@ -997,8 +995,8 @@ are then given by
     &\quad = f_i f_j\,\sigma_{\boldsymbol{Z}^*;\,-1-1} 
     + \pi(f_{\min \{i,j\}} - f_i f_j)  
     + \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h) + f_{ji}(h) - 2f_i f_j)
-\end{align*}}
-\noindent The detailed derivations of these expressions are provided in Appendix \ref{app:derivation_covarianceZ}.
+\end{align*}}\noindent
+The detailed derivations of these expressions are provided in Appendix \ref{app:derivation_covarianceZ}.
 \end{remark}
 \noindent To now derive the asymptotic properties of $\hat{\boldsymbol{f}}^*$ we define the vector-valued function $\boldsymbol{g}:= [0,1]^{m+1} \rightarrow [0,1]^{m}$ as
 \[g_j(x_{-1}, x_{0}, \ldots, x_{m-1}) = x_j / x_{-1}, \quad \text{for } j = 0 \ldots, m-1,\]
@@ -1429,12 +1427,11 @@ O_{t+k}O_{t+k-h}Z_{t+k, j'}Z_{t+k-h, j'}) \\
 O_tO_{t-h}Z_{t, j'}Z_{t-h, j'})\bigr] \\
 &\quad \overset{\perp}{=}
 \pi(h)\,\mathrm{E}[Z_{t,i'}Z_{t-h, i'}Z_{t, j'}Z_{t-h, j'}] 
-- \pi(h)^2\,f_{i'i'}(h)\,f_{j'j'}(h)\\
-&\qquad + \sum_{k=1}^{\infty}
-\mathrm{E}[O_tO_{t-h}O_{t+k}O_{t+k-h}]\,\bigl[
-\mathrm{E}[Z_{t,i'}Z_{t-h, i'}Z_{t+k, j'}Z_{t+k-h, j'}] \\
-&\qquad + \mathrm{E}[Z_{t+k, i'}Z_{t+k-h, i'}Z_{t, j'}Z_{t-h, j'}]\bigr]
-- 2\pi(h)^2 f_{i'i'}(h)\,f_{j'j'}(h)
+- \pi(h)^2\,f_{i'i'}(h)\,f_{j'j'}(h) + \sum_{k=1}^{\infty} \biggl(
+\mathrm{E}[O_tO_{t-h}O_{t+k}O_{t+k-h}]\\ 
+& \qquad \cdot \biggl[\mathrm{E}[Z_{t,i'}Z_{t-h, i'}Z_{t+k, j'}Z_{t+k-h, j'}] 
++ \mathrm{E}[Z_{t+k, i'}Z_{t+k-h, i'}Z_{t, j'}Z_{t-h, j'}]\biggr]
+- 2\pi(h)^2 f_{i'i'}(h)\,f_{j'j'}(h)\biggr)
 \end{align*}}\noindent
 Note that cases \textbf{(v)}, \textbf{(vi)} and \textbf{(viii)} coincide with cases 
 \textbf{(i)-(iii)} from $\boldsymbol{\Sigma}_{\boldsymbol{Z}*}$ of Proposition~\ref{prop:clt_zstar}. 
@@ -1495,18 +1492,6 @@ $\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}$, is given by
     \end{pmatrix}.
 \end{align*}
 \end{theorem}
-% Since explicit closed-form expressions for the elements of 
-% $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$ require 
-% higher-order mixed moments of $(X_t)$, a fully general evaluation of 
-% $\boldsymbol{G}\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}\boldsymbol{G}^\top$ 
-% is intractable without further assumptions. We therefore proceed in 
-% two steps: first, in Section~\ref{subsec:serial-H0}, we narrow our focus to 
-% the asymptotic null distribution of $\sqrt{n}\,\hat{\kappa}_{\mathrm{ord}}(h)$, 
-% under which the i.i.d.\ assumption on $(X_t)$ yields the simplifications 
-% needed for closed-form results. Second, in Section~\ref{subsec:serial-HA}, 
-% we return to the general model and show that the test is consistent 
-% under $H_A$, without requiring explicit expressions for 
-% l
 \subsection{Hypothesis Testing for Serial Dependence}
 \label{subsec:serial-testing}
 The asymptotic results derived above provide the foundation for a
@@ -1561,35 +1546,34 @@ Applying these simplifications to cases \textbf{(ix)} and \textbf{(x)}
 of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$ yields:
 {\small\allowdisplaybreaks
 \begin{align*}
-&\textbf{(ix)}\ i = 0,\ldots,m-1,\ j = m,\ldots,2m-1\ 
-\text{(continued from above)}:\\
+&\textbf{(ix)}\ i = 0,\ldots,m-1,\ j = m,\ldots,2m-1 \quad(j-m = j'):\\
 &\quad \overset{H_0}{=} 
-\pi(h)\,f_{j-m}f_{\min\{i,j-m\}} - \pi\pi(h)f_i f_{j-m}^2 \\
-&\qquad + \underbrace{\mathrm{E}[O_t^2 O_{t+h}]\,f_{j-m}f_{\min\{i,j-m\}} 
-+ \mathrm{E}[O_{t+h} O_t O_{t-h}]\,f_i f_{j-m}^2 - 2 \pi \pi(h)f_i f_{j-m}^2}_{k=h} \\
-&\qquad + f_i f_{(j-m)}^2 \mathrm{E}[O_t^2 O_{t-h}] - f_i f_{(j-m)}^2\mathrm{E}[O_t^2 O_{t-h}] \\
+\pi(h)\,f_{j}f_{\min\{i,j'\}} - \pi\pi(h)f_i f_{j'}^2 \\
+&\qquad + \underbrace{\mathrm{E}[O_t^2 O_{t+h}]\,f_{j'}f_{\min\{i,j'\}} 
++ \mathrm{E}[O_{t+h} O_t O_{t-h}]\,f_i f_{j'}^2 - 2 \pi \pi(h)f_i f_{j'}^2}_{k=h} \\
+&\qquad + f_i f_{j'}^2 \mathrm{E}[O_t^2 O_{t-h}] - f_i f_{j'}^2\mathrm{E}[O_t^2 O_{t-h}] \\
 &\qquad + \sum_{\substack{k=1\\k\neq h}}^{\infty} \bigl[
 \mathrm{E}[O_t O_{t+k} O_{t+k-h}] + \mathrm{E}[O_{t+k} O_t O_{t-h}]
-- 2\pi\pi(h)\bigr] f_i f_{j-m}^2 \\
-&\quad =2\pi(h)f_{j-m}f_{\min\{i,j-m\}} - \pi \pi(h)f_i f_{j-m}^2 - \pi(h)f_i f_{j-m}^2\\
-&\qquad + (1-\pi)\pi(h)f_i f_{j-m}^2 - (1-\pi)\pi(h)f_i f_{j-m}^2\\ 
-&\qquad + f_{i}f_{j-m}^2 \sum_{k=1}^{\infty} \bigl[
+- 2\pi\pi(h)\bigr] f_i f_{j'}^2 \\
+&\quad =2\pi(h)f_{j'}f_{\min\{i,j'\}} - \pi \pi(h)f_i f_{j'}^2 - \pi(h)f_i f_{j'}^2
++ (1-\pi)\pi(h)f_i f_{j'}^2 - (1-\pi)\pi(h)f_i f_{j'}^2\\ 
+&\qquad + f_{i}f_{j'}^2 \sum_{k=1}^{\infty} \bigl[
 \mathrm{E}[O_t O_{t+k} O_{t+k-h}] + \mathrm{E}[O_{t+k} O_t O_{t-h}]
 - 2\pi\pi(h)\bigr] \\
-&\quad = 2\pi(h)(f_{(j-m)}f_{\min\{i,j-m\}} - f_i f_{j-m}^2) + f_i f_{j-m}^2 \sigma^{(h)}_{-1-2}\\[2ex]
-&\textbf{(x)}\ i,j = m,\ldots,2m-1\ \text{(continued from above)}:\\
-&\quad \overset{H_0}{=} \pi(h)f_{\min\{i,j\}}^2 - \pi(h)^2 f_{(i-m)}^2f_{(j-m)}^2 
-+ 2 \mathrm{E}[O_t O_{t+h} O_{t-h}] f_i f_j f_{\min\{i,j\}} - 2 \pi(h)^2 f_{i-m}^2 f_{j-m}^2 \\
-&\qquad + \sum_{\substack{k=1\\k\neq h}}^{\infty} 2 f_{i}^2 f_{j}^2 \left[  \mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}] - \pi(h)^2\right] \\
-&\quad = \pi(h)f_{\min\{i-m,j-m\}}^2 - \pi(h)^2 f_{(i-m)}^2f_{(j-m)}^2 
-+ 2 \mathrm{E}[O_t O_{t+h} O_{t-h}] f_{i-m} f_{j-m} f_{\min\{i-m,j-m\}}\\
-&\qquad - 2f_{i-m}^2f_{j-m}^2 E[O_{t}O_{t+h}O_{t-h}] 
-+ \pi(h)f_{i-m}^2f_{j-m}^2 - \pi(h)f_{i-m}^2f_{j-m}^2 + \\
-&\qquad +2 f_{i-m}^2f_{j-m}^2 \sum_{k=1}^{\infty}  \left[  \mathrm{E}[O_t O_{t-h} O_{t+k} O_{t+k-h}] - \pi(h)^2\right] \\
-&\quad = \pi(h) (f_{\min\{i-m,j-m\}}^2- f_{i-m}^2f_{j-m}^2) + 2\pi(h, 2h)f_{i-m}f_{j-m}(f_{\min\{i-m,j-m\}}- f_{i-m}f_{j-m})\\
-&\qquad + f_{i-m}^2f_{j-m}^2\sigma^{(h)}_{-2-2},
-\end{align*}}
-\noindent where $\pi(h,2h) := \mathrm{E}[O_t O_{t+h}O_{t-h}]$.
+&\quad = 2\pi(h)(f_{j'}f_{\min\{i,j'\}} - f_i f_{j'}^2) + f_i f_{j'}^2 \sigma^{(h)}_{-1-2}\\[2ex]
+&\textbf{(x)}\ i,j = m,\ldots,2m-1\ \quad \quad(i-m = i', j-m = j'):\\
+&\quad \overset{H_0}{=} \pi(h)f_{\min\{i',j'\}}^2 - \pi(h)^2 f_{i'}^2f_{j'}^2 
++ 2 \mathrm{E}[O_t O_{t+h} O_{t-h}] f_{i'} f_{j'} f_{\min\{i',j'\}} - 2 \pi(h)^2 f_{i'}^2 f_{j'}^2 \\
+&\qquad + \sum_{\substack{k=1\\k\neq h}}^{\infty} 2 f_{i'}^2 f_{j'}^2 \left[  \mathrm{E}[O_t O_{t-h} O_{t+k}O_{t+k-h}] - \pi(h)^2\right] \\
+&\quad = \pi(h)f_{\min\{i', j'\}}^2 - \pi(h)^2 f_{i'}^2f_{j'}^2 
++ 2 \mathrm{E}[O_t O_{t+h} O_{t-h}] f_{i'} f_{j'} f_{\min\{i',j'\}}\\
+&\qquad - 2f_{i'}^2f_{j'}^2 E[O_{t}O_{t+h}O_{t-h}] 
++ \pi(h)f_{i'}^2f_{j'}^2 - \pi(h)f_{i'}^2f_{j'}^2 + \\
+&\qquad +2 f_{i'}^2f_{j'}^2 \sum_{k=1}^{\infty}  \left[  \mathrm{E}[O_t O_{t-h} O_{t+k} O_{t+k-h}] - \pi(h)^2\right] \\
+&\quad = \pi(h) (f_{\min\{i',j'\}}^2- f_{i'}^2f_{j'}^2) + 2\pi(h, 2h)f_{i'}f_{j'}(f_{\min\{i',j'\}}- f_{i'}f_{j'})
++ f_{i'}^2f_{j'}^2\sigma^{(h)}_{-2-2},
+\end{align*}}\noindent
+where $\pi(h,2h) := \mathrm{E}[O_t O_{t+h}O_{t-h}]$.
 Substituting all elements of $\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$ 
 into $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}} = \boldsymbol{G}
 \boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}\boldsymbol{G}^\top$ and 
@@ -1608,7 +1592,7 @@ $\sigma^{(h)*}_{ij}$ simplify to (see Appendix~\ref{app:derivation_covariance}):
         \frac{1}{\pi(h)^2}(f_{\min\{i',j'\}}-f_{i'}f_{j'})
         \Bigl(\pi(h)(f_{\min\{i',j'\}}-f_{i'}f_{j'}) 
         + 2\pi(h,2h)f_{i'}f_{j'}\Bigr)
-\end{align*}}
+\end{align*}}\noindent
 Applying the delta method to 
 $\kappa_{\mathrm{ord}} = A/B$, where 
 $A = \sum_{j=0}^{m-1}(f_{jj}(h)-f_j^2)$ and 
@@ -1632,9 +1616,6 @@ formula and evaluating under $H_0$ yields (see Appendix~\ref{app:var-kappa}
 for the detailed calculation)
 \begin{align*}
     \sigma^2_\kappa 
-    &= \boldsymbol{D}_{\kappa}
-       \boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}
-       \boldsymbol{D}_{\kappa}^\top
     = \frac{\frac{1}{\pi(h)}\displaystyle\sum_{i,j=0}^{m-1} 
       \bigl(f_{\min\{i,j\}}-f_if_j\bigr)
       \Bigl(f_{\min\{i,j\}} 
@@ -1908,8 +1889,8 @@ dependence: $r = 0$ yields an i.i.d.\ process, positive values imply
 positive autocorrelation, and negative values imply negative autocorrelation.
 
 \paragraph{Distributional properties.}
-The stationary marginal distribution of $(X_t)$ is 
-$\mathrm{Binomial}(m, p)$, so that the process is strictly stationary. 
+The stationary marginal distribution of $(X_t)$ is \linebreak
+$\mathrm{Binomial}(m, p)$,  so that the process is strictly stationary. 
 In particular, the true CDF vector $\boldsymbol{f}$ and the index of 
 ordinal variation (IOV) are available in closed form as
 \[
@@ -1931,7 +1912,7 @@ p_{i|j}(1)= \sum^{\min\{i,j\}}_{q = \max\{0, i+j-m \}}
 \]
 The $h$-step-ahead transition probabilities are obtained by replacing 
 $\alpha$ and $\beta$ with $\alpha_h = p(1-r^h) + r^h$ and 
-$\beta_h = p(1-r^h)$. The joint probabilities
+$\beta_h = p(1-r^h)$. The lag-$h$ joint probabilities
 \[
 p_{ij}(h) = P(X_t = i, X_{t-h} = j)
 \]
@@ -1997,7 +1978,7 @@ while inducing serial dependence in $(O_t)$, with
 $\mathrm{Cov}(O_t, O_{t+h}) = r_{\pi}^h\,\pi(1-\pi)$ for all $h \geq 1$ 
 \citep[p.~139]{Weiss2018}. Notably, this process is equal to a BinAR(1)-process 
 with parameters $m =1,~p = \pi$ and $r = r_h$, which implies that the process 
-satisfies the relevant mixing conditions.
+satisfies the relevant mixing conditions.\\
 Third, we consider observation schemes that depend on the current state of 
 the underlying process $(X_t)$, corresponding to MNAR-type mechanisms. In 
 the first variant, the observation probability increases linearly with $X_t$, i.e.
@@ -2008,8 +1989,8 @@ while in the second variant it decreases linearly with $X_t$, i.e.
 \[
 \pi_t = \pi_{\text{high}} - (\pi_{\text{high}} - \pi_{\text{low}})\frac{X_t}{m}.
 \]
-To be able to reference both mechanisms in a more concise way, we will write $P(O_t = 1) \propto X_t$ 
-and $P(O_t = 1) \propto - X_t$ to refer to the increasing and decreasing versions, respectively. 
+To be able to reference both mechanisms in a more concise way, we will write \linebreak $P(O_t=)\propto X_t$ 
+and $P(O_t=1)\propto-X_t$ to refer to the increasing and decreasing versions, respectively. 
 The parameters $\pi_{\text{low}}$ and $\pi_{\text{high}}$ define the minimum and maximum observation probabilities, 
 respectively, and therefore determine the range in which $\pi_t$ can vary. In both cases,
 \[
@@ -2035,7 +2016,7 @@ qualitatively different settings:
 \end{itemize}
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth, height = 0.75 \textwidth]{../Graphs/MarginalsPlot.png}
+    \includegraphics[width=\textwidth, height = 0.5 \textwidth]{../Graphs/MarginalsPlot.png}
     \caption{Marginal distribution of the two simulation scenarios.}
     \label{fig:marginal-dist}
 \end{figure}
@@ -2051,15 +2032,17 @@ across experiments and are stated explicitly for each figure. As a default,
 results are based on $n \in \{50, 100, 250, 500, 1000\}$ and $B = 1{,}000$ replications.
 
 \subsection*{Estimators and performance measures}
-
-In each replication, the following quantities are computed from the 
-observed data $(O_t X_t)_{t=1}^n$: the corrected CDF estimator 
+Depending on the scenario under consideration, a subset of the 
+following quantities is computed from the observed data 
+$(O_t X_t)_{t=1}^n$: the corrected CDF estimator 
 $\hat{\boldsymbol{f}}^*$ (Definition~\ref{def:correctedest}), the 
 IOV estimator $\widehat{\mathrm{IOV}}$, the skewness estimator 
 $\widehat{\mathrm{skew}}$, and the ordinal Cohen's $\kappa$ estimator 
-$\hat{\kappa}_{\mathrm{ord}}(h)$ for lags $h \in \{1, 2\}$. 
-Performance is assessed through the following measures, averaged across 
-replications:
+$\hat{\kappa}_{\mathrm{ord}}(h)$ for lags $h \in \{1, 2\}$. The 
+specific estimator(s) reported are stated explicitly for each 
+figure or table.\\
+Performance is generally assessed through a subset of the following 
+measures, averaged across replications:
 \begin{itemize}
     \item \textbf{Mean bias:} $\frac{1}{B}\sum_{b=1}^B 
     (\hat{\theta}_b - \theta)$, where $\theta$ denotes the true 
@@ -2071,11 +2054,8 @@ replications:
     against the asymptotic standard deviation 
     $\sqrt{\sigma^2_\theta / n}$ derived in the theoretical chapters.
 \end{itemize}
-The theoretical bias limit for the IOV estimator under MCAR is given 
-by $-\frac{4}{mn}\mathrm{tr}(\boldsymbol{\Sigma}_Z)$ 
-(Corollary~\ref{cor:iov_missing}), and for $\hat{\kappa}_{\mathrm{ord}}(h)$ under $H_0$ by 
-$-\frac{1}{n\pi}$ (Theorem~\ref{thm:kappa-asymp}). These serve as 
-benchmarks against which the simulated bias curves are compared.
+The theoretical bias and asymptotic variance expressions for  $\widehat{\mathrm{IOV}}$ and $\hat{\kappa}(h)$ used as 
+benchmarks throughout this section come from Corollary~\ref{cor:iov_missing} and Theorem~\ref{thm:kappa-asymp} respectively. 
 \section{Results}
 \label{sec:sim-results}
 
@@ -2089,7 +2069,7 @@ normal distribution. The left panel shows a kernel density plot of the raw quant
 while the right panel shows the same quantity after multiplication
 by $\sqrt{n}$. Both panels display
 results for $n \in \{50, 1000, 5000\}$ under \hyperref[scen:B]{Scenario~B} with
-$\pi = 0.75$.\\
+$\pi = 0.75$.
 \begin{figure}[htbp]
     \centering
     \begin{minipage}[c]{0.42\textwidth}
@@ -2117,7 +2097,7 @@ $\pi = 0.75$.\\
     (dashed). \hyperref[scen:B]{Scenario~B} with $\pi = 0.75$. Based on
     $B = 1{,}000$ replications.}
     \label{fig:iov-density}
-\end{figure}
+\end{figure}\noindent
 In the left panel, the residual leftward shift at $n = 50$ relative
 to the asymptotic limit reflects the negative finite-sample bias of
 $\widehat{\mathrm{IOV}}$ established in
