@@ -1,18 +1,18 @@
 # Fdb version 4
-["bibtex Draft"] 1781861887.58065 "Draft.aux" "Draft.bbl" "Draft" 1781862723.40152 0
+["bibtex Draft"] 1781868009.07213 "Draft.aux" "Draft.bbl" "Draft" 1781868029.89804 0
   "./references.bib" 1781693924 4651 a0bc0f42adbcaae552fee81b1fc515a7 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/bibtex/bst/bibtex/apalike.bst" 1291972791 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "Draft.aux" 1781862711 33411 b02619b3631bd6fddb3149b16ee122e1 "xelatex"
+  "Draft.aux" 1781868020 32714 ea3937e58d4afbb2c553dbf67dc14a9b "xelatex"
   (generated)
   "Draft.bbl"
   "Draft.blg"
   (rewritten before read)
-["xdvipdfmx"] 1781862714.64399 "Draft.xdv" "Draft.pdf" "Draft" 1781862723.43921 0
-  "Draft.xdv" 1781862711 1141964 44051a730d3198be5448e546026ca8a2 "xelatex"
+["xdvipdfmx"] 1781868022.84843 "Draft.xdv" "Draft.pdf" "Draft" 1781868029.92134 0
+  "Draft.xdv" 1781868020 1146636 832eb153ef1bb18611a697cb3bc0ba86 "xelatex"
   (generated)
   "Draft.pdf"
   (rewritten before read)
-["xelatex"] 1781862699.53071 "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" "Draft.xdv" "Draft" 1781862723.40233 0
+["xelatex"] 1781868009.85029 "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" "Draft.xdv" "Draft" 1781868029.89855 0
   "../Graphs/Bias_scaled.png" 1781694298 39020 2251590ae88688b2417554cac1cfea4a ""
   "../Graphs/Bias_unscaled.png" 1781094416 29280 289ddd0b2263ccf765c6f1ce39f1ae20 ""
   "../Graphs/CLT_scaled.png" 1781094405 46948 0189ea8c206735f577dde7a3d0ef206f ""
@@ -39,6 +39,7 @@
   "C:/Users/victo/AppData/Local/MiKTeX/miktex/data/le/xetex/xelatex.fmt" 1776333737 27177068 ed83974225c2fccd90c08110ff5492d1 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768654 1528 7e12f4c0fcf5a072cebdcfbfc610f54c ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/euler/eufb10.tfm" 1233951852 1028 36de000ffb3f7b5321446b15f27c24a5 ""
+  "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/euler/eufb5.tfm" 1233951852 1028 71b7b8c63219939417bfe7c256fb5958 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/euler/eufb7.tfm" 1233951852 1028 ed16f3c586555be9d71149d662367e60 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/euler/eufm10.tfm" 1233951852 1040 b84415f97d114011685943ade933dc71 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/public/amsfonts/euler/eufm5.tfm" 1233951852 1040 a9d2074f3fa062d4d9046b92e2334d8c ""
@@ -52,6 +53,7 @@
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/public/cm/cmr10.tfm" 1136765053 1296 45809c5a464d5f32c8f98ba97c1bb47f ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/ec-lmr12.tfm" 1256929440 12092 7b1546e2d096cfd5dcbd4049b0b1ec2e ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/lmbsy10.tfm" 1256929440 1300 2df9da0fc09d4a8c772b3dd386a47c6a ""
+  "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/lmbsy5.tfm" 1256929440 1304 2ff0a255ae754422adbc0e6519ed2658 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/lmbsy7.tfm" 1256929440 1304 535e0954c1961c817723e44bc6a9662c ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/lmex10.tfm" 1256929440 992 ce925c9346c7613270a79afbee98c070 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/lmmi10.tfm" 1256929440 1528 6d36b2385e0ca062a654de6ac59cb34f ""
@@ -61,6 +63,7 @@
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/lmmi7.tfm" 1256929440 1528 d5b028dd23da623848ef0645c96a1ed7 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/lmmi8.tfm" 1256929440 1520 a3fe5596932db2db2cbda300920dd4e9 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/lmmib10.tfm" 1256929440 1524 94d8ba2701edc3d8c3337e16e222f220 ""
+  "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/lmmib5.tfm" 1256929440 1496 026e52505574e5c5b11a8037b8db27d0 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/lmmib7.tfm" 1256929440 1508 e1d41318430466dfe2207ded55ef3af5 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/lmsy10.tfm" 1256929440 1308 02cc510f9dd6012e5815d0c0ffbf6869 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/fonts/tfm/public/lm/lmsy5.tfm" 1256929440 1296 54ed1a711e2303d5282575278e3620b0 ""
@@ -223,11 +226,11 @@
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
   "C:/Users/victo/AppData/Local/Programs/MiKTeX/tex/latex/xpatch/xpatch.sty" 1585221260 8510 7803f78066c4f9d008405191a4b43073 ""
-  "Draft.aux" 1781862711 33411 b02619b3631bd6fddb3149b16ee122e1 "xelatex"
-  "Draft.bbl" 1781861888 3526 26ccb9d91e9b0556f8ea1e318b394979 "bibtex Draft"
-  "Draft.tex" 1781862696 186459 a3e921b7fdd6326f1eb3ab0bd4811bd7 ""
-  "Draft.toc" 1781862711 6210 879b1f2e9509adfc19d70d6f2707ede5 "xelatex"
-  "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" 1781862696 186459 a3e921b7fdd6326f1eb3ab0bd4811bd7 ""
+  "Draft.aux" 1781868020 32714 ea3937e58d4afbb2c553dbf67dc14a9b "xelatex"
+  "Draft.bbl" 1781868009 3526 26ccb9d91e9b0556f8ea1e318b394979 "bibtex Draft"
+  "Draft.tex" 1781867991 187083 96c23ff243612cd1120120d13182b913 ""
+  "Draft.toc" 1781868020 6210 879b1f2e9509adfc19d70d6f2707ede5 "xelatex"
+  "c:/Users/victo/Desktop/Masterarbeit/Draft/Draft.tex" 1781867991 187083 96c23ff243612cd1120120d13182b913 ""
   (generated)
   "Draft.aux"
   "Draft.log"

@@ -9,7 +9,7 @@
 \usepackage{tikz}
 \usepackage{float}
 \usepackage{fontspec}
-
+\usepackage[stable]{footmisc}
 \usepackage{showframe}
 % Theorem-Definitionen
 \newtheorem{theorem}{Theorem}[chapter]
@@ -2155,11 +2155,11 @@ approximation.
         \centering
         \includegraphics[width=0.85\textwidth]{../Graphs/Bias_scaled.png}
     \end{minipage}
-    \caption{\scriptsize Left: Mean from simulation (solid) and theoretical approximation (dashed) of
+    \caption[Bias of IOV: simulation vs.\ theoretical approximation]{\scriptsize Left: Mean from simulation (solid) and theoretical approximation (dashed) of
     $(\widehat{\mathrm{IOV}} - \mathrm{IOV})$. Right: the same quantities rescaled by a 
     factor of $n$. For
     $n \in \{2, 3, 5, 10, 15, 25, 37, 50, 75, 100, 150, 200, 375, 500, 750, 1000\}$ and \hyperref[scen:B]{Scenario~B} with $\pi = 0.75$. Based on
-    $B = 20{,}000$ replications.}
+    $B = 50{,}000$ replications.\footnotemark}
     \label{fig:iov_bias_n_scaled}
 \end{figure}
 
@@ -2200,7 +2200,12 @@ terms, the relative impact of missingness is smaller in Scenario~B,
 where serial dependence is stronger. Consequently, the gap between
 $\pi = 1$ and $\pi = 0.75$ is more pronounced in Scenario~A than in
 Scenario~B.
-
+\footnotetext{For $n \in \{2,3,5,10\}$, 3169, 801, 67,
+    and 1 out of $B = 50{,}000$ replications, respectively, were excluded because
+    $\bar{O} = 0$, in which case the corrected estimator $\hat{\boldsymbol{f}}^*$ is
+    undefined. These frequencies closely match the theoretical probability
+    $(1-\pi)^n$ of complete non-observation, confirming that this is an expected
+    finite-sample artifact rather than a numerical issue.}
 
 \begin{figure}[H]
     \centering
@@ -2230,8 +2235,9 @@ $(O_t)$ is no longer i.i.d. Figure~\ref{fig:iov_sd_comparison} presents
 the same comparison as Figure~\ref{fig:iov_comparison}, now varying the
 serial dependence parameter $r_\pi$ while keeping the marginal observation
 probability constant. A comparison of Figure~\ref{fig:iov_sd_comparison} and 
-Figure~\ref{fig:iov_comparison} reveals that the difference between i.i.d.\ 
-$O_t$ and weak serial dependence ($r_\pi = 0.2$) is not substantial. Only upon 
+Figure~\ref{fig:iov_comparison} reveals that, with respect to the 
+IOV estimator, the difference between i.i.d.\ $O_t$ and weak serial 
+dependence ($r_\pi = 0.2$) is not substantial. Only upon 
 closer inspection can a slight increase in the standard deviation be observed. 
 Even under much stronger serial dependence ($r_\pi = 0.75$), the effect remains 
 limited, with only a slight increase in the standard deviations.
@@ -2296,7 +2302,7 @@ scenarios hold as for the IOV.
 \label{sec:sim-kappa}
 
 \paragraph{Distribution under $H_0$.}
-Under the null hypothesis ($r = 0$, i.i.d.\ process),
+Under the null hypothesis ($\kappa_{\mathrm{ord}}(h) = 0\text{ for } h = 1,~2,\ldots$),
 Figure~\ref{fig:kappa_comparison} compares simulated and asymptotic
 results for $\hat{\kappa}_{\mathrm{ord}}(1)$ as a function of $n$
 for both scenarios (with $r$ set to 0) and
@@ -2395,7 +2401,7 @@ the speed of convergence is substantially slower for $\pi = 0.75$ compared to $\
     \end{minipage}
     {\scriptsize {\fontspec{Arial} log(n)}}
     \caption{\scriptsize
-        Left: Mean estimate of $\hat{\kappa}(1)$ together with
+        Left: Mean estimate of $\kappa_{\mathrm{ord}}(1)$ together with
         $\pm 1.96$ standard deviations (gray ribbon) for Scenario~A,
         compared to the 95\% confidence intervals under $H_0$.
         Right: Rejection rate under $H_A$ for Scenario~A with varying
@@ -2416,7 +2422,7 @@ now examine what happens when this assumption is violated.
 \paragraph{IOV under MNAR.}
 Under the two MNAR mechanisms described in Section~\ref{sec:sim-setup},
 Figure~\ref{fig:bias-mnar} shows the simulated bias of
-$\widehat{\mathrm{IOV}}$ for Scenario~A across
+$\widehat{\mathrm{IOV}}$ for Scenario~A across \linebreak
 $n \in \{50, 100, 250, 500, 1000\}$ with marginal observation probability
 $\pi = 0.75$.
 In both settings, the bias of $\hat{\boldsymbol{f}}^*$ is non-negligible
@@ -2457,8 +2463,7 @@ and that we now show rejection rates under $H_A$ for both MNAR mechanisms in the
 panel, while keeping the marginal observation probability $\pi = 0.75$ constant. We also
 included the rejection rates under $H_0$ (black line) to illustrate the effect of MNAR
 missingness on the level of the test. Otherwise, the same specifications for the scenarios,
-sample sizes, and number of replications are used as in Figure~\ref{fig:kappa-H_A}.
-
+sample sizes, and number of replications are used as in Figure~\ref{fig:kappa-H_A}. \\
 A few observations are worth highlighting. First, the left panel seemingly implies that
 $\hat{\kappa}_{\mathrm{ord}}(1)$ is not consistent under MNAR missingness: for both
 mechanisms, the average estimate of $\hat{\kappa}_{\mathrm{ord}}(1)$ for $n \geq 250$
@@ -2499,7 +2504,7 @@ and that the severity of this effect depends on the particular MNAR mechanism at
     \end{minipage}
     {\scriptsize {\fontspec{Arial} log(n)}}
     \caption{\scriptsize
-        Left: Mean estimateS of $\hat{\kappa}(1)$ together with
+        Left: Mean estimates of $\kappa(1)$ together with
         $\pm 1.96$ standard deviations  for Scenario~A with MNAR missingness,
         with the red (increasing) and blue (decreasing) ribbons corresponding to the two  MNAR mechanisms described in Section~\ref{sec:sim-setup},
         compared to the 95\% confidence intervals under $H_0$.
