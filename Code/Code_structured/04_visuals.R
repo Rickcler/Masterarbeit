@@ -8,6 +8,7 @@ source("00_setup.R")
 load("Masterarbeit.RData")
 
 
+
 #------------------------------------------------------------------------------
 # Figure 4.1: Cohen's Kappa of BinAR(1) for different values of r
 #------------------------------------------------------------------------------
@@ -48,7 +49,7 @@ Cohens_Plot <- ggplot(df_long, aes(x = h, y = kappa, color = r)) +
   theme_minimal() +
   coord_fixed(ratio = 40)
 print(Cohens_Plot)
-ggsave("Graphs/Cohens_Kappa_by_h.png", Cohens_Plot + theme(legend.position = "none"), width = 8, height = 6)
+ggsave("Graphs/Cohens_Kappa_by_h.png", Cohens_Plot, width = 8, height = 6)
 
 #------------------------------------------------------------------------------
 # Figure 4.2: Maginal Distribution 

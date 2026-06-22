@@ -10,7 +10,7 @@
 \usepackage{float}
 \usepackage{fontspec}
 \usepackage[stable]{footmisc}
-\usepackage{showframe}
+% \usepackage{showframe}
 % Theorem-Definitionen
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{proposition}[theorem]{Proposition}
@@ -85,11 +85,11 @@ methodological attention. Building on the amplitude modulation framework introdu
 by \citet{weiss2021categorical}, this thesis develops asymptotic theory for distributional
 measures of ordinal and nominal categorical time series under missingness. For both
 measures of marginal dispersion and measures of serial dependence, 
-missingness-corrected estimators are introduced and their asymptotic normality is established 
+missingness-corrected estimators are introduced, and their asymptotic normality is established 
 under certain dependency conditions. The delta method is used to derive closed-form expressions for the
 asymptotic variance and the leading-order finite-sample bias of these estimators, and
 a hypothesis test for serial independence based on the corrected $\kappa$-estimator is
-constructed.The accompanying Monte Carlo simulation study, based on the BinAR(1) process,
+constructed. The accompanying Monte Carlo simulation study, based on the BinAR(1) process,
 goes beyond the illustrations in \citet{weiss2021categorical} by systematically
 investigating finite-sample accuracy and rates of convergence across a broad range
 of sample sizes, and by extending the analysis to more complex missingness structures:
@@ -219,10 +219,10 @@ Furthermore, $(X_t)$ is assumed to be stationary. A distinction can be made betw
 \end{definition}
 
 \begin{definition}[Strong/ Strict Stationarity]\label{def:Stationarity}
-    Strong/ Strict stationarity requires that all finite-dimensional distributions are invariant under time shifts, i.e.,
-        \begin{equation}
+    Strong/ Strict stationarity requires that all finite-dimensional distributions are invariant under time shifts, i.e.
+        \begin{equation*}
             F_{X_t,\ldots,X_{t+j}} = F_{X_{t+h},\ldots,X_{t+h+j}} \quad \forall\,t,j,h.
-        \end{equation}
+        \end{equation*}
 \end{definition}
 \section{Marginal Distributions}
 
@@ -243,7 +243,7 @@ Regardless of whether we consider a simple categorical process with few categori
 
     \item \textbf{Nominal data:}
     Since the categories of nominal variables do not possess a meaningful order, statistical procedures cannot make use of cumulative structure.
-    Therefore the marginal distribution is best represented by the probability mass function (PMF):
+    Therefore, the marginal distribution is best represented by the probability mass function (PMF):
     \[
         \boldsymbol{p} = (p_0, \dots, p_{m})^\top,
         \qquad
@@ -622,7 +622,7 @@ and hence Borel-measurable \citep[Theorem~1.88]{klenke2005}.
 The measurability of $g(X_t) = \boldsymbol{Z}_t$ follows from the 
 measurability of its components, and the composition 
 $U_t = L \circ g \circ X_t$ is measurable by 
-\citet[Theorem~1.80]{klenke2005}. Hence $U_t$ inherits strict stationarity and $\alpha$-mixing with
+\citet[Theorem~1.80]{klenke2005}. Hence, $U_t$ inherits strict stationarity and $\alpha$-mixing with
 $\alpha_{U_t}(n) \le \alpha_{X_t}(n) \le C\rho^n$ from $(X_t)$. We apply the CLT of
 \citet[Theorem 7]{Ibragimov1962}, which requires four conditions:
 \begin{enumerate}
@@ -1359,7 +1359,7 @@ O_t O_{t-h}Z_{t,j'}Z_{t-h,j'})\biggr] \\
 + 2\sum_{k=1}^{\infty}\bigl[
 \mathrm{E}[O_tO_{t-h}O_{t+k}O_{t+k-h}]
 - \pi(h)^2\bigr]\Bigr)\\
-&\quad =: f_{j'j'}(h)\,\sigma^{(h)}_{-2-2}\\[2ex]
+&\quad = f_{j'j'}(h)\,\sigma^{(h)}_{-2-2}\\[2ex]
 %
 &\textbf{(v)}\ i = j = -1: \\
 &\quad \mathrm{Var}(O_t) + 2\sum_{k=1}^\infty\mathrm{Cov}(O_t, O_{t+k}) 
@@ -1770,11 +1770,11 @@ Theorem~\ref{thm:kappa-asymp} and Slutsky's theorem, this test has
 asymptotic level $\alpha$.\\
 The test can equivalently be expressed through a confidence interval:
 $H_0$ is rejected at level $\alpha$ if and only if $0$ lies outside
-\begin{equation}\label{eq:ci-kappa}
+\begin{equation*}\label{eq:ci-kappa}
     \hat{\kappa}_{\mathrm{ord}}(h)
     \;\pm\;
     z_{\alpha/2}\,\frac{\hat{\sigma}_\kappa}{\sqrt{n}}.
-\end{equation}
+\end{equation*}
 It is important to note that \eqref{eq:ci-kappa} is an interval for
 the purpose of testing $H_0: \kappa_{\mathrm{ord}}(h) = 0$; it does
 \emph{not} serve as a confidence interval for the true value
@@ -2112,7 +2112,7 @@ of $\widehat{\mathrm{IOV}}$ as a function of $n$. The left panel
 shows the mean bias
 $\frac{1}{B}\sum_{b=1}^B(\widehat{\mathrm{IOV}}_b - \mathrm{IOV})$,
 together with the theoretical approximation
-$-\frac{4}{mn}\sum_{i=0}^{m-1}\sigma_{\hat{\boldsymbol{f}}^*;\,i,i}$
+$-\frac{4}{mn}\sum_{i=0}^{m-1}\sigma_{\hat{\boldsymbol{f}}^*;\,ii}$
 from Corollary~\ref{cor:iov_missing}$\, $ (dashed). The simulated and
 theoretical curves are nearly indistinguishable across the entire
 range of $n$, confirming the accuracy of the $O(n^{-1})$
@@ -2120,7 +2120,7 @@ approximation even at small sample sizes.\\
 The right panel displays the $n$-scaled bias
 $n \cdot \frac{1}{B}\sum_{b=1}^B(\widehat{\mathrm{IOV}}_b -
 \mathrm{IOV})$, along with the corresponding theoretical limit
-$-\frac{4}{m}\sum_{i=0}^{m-1}\sigma_{\hat{\boldsymbol{f}}^*;\,i,i}$
+$-\frac{4}{m}\sum_{i=0}^{m-1}\sigma_{\hat{\boldsymbol{f}}^*;\,ii}$
 (dashed). If the bias were exactly of order $n^{-1}$, this quantity
 would be constant in $n$. The figure shows that it is indeed nearly
 constant, with only minor fluctuations around the limiting value.\\
@@ -2549,12 +2549,12 @@ exponentially decaying coefficients. Then
 \[
     \sqrt{n}\bigl(\hat{\boldsymbol{p}} - \boldsymbol{p}\bigr)
     \xrightarrow[n\to\infty]{d}
-    \mathcal{N}\bigl(\boldsymbol{0},\, \boldsymbol{\Sigma}_Y\bigr),
+    \mathcal{N}\bigl(\boldsymbol{0},\, \boldsymbol{\Sigma}_{\boldsymbol{Y}}\bigr),
 \]
-where $\boldsymbol{\Sigma}_Y = (\sigma_{Y;ij})_{i,j=0,\ldots,m}$ is
+where $\boldsymbol{\Sigma}_{\boldsymbol{Y}} = (\sigma_{\boldsymbol{Y};ij})_{i,j=0,\ldots,m}$ is
 given by
 \[
-    \sigma_{Y;ij}
+    \sigma_{\boldsymbol{Y};ij}
     = p_j(\delta_{ij} - p_i)
     + \sum_{h=1}^{\infty}\bigl(p_{ij}(h) + p_{ji}(h) - 2p_ip_j\bigr).
 \]
@@ -2609,7 +2609,7 @@ defined analogously to Definition~\ref{def:correctedest} as
             {\frac{1}{n}\sum_{t=1}^n O_t}
     = \frac{\hat{\boldsymbol{\mathfrak{p}}}}{\bar{O}}.
 \]
-\end{definition}
+\end{definition}\noindent
 Since $O_t\boldsymbol{Y}_t$ is a bounded indicator process that 
 inherits stationarity and $\alpha$-mixing from $(O_t)$ and $(X_t)$ 
 by the same argument as in Section~\ref{sec:Amp Mod}, the asymptotic 
