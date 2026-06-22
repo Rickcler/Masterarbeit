@@ -11,13 +11,13 @@
 \contentsline {chapter}{\numberline {2}Sample Measures}{11}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Estimation of Marginal Distributions}{11}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Asymptotics of the marginal estimator}{11}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Asymptotic Properties of Sample Dispersion Measures}{14}{section.2.3}%
+\contentsline {section}{\numberline {2.3}Asymptotic Properties of Sample Dispersion Measures}{13}{section.2.3}%
 \contentsline {chapter}{\numberline {3}Introducing Missingness}{17}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Missingness Mechanisms}{17}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Amplitude Modulation}{18}{section.3.2}%
 \contentsline {section}{\numberline {3.3}Asymptotic Theory for the corrected estimator}{19}{section.3.3}%
 \contentsline {section}{\numberline {3.4}Asymptotic marginal properties}{24}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Serial Dependence}{24}{section.3.5}%
+\contentsline {section}{\numberline {3.5}Serial Dependence}{25}{section.3.5}%
 \contentsline {subsection}{\numberline {3.5.1}Asymptotic distribution under the general model}{26}{subsection.3.5.1}%
 \contentsline {subsection}{\numberline {3.5.2}Hypothesis Testing for Serial Dependence}{29}{subsection.3.5.2}%
 \contentsline {subsubsection}{\nonumberline Asymptotic null distribution, test statistic, and confidence intervals under $H_0$}{30}{subsubsection*.8}%

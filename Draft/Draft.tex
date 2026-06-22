@@ -84,21 +84,27 @@ data in the presence of missing observations has received comparatively little
 methodological attention. Building on the amplitude modulation framework introduced
 by \citet{weiss2021categorical}, this thesis develops asymptotic theory for distributional
 measures of ordinal and nominal categorical time series under missingness. For both
-measures of marginal dispersion, as well as for measures of serial dependence, 
+measures of marginal dispersion and measures of serial dependence, 
 missingness-corrected estimators are introduced and their asymptotic normality is established 
 under certain dependency conditions. The delta method is used to derive closed-form expressions for the
 asymptotic variance and the leading-order finite-sample bias of these estimators, and
 a hypothesis test for serial independence based on the corrected $\kappa$-estimator is
-constructed. An extensive Monte Carlo simulation study based on the BinAR(1) process 
-confirms the accuracy of the derived asymptotic approximations already at moderate sample sizes and investigates
-the estimators' rate of convergence. While the theoretical development assumes that
-missingness occurs completely at random (MCAR), the simulation study also examines
-two state-dependent mechanisms in which the observation probability depends on
-the current value of the process, violating MCAR (MNAR). The results show that the
-corrected estimators and the proposed test perform well under MCAR but can become
-severely biased and lead to incorrect inference once missingness depends on the
-underlying process, underscoring both the usefulness of the amplitude modulation
-approach and the importance of carefully assessing the MCAR assumption in practice.
+constructed.The accompanying Monte Carlo simulation study, based on the BinAR(1) process,
+goes beyond the illustrations in \citet{weiss2021categorical} by systematically
+investigating finite-sample accuracy and rates of convergence across a broad range
+of sample sizes, and by extending the analysis to more complex missingness structures:
+in addition to the i.i.d.\ MCAR baseline, we examine serially dependent observation
+processes that remain independent of the underlying categorical process, as well as
+two state-dependent MNAR mechanisms in which the observation probability depends on
+the current value of the process, thereby assessing the robustness of the proposed
+methods under violations of the MCAR assumption. The results show that the corrected 
+estimators and the proposed test perform well 
+under MCAR even when the observation process exhibits serial dependence. Under MNAR, 
+however, the estimators inherit a persistent bias that does not vanish with growing 
+sample size, and the test can exhibit severe size distortion or substantial loss of 
+power -- underscoring the practical value of the amplitude modulation framework and 
+the importance of carefully assessing the MCAR assumption before applying the 
+proposed methods.
 
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
@@ -190,14 +196,6 @@ Technical derivations are collected in the Appendix.
 
 
 \chapter{Distributional Properties of Categorical Processes}\label{chap:distributional}
-% Bradley Buch - Introduction to strong mixing conditions (Fernleihe; Kapitel 5)
-% Zu Messbarenfunktionen: Klenke, Bauer (MaÃŸtheorie; Wahrscheinlichkeitstheorie; Messbare Abbildungen S. 52 Indikatorfunktion), Georgii, MaÃŸ und Wahrscheinlichkeitstheorie, Brockwell: Theory and Methodes, Shao Mathematical statistics
-% Cramer Wolt Methode um zu begrÃ¼nden warum sich CLT auf MehrdimensionalitÃ¤t Ã¼bertrÃ¤gt.
-% Was sind Beispiele fÃ¼r Kategoriale Zeitreihen mit exponentiellen
-% Oberwolfach reports
-% Ideen von weiter hinten aus dem paper fÃ¼r konkretes aussehen der Zeitreihe
-% Fokianos Tjostheim (Paper)
-
 
 \section{General Notation}
 
@@ -287,16 +285,16 @@ While the mode can still be informative as the most frequent category, the media
 \[
 \operatorname{Med}(X_t)
 =
-\min \bigl\{\, s_i \in S : F(s_i) \ge \tfrac{1}{2} \,\bigr\}.
+\min \bigl\{\, s_i \in S : f_i \ge \tfrac{1}{2} \,\bigr\}.
 \]
 Thus, for ordinal data, both the mode and the median carry information, but they capture slightly different aspects of location: the mode identifies the most typical category, whereas the median indicates the midpoint in the ordered scale.
 \section{Measures of Dispersion}
 
 Since the concept of dispersion differs between ordinal and nominal processes, two separate measures are employed: the \emph{Index of Ordinal Variation} (IOV) for ordinal data and the \emph{Index of Qualitative Variation} (IQV) for nominal data, defined as
-\begin{equation}\label{eq:iov_iqv}
+\begin{equation*}\label{eq:iov_iqv}
     \mathrm{IOV}(\boldsymbol{f}) = \frac{4}{m}\sum_{i=0}^{m-1}f_i(1-f_i), \qquad
     \mathrm{IQV}(\boldsymbol{p}) = \frac{m+1}{m}\!\left(1-\sum_{i=0}^{m}p_i^2\right).
-\end{equation}
+\end{equation*}
 Both indices are scaled to $[0,1]$, with $0$ indicating a degenerate (one-point) distribution and $1$ indicating maximal dispersion. However, what constitutes maximal dispersion differs: for ordinal data, dispersion is maximal when all probability mass is concentrated in the two outermost categories, whereas for nominal data it corresponds to the uniform distribution over all $m+1$ categories.
 \begin{proposition}[Dispersion Bounds]\label{prop:dispersion_bounds}
 Both $\mathrm{IOV}$ and $\mathrm{IQV}$ satisfy:
@@ -585,30 +583,27 @@ The $\alpha$-mixing coefficients of $(X_t)$, given that it's strictly stationary
 The process is called $\alpha$-mixing if $\alpha(n) \to 0$ as $n \to \infty$.\\
 We additionally assume exponential decay of the mixing coefficients,
 i.e., there exist constants $C > 0$ and $\rho \in (0,1)$ such that
-\begin{equation}\label{eq:exp_mixing}
+\begin{equation*}\label{eq:exp_mixing}
 \alpha(n) \le C \rho^n \qquad \text{for all } n \in \mathbb{N}.
-\end{equation}
+\end{equation*}
 \end{definition}
 \noindent
-We now want to show that the estimator $\hat{\boldsymbol{f}}$ also satisifies these dependence assumptions. The indicator mappings
+We now want to show that $\boldsymbol{Z}_t$ also satisfies these dependence assumptions. The individual indicator mappings
 \[
-g_i(X_t) := \mathbb{I}\{X_t \le s_i\},
-\qquad
-h_i(X_t) := \mathbb{I}\{X_t = s_i\},
+g_i(X_t) := \mathbb{I}\{X_t \le s_i\}
 \]
 are measurable functions of $X_t$ \citep[p. 36]{klenke2005}.
 Since measurability preserves strict stationarity, the binarized processes
 $(g_i(X_t))$ and $(h_i(X_t))$ are strictly stationary whenever $(X_t)$ is
 strictly stationary \citep[p. 157]{kallenberg_2021}.
-Consequently, the vector-valued processes $\boldsymbol{Z}_t$ and $\boldsymbol{Y}_t$
-are strictly stationary as well.\\
+Consequently, the vector-valued processes $\boldsymbol{Z}_t$ is strictly stationary as well.\\
 Moreover, each indicator variable $Z_{t,i}$ is defined on the same probability space
 as $X_t$, and the $\sigma$-field it generates satisfies
 \[
 \sigma(Z_{t,i} : J \le t \le L) \subset \sigma(X_t : J \le t \le L), \qquad J \le L,
 \]
 which implies $\alpha_{Z_{t,i}}(n) \le \alpha_{X_t}(n)$ for all $i$ and $n$. Hence,
-$\boldsymbol{Z}_t$ and $\boldsymbol{Y}_t$ are also $\alpha$-mixing with exponentially
+$\boldsymbol{Z}_t$ is also $\alpha$-mixing with exponentially
 decaying coefficients.\\
 To derive the asymptotic distribution of $\hat{\boldsymbol{f}}$, we
 apply the Cramér–Wold theorem \citep[Corollary 4.5]{kallenberg_2021}. 
@@ -659,23 +654,22 @@ $\alpha_{U_t}(n) \le \alpha_{X_t}(n) \le C\rho^n$ from $(X_t)$. We apply the CLT
     $\mathrm{E}|U_t|^{2+\lambda} \le M^{2+\lambda} < \infty$ for all $\lambda > 0$.
 \end{enumerate}
 All four conditions being satisfied, Ibragimov's CLT applies to $(U_t)$, and by the 
-Cramér--Wold device, the asymptotic variance matrix $\boldsymbol{\Sigma}_Z = 
-(\sigma_{Z;ij})$ is determined by
+Cramér--Wold device, the asymptotic variance matrix $\boldsymbol{\Sigma}_{\boldsymbol{Z}}$ with elemenets $\sigma_{\boldsymbol{Z};ij}$ is determined by
 \[
-\boldsymbol{a}^{\top}\boldsymbol{\Sigma}_Z\boldsymbol{a} = \mathrm{Var}(U_t)
+\boldsymbol{a}^{\top}\boldsymbol{\Sigma}_{\boldsymbol{Z}}\boldsymbol{a} = \mathrm{Var}(U_t)
 + 2\sum_{h=1}^{\infty}\mathrm{Cov}(U_t, U_{t+h}),
 \]
 which gives
 \[
-\sigma_{Z;ij} = \mathrm{Cov}(Z_{t,i}, Z_{t,j})
+\sigma_{\boldsymbol{Z};ij} = \mathrm{Cov}(Z_{t,i}, Z_{t,j})
 + \sum_{h=1}^{\infty}\bigl[\mathrm{Cov}(Z_{t,i}, Z_{t+h,j}) 
 + \mathrm{Cov}(Z_{t,j}, Z_{t+h,i})\bigr].
 \]
 Using $\mathrm{Cov}(Z_{t,i}, Z_{t,j}) = f_{\min\{i,j\}} - f_i f_j$ and
 $\mathrm{Cov}(Z_{t,i}, Z_{t+h,j}) = f_{ij}(h) - f_i f_j$, the elements of
-$\boldsymbol{\Sigma}_Z$ take the explicit form
+$\boldsymbol{\Sigma}_{\boldsymbol{Z}}$ take the explicit form
 \[
-\sigma_{Z;ij} = \bigl(f_{\min\{i,j\}} - f_i f_j\bigr)
+\sigma_{\boldsymbol{Z};ij} = \bigl(f_{\min\{i,j\}} - f_i f_j\bigr)
 + \sum_{h=1}^{\infty}\bigl(f_{ij}(h) + f_{ji}(h) - 2f_i f_j\bigr).
 \]
 
@@ -685,17 +679,17 @@ coefficients. Then
 \[
 \sqrt{n}\bigl(\hat{\boldsymbol{f}} - \boldsymbol{f}\bigr)
 \xrightarrow[n\to\infty]{d}
-\mathcal{N}\bigl(\boldsymbol{0},\, \boldsymbol{\Sigma}_Z\bigr),
+\mathcal{N}\bigl(\boldsymbol{0},\, \boldsymbol{\Sigma}_{\boldsymbol{Z}}\bigr),
 \]
-where $\boldsymbol{\Sigma}_Z = (\sigma_{Z;ij})_{i,j=0,\ldots,m-1}$ is given by
-\begin{equation}\label{eq:sigma_Z}
-\sigma_{Z;ij} = \bigl(f_{\min\{i,j\}} - f_if_j\bigr)
+where $\boldsymbol{\Sigma}_{\boldsymbol{Z}} = (\sigma_{\boldsymbol{Z};ij})_{i,j=0,\ldots,m-1}$ is given by
+\begin{equation*}\label{eq:sigma_Z}
+\sigma_{\boldsymbol{Z};ij} = \bigl(f_{\min\{i,j\}} - f_if_j\bigr)
 + \sum_{h=1}^{\infty}\bigl(f_{ij}(h) + f_{ji}(h) - 2f_if_j\bigr).
-\end{equation}
+\end{equation*}
 \end{theorem}
 \section{Asymptotic Properties of Sample Dispersion Measures}
 We can now use this information of the asymptotic distribution of $\hat{\boldsymbol{f}}$ to compute the asymptotic properties of sample measures that are based on $\hat{\boldsymbol{f}}$. According to the multivariate delta method \citep[Chapter~3]{VanderVaart1998} a random variable $G^* := g^*(\boldsymbol{\Theta^*})$, where $\boldsymbol{\Theta^*} \in \mathbb{R}^{m}$, $\sqrt{n}(\boldsymbol{\Theta^*} - \boldsymbol{\Theta})\overset{asy.}{\sim} \mathcal{N}(0, \boldsymbol{\Sigma^*})$ and  $g^*: \mathbb{R}^m\rightarrow \mathbb{R}$ is a continuously differentiable function, satisfies
-\[\sqrt{n}(G^* - g^*(\boldsymbol{\Theta})) \overset{asy.}{\sim} \mathcal{N}(0, \boldsymbol{j\Sigma^* j^{\top}} )\]
+\[\sqrt{n}(G^* - g^*(\boldsymbol{\Theta^*})) \overset{asy.}{\sim} \mathcal{N}(0, \boldsymbol{j\Sigma^* j^{\top}} )\]
 where $\boldsymbol{j}$ is the Jacobian and where $j_i =  \frac{\partial g^*(\boldsymbol{\Theta})}{\partial \theta_i}$. \\
 \subsection*{IOV}
 Since we have shown that $\boldsymbol{\hat{f}}$ is asymptotically normal we can set $\boldsymbol{\Theta^*} = \hat{\boldsymbol{f}}$ and use this to derive the asymptotic properties of sample measures like the IOV by setting $g^*: \mathbb{R}^m \rightarrow \mathbb{R}, \quad g^*(\hat{\boldsymbol{f}}) = \mathrm{IOV}(\hat{\boldsymbol{f}})$. The respective Jacobian is given by:
@@ -757,24 +751,24 @@ the finite-sample bias is given by
     \mathrm{Cov}(\hat{\boldsymbol{f}})\right) \\
     &= \frac{1}{2}\,\mathrm{tr}\!\left(-\frac{8}{m}\boldsymbol{I}_m \cdot 
     \frac{1}{n}\boldsymbol{\Sigma}_Z\right) \\
-    &= -\frac{4}{mn} \sum_{i=0}^{m-1} \sigma_{\boldsymbol{Z};\,i,i}.
+    &= -\frac{4}{mn} \sum_{i=0}^{m-1} \sigma_{\boldsymbol{Z};\,ii}.
 \end{align*}
 \noindent This implies that the bias is strictly negative and only depends on the marginal variances 
-$\sigma_{\boldsymbol{Z}; i,i}$ of the individual estimators $f_i$,  not on the covariances. 
+$\sigma_{\boldsymbol{Z}; ii}$ of the individual estimators $f_i$,  not on the covariances. 
 The results are summarized in the following theorem: \\
 \begin{theorem}[Asymptotic Distribution of $\widehat{\mathrm{IOV}}$]\label{thm:iov_asymp}
 Under the assumptions of Theorem~\ref{thm:clt_fhat}:
 \begin{enumerate}
     \item[\normalfont(i)] \textbf{Asymptotic variance:}
-    \begin{equation}\label{eq:var_iov}
+    \begin{equation*}\label{eq:var_iov}
         \sqrt{n}\mathrm{Var}(\widehat{\mathrm{IOV}}) \overset{asy.}{=}
-        \frac{16}{m^2}\sum_{i,j=0}^{m-1}(1-2f_i)(1-2f_j)\,\sigma_{Z;ij}.
-    \end{equation}
+        \frac{16}{m^2}\sum_{i,j=0}^{m-1}(1-2f_i)(1-2f_j)\,\sigma_{\boldsymbol{Z};ij}.
+    \end{equation*}
     \item[\normalfont(ii)] \textbf{Bias to order $n^{-1}$:}
-    \begin{equation}\label{eq:bias_iov}
+    \begin{equation*}\label{eq:bias_iov}
         \mathrm{Bias}(\widehat{\mathrm{IOV}})
-        = -\frac{4}{m\,n}\sum_{i=0}^{m-1}\sigma_{Z;ii}.
-    \end{equation}
+        = -\frac{4}{m\,n}\sum_{i=0}^{m-1}\sigma_{\boldsymbol{Z};ii}.
+    \end{equation*}
 \end{enumerate}
 \end{theorem}
 \subsection*{Skewness}
@@ -803,10 +797,10 @@ The Jacobian for the skew is given by
 such that we end up with the following results:
 \begin{proposition}[Asymptotic Properties of $\widehat{\mathrm{skew}}$]\label{prop:skew}
 Under the assumptions of Theorem~\ref{thm:clt_fhat}:
-\begin{equation}\label{eq:var_skew}
+\begin{equation*}\label{eq:var_skew}
     \sqrt{n}\mathrm{Var}(\widehat{\mathrm{skew}}) \overset{asy.}{=}
     \frac{4}{m^2}\sum_{i,j=0}^{m-1}\sigma_{Z;ij}.
-\end{equation}
+\end{equation*}
 Since $\mathrm{skew}$ is linear in $\boldsymbol{f}$, the Hessian vanishes and the
 estimator is exactly unbiased for all $n$.
 \end{proposition}
@@ -877,8 +871,7 @@ illustrated later in Section~\ref{sec:mnar}.
 To model the missingness, the concept of \textbf{amplitude modulation} --
 originally introduced by \citet{Parzen1963} in the context of spectral
 analysis of time series with missing observations, and adapted to the
-categorical setting by \citet{Weiss2021} -- is employed.. This approach models missingness through a binary stochastic process $(O_t)_t$ that runs concurrently with the main process $(X_t)_t$ and modulates its "amplitude"  in a binary manner:
-
+categorical setting by \citet{weiss2021categorical} -- is employed. This approach models missingness through a binary stochastic process $(O_t)_t$ that runs concurrently with the main process $(X_t)_t$ and modulates its "amplitude"  in a binary manner:
 \[
 O_t \in \{0,1\} \quad \forall t
 \]
@@ -931,7 +924,7 @@ where the elements of $\boldsymbol{Z}_t^*$ are numbered as $Z_{t,-1}^*, Z_{t,0}^
     &= (\pi, \pi f_0, \ldots, \pi f_{m-1})^\top \\
     &=\pi (1, \boldsymbol{f}^{\top})^\top =: \boldsymbol{\mu}_{\boldsymbol{Z}_t^{*}}.
 \end{align*}
-Since the processes $(O_t)$ and $(\boldsymbol{Z}_t)$ are independent and stationary, the joint process $((O_t, \boldsymbol{Z}_t)^{\top})$ is also stationary. Moreover, if both processes are $\alpha$-mixing, then the joint process is $\alpha$-mixing. As $\boldsymbol{Z}_t^*$ is a measurable function of $(O_t, \boldsymbol{Z})^\top$ it follows that $\boldsymbol{Z}^*_t$ is stationary and $\alpha$-mixing (with exponentially decaying coefficients). \\
+Since the processes $(O_t)$ and $(\boldsymbol{Z}_t)$ are independent and stationary, the joint process $((O_t, \boldsymbol{Z}_t)^{\top})$ is also stationary. Moreover, if both processes are $\alpha$-mixing, then the joint process is $\alpha$-mixing. As $\boldsymbol{Z}_t^*$ is a measurable function of $(O_t, \boldsymbol{Z})^\top$ it follows that $\boldsymbol{Z}^*_t$ is stationary and $\alpha$-mixing (with exponentially decaying coefficients).
 \subsection*{Multivariate CLT}
 
 \begin{proposition}[Asymptotic distribution of $\bar{\boldsymbol{Z}}^*_n$]
@@ -1007,7 +1000,7 @@ such that
 \end{align*}
 and  accordingly
 \begin{align*}
-    g(\bar{\boldsymbol{\mu}}_{\boldsymbol{Z}^*}^*) = \boldsymbol{f}.
+    g(\boldsymbol{\mu}_{\boldsymbol{Z}^*}) = \boldsymbol{f}.
 \end{align*}
 The Jacobian of $\boldsymbol{g}(\boldsymbol{x})$ evaluated at $\boldsymbol{x} = \boldsymbol{\mu}_{\boldsymbol{Z}^*}$ is given by
 \[\boldsymbol{G}_{m\times (m+1)} =
@@ -1026,16 +1019,16 @@ Then, following the delta method, we have the following result that corresponds 
 \begin{theorem}[Asymptotic Normality of $\hat{\boldsymbol{f}}^*$]\label{thm:clt_fstarhat}
 Let $(X_t)$ be a strictly stationary, ordinal process that is $\alpha$-mixing with exponentially decaying
 coefficients. Let the modulating process $(O_t)$ also be strictly stationary and $\alpha$-mixing with exponentially decaying coefficients, with moments $\mathrm{E}[O_t] = \pi > 0$ and $\mathrm{E}[O_h O_0] = \pi(h) > 0$. Furthermore, let $(O_t)$ and $(X_t)$ be independent, where $X_t$ is observed if $O_t = 1$. Then the corrected estimator from Definition~\ref{def:correctedest} satisfies the following multivariate CLT:
-\begin{equation}\label{eq:clt_fstarhat}
+\begin{equation*}\label{eq:clt_fstarhat}
     \sqrt{n}\bigl(\hat{\boldsymbol{f}}^* - \boldsymbol{f}\bigr)
     \xrightarrow[n\to\infty]{d}
     \mathcal{N}\bigl(\boldsymbol{0}, \boldsymbol{\Sigma}_{\hat{\boldsymbol{f}}^*}\bigr),
     \quad \text{with } \boldsymbol{\Sigma}_{\hat{\boldsymbol{f}}^*} = (\sigma_{\hat{\boldsymbol{f}}^*;ij})_{i,j=0,\ldots,m-1},
-\end{equation}
+\end{equation*}
 where
-\begin{equation}\label{eq:sigma_fstar}
+\begin{equation*}\label{eq:sigma_fstar}
     \sigma_{\hat{\boldsymbol{f}}^*;i,j} = \frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j) + \frac{1}{\pi^2} \sum_{h=1}^{\infty}\pi(h)(f_{ij}(h)+f_{ji}(h)-2f_if_j).
-\end{equation}\end{theorem}
+\end{equation*}\end{theorem}
 \noindent The structure of $\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}^*}}$ can be computed as follows
 \begin{align*}
     \boldsymbol{\Sigma}_{\hat{\boldsymbol{f}^*}} &= \boldsymbol{G} \boldsymbol{\Sigma}_{\boldsymbol{Z}^*} \boldsymbol{G}^\top \\
@@ -1070,20 +1063,20 @@ where
 Here, the lag-0 term captures the contemporaneous covariance structure of the
 observed process, while the lag-$h$ terms accumulate the serial dependence
 across all lags $h \geq 1$. While the asymptotic normality of $\hat{\boldsymbol{f}}^*$
-is also established by \citet{Weiss2021}, the derivations above make the underlying 
+is also established by \citet{weiss2021categorical}, the derivations above make the underlying 
 mixing conditions and the Cramér–Wold argument fully explicit.
 \subsection*{Bias analysis}
 Since $g_j$ is not a linear function of $\boldsymbol{Z}_t^*$, the bias of order
 $O(n^{-1})$ is computable using a second-order Taylor expansion. The Hessian of $g_j$ evaluated in $\boldsymbol{\mu}_{\boldsymbol{Z}^*}$ is given by
 \[
-\boldsymbol{H}_{g_j} = \left(\frac{\partial^2 g_j(\boldsymbol{\mu_{Z}^*})}{\partial x_i \partial x_k}\right)_{i,k=-1,\ldots,m-1} =
+\boldsymbol{H}_{g_j} = \left(\frac{\partial^2 g_j(\boldsymbol{\mu_{Z^*}})}{\partial x_i \partial x_k}\right)_{i,k=-1,\ldots,m-1} =
 \begin{cases}
     \frac{2f_j}{\pi^2}  & \text{if } i = k = -1 \\
     -\frac{1}{\pi^2}    & \text{if } i = -1,\ k = j \\
     0                   & \text{else.}
 \end{cases}
 \]
-Using the symmetry $\sigma_{\boldsymbol{Z}^*;-1,j} = \sigma_{\boldsymbol{Z}^*;j,-1}$ and the equality from Lemma~\ref{lem:quadform} the bias simplifies to
+Using the symmetry $\sigma_{\boldsymbol{Z}^*;-1j} = \sigma_{\boldsymbol{Z}^*;j(-1)}$ and the equality from Lemma~\ref{lem:quadform} the bias simplifies to
 \begin{align*}
     \mathrm{Bias}(\hat{f}_j)
     &= \frac{1}{2}\mathrm{tr}(\boldsymbol{H}_{g_j}\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}) \\
