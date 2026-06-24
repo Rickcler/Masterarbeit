@@ -51,8 +51,11 @@
     {\Large\bfseries Master's Thesis \par}
     \vspace{1.5cm}
 
-    {\huge\bfseries Analyzing Categorical Time Series\\
-    in the Presence of Missing Observations \par}
+    {\huge\bfseries Asymptotic Inference\\
+    for Categorical Time Series\\
+    with Missing Data
+
+    \par}
     \vspace{2cm}
 
     {\large submitted by \par}
@@ -688,9 +691,23 @@ where $\boldsymbol{\Sigma}_{\boldsymbol{Z}} = (\sigma_{\boldsymbol{Z};ij})_{i,j=
 \end{equation*}
 \end{theorem}
 \section{Asymptotic Properties of Sample Dispersion Measures}
-We can now use this information of the asymptotic distribution of $\hat{\boldsymbol{f}}$ to compute the asymptotic properties of sample measures that are based on $\hat{\boldsymbol{f}}$. According to the multivariate delta method \citep[Chapter~3]{VanderVaart1998} a random variable $G^* := g^*(\boldsymbol{\Theta^*})$, where $\boldsymbol{\Theta^*} \in \mathbb{R}^{m}$, $\sqrt{n}(\boldsymbol{\Theta^*} - \boldsymbol{\Theta})\overset{asy.}{\sim} \mathcal{N}(0, \boldsymbol{\Sigma^*})$ and  $g^*: \mathbb{R}^m\rightarrow \mathbb{R}$ is a continuously differentiable function, satisfies
-\[\sqrt{n}(G^* - g^*(\boldsymbol{\Theta^*})) \overset{asy.}{\sim} \mathcal{N}(0, \boldsymbol{j\Sigma^* j^{\top}} )\]
-where $\boldsymbol{j}$ is the Jacobian and where $j_i =  \frac{\partial g^*(\boldsymbol{\Theta})}{\partial \theta_i}$. \\
+We can now use this information of the asymptotic distribution of $\hat{\boldsymbol{f}}$ to compute the asymptotic properties of sample measures that are based on $\hat{\boldsymbol{f}}$. 
+According to the multivariate delta method \citep[Chapter~3]{VanderVaart1998}, 
+let $(\boldsymbol{\Theta}^*_n)_{n \in \mathbb{N}}$ be a sequence of random vectors 
+in $\mathbb{R}^m$ satisfying
+\[
+    \sqrt{n}(\boldsymbol{\Theta}^*_n - \boldsymbol{\Theta}) 
+    \xrightarrow{d} \mathcal{N}(\boldsymbol{0}, \boldsymbol{\Sigma}^*),
+\]
+and let $g^*\colon \mathbb{R}^m \to \mathbb{R}$ be continuously differentiable 
+at $\boldsymbol{\Theta}$. Then
+\[
+    \sqrt{n}\bigl(g^*(\boldsymbol{\Theta}^*_n) - g^*(\boldsymbol{\Theta})\bigr)
+    \xrightarrow{d} \mathcal{N}\bigl(0,\, \boldsymbol{j}\boldsymbol{\Sigma}^*
+    \boldsymbol{j}^\top\bigr),
+\]
+where $\boldsymbol{j}$ is the Jacobian with components 
+$j_i = \frac{\partial g^*(\boldsymbol{\Theta})}{\partial \theta_i}$. \\
 \subsection*{IOV}
 Since we have shown that $\boldsymbol{\hat{f}}$ is asymptotically normal we can set $\boldsymbol{\Theta^*} = \hat{\boldsymbol{f}}$ and use this to derive the asymptotic properties of sample measures like the IOV by setting $g^*: \mathbb{R}^m \rightarrow \mathbb{R}, \quad g^*(\hat{\boldsymbol{f}}) = \mathrm{IOV}(\hat{\boldsymbol{f}})$. The respective Jacobian is given by:
 \begin{align*}
@@ -746,14 +763,14 @@ the finite-sample bias is given by
 \begin{align*}
     \mathrm{Bias}(\mathrm{IOV}(\hat{\boldsymbol{f}})) 
     &= \mathrm{E}\!\left[\frac{1}{2}(\hat{\boldsymbol{f}}- \boldsymbol{f})^\top 
-    \boldsymbol{H}_{\mathrm{IOV}}(\boldsymbol{f})(\hat{\boldsymbol{f}}- \boldsymbol{f})\right] \tag{Lemma $\ref{lem:quadform}$} \\
+    \boldsymbol{H}_{\mathrm{IOV}}(\boldsymbol{f})(\hat{\boldsymbol{f}}- \boldsymbol{f})\right] \\
     &= \frac{1}{2}\,\mathrm{tr}\!\left(\boldsymbol{H}_{\mathrm{IOV}}\,
     \mathrm{Cov}(\hat{\boldsymbol{f}})\right) \\
     &= \frac{1}{2}\,\mathrm{tr}\!\left(-\frac{8}{m}\boldsymbol{I}_m \cdot 
     \frac{1}{n}\boldsymbol{\Sigma}_Z\right) \\
-    &= -\frac{4}{mn} \sum_{i=0}^{m-1} \sigma_{\boldsymbol{Z};\,ii}.
+    &= -\frac{4}{mn} \sum_{i=0}^{m-1} \sigma_{\boldsymbol{Z};\,ii},
 \end{align*}
-\noindent This implies that the bias is strictly negative and only depends on the marginal variances 
+\noindent where we used Lemma~\ref{lem:quadform} in the second equality. The result implies that the bias is strictly negative and only depends on the marginal variances 
 $\sigma_{\boldsymbol{Z}; ii}$ of the individual estimators $f_i$,  not on the covariances. 
 The results are summarized in the following theorem: \\
 \begin{theorem}[Asymptotic Distribution of $\widehat{\mathrm{IOV}}$]\label{thm:iov_asymp}
@@ -1982,7 +1999,7 @@ while in the second variant it decreases linearly with $X_t$, i.e.
 \[
 \pi_t = \pi_{\text{high}} - (\pi_{\text{high}} - \pi_{\text{low}})\frac{X_t}{m}.
 \]
-To be able to reference both mechanisms in a more concise way, we will write \linebreak $P(O_t=)\propto X_t$ 
+To be able to reference both mechanisms in a more concise way, we will write \linebreak $P(O_t= 1)\propto X_t$ 
 and $P(O_t=1)\propto-X_t$ to refer to the increasing and decreasing versions, respectively. 
 The parameters $\pi_{\text{low}}$ and $\pi_{\text{high}}$ define the minimum and maximum observation probabilities, 
 respectively, and therefore determine the range in which $\pi_t$ can vary. In both cases,
@@ -2295,7 +2312,7 @@ scenarios hold as for the IOV.
 \label{sec:sim-kappa}
 
 \paragraph{Distribution under $H_0$.}
-Under the null hypothesis ($\kappa_{\mathrm{ord}}(h) = 0\text{ for } h = 1,~2,\ldots$),
+Under the null hypothesis that there is no serial depdendence, i. e. that $\kappa_{\mathrm{ord}}(h) = 0$ for all $h \in \mathbb{N}$,
 Figure~\ref{fig:kappa_comparison} compares simulated and asymptotic
 results for $\hat{\kappa}_{\mathrm{ord}}(1)$ as a function of $n$
 for both scenarios (with $r$ set to 0) and

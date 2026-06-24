@@ -20,39 +20,39 @@
 \contentsline {section}{\numberline {3.5}Serial Dependence}{25}{section.3.5}%
 \contentsline {subsection}{\numberline {3.5.1}Asymptotic distribution under the general model}{26}{subsection.3.5.1}%
 \contentsline {subsection}{\numberline {3.5.2}Hypothesis Testing for Serial Dependence}{29}{subsection.3.5.2}%
-\contentsline {subsubsection}{\nonumberline Asymptotic null distribution, test statistic, and confidence intervals under $H_0$}{30}{subsubsection*.8}%
-\contentsline {paragraph}{\nonumberline Test statistic and confidence intervals.}{33}{paragraph*.9}%
+\contentsline {subsubsection}{\nonumberline Asymptotic null distribution, test statistic, and confidence intervals under $H_0$}{30}{subsubsection*.6}%
+\contentsline {paragraph}{\nonumberline Test statistic and confidence intervals.}{33}{paragraph*.7}%
 \contentsline {subsection}{\numberline {3.5.3}Consistency under $H_A$}{34}{subsection.3.5.3}%
 \contentsline {chapter}{\numberline {4}Simulation Study}{35}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Setup and Design}{35}{section.4.1}%
-\contentsline {paragraph}{\nonumberline Model definition.}{35}{paragraph*.10}%
-\contentsline {paragraph}{\nonumberline Distributional properties.}{36}{paragraph*.11}%
-\contentsline {paragraph}{\nonumberline Mixing properties.}{36}{paragraph*.12}%
-\contentsline {paragraph}{\nonumberline Missingness mechanism.}{37}{paragraph*.13}%
+\contentsline {paragraph}{\nonumberline Model definition.}{35}{paragraph*.8}%
+\contentsline {paragraph}{\nonumberline Distributional properties.}{36}{paragraph*.9}%
+\contentsline {paragraph}{\nonumberline Mixing properties.}{36}{paragraph*.10}%
+\contentsline {paragraph}{\nonumberline Missingness mechanism.}{37}{paragraph*.11}%
 \contentsline {section}{\numberline {4.2}Results}{39}{section.4.2}%
 \contentsline {subsection}{\numberline {4.2.1}Marginal Estimation and Dispersion Measures}{39}{subsection.4.2.1}%
-\contentsline {paragraph}{\nonumberline Convergence to the asymptotic distribution.}{39}{paragraph*.16}%
-\contentsline {paragraph}{\nonumberline Finite-sample bias and its order.}{40}{paragraph*.17}%
-\contentsline {paragraph}{\nonumberline Asymptotic standard deviation: simulation vs.\ theory.}{40}{paragraph*.18}%
-\contentsline {paragraph}{\nonumberline Serially dependent observation process.}{42}{paragraph*.19}%
-\contentsline {paragraph}{\nonumberline Skewness.}{43}{paragraph*.20}%
+\contentsline {paragraph}{\nonumberline Convergence to the asymptotic distribution.}{39}{paragraph*.14}%
+\contentsline {paragraph}{\nonumberline Finite-sample bias and its order.}{40}{paragraph*.15}%
+\contentsline {paragraph}{\nonumberline Asymptotic standard deviation: simulation vs.\ theory.}{40}{paragraph*.16}%
+\contentsline {paragraph}{\nonumberline Serially dependent observation process.}{42}{paragraph*.17}%
+\contentsline {paragraph}{\nonumberline Skewness.}{43}{paragraph*.18}%
 \contentsline {subsection}{\numberline {4.2.2}Serial Dependence: Cohen's $\kappa $}{43}{subsection.4.2.2}%
-\contentsline {paragraph}{\nonumberline Distribution under $H_0$.}{43}{paragraph*.21}%
-\contentsline {paragraph}{\nonumberline Asymptotic level of the test.}{43}{paragraph*.22}%
-\contentsline {paragraph}{\nonumberline Power under $H_A$.}{44}{paragraph*.23}%
+\contentsline {paragraph}{\nonumberline Distribution under $H_0$.}{43}{paragraph*.19}%
+\contentsline {paragraph}{\nonumberline Asymptotic level of the test.}{43}{paragraph*.20}%
+\contentsline {paragraph}{\nonumberline Power under $H_A$.}{44}{paragraph*.21}%
 \contentsline {subsection}{\numberline {4.2.3}Robustness under MCAR Violations}{45}{subsection.4.2.3}%
-\contentsline {paragraph}{\nonumberline IOV under MNAR.}{45}{paragraph*.24}%
-\contentsline {paragraph}{\nonumberline Cohen's $\kappa $ under MNAR.}{47}{paragraph*.25}%
+\contentsline {paragraph}{\nonumberline IOV under MNAR.}{45}{paragraph*.22}%
+\contentsline {paragraph}{\nonumberline Cohen's $\kappa $ under MNAR.}{47}{paragraph*.23}%
 \contentsline {chapter}{\numberline {5}Extension to Nominal Processes}{49}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Asymptotic Distribution of $\hat {\boldsymbol {p}}$}{49}{section.5.1}%
 \contentsline {section}{\numberline {5.2}Asymptotic Properties of the IQV}{49}{section.5.2}%
 \contentsline {section}{\numberline {5.3}Missingness}{50}{section.5.3}%
-\contentsline {paragraph}{\nonumberline Marginal measures}{50}{paragraph*.26}%
-\contentsline {paragraph}{\nonumberline Serial dependence}{51}{paragraph*.27}%
-\contentsline {chapter}{Conclusion and Outlook}{53}{chapter*.28}%
-\contentsline {paragraph}{\nonumberline Asymptotic theory under $H_A$.}{53}{paragraph*.29}%
-\contentsline {paragraph}{\nonumberline Missingness beyond MCAR.}{53}{paragraph*.30}%
-\contentsline {paragraph}{\nonumberline Extensions to multivariate and mixed-type processes.}{54}{paragraph*.31}%
+\contentsline {paragraph}{\nonumberline Marginal measures}{50}{paragraph*.24}%
+\contentsline {paragraph}{\nonumberline Serial dependence}{51}{paragraph*.25}%
+\contentsline {chapter}{Conclusion and Outlook}{53}{chapter*.26}%
+\contentsline {paragraph}{\nonumberline Asymptotic theory under $H_A$.}{53}{paragraph*.27}%
+\contentsline {paragraph}{\nonumberline Missingness beyond MCAR.}{53}{paragraph*.28}%
+\contentsline {paragraph}{\nonumberline Extensions to multivariate and mixed-type processes.}{54}{paragraph*.29}%
 \contentsline {chapter}{\numberline {A}Appendix}{55}{appendix.1.A}%
 \contentsline {section}{\numberline {A.1}Derivation of the Asymptotic Covariance Matrix~$\boldsymbol {\Sigma }_{\boldsymbol {Z}^{*}}$}{56}{section.1.A.1}%
 \contentsline {section}{\numberline {A.2}Derivation of the Asymptotic Covariance Matrix~$\boldsymbol {\Sigma }_{\boldsymbol {f}^{(h)*}}$}{57}{section.1.A.2}%
@@ -62,6 +62,6 @@
 \contentsline {section}{\numberline {A.6}Derivation of $\hat {\kappa }_{\mathrm {ord}}$ under i.i.d. missingness}{61}{section.1.A.6}%
 \contentsline {section}{\numberline {A.7}Asymptotic Variance and Bias of $\hat {\boldsymbol {p}}^*$}{62}{section.1.A.7}%
 \contentsline {section}{\numberline {A.8}Asymptotics of $\hat {\kappa }_{\mathrm {nom}}(h)$}{63}{section.1.A.8}%
-\contentsline {paragraph}{\nonumberline Distribution under the general model}{63}{paragraph*.32}%
-\contentsline {paragraph}{\nonumberline Asymptotics under $H_0$}{65}{paragraph*.33}%
+\contentsline {paragraph}{\nonumberline Distribution under the general model}{63}{paragraph*.30}%
+\contentsline {paragraph}{\nonumberline Asymptotics under $H_0$}{65}{paragraph*.31}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
