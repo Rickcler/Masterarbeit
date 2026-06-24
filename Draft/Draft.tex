@@ -2782,7 +2782,13 @@ must be taken, however, to strike a reasonable balance between
 tractability and generality: the chosen model should be specific 
 enough to permit closed-form expressions for the relevant moments, 
 yet general enough to remain practically relevant rather than being 
-tailored to a narrow and largely artificial special case.
+tailored to a narrow and largely artificial special case. A nonparametric
+alternative would be to estimate the long-run variance directly via the 
+higher-order moments entering $\boldsymbol{\Sigma}_{\boldsymbol{f}^{(h)*}}$.
+Since $m^2$ moment terms must be estimated for each lag and the corresponding 
+long-run variance involves a theoretically infinite sum over lags, practical 
+implementation would require lag truncation. Consequently, the approach may 
+become demanding for large state spaces or limited sample sizes.
 
 \paragraph{Missingness beyond MCAR.} The asymptotic theory developed 
 in this thesis rests on the assumption that $(O_t)$ and $(X_t)$ are 
@@ -3064,8 +3070,9 @@ using the symmetry $\sigma^{(h)*}_{il} = \sigma^{(h)*}_{li}$ and Lemma~\ref{lem:
 \section{Derivation of $\hat{\kappa}_{\mathrm{ord}}$ under i.i.d. missingness}\label{app:var-kappa-iid}
 In this section we provide the detailed computations of the simplified version of the variance of $\hat{\kappa}_{\mathrm{ord}}$ under i.i.d. missingness. Recall that this implies
 \[
-    \pi(h) = \pi^2, \qquad \pi(h, 2h) = \pi^3.
+    \pi(h) = \pi^2, \qquad \pi(h, 2h) = \pi^3,
 \]
+where $\pi(h) = E[O_t O_{t-h}]$ and $\pi(h, i) = E{O_t O_{t-h} O_{t-i}}$.\\
 For the simplified variance term we then have
 \begin{align*}
     \sigma^2_\kappa &=
@@ -3414,21 +3421,27 @@ Under $H_0$ we have $\kappa_{\mathrm{nom}}(h) = 0$ and therefore $h_{1i, 1j}$ si
 \[h_{1i, 1j}\overset{H_0}{=}\begin{cases} \frac{-2 }{B} - \frac{8p_i^2}{B^2}& \text{if } i = j,\\
           \frac{-8 p_i p_j }{B^2} & \text{else.}
     \end{cases}\]
-A bias correction of order $n^{-1}$ can be derived using a taylor expansion of $\kappa_{\mathrm{nom}}$ around $\boldsymbol{\mu}^{(h)*}$.
-Using Lemma~\ref{lem:quadform} and the fact that $\sigma^{(h)*}_{i\,(j+m+1)} = 2 p_j \sigma^{(h)*}_{ij}$ from case \textbf{(ii)}, the bias reduces to
+A bias correction of order $n^{-1}$ can be derived using a second-order Taylor expansion of $\kappa_{\mathrm{nom}}$ around $\boldsymbol{\mu}^{(h)*}$. 
+Note that since $\kappa_{\mathrm{nom}}$ is not a quadratic function of $\mu^{(h)∗}$, higher-order 
+derivatives do not vanish. Consequently, further terms of the Taylor expansion would yield 
+bias corrections beyond order $n^{-1}$. The bias is given by 
+\[\mathrm{Bias}(\hat{\kappa}_{\mathrm{nom}}(h))=\frac{1}{n2}\mathrm{tr}\bigl[\boldsymbol{H}_\kappa\boldsymbol{\Sigma}_{\boldsymbol{p}^{(h)*}}\bigr] + o(n^{-1}),\]
+where zhe remainder term $o(n^{-1})$ collects all contributions arising from higher-order derivatives of $\hat{\kappa}_{\mathrm{nom}}$, 
+which are of smaller asymptotic order than $n^{-1}$. The present derivation is restricted to the leading bias term, which is sufficient for the asymptotic considerations of this thesis.
+Using Lemma~\ref{lem:quadform} and the fact that $\sigma^{(h)*}_{i\,(j+m+1)} = 2 p_j \sigma^{(h)*}_{ij}$ from case \textbf{(ii)}, the leading bias term reduces to
 \begin{align*}
-    \mathrm{Bias}(\hat{\kappa}_{\mathrm{nom}}(h))
-    &=\frac{1}{2}\mathrm{tr}\bigl[\boldsymbol{H}_\kappa\boldsymbol{\Sigma}_{\boldsymbol{p}^{(h)*}}\bigr]
-    =\frac{1}{2}\sum_{i=0}^{2m+2}\bigl[\boldsymbol{H}_\kappa\boldsymbol{\Sigma}_{\boldsymbol{p}^{(h)*}}\bigr]_{ii}\\
-    &=\frac{1}{2}\Biggl[\sum_{i,  j =0}^{m}h_{1i,1j}\sigma^{(h)*}_{ij}+h_{1i,2j}\sigma^{(h)*}_{i(j+m+1)}
-    +h_{2i,1j}\sigma^{(h)*}_{(i+m+1)j}\Biggr] \\
-    &= \frac{1}{2}\Biggl[\sum_{i = 0}^{m}(\frac{-2}{B} - \frac{8p_i^2}{B^2}) \frac{1}{\pi}p_i(1-p_i)
+    \frac{1}{n2}\mathrm{tr}\bigl[\boldsymbol{H}_\kappa\boldsymbol{\Sigma}_{\boldsymbol{p}^{(h)*}}\bigr] 
+    &=\frac{1}{n2}\sum_{i=0}^{2m+2}\bigl[\boldsymbol{H}_\kappa\boldsymbol{\Sigma}_{\boldsymbol{p}^{(h)*}}\bigr]_{ii}  \\
+    &=\frac{1}{n2}\Biggl[\sum_{i,  j =0}^{m}h_{1i,1j}\sigma^{(h)*}_{ij}+h_{1i,2j}\sigma^{(h)*}_{i(j+m+1)}
+    +h_{2i,1j}\sigma^{(h)*}_{(i+m+1)j}\Biggr]\\
+    &= \frac{1}{n2}\Biggl[\sum_{i = 0}^{m}(\frac{-2}{B} - \frac{8p_i^2}{B^2}) \frac{1}{\pi}p_i(1-p_i)
      + \sum_{\substack{i,j = 0\\ i \neq j}}^{m} \frac{-8 p_i p_j }{B^2} \frac{1}{\pi}p_j(0-p_i) \\
-    &\quad + 2 \sum_{i, j = 0}^{m} \frac{2p_i}{B^2} 2p_j \frac{1}{\pi} (\delta p_i -  p_i p_j) \Biggr] \\
-    &= \frac{1}{  \pi}\biggl[\sum_{i = 0}^{m} \biggl(\frac{- p_i + p_i^2 }{B} - \frac{4 p_i^3 + 4 p_i^4 }{B^2} + \frac{4p_i^3- 4p_i^4}{B^2}\biggr) \biggr] \\
-    &= \frac{1}{\pi} \frac{-B}{B} = - \frac{1}{\pi}
+    &\quad + 2 \sum_{i, j = 0}^{m} \frac{2p_i}{B^2} 2p_j \frac{1}{\pi} (\delta_{ij} p_i -  p_i p_j) \Biggr]  \\
+    &= \frac{1}{ n \pi}\biggl[\sum_{i = 0}^{m} \biggl(\frac{- p_i + p_i^2 }{B} - \frac{4 p_i^3 + 4 p_i^4 }{B^2} + \frac{4p_i^3- 4p_i^4}{B^2}\biggr) \biggr] \\
+    &= \frac{1}{n\pi} \frac{-B}{B} = - \frac{1}{n \pi} 
 \end{align*}
-
+where we used that $h_{2i, 2j} = 0$ in the third equation. We can conclude that the finite-sample bias is given by
+\[\mathrm{Bias}(\hat{\kappa}_{\mathrm{nom}}(h)) = -\frac{1}{n \pi} + o(n^{-1}).\]
 \end{appendices}
 
 \bibliography{references}
