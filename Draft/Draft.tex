@@ -1222,13 +1222,15 @@ and compute its expectation:
 where the second equality follows from the independence of $(O_t)$ 
 and $(X_t)$, and the third from the stationarity of $(X_t)$. This 
 motivates the corrected estimator
-\begin{align}
+
+\begin{definition}[Corrected Estimator of $f^*_{ij}(h)$]\label{def:biv_probs_est}
+\[
     \hat{f}^*_{ij}(h)
     := \frac{\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} 
       O_t\, O_{t-h}\, Z_{t,i}\, Z_{t-h,j}}
       {\dfrac{1}{n-h}\displaystyle\sum_{t=h+1}^{n} O_t\, O_{t-h}}
     =: \hat{\mathfrak{f}}_{ij}(h) \big/ \overline{OO}_{\,h}, \label{def:biv_probs_est}
-\end{align}
+\]\end{definition}\noindent
 which is also proposed by \citet[p.~4683]{weiss2021categorical}. As in Section~\ref{sec:Amp Mod}, the properties of this estimator 
 depend on whether $(O_t)$ is deterministic or stochastic. If $(O_t)$ 
 is deterministic, the corrected estimator is exactly unbiased. In the 
@@ -1249,7 +1251,8 @@ To derive the asymptotic distribution of $\hat{f}^*_{ij}(h)$, we
 proceed analogously to Section~\ref{sec:Amp Mod} and apply the 
 Cramér--Wold device to the sample mean of a suitably defined 
 binary vector:
-\begin{align}
+\phantomsection\label{eq:Z^h}
+\begin{align*}
     \boldsymbol{Z}^{(h)*}_t 
     &= \left(
         Z_{t,-2}^{(h)*},\;
@@ -1261,8 +1264,8 @@ binary vector:
         O_t O_{t-h},\;
         \underbrace{O_t,\, \ldots,\, O_{t} Z_{t,i},\, \ldots}_{=\,\boldsymbol{Z}^*_t},\;
         \ldots,\, O_t O_{t-h} Z_{t,j} Z_{t-h,j},\, \ldots
-        \right)^\top.\label{eq:Z^h}
-\end{align}
+        \right)^\top.
+\end{align*}
 The components of $\boldsymbol{Z}^{(h)*}_t$ are indexed from $-2$ to 
 $2m-1$: the component at index $-2$ captures the product $O_tO_{t-h}$, 
 the components at indices $-1$ through $m-1$ coincide with 
@@ -1461,12 +1464,12 @@ vector-valued function $\boldsymbol{g}\colon [0,1]^{2(m+1)} \to
         x_j / x_{-2} & \text{for } j = m,\ldots,2m-1,
     \end{cases}
 \]
-so that 
-\begin{align}
+so that \phantomsection \label{def:f_h_hat}
+\[
     \hat{\boldsymbol{f}}^{(h)*} := 
-        \boldsymbol{g}(\bar{\boldsymbol{Z}}^{(h)*}_n) \label{def:f_h_hat}
-\end{align} and 
-$\boldsymbol{\mu}^{(h)*} := 
+        \boldsymbol{g}(\bar{\boldsymbol{Z}}^{(h)*}_n) 
+\] 
+and $\boldsymbol{\mu}^{(h)*} := 
 \boldsymbol{g}(\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}) 
 = (f_0,\ldots,f_{m-1},f_{00}(h),\ldots,f_{m-1m-1}(h))^\top$. Since $\boldsymbol{g}$ is continuous at 
 $\boldsymbol{\mu}_{\boldsymbol{Z}^{(h)*}}$, consistency of 
@@ -3188,9 +3191,9 @@ Since the derivations are entirely analogous to those in the ordinal setting (Se
 
 \paragraph{Distribution under the general model}
 The serial dependence measure $\kappa_{\mathrm{nom}}(h)$ (recall Definition~\ref{def:cohens-kappa}) depends on the bivariate probabilities $p_{ij}(h)$.   
-Therefore, the corrected estimator $\hat{p}_{ij}^*(h)$ is defined in direct analogy to $\hat{f}_{ij}^*(h)$ from Section~\ref{sec:serial-dependence} as
+Therefore, the corrected estimator $\hat{p}_{ij}^*(h)$ is defined in direct analogy to $\hat{f}_{ij}^*(h)$ from Definition~\ref{def:biv_probs_est} as
 \[\hat{p}_{ij}^*(h) = \frac{\sum_{t=h+1}^{n}O_t O_{t-h}Y_{t,i}Y_{t-h,j}}{\sum_{t=h+1}^{n}O_t O_{t-h}}.\]
-We define $\boldsymbol{Y}^{(h)*}_n$ in direct analogy to $\boldsymbol{Z}^{(h)*}_n$ from Definition~\ref{def:biv_probs_est}:
+We define $\boldsymbol{Y}^{(h)*}_t$ in direct analogy to \hyperref[eq:Z^h]{$\boldsymbol{Z}^{(h)*}_t$} from Section~\ref{subsec:serial-general}:
 \begin{align*}
     \boldsymbol{Y}^{(h)*}_t 
     &= \left(
@@ -3205,13 +3208,14 @@ We define $\boldsymbol{Y}^{(h)*}_n$ in direct analogy to $\boldsymbol{Z}^{(h)*}_
         \ldots,\, O_t O_{t-h} Y_{t,j} Y_{t-h,j},\, \ldots
         \right)^\top
 \end{align*}
-and accordingly $\hat{\boldsymbol{p}}^{(h)*}$ in direct analogy to $\hat{\boldsymbol{f}}^{(h)*}$ from Definition~\ref{def:f_h_hat} as
+and accordingly $\hat{\boldsymbol{p}}^{(h)*}$ in direct analogy to \hyperref[def:f_h_hat]{$\hat{\boldsymbol{f}}^{(h)*}$} as
 \[\hat{\boldsymbol{p}}^{(h)*} := \left(\hat{p}_0^{*}, \ldots, \hat{p}_m^{*}, \hat{p}_{00}(h)^{*}, \ldots, \hat{p}_{mm}(h)^{*}\right)^\top.\]
-The consistency of $\bar{\boldsymbol{Y}}^{(h)*}_n$ follows from the same argument as that of $\bar{\boldsymbol{Z}}^{(h)*}_n$ in Section~\ref{sec:serial-dependence}. 
+The consistency of $\bar{\boldsymbol{Y}}^{(h)*}_n := \frac{1}{n} \sum_{t = 0}^{n} \boldsymbol{Y}^{(h)*}_t$
+follows from the same argument as that of $\bar{\boldsymbol{Z}}^{(h)*}_n$ in Proposition~\ref{prop:clt_zstar_h}. 
 The elements of the asymptotic covariance matrix $\boldsymbol{\Sigma}_{\boldsymbol{Y}^{(h)*}}$ are 
 computed in direct analogy to those of \hyperref[cal:Sigma_Zh]{$\boldsymbol{\Sigma}_{\boldsymbol{Z}^{(h)*}}$}
 from  Section~\ref{subsec:serial-general} with $Z_{t,i}$, $f_i$, $f_{ij}(h)$ replaced by $Y_{t,i}$, $p_i$, $p_{ij}(h)$ and $(f_{\mathrm{min}\{i,j\}}- f_i f_j)$
-by $p_j(\delta_{ij} - p_i)$ throughout. Also recall that $\delta_{ij} = \mathbb{I}_{i = j}$ is the Kronecker Delta. For $i, j = 0, \ldots, m $, the individual elements are given by 
+by $p_j(\delta_{ij} - p_i)$ throughout. Also recall that $\delta_{ij} = \mathbb{I}\{i = j\}$ is the Kronecker Delta. For $i, j = 0, \ldots, m $, the individual elements are given by 
 \begin{align*}
     &\textbf{(i) }\sigma_{-2-2}^{(h)} = \pi(h)(1-\pi(h)) + 2 \sum_{k=1}^{\infty} \biggl(\mathrm{E}[O_t O_{t-h}O_{t+k}O_{t+k-h}] -2\pi(h)^2\biggr) \\
     &\textbf{(ii) }\sigma_{-1, -2}^{(h)} = (1-\pi)\pi(h)\sum_{k=1}^{\infty} [\mathrm{E}[O_t O_{t-h}O_{t+k}]\mathrm{E}+[O_t O_{t+k}O_{t+k-h}]-2\pi \pi(h)] \\
