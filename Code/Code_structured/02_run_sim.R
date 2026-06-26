@@ -7,6 +7,7 @@
 source("00_setup.R")
 source("01_functions.R")
 load("Masterarbeit.RData")  # für UNIQUE_N
+
 # ------------------------------------------------------------------------------
 # Szenarien: MCAR / serially dependent missingness
 # ------------------------------------------------------------------------------
@@ -75,9 +76,35 @@ results <- apply(scenarios, 1, function(row) {
   )
 })
 
+sim_df <- do.call(rbind, lapply(seq_along(results), function(i) {
+  s <- results[[i]]$summary
+  data.frame(
+    scenarios[i, ],
+    type       = "Simulation",
+    mean_IOV   = s["mean", "IOV"],
+    sd_IOV     = s["sd",   "IOV"],
+    lower_IOV  = s["mean", "IOV"] - s["sd", "IOV"],
+    upper_IOV  = s["mean", "IOV"] + s["sd", "IOV"],
+    mean_Skew  = s["mean", "Skew"],
+    sd_Skew    = s["sd",   "Skew"],
+    lower_Skew = s["mean", "Skew"] - s["sd", "Skew"],
+    upper_Skew = s["mean", "Skew"] + s["sd", "Skew"],
+    mean_C     = s["mean", "lag1_Cohen"],
+    sd_C       = s["sd",   "lag1_Cohen"],
+    lower_C    = s["mean", "lag1_Cohen"] - s["sd", "lag1_Cohen"],
+    upper_C    = s["mean", "lag1_Cohen"] + s["sd", "lag1_Cohen"],
+    mean_C_bc  = s["mean", "lag1_Cohen_bc"],
+    sd_C_bc    = s["sd", "lag1_Cohen_bc"],
+    lower_C_bc = s["mean", "lag1_Cohen_bc"] - s["sd", "lag1_Cohen_bc"],
+    upper_C_bc = s["mean", "lag1_Cohen_bc"] + s["sd", "lag1_Cohen_bc"]
+  )
+}))
+
+
 # ------------------------------------------------------------------------------
 # MAR-Simulationen
 # ------------------------------------------------------------------------------
+n_grid  <- c(50, 100, 250, 500, 1000, 2000) 
 
 set.seed(SEED)
 results_MAR <- apply(scenarios_MAR, 1, function(row) {
@@ -159,45 +186,7 @@ rej_list_mnar <- lapply(1:nrow(scenarios_mnar), function(s) {
 
 rej_df_mnar <- do.call(rbind, rej_list_mnar)
 
-# ------------------------------------------------------------------------------
-# Ergebnisse in Data Frames
-# ------------------------------------------------------------------------------
 
-# Zusammenfassung je Szenario
-sim_df <- do.call(rbind, lapply(seq_along(results), function(i) {
-  s <- results[[i]]$summary
-  data.frame(
-    scenarios[i, ],
-    type       = "Simulation",
-    mean_IOV   = s["mean", "IOV"],
-    sd_IOV     = s["sd",   "IOV"],
-    lower_IOV  = s["mean", "IOV"] - s["sd", "IOV"],
-    upper_IOV  = s["mean", "IOV"] + s["sd", "IOV"],
-    mean_Skew  = s["mean", "Skew"],
-    sd_Skew    = s["sd",   "Skew"],
-    lower_Skew = s["mean", "Skew"] - s["sd", "Skew"],
-    upper_Skew = s["mean", "Skew"] + s["sd", "Skew"],
-    mean_C     = s["mean", "lag1_Cohen"],
-    sd_C       = s["sd",   "lag1_Cohen"],
-    lower_C    = s["mean", "lag1_Cohen"] - s["sd", "lag1_Cohen"],
-    upper_C    = s["mean", "lag1_Cohen"] + s["sd", "lag1_Cohen"],
-    mean_C_bc  = s["mean", "lag1_Cohen_bc"],
-    sd_C_bc    = s["sd", "lag1_Cohen_bc"],
-    lower_C_bc = s["mean", "lag1_Cohen_bc"] - s["sd", "lag1_Cohen_bc"],
-    upper_C_bc = s["mean", "lag1_Cohen_bc"] + s["sd", "lag1_Cohen_bc"]
-  )
-}))
-
-# Geschätzte CDFs (nur m = 3)
-cdf_df <- do.call(rbind, lapply(which(scenarios$m == 3), function(i) {
-  cdf <- results[[i]]$cdf
-  data.frame(
-    scenario  = i,
-    statistic = c("mean", "sd"),
-    scenarios[i, ],
-    cdf
-  )
-}))
 
 # ------------------------------------------------------------------------------
 # Bias / CLT Simulationen 
@@ -362,7 +351,7 @@ ci_df <- data.frame(
     ci_upper  =  1.96 * sd_H0
   ) %>%
   ungroup()
-
+ 
 ### Rejection Rates
 
 scenarios_rej <- expand.grid(

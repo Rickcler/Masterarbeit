@@ -6,7 +6,38 @@
 
 source("00_setup.R")
 load("Masterarbeit.RData")
+library(astsa)
+library(ggplot2)
 
+
+library(ggplot2)
+library(dplyr)
+
+# Proband 1 extrahieren, NA-Zeilen behalten (sichtbar machen)
+
+df_plot <- sleep1[[1]] %>%
+  mutate(
+    # Gruppe bricht bei NA auf – jede zusammenhängende Sequenz ohne NA
+    # bekommt eine eigene Gruppen-ID
+    gruppe = cumsum(is.na(state) | c(FALSE, is.na(head(state, -1))))
+  ) %>%
+  filter(!is.na(state))
+
+sleep_plot <- ggplot(df_plot, aes(x = min, y = state, group = gruppe)) +
+  geom_line(linewidth = 0.4, color = "steelblue") +
+  geom_point(size = 5, color = "steelblue") +
+  scale_y_continuous(
+    breaks = 1:6,
+    labels = c("Deep", "Light 2", "Light 1", "REM", "Wake", "Movement")
+  ) +
+  labs(
+    x       = "Time (minutes)",
+    y       = "Sleep state",
+    caption = "Lines are interrupted at missing observations (minutes 116–120)."
+  ) +
+  theme_minimal()
+
+ggsave("Graphs/sleep_example.png", sleep_plot, width = 8, height = 4)
 # ------------------------------------------------------------------------------
 # Daten aufbereiten
 # ------------------------------------------------------------------------------
