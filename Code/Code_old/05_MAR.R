@@ -33,7 +33,7 @@ sleep_plot <- ggplot(df_plot, aes(x = min, y = state, group = gruppe)) +
   labs(
     x       = "Time (minutes)",
     y       = "Sleep state",
-    caption = "Lines are interrupted at missing observations (minutes 116–120)."
+    caption = ""
   ) +
   theme_minimal()
 print(sleep_plot)
