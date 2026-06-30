@@ -1,67 +1,67 @@
 \contentsline {chapter}{Abstract}{1}{chapter*.2}%
 \contentsline {chapter}{Introduction}{2}{chapter*.3}%
-\contentsline {chapter}{\numberline {1}Distributional Properties of Categorical Processes}{4}{chapter.1}%
-\contentsline {section}{\numberline {1.1}General Notation}{4}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Stationarity}{4}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Marginal Distributions}{4}{section.1.3}%
-\contentsline {section}{\numberline {1.4}Bivariate Probabilities at Lag $h$}{5}{section.1.4}%
-\contentsline {section}{\numberline {1.5}Location}{5}{section.1.5}%
-\contentsline {section}{\numberline {1.6}Measures of Dispersion}{6}{section.1.6}%
-\contentsline {section}{\numberline {1.7}Measures of serial dependence}{9}{section.1.7}%
-\contentsline {chapter}{\numberline {2}Sample Measures}{11}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Estimation of Marginal Distributions}{11}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Asymptotics of the marginal estimator}{11}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Asymptotic Properties of Sample Dispersion Measures}{13}{section.2.3}%
-\contentsline {chapter}{\numberline {3}Introducing Missingness}{17}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Missingness Mechanisms}{17}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Amplitude Modulation}{18}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Asymptotic Theory for the corrected estimator}{19}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Asymptotic marginal properties}{24}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Serial Dependence}{25}{section.3.5}%
-\contentsline {subsection}{\numberline {3.5.1}Asymptotic distribution under the general model}{26}{subsection.3.5.1}%
-\contentsline {subsection}{\numberline {3.5.2}Hypothesis Testing for Serial Dependence}{30}{subsection.3.5.2}%
-\contentsline {subsubsection}{\nonumberline Asymptotic null distribution, test statistic, and confidence intervals under $H_0$}{30}{subsubsection*.10}%
-\contentsline {paragraph}{\nonumberline Test statistic and confidence intervals.}{33}{paragraph*.11}%
-\contentsline {subsection}{\numberline {3.5.3}Consistency under $H_A$}{34}{subsection.3.5.3}%
-\contentsline {chapter}{\numberline {4}Simulation Study}{36}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Setup and Design}{36}{section.4.1}%
-\contentsline {paragraph}{\nonumberline Model definition.}{36}{paragraph*.12}%
-\contentsline {paragraph}{\nonumberline Distributional properties.}{37}{paragraph*.13}%
-\contentsline {paragraph}{\nonumberline Mixing properties.}{37}{paragraph*.14}%
-\contentsline {paragraph}{\nonumberline Missingness mechanism.}{38}{paragraph*.15}%
-\contentsline {section}{\numberline {4.2}Results}{40}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Marginal Estimation and Dispersion Measures}{40}{subsection.4.2.1}%
-\contentsline {paragraph}{\nonumberline Convergence to the asymptotic distribution.}{40}{paragraph*.18}%
-\contentsline {paragraph}{\nonumberline Finite-sample bias and its order.}{41}{paragraph*.19}%
-\contentsline {paragraph}{\nonumberline Asymptotic standard deviation: simulation vs.\ theory.}{41}{paragraph*.20}%
-\contentsline {paragraph}{\nonumberline Serially dependent observation process.}{43}{paragraph*.21}%
-\contentsline {paragraph}{\nonumberline Skewness.}{44}{paragraph*.22}%
-\contentsline {subsection}{\numberline {4.2.2}Serial Dependence: Cohen's $\kappa $}{44}{subsection.4.2.2}%
-\contentsline {paragraph}{\nonumberline Distribution under $H_0$.}{44}{paragraph*.23}%
-\contentsline {paragraph}{\nonumberline Asymptotic level of the test.}{44}{paragraph*.24}%
-\contentsline {paragraph}{\nonumberline Power under $H_A$.}{45}{paragraph*.25}%
-\contentsline {subsection}{\numberline {4.2.3}Robustness under MCAR Violations}{46}{subsection.4.2.3}%
-\contentsline {paragraph}{\nonumberline IOV under MNAR.}{46}{paragraph*.26}%
+\contentsline {chapter}{\numberline {1}Distributional Properties of Categorical Processes}{5}{chapter.1}%
+\contentsline {section}{\numberline {1.1}General Notation}{5}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Stationarity}{5}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Marginal Distributions}{5}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Bivariate Probabilities at Lag $h$}{6}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Location}{6}{section.1.5}%
+\contentsline {section}{\numberline {1.6}Measures of Dispersion}{7}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Measures of serial dependence}{10}{section.1.7}%
+\contentsline {chapter}{\numberline {2}Sample Measures}{12}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Estimation of Marginal Distributions}{12}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Asymptotics of the marginal estimator}{12}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Asymptotic Properties of Sample Dispersion Measures}{14}{section.2.3}%
+\contentsline {chapter}{\numberline {3}Introducing Missingness}{18}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Missingness Mechanisms}{18}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Amplitude Modulation}{19}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Asymptotic Theory for the corrected estimator}{20}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Asymptotic marginal properties}{25}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Serial Dependence}{26}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Asymptotic distribution under the general model}{27}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}Hypothesis Testing for Serial Dependence}{31}{subsection.3.5.2}%
+\contentsline {subsubsection}{\nonumberline Asymptotic null distribution, test statistic, and confidence intervals under $H_0$}{31}{subsubsection*.10}%
+\contentsline {paragraph}{\nonumberline Test statistic and confidence intervals.}{34}{paragraph*.11}%
+\contentsline {subsection}{\numberline {3.5.3}Consistency under $H_A$}{35}{subsection.3.5.3}%
+\contentsline {chapter}{\numberline {4}Simulation Study}{37}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Setup and Design}{37}{section.4.1}%
+\contentsline {paragraph}{\nonumberline Model definition.}{37}{paragraph*.12}%
+\contentsline {paragraph}{\nonumberline Distributional properties.}{38}{paragraph*.13}%
+\contentsline {paragraph}{\nonumberline Mixing properties.}{38}{paragraph*.14}%
+\contentsline {paragraph}{\nonumberline Missingness mechanism.}{39}{paragraph*.15}%
+\contentsline {section}{\numberline {4.2}Results}{41}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Marginal Estimation and Dispersion Measures}{41}{subsection.4.2.1}%
+\contentsline {paragraph}{\nonumberline Convergence to the asymptotic distribution.}{41}{paragraph*.18}%
+\contentsline {paragraph}{\nonumberline Finite-sample bias and its order.}{42}{paragraph*.19}%
+\contentsline {paragraph}{\nonumberline Asymptotic standard deviation: simulation vs.\ theory.}{43}{paragraph*.20}%
+\contentsline {paragraph}{\nonumberline Serially dependent observation process.}{44}{paragraph*.21}%
+\contentsline {paragraph}{\nonumberline Skewness.}{45}{paragraph*.22}%
+\contentsline {subsection}{\numberline {4.2.2}Serial Dependence: Cohen's $\kappa $}{45}{subsection.4.2.2}%
+\contentsline {paragraph}{\nonumberline Distribution under $H_0$.}{45}{paragraph*.23}%
+\contentsline {paragraph}{\nonumberline Asymptotic level of the test.}{45}{paragraph*.24}%
+\contentsline {paragraph}{\nonumberline Power under $H_A$.}{46}{paragraph*.25}%
+\contentsline {subsection}{\numberline {4.2.3}Robustness under MCAR Violations}{47}{subsection.4.2.3}%
+\contentsline {paragraph}{\nonumberline IOV under MNAR.}{47}{paragraph*.26}%
 \contentsline {paragraph}{\nonumberline Cohen's $\kappa $ under MNAR.}{48}{paragraph*.27}%
-\contentsline {chapter}{\numberline {5}Extension to Nominal Processes}{50}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Asymptotic Distribution of $\hat {\boldsymbol {p}}$}{50}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Asymptotic Properties of the IQV}{50}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Missingness}{51}{section.5.3}%
-\contentsline {paragraph}{\nonumberline Marginal measures}{51}{paragraph*.28}%
-\contentsline {paragraph}{\nonumberline Serial dependence}{52}{paragraph*.29}%
-\contentsline {chapter}{Conclusion and Outlook}{54}{chapter*.30}%
-\contentsline {paragraph}{\nonumberline Asymptotic theory under $H_A$.}{54}{paragraph*.31}%
-\contentsline {paragraph}{\nonumberline Missingness beyond MCAR.}{54}{paragraph*.32}%
-\contentsline {paragraph}{\nonumberline Extensions to multivariate and mixed-type processes.}{55}{paragraph*.33}%
-\contentsline {chapter}{\numberline {A}Appendix}{56}{appendix.1.A}%
-\contentsline {section}{\numberline {A.1}Derivation of the Asymptotic Covariance Matrix~$\boldsymbol {\Sigma }_{\boldsymbol {Z}^{*}}$}{57}{section.1.A.1}%
-\contentsline {section}{\numberline {A.2}Derivation of the Asymptotic Covariance Matrix~$\boldsymbol {\Sigma }_{\boldsymbol {f}^{(h)*}}$}{58}{section.1.A.2}%
-\contentsline {section}{\numberline {A.3}Asymptotic Variance of $\hat {\kappa }_{\mathrm {ord}}(h)$}{59}{section.1.A.3}%
-\contentsline {section}{\numberline {A.4}Hessian $\kappa (h)$}{59}{section.1.A.4}%
-\contentsline {section}{\numberline {A.5}Bias $\kappa _{\mathrm {ord}}(h)$}{61}{section.1.A.5}%
-\contentsline {section}{\numberline {A.6}Derivation of $\hat {\kappa }_{\mathrm {ord}}$ under i.i.d. missingness}{62}{section.1.A.6}%
-\contentsline {section}{\numberline {A.7}Asymptotic Variance and Bias of $\hat {\boldsymbol {p}}^*$}{63}{section.1.A.7}%
-\contentsline {section}{\numberline {A.8}Asymptotics of $\hat {\kappa }_{\mathrm {nom}}(h)$}{64}{section.1.A.8}%
-\contentsline {paragraph}{\nonumberline Distribution under the general model}{64}{paragraph*.34}%
-\contentsline {paragraph}{\nonumberline Asymptotics under $H_0$}{66}{paragraph*.35}%
+\contentsline {chapter}{\numberline {5}Extension to Nominal Processes}{51}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Asymptotic Distribution of $\hat {\boldsymbol {p}}$}{51}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Asymptotic Properties of the IQV}{51}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Missingness}{52}{section.5.3}%
+\contentsline {paragraph}{\nonumberline Marginal measures}{52}{paragraph*.28}%
+\contentsline {paragraph}{\nonumberline Serial dependence}{53}{paragraph*.29}%
+\contentsline {chapter}{Conclusion and Outlook}{55}{chapter*.30}%
+\contentsline {paragraph}{\nonumberline Asymptotic theory under $H_A$.}{55}{paragraph*.31}%
+\contentsline {paragraph}{\nonumberline Missingness beyond MCAR.}{55}{paragraph*.32}%
+\contentsline {paragraph}{\nonumberline Extensions to multivariate and mixed-type processes.}{56}{paragraph*.33}%
+\contentsline {chapter}{\numberline {A}Appendix}{57}{appendix.1.A}%
+\contentsline {section}{\numberline {A.1}Derivation of the Asymptotic Covariance Matrix~$\boldsymbol {\Sigma }_{\boldsymbol {Z}^{*}}$}{58}{section.1.A.1}%
+\contentsline {section}{\numberline {A.2}Derivation of the Asymptotic Covariance Matrix~$\boldsymbol {\Sigma }_{\boldsymbol {f}^{(h)*}}$}{59}{section.1.A.2}%
+\contentsline {section}{\numberline {A.3}Asymptotic Variance of $\hat {\kappa }_{\mathrm {ord}}(h)$}{60}{section.1.A.3}%
+\contentsline {section}{\numberline {A.4}Hessian $\kappa (h)$}{60}{section.1.A.4}%
+\contentsline {section}{\numberline {A.5}Bias $\kappa _{\mathrm {ord}}(h)$}{62}{section.1.A.5}%
+\contentsline {section}{\numberline {A.6}Derivation of $\hat {\kappa }_{\mathrm {ord}}$ under i.i.d. missingness}{63}{section.1.A.6}%
+\contentsline {section}{\numberline {A.7}Asymptotic Variance and Bias of $\hat {\boldsymbol {p}}^*$}{64}{section.1.A.7}%
+\contentsline {section}{\numberline {A.8}Asymptotics of $\hat {\kappa }_{\mathrm {nom}}(h)$}{65}{section.1.A.8}%
+\contentsline {paragraph}{\nonumberline Distribution under the general model}{65}{paragraph*.34}%
+\contentsline {paragraph}{\nonumberline Asymptotics under $H_0$}{67}{paragraph*.35}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

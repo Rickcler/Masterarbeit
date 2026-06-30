@@ -45,7 +45,7 @@
     \vspace{0.2cm}
     {\large Fakultät Sozial- und Wirtschaftswissenschaften \par}
     \vspace{0.2cm}
-    {\large Lehrstuhl für Mathematik in den Wirstschaftswissenschaften \par}
+    {\large Lehrstuhl für Mathematik in den Wirtschaftswissenschaften \par}
     \vspace{2cm}
 
     {\Large\bfseries Master's Thesis \par}
@@ -105,7 +105,7 @@ estimators and the proposed test perform well
 under MCAR even when the observation process exhibits serial dependence. Under MNAR, 
 however, the estimators inherit a persistent bias that does not vanish with growing 
 sample size, and the test can exhibit severe size distortion or substantial loss of 
-power -- underscoring the practical value of the amplitude modulation framework and 
+power. This underscores the practical value of the amplitude modulation framework and 
 the importance of carefully assessing the MCAR assumption before applying the 
 proposed methods.
 
@@ -133,6 +133,25 @@ as a typical example. Although the categories are often labelled numerically,
 these labels merely reflect the underlying ordering and do not support meaningful 
 arithmetic operations. Consequently, standard tools such as means, variances, or 
 autocorrelations are generally inappropriate and must be replaced by measures tailored to categorical data.\\
+To illustrate the typical structure of such data, 
+Figure~\ref{fig:sleep-example} displays the sleep state time series 
+of one subject from the infant sleep study of \citet{Stoffer2000}, 
+recorded at one-minute intervals over a two-hour period. The series 
+takes values in an ordered set of six sleep states, ranging from deep 
+sleep to full wakefulness, and exhibits the strong serial dependence 
+characteristic of categorical time series: the process tends to 
+remain in the same state for several consecutive time points, 
+and transitions between states follow a structured pattern rather 
+than occurring at random.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth, height=5cm]{../Graphs/sleep_example.png}
+    \caption{\scriptsize Sleep state time series of one subject from 
+    \citet{Stoffer2000}, recorded at one-minute intervals. 
+    The six states are ordered from deep sleep (1) to movement (6).}
+    \label{fig:sleep-example}
+\end{figure}
 Missing observations are a common challenge across empirical 
 disciplines. In cross-sectional surveys, respondents may refuse to 
 answer certain questions or give incomplete responses; in automated 
@@ -153,7 +172,7 @@ is well established, considerably less attention has been devoted to situations
 in which observations are missing.\\
 The starting point for the present thesis is the work of 
 \citet{weiss2021categorical}, who addresses the analysis of 
-categorical time series in the presence of missing observations --- 
+categorical time series in the presence of missing observations,  
 a setting for which only limited methodological results had previously been available. 
 Both ordinal and nominal processes are considered, 
 and solutions are developed for the analysis of marginal and serial 
@@ -324,9 +343,9 @@ For ordinal data, this corresponds to a CDF vector $\mathbf{f}$ of the form
 \right\}
 := \{\boldsymbol{c}_0,\ldots,\boldsymbol{c}_m\} \subset [0,1]^{m}.
 \]
-In each of these cases, every component $f_i$ satisfies $f_i \in \{0,1\}$, and thus
+In each of these cases, every component $f_i,~i=0,\ldots, m-1$ satisfies $f_i \in \{0,1\}$, and thus
 \[
-f_i(1 - f_i) = 0 \qquad \forall i.
+f_i(1 - f_i) = 0.
 \]
 Therefore,
 \[
@@ -522,7 +541,7 @@ measures attain their upper bound:
     = \frac{1 - \sum_{j=0}^{m}p_j^2}{1 - \sum_{i=0}^{m}p_i^2} = 1,
 \end{align*}
 where we used that $\sum_{j=0}^{m} p_j = 1$, so that $\sum_{j=0}^{m}(p_j - p_j^2) = 1 - \sum_{j=0}^{m} p_j^2$. 
-Under serial independence, $f_{jj}(h) = f_j^2$ and $p_{jj}(h) = p_jp_j$, so that
+Under serial independence, $f_{jj}(h) = f_j^2$ and $p_{jj}(h) = p_j^2$, so that
 the numerator vanishes and $\kappa(h) = 0$.\\
 For the nominal version, the lower bound is attained when $p_{jj}(h) = 0$ for all
 $j$, i.e.\ when the process never remains in the same category across lag $h$:
@@ -534,7 +553,7 @@ which depends on the marginal distribution and equals $-1$ only in the special c
 of a uniform marginal. For the ordinal version, the lower bound takes an analogous
 form but involves the cumulative probabilities $f_j$.
 \chapter{Sample Measures}\label{chap:sample}
-\section{Estimation of Marginal Distributions}
+\section{Estimation of Marginal Distributions}\label{sec:marg_dist}
 To estimate the marginal (cumulative) probabilities, we express the
 relative frequencies through a binarization of the original process
 $(X_t)$. For ordinal data, define the indicator vector
@@ -560,7 +579,7 @@ The marginal CDF and PMF vectors are estimated by the corresponding sample means
 \]
 \end{definition}
 
-\section{Asymptotics of the marginal estimator}
+\section{Asymptotics of the marginal estimator}\label{sec:asymp_marg}
 To derive the asymptotic distribution of $\hat{\boldsymbol{f}}$ and
 $\hat{\boldsymbol{p}}$, a central limit theorem is
 required. Although the derivations for the ordinal and nominal cases follow the same general strategy, 
@@ -596,8 +615,8 @@ We now want to show that $\boldsymbol{Z}_t$ also satisfies these dependence assu
 g_i(X_t) := \mathbb{I}\{X_t \le s_i\}
 \]
 are measurable functions of $X_t$ \citep[p. 36]{klenke2005}.
-Since measurability preserves strict stationarity, the binarized processes
-$(g_i(X_t))$ and $(h_i(X_t))$ are strictly stationary whenever $(X_t)$ is
+Since measurability preserves strict stationarity, the binarized process
+$(g_i(X_t))$ is strictly stationary whenever $(X_t)$ is
 strictly stationary \citep[p. 157]{kallenberg_2021}.
 Consequently, the vector-valued processes $\boldsymbol{Z}_t$ is strictly stationary as well.\\
 Moreover, each indicator variable $Z_{t,i}$ is defined on the same probability space
@@ -1416,7 +1435,7 @@ f_{j'j'}(h)\Bigl((1-\pi)\pi(h)
 + \sum_{k=1}^{\infty}\pi(k)\bigl(f_{ij}(k)+f_{ji}(k)-2f_if_j\bigr)\\[2ex]
 %
 &\textbf{(ix)}\ i = 0, \ldots, m-1,\ j = m, \ldots, 2m-1\quad  (j'=j-m): \\
-&\quad \mathrm{Cov}(O_tZ_{t,i},\, O_tO_{t-h}Z_{t,j'}Z_{t-h,j'})  \sum_{k=1}^{\infty}\bigl[
+&\quad \mathrm{Cov}(O_tZ_{t,i},\, O_tO_{t-h}Z_{t,j'}Z_{t-h,j'}) + \sum_{k=1}^{\infty}\bigl[
 \mathrm{Cov}(O_tZ_{t,i},\, O_{t+k}O_{t+k-h}Z_{t+k, j'}Z_{t+k-h, j'}) \\
 &\qquad + \mathrm{Cov}(O_{t+k}Z_{t+k,i},\, 
 O_tO_{t-h}Z_{t,j'}Z_{t-h,j'})\bigr] \\
@@ -1883,7 +1902,7 @@ broader range of sample sizes, both scenarios simultaneously, and additional mis
 
 All simulations are based on the BinAR(1) process as described in 
 \citet[Section~3.3]{Weiss2018}, which serves as a flexible and tractable 
-model for ordinal categorical time series with controllable serial dependence. Note that 
+model for ordinal categorical time series with controllable serial dependence.
 
 \paragraph{Model definition.}
 The BinAR(1) process is parameterized by the number of categories 
@@ -2150,9 +2169,10 @@ constant, with only minor fluctuations around the limiting value.\\
 The pointwise $95\%$ confidence bands (vertical lines) widen with
 $n$. Since $\widehat{\mathrm{IOV}}$ has standard deviation of order
 $n^{-1/2}$, its Monte Carlo mean based on $B$ replications has
-standard error of order $(Bn)^{-1/2}$. After multiplication by $n$,
-this becomes $\sqrt{n/B}$, explaining the increasing width of the
-bands. This effect is therefore purely induced by the scaling and
+standard error of order $(Bn)^{-1/2}$. After multiplication by $n$, this becomes $\sqrt{n/B}$, explaining 
+the increasing width of the bands; the apparent increase in deviation 
+from the theoretical limit should be interpreted in light of this 
+widening uncertainty. This effect is therefore purely induced by the scaling and
 should not be interpreted as a deterioration of the asymptotic
 approximation.
 
@@ -2397,8 +2417,9 @@ compared to the 95\% confidence intervals (blue ribbon) computed using Theorem~\
 the test is consistent: the two ribbons monotonically get narrower, and at around 500 observations they 
 become non-overlapping, indicating that less than 2.5\% of samples under the given scenario would fall 
 inside the 95\% confidence intervals. However, for smaller $n$, the two ribbons are clearly overlapping, 
-indicating that the test would fail to reject $H_0$, even though there is serial dependence in the 
-underlying process.
+indicating a non-negligible probability that the test fails to reject 
+$H_0$, even though serial dependence is present in the underlying 
+process.
 To show which factors determine the convergence speed of the test, the right panel shows rejection rates for 
 Scenario~A with varying serial dependence parameter $r \in \{0.15, 0.35, 0.6\}$ and marginal observation probability 
 $\pi \in \{0.75, 1\}$. The test shows that the convergence rate increases strongly with $r$: the scenario with 
@@ -2552,7 +2573,8 @@ measure and the form of the serial dependence measure.
 
 \section{Asymptotic Distribution of $\hat{\boldsymbol{p}}$}
 
-The structure of $\boldsymbol{\Sigma}_Y$
+The asymptotic behavior of the marginal estimator $\hat{\boldsymbol{p}}$ is based on the indicator vector $\boldsymbol{Y}_t$ (recall Section~\ref{sec:marg_dist})
+the same way $\hat{\boldsymbol{f}}$ is based on $\boldsymbol{Z}_t$ (see Section~\ref{sec:asymp_marg} for the derivations). The structure of the corresponding asymptotic covariance matrix $\boldsymbol{\Sigma}_Y$
 differs from that of $\boldsymbol{\Sigma}_Z$, however, in the lag-0
 term. For ordinal data, the joint expectation
 $\mathrm{E}[Z_{t,i}Z_{t,j}] = P(X_t \leq s_i, X_t \leq s_j) =
@@ -2633,7 +2655,7 @@ defined analogously to Definition~\ref{def:correctedest} as
     = \frac{\hat{\boldsymbol{\mathfrak{p}}}}{\bar{O}}.
 \]
 \end{definition}\noindent
-Since $O_t\boldsymbol{Y}_t$ is a bounded indicator process that 
+Since $(O_t\boldsymbol{Y}_t)$ is a bounded indicator process that 
 inherits stationarity and $\alpha$-mixing from $(O_t)$ and $(X_t)$ 
 by the same argument as in Section~\ref{sec:Amp Mod}, the asymptotic 
 normality of $\hat{\boldsymbol{p}}^*$ follows from 
@@ -2827,10 +2849,10 @@ mechanisms of the different component processes. A further direction
 would be to study mixed-type multivariate time series, in which some 
 components are categorical and others are continuous or count-valued, 
 again under partial observability. Such settings are common in 
-applied contexts --- for instance large panel surveys that record categorical questions
-alongside continuous measurements --- and would require 
+applied contexts, like large panel surveys that record categorical questions
+alongside continuous measurements, and would require 
 combining the framework developed here with the existing asymptotic 
-theory for missingness in metric time series.\\
+theory for missingness in metric time series.\\\\
 Taken together, the results of this thesis provide a rigorous 
 foundation for the analysis of categorical time series under 
 partial observability and clarify both the strengths and the limits 
@@ -3078,7 +3100,7 @@ In this section we provide the detailed computations of the simplified version o
 \[
     \pi(h) = \pi^2, \qquad \pi(h, 2h) = \pi^3,
 \]
-where $\pi(h) = E[O_t O_{t-h}]$ and $\pi(h, i) = E{O_t O_{t-h} O_{t-i}}$.\\
+where $\pi(h) = E[O_t O_{t-h}]$ and $\pi(h_1,2h) := \mathrm{E}[O_t O_{t-h}O_{t-2h}]$.
 For the simplified variance term we then have
 \begin{align*}
     \sigma^2_\kappa &=

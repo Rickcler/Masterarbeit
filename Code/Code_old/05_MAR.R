@@ -36,7 +36,7 @@ sleep_plot <- ggplot(df_plot, aes(x = min, y = state, group = gruppe)) +
     caption = "Lines are interrupted at missing observations (minutes 116–120)."
   ) +
   theme_minimal()
-
+print(sleep_plot)
 ggsave("Graphs/sleep_example.png", sleep_plot, width = 8, height = 4)
 # ------------------------------------------------------------------------------
 # Daten aufbereiten
