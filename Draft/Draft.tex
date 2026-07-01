@@ -141,8 +141,7 @@ takes values in an ordered set of six sleep states, ranging from deep
 sleep to full wakefulness, and exhibits the strong serial dependence 
 characteristic of categorical time series: the process tends to 
 remain in the same state for several consecutive time points, 
-and transitions between states follow a structured pattern rather 
-than occurring at random.
+and transitions between states follow a structured pattern rather than occurring at random.
 
 \begin{figure}[htbp]
     \centering
@@ -591,7 +590,7 @@ conditions on the original process $(X_t)$.
 Specifically, $(X_t)_{t \in \mathbb{Z}}$ is assumed to be strictly
 stationary (recall Definition \ref{def:Stationarity}) and $\alpha$-mixing with exponentially decaying coefficients.\\
 \begin{definition}[$\alpha$-Mixing with Exponential Decay]\label{def:mixing}
-Following \citet[Section 1.2.]{bradley_2005}, let
+Following \citet[Section 2.1.]{bradley_2005}, let
 \[
 \mathcal{F}_J^L := \sigma(X_t : J \le t \le L)
 \]
@@ -1785,7 +1784,7 @@ and~\ref{thm:clt_fhat_h}) and the law of large numbers applied to
 the observation-process moments.\\
 Alternatively, one may test for serial independence of the observation 
 process $(O_t)$ using, for example, a portmanteau test such as the Ljung–Box 
-test (see \cite[Chapter~1.6]{brockwell_davis_2016}). Note that the Ljung-Box test
+test (see \citet[Chapter~1.6]{brockwell_davis_2016}). Note that the Ljung-Box test
 only tests for linear dependence structures and may fail to detect nonlinear dependence in $(O_t)$.
 Since higher moments of $O_t$ are directly determined by its first moment (since $O_t \in \{0,1\}$),
 the implied limitations of the Ljung-Box test for binary time series are less severe than for continuous-valued 
@@ -1841,7 +1840,7 @@ Holm procedure, which orders the $H$ $p$-values as
 $p_{(1)} \leq \ldots \leq p_{(H)}$ and rejects the hypothesis 
 associated with $p_{(k)}$ if $p_{(l)} \leq \alpha/(H+1-l)$ for all 
 $l \leq k$. For a comprehensive treatment of these and further 
-procedures, see \citet[pp.~348--351]{lehmann_romano_2005}.
+procedures, see \citet[pp.~348--391]{lehmann_romano_2005}.
 % \begin{remark}
 % The test can be visualized analogously to the sample autocorrelation
 % function (ACF): plotting $\hat{\kappa}_{\mathrm{ord}}(h)$ against
