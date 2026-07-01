@@ -959,7 +959,8 @@ where the elements of $\boldsymbol{Z}_t^*$ are numbered as $Z_{t,-1}^*, Z_{t,0}^
     &= (\pi, \pi f_0, \ldots, \pi f_{m-1})^\top \\
     &=\pi (1, \boldsymbol{f}^{\top})^\top =: \boldsymbol{\mu}_{\boldsymbol{Z}_t^{*}}.
 \end{align*}
-Since the processes $(O_t)$ and $(\boldsymbol{Z}_t)$ are independent and stationary, the joint process $((O_t, \boldsymbol{Z}_t)^{\top})$ is also stationary. Moreover, if both processes are $\alpha$-mixing, then the joint process is $\alpha$-mixing. As $\boldsymbol{Z}_t^*$ is a measurable function of $(O_t, \boldsymbol{Z})^\top$ it follows that $\boldsymbol{Z}^*_t$ is stationary and $\alpha$-mixing (with exponentially decaying coefficients).
+Since the processes $(O_t)$ and $(\boldsymbol{Z}_t)$ are independent and stationary, the joint process $(O_t, \boldsymbol{Z}_t^{\top})^{\top}$ is also stationary. 
+Moreover, if both processes are $\alpha$-mixing, then the joint process is $\alpha$-mixing. As $\boldsymbol{Z}_t^*$ is a measurable function of $(O_t, \boldsymbol{Z}^\top)^\top$ it follows that $\boldsymbol{Z}^*_t$ is stationary and $\alpha$-mixing (with exponentially decaying coefficients).
 \subsection*{Multivariate CLT}
 
 \begin{proposition}[Asymptotic distribution of $\bar{\boldsymbol{Z}}^*_n$]
@@ -984,12 +985,12 @@ and
     \boldsymbol{\Sigma}_{\boldsymbol{Z}^*} = \mathrm{Var}(\boldsymbol{Z}^*_t) 
     + 2\sum_{h=1}^{\infty}\mathrm{Cov}(\boldsymbol{Z}^*_t, \boldsymbol{Z}^*_{t+h}),
 \]
-with elements $\sigma_{\boldsymbol{Z}^*;\,i,j}$ as given in 
+with elements $\sigma_{\boldsymbol{Z}^*;\,ij}$ as given in 
 cases \textnormal{(i)--(iii)} below.
 \end{proposition}
 
 \begin{proof}
-Since $U_t^* = \boldsymbol{a}^\top \boldsymbol{Z}_t^*$ is a measurable function 
+Since $U_t^* = \boldsymbol{a}^\top \bar{\boldsymbol{Z}}_n^*$ is a measurable function 
 of the strictly stationary and $\alpha$-mixing process $\boldsymbol{Z}_t^*$, it 
 inherits both properties, with $\alpha_{U_t^*}(n) \leq \alpha_{\boldsymbol{Z}_t^*}(n) 
 \leq C\rho^n$ following from the inclusion $\sigma(U_t^*) \subset \sigma(\boldsymbol{Z}_t^*)$. 
@@ -1029,8 +1030,12 @@ The detailed derivations of these expressions are provided in Appendix \ref{app:
 \[g_j(x_{-1}, x_{0}, \ldots, x_{m-1}) = x_j / x_{-1}, \quad \text{for } j = 0 \ldots, m-1,\]
 such that
 \begin{align*}
-    \boldsymbol{g}(\bar{\boldsymbol{Z}^*_t}) &= (g_0(\bar{\boldsymbol{Z}}^*_t), \ldots, g_{m-1}(\bar{\boldsymbol{Z}}^*_t))^\top  =  (\hat{f}_0 O_t/O_t, \ldots, \hat{f}_{m-1} O_t/O_t)^\top\\
-    &= \hat{\boldsymbol{f}}^*
+\boldsymbol{g}(\bar{\boldsymbol{Z}}^*_n) 
+&= \bigl(g_0(\bar{\boldsymbol{Z}}^*_n),\, \ldots,\, 
+   g_{m-1}(\bar{\boldsymbol{Z}}^*_n)\bigr)^\top 
+ = \left(\frac{\bar{Z}^*_{n,0}}{\bar{Z}^*_{n,-1}},\, \ldots,\, 
+   \frac{\bar{Z}^*_{n,m-1}}{\bar{Z}^*_{n,-1}}\right)^\top \\
+&= \hat{\boldsymbol{f}}^*
 \end{align*}
 and  accordingly
 \begin{align*}
@@ -1061,7 +1066,7 @@ coefficients. Let the modulating process $(O_t)$ also be strictly stationary and
 \end{equation*}
 where
 \begin{equation*}\label{eq:sigma_fstar}
-    \sigma_{\hat{\boldsymbol{f}}^*;i,j} = \frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j) + \frac{1}{\pi^2} \sum_{h=1}^{\infty}\pi(h)(f_{ij}(h)+f_{ji}(h)-2f_if_j).
+    \sigma_{\hat{\boldsymbol{f}}^*;ij} = \frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j) + \frac{1}{\pi^2} \sum_{h=1}^{\infty}\pi(h)(f_{ij}(h)+f_{ji}(h)-2f_if_j).
 \end{equation*}\end{theorem}
 \noindent The structure of $\boldsymbol{\Sigma}_{\hat{\boldsymbol{f}^*}}$ can be computed as follows
 \begin{align*}
@@ -1073,25 +1078,25 @@ where
     -\frac{f_{m-1}}{\pi}& 0 &\ldots& 0 & \frac{1}{\pi}
     \end{pmatrix}
     \begin{pmatrix}
-        \sigma_{\boldsymbol{Z}^*; -1, -1}& \ldots & \sigma_{\boldsymbol{Z}^*; -1, m-1}\\
+        \sigma_{\boldsymbol{Z}^*; -1 -1}& \ldots & \sigma_{\boldsymbol{Z}^*; -1 (m-1)}\\
         \vdots & \ddots &\vdots \\
-        \sigma_{\boldsymbol{Z}^*; m-1, -1} & \ldots & \sigma_{\boldsymbol{Z}^*; m-1, m-1}
+        \sigma_{\boldsymbol{Z}^*; (m-1) -1} & \ldots & \sigma_{\boldsymbol{Z}^*; (m-1) (m-1)}
     \end{pmatrix}
     \boldsymbol{G}^\top\\
     &= \begin{pmatrix}
-        -\frac{f_0}{\pi}\sigma_{\boldsymbol{Z}^*; -1,-1} + \frac{1}{\pi}\sigma_{\boldsymbol{Z}^*; 0, -1} &\ldots&-\frac{f_0}{\pi}\sigma_{\boldsymbol{Z}^*; -1, m-1} + \frac{1}{\pi}\sigma_{\boldsymbol{Z}^*; 0, m-1} \\
+        -\frac{f_0}{\pi}\sigma_{\boldsymbol{Z}^*; -1-1} + \frac{1}{\pi}\sigma_{\boldsymbol{Z}^*; 0 -1} &\ldots&-\frac{f_0}{\pi}\sigma_{\boldsymbol{Z}^*; -1 (m-1)} + \frac{1}{\pi}\sigma_{\boldsymbol{Z}^*; 0, m-1} \\
         \vdots & \ddots &\vdots \\
-        -\frac{f_{m-1}}{\pi}\sigma_{\boldsymbol{Z}^*; -1, -1} + \frac{1}{\pi}\sigma_{\boldsymbol{Z}^*; m-1, -1} &\ldots&-\frac{f_{m-1}}{\pi}\sigma_{\boldsymbol{Z}^*; -1, m-1} + \frac{1}{\pi}\sigma_{\boldsymbol{Z}^*; m-1, m-1} \\
+        -\frac{f_{m-1}}{\pi}\sigma_{\boldsymbol{Z}^*; -1 -1} + \frac{1}{\pi}\sigma_{\boldsymbol{Z}^*; (m-1) -1} &\ldots&-\frac{f_{m-1}}{\pi}\sigma_{\boldsymbol{Z}^*; -1 (m-1)} + \frac{1}{\pi}\sigma_{\boldsymbol{Z}^*; (m-1) (m-1)} \\
     \end{pmatrix}\boldsymbol{G}^\top.
 \end{align*}
 \noindent Such that the individual elements look like this:
 \begin{align*}
-    \sigma_{\hat{\boldsymbol{f}}^*; i, j}  &= (-\frac{f_j}{\pi}) (-\frac{f_i}{\pi}\sigma_{\boldsymbol{Z}^*; -1, -1} + \frac{1}{\pi} \sigma_{\boldsymbol{Z}^*; i, -1}) + \frac{1}{\pi}(-\frac{f_{i}}{\pi}\sigma_{\boldsymbol{Z}^*; -1, j}+ \frac{1}{\pi} \sigma_{\boldsymbol{Z}^*; i, j}) \\
-    &= \frac{f_j f_i }{\pi^2} \sigma_{\boldsymbol{Z}^*; -1, -1} - \frac{f_j}{\pi^2} \sigma_{\boldsymbol{Z}^*; i, -1} - \frac{f_i}{\pi^2}\sigma_{\boldsymbol{Z}^*; -1, j} + \frac{1}{\pi^2} \sigma_{\boldsymbol{Z}^*; i, j} \\
-    &= \frac{1}{\pi^2}\left(f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} - f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} - f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} + \sigma_{\boldsymbol{Z}^*; i, j}\right) \\
-    &= \frac{1}{\pi^2}(\sigma_{\boldsymbol{Z}^*; i, j}-f_if_j \sigma_{\boldsymbol{Z}^*; -1, -1}) \\
-    &= \frac{1}{\pi^2}\biggl(\left[f_if_j\sigma_{\boldsymbol{Z}^*; -1, -1} + \pi(f_{\min \{i,j\}}- f_if_j) + \sum_{h=1}^{\infty}\pi(h)f_{ij}(h)+f_{ji}(h)-2f_if_j\right] \\
-    &\quad - f_if_j \sigma_{\boldsymbol{Z}^*; -1, -1}\biggr) \\
+    \sigma_{\hat{\boldsymbol{f}}^*; i, j}  &= (-\frac{f_j}{\pi}) (-\frac{f_i}{\pi}\sigma_{\boldsymbol{Z}^*; -1 -1} + \frac{1}{\pi} \sigma_{\boldsymbol{Z}^*; i, -1}) + \frac{1}{\pi}(-\frac{f_{i}}{\pi}\sigma_{\boldsymbol{Z}^*; -1 j}+ \frac{1}{\pi} \sigma_{\boldsymbol{Z}^*; i, j}) \\
+    &= \frac{f_j f_i }{\pi^2} \sigma_{\boldsymbol{Z}^*; -1 -1} - \frac{f_j}{\pi^2} \sigma_{\boldsymbol{Z}^*; i, -1} - \frac{f_i}{\pi^2}\sigma_{\boldsymbol{Z}^*; -1, j} + \frac{1}{\pi^2} \sigma_{\boldsymbol{Z}^*; i j} \\
+    &= \frac{1}{\pi^2}\left(f_if_j\sigma_{\boldsymbol{Z}^*; -1 -1} - f_if_j\sigma_{\boldsymbol{Z}^*; -1 -1} - f_if_j\sigma_{\boldsymbol{Z}^*; -1 -1} + \sigma_{\boldsymbol{Z}^*; i, j}\right) \\
+    &= \frac{1}{\pi^2}(\sigma_{\boldsymbol{Z}^*; i, j}-f_if_j \sigma_{\boldsymbol{Z}^*; -1 -1}) \\
+    &= \frac{1}{\pi^2}\biggl(\left[f_if_j\sigma_{\boldsymbol{Z}^*; -1 -1} + \pi(f_{\min \{i,j\}}- f_if_j) + \sum_{h=1}^{\infty}\pi(h)f_{ij}(h)+f_{ji}(h)-2f_if_j\right] \\
+    &\quad - f_if_j \sigma_{\boldsymbol{Z}^*; -1 -1}\biggr) \\
     &= \underbrace{\frac{1}{\pi} (f_{\min \{i,j\}}- f_if_j) }_{\mathrm{lag}(0)}+ \frac{1}{\pi^2}\sum_{h=1}^{\infty}\underbrace{\pi(h)(f_{ij}(h)+f_{ji}(h)-2f_if_j)}_{\mathrm{lag}(h)}
 \end{align*}
 Here, the lag-0 term captures the contemporaneous covariance structure of the
@@ -1115,7 +1120,7 @@ Using the symmetry $\sigma_{\boldsymbol{Z}^*;-1j} = \sigma_{\boldsymbol{Z}^*;j(-
     \mathrm{Bias}(\hat{f}_j)
     &= \frac{1}{2}\mathrm{tr}(\boldsymbol{H}_{g_j}\boldsymbol{\Sigma}_{\boldsymbol{Z}^*}) \\
     &= \frac{1}{2}h_{g_j;-1-1}\,\sigma_{\boldsymbol{Z}^*;-1-1}
-        + h_{g_j;-1j}\,\sigma_{\boldsymbol{Z}^*;-1,j} \\
+        + h_{g_j;-1j}\,\sigma_{\boldsymbol{Z}^*;-1 j} \\
     &= \frac{1}{2}\cdot\frac{2f_j}{\pi^2}\,\sigma_{\boldsymbol{Z}^*;-1-1}
         - \frac{1}{\pi^2}\cdot f_j\,\sigma_{\boldsymbol{Z}^*;-1-1} \\
     &= \frac{f_j}{\pi^2}\,\sigma_{\boldsymbol{Z}^*;-1-1}
@@ -1130,10 +1135,10 @@ we consider three special cases of the general result:
 \begin{corollary}[Full Observation] \label{cor:Full Obs}
 If the process is fully observed, i.e.\ $\pi = 1$, then
 \[
-    \sigma_{\hat{\boldsymbol{f}}^*;\, i,j}
+    \sigma_{\hat{\boldsymbol{f}}^*;\, ij}
     = \bigl(f_{\min\{i,j\}} - f_if_j\bigr)
     + \sum_{h=1}^{\infty} f_{ij}(h) + f_{ji}(h) - 2f_if_j
-    = \sigma_{\boldsymbol{Z};\, i,j}.
+    = \sigma_{\boldsymbol{Z};\, ij}.
 \]
 \end{corollary}
 \noindent That is, the asymptotic covariance of $\hat{\boldsymbol{f}}^*$ reduces to that of
@@ -1143,7 +1148,7 @@ the complete-data estimator \hyperref[thm:clt_fhat]{$\hat{\boldsymbol{f}}$}, as 
 If $(O_t)$ is i.i.d., then $\pi(h) = \pi^2$ for all $h \geq 1$,
 and the asymptotic covariance simplifies to
 \[
-    \sigma_{\hat{\boldsymbol{f}}^*;\, i,j}
+    \sigma_{\hat{\boldsymbol{f}}^*;\, ij}
     = \frac{1}{\pi}\bigl(f_{\min\{i,j\}} - f_if_j\bigr)
     + \sum_{h=1}^{\infty} f_{ij}(h) + f_{ji}(h) - 2f_if_j.
 \]
@@ -1159,7 +1164,7 @@ If $(X_t)$ is i.i.d., then $f_{ij}(h) = f_if_j$ for all
 $i,j = 0,\ldots,m-1$ and $h \geq 1$, so that the asymptotic
 covariance reduces to
 \[
-    \sigma_{\hat{\boldsymbol{f}}^*;\, i,j}
+    \sigma_{\hat{\boldsymbol{f}}^*;\, ij}
     = \frac{1}{\pi}\bigl(f_{\min\{i,j\}} - f_i f_j\bigr)
     + \frac{1}{\pi^2}\sum_{h=1}^{\infty} \pi(h)
     \overbrace{(f_{ij}(h) + f_{ji}(h) - 2f_i f_j)}^{=0}
@@ -1289,7 +1294,7 @@ $2m-1$: the component at index $-2$ captures the product $O_tO_{t-h}$,
 the components at indices $-1$ through $m-1$ coincide with 
 $\boldsymbol{Z}_t^*$ from Section~\ref{sec:Amp Mod}, and the remaining 
 components at indices $m$ through $2m-1$ capture the lag-$h$ interaction 
-terms $O_t O_{t-h}Z_{t,i}Z_{t-h,i}$. Since $\kappa_{\mathrm{ord}}$ 
+terms $O_t O_{t-h}Z_{t,i}Z_{t-h,i}$. Since $\hat{\kappa_{\mathrm{ord}}}(h)$ 
 depends only on the diagonal frequencies $\hat{f}^*_{ii}(h)$, it 
 suffices to include the corresponding diagonal components in 
 $\boldsymbol{Z}_t^{(h)*}$. Should one wish to study a dependence 
@@ -1402,14 +1407,14 @@ O_t O_{t-h}Z_{t,j'}Z_{t-h,j'})\biggr] \\
 &\textbf{(v)}\ i = j = -1: \\
 &\quad \mathrm{Var}(O_t) + 2\sum_{k=1}^\infty\mathrm{Cov}(O_t, O_{t+k}) 
 = \pi(1-\pi) + 2\sum_{k=1}^{\infty}\gamma_O(k)
-= \sigma_{\boldsymbol{Z}^*;\,-1,-1}\\[2ex]
+= \sigma_{\boldsymbol{Z}^*;\,-1-1}\\[2ex]
 %
 &\textbf{(vi)}\ i = -1,\ j = 0, \ldots, m-1: \\
 &\quad \mathrm{Cov}(O_t, O_t Z_{t,j}) 
 + \sum_{k=1}^\infty\bigl[
 \mathrm{Cov}(O_t, O_{t+k}Z_{t+k,j}) 
 + \mathrm{Cov}(O_{t+k}, O_tZ_{t,j})\bigr]
-= f_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1}\\[2ex]
+= f_j\,\sigma_{\boldsymbol{Z}^*;\,-1-1}\\[2ex]
 %
 &\textbf{(vii)}\ i = -1,\ j = m, \ldots, 2m-1 \quad  (j'=j-m): \\
 &\quad \mathrm{Cov}(O_t,\, O_tO_{t-h}Z_{t,j'}Z_{t-h,j'}) \\
@@ -1428,8 +1433,8 @@ f_{j'j'}(h)\Bigl((1-\pi)\pi(h)
 + \sum_{k=1}^{\infty}\bigl[
 \mathrm{Cov}(O_tZ_{t,i}, O_{t+k}Z_{t+k,j}) 
 + \mathrm{Cov}(O_{t+k}Z_{t+k,i}, O_tZ_{t,j})\bigr] \\
-&\quad = \sigma_{\boldsymbol{Z}^*;\,i,j} 
-= f_i f_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1} 
+&\quad = \sigma_{\boldsymbol{Z}^*;\,ij} 
+= f_i f_j\,\sigma_{\boldsymbol{Z}^*;\,-1 -1} 
 + \pi(f_{\min\{i,j\}}-f_if_j)  
 + \sum_{k=1}^{\infty}\pi(k)\bigl(f_{ij}(k)+f_{ji}(k)-2f_if_j\bigr)\\[2ex]
 %
@@ -2227,7 +2232,7 @@ dominates the effect of serial dependence: the former is more pronounced
 in Scenario~A, whereas the latter is stronger in Scenario~B.\\
 Although less immediately visible in the figure, this also affects the
 difference between the cases $\pi = 1$ and $\pi = 0.75$. The covariance
-terms \hyperref[thm:clt_fstarhat]{$\sigma_{\hat{\boldsymbol{f}}^*; i,j}$} follow the forms given in
+terms \hyperref[thm:clt_fstarhat]{$\sigma_{\hat{\boldsymbol{f}}^*; ij}$} follow the forms given in
 Corollaries~\ref{cor:Full Obs} and~\ref{cor:iid_Obs}, respectively.
 Since here missingness only inflates the lag-$0$ component of the covariance
 structure, whereas serial dependence contributes through the higher-lag
@@ -2673,10 +2678,10 @@ the corrected estimator $\hat{\boldsymbol{p}}^*$ (Definition \ref{def:p_starhat}
     \xrightarrow[n\to\infty]{d}
     \mathcal{N}\bigl(\boldsymbol{0},\, \boldsymbol{\Sigma}_{\boldsymbol{p}^*}\bigr),
 \]
-where $\boldsymbol{\Sigma}_{\boldsymbol{p}^*} = (\sigma_{\boldsymbol{p}^*;i,j})_{i,j=0,\ldots,m}$ is
+where $\boldsymbol{\Sigma}_{\boldsymbol{p}^*} = (\sigma_{\boldsymbol{p}^*;ij})_{i,j=0,\ldots,m}$ is
 given by
 \[
-    \sigma_{\boldsymbol{p}^*;i,j}
+    \sigma_{\boldsymbol{p}^*;ij}
     =  \frac{1}{\pi}p_j(\delta_{ij} - p_i)
     + \frac{1}{\pi^2}\sum_{h=1}^{\infty}\bigl(p_{ij}(h) + p_{ji}(h) - 2p_i p_j\bigr).
 \]
@@ -2880,7 +2885,7 @@ In this section we provide the detailed computations of the elements \textbf{(ii
     &\quad = (\pi - \pi^2)f_j + 2\sum_{h=1}^{\infty}(\gamma_O(h) + \pi^2 - \pi^2)f_j \\
     &\quad = \pi(1-\pi)f_j + 2f_j\sum_{h=1}^{\infty}\gamma_O(h) 
     = f_j\!\left(\pi(1-\pi) + 2\sum_{h=1}^{\infty}\gamma_O(h)\right) \\
-    &\quad = f_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1} \\[2ex]
+    &\quad = f_j\,\sigma_{\boldsymbol{Z}^*;\,-1-1} \\[2ex]
     &\textbf{(iii)}\ i,j \geq 0: \\
     &\quad \mathrm{Cov}(O_t Z_{t,i}, O_t Z_{t,j}) 
     + \sum_{h=1}^{\infty}\bigl[\mathrm{Cov}(O_t Z_{t,i}, O_{t+h} Z_{t+h,j}) 
@@ -2896,7 +2901,7 @@ In this section we provide the detailed computations of the elements \textbf{(ii
     &\qquad + 2f_if_j\sum_{h=1}^{\infty} \gamma_O(h) - 2f_if_j\sum_{h=1}^{\infty} \gamma_{O}(h) + f_i f_j \pi - f_i f_j \pi  \\
     &\quad = f_if_j \pi(1-\pi) + f_i f_j\sum_{h=1}^{\infty} \gamma_O(h) + \pi(f_{\mathrm{min}\{i,j\}} - f_i f_j) \\
     &\qquad + \sum_{h=1}^{\infty} \left(\pi(h)(f_{ij}(h) + f_{ji}(h)) - 2f_if_j(\gamma_O(h) + \pi^2)\right)  \\
-    &\quad = f_i f_j\,\sigma_{\boldsymbol{Z}^*;\,-1,-1} 
+    &\quad = f_i f_j\,\sigma_{\boldsymbol{Z}^*;\,-1-1} 
     + \pi(f_{\mathrm{min}\{i,j\}} - f_i f_j)  
     + \sum_{h=1}^{\infty} \pi(h)(f_{ij}(h) + f_{ji}(h) - 2f_if_j)
 \end{align*}
@@ -3184,15 +3189,15 @@ $\boldsymbol{\mu}_{\boldsymbol{Y}^*}$ is sparse, with non-zero entries
 \]
 which is identical in structure to the ordinal case. Applying
 Lemma~\ref{lem:quadform} and using
-$\sigma_{\boldsymbol{Y}^*;\,-1,j} = p_j\,\sigma_{\boldsymbol{Y}^*;\,-1,-1}$
+$\sigma_{\boldsymbol{Y}^*;\,-1 j} = p_j\,\sigma_{\boldsymbol{Y}^*;\,-1-1}$
 from the nominal analogue of case~\textbf{(ii)} of
 Remark~\ref{rem:sigma_zstar}, the bias reduces to
 \begin{align*}
     \mathrm{Bias}(\hat{p}_j)
     &= \frac{1}{2}\,\mathrm{tr}
        \bigl(\boldsymbol{H}_{g_j}\,\boldsymbol{\Sigma}_{\boldsymbol{Y}^*}\bigr) \\
-    &= \frac{p_j}{\pi^2}\,\sigma_{\boldsymbol{Y}^*;\,-1,-1}
-       - \frac{1}{\pi^2}\,p_j\,\sigma_{\boldsymbol{Y}^*;\,-1,-1}
+    &= \frac{p_j}{\pi^2}\,\sigma_{\boldsymbol{Y}^*;\,-1-1}
+       - \frac{1}{\pi^2}\,p_j\,\sigma_{\boldsymbol{Y}^*;\,-1-1}
      = 0.
 \end{align*}
 Hence, $\hat{\boldsymbol{p}}^*$ is unbiased to order $n^{-1}$ under
@@ -3239,7 +3244,7 @@ from  Section~\ref{subsec:serial-general} with $Z_{t,i}$, $f_i$, $f_{ij}(h)$ rep
 by $p_j(\delta_{ij} - p_i)$ throughout. Also recall that $\delta_{ij} = \mathbb{I}\{i = j\}$ is the Kronecker Delta. For $i, j = 0, \ldots, m $, the individual elements are given by 
 \begin{align*}
     &\textbf{(i) }\sigma_{-2-2}^{(h)} = \pi(h)(1-\pi(h)) + 2 \sum_{k=1}^{\infty} \biggl(\mathrm{E}[O_t O_{t-h}O_{t+k}O_{t+k-h}] -2\pi(h)^2\biggr) \\
-    &\textbf{(ii) }\sigma_{-1, -2}^{(h)} = (1-\pi)\pi(h)\sum_{k=1}^{\infty} [\mathrm{E}[O_t O_{t-h}O_{t+k}]\mathrm{E}+[O_t O_{t+k}O_{t+k-h}]-2\pi \pi(h)] \\
+    &\textbf{(ii) }\sigma_{-1 -2}^{(h)} = (1-\pi)\pi(h)\sum_{k=1}^{\infty} [\mathrm{E}[O_t O_{t-h}O_{t+k}]\mathrm{E}+[O_t O_{t+k}O_{t+k-h}]-2\pi \pi(h)] \\
     &\textbf{(iii) }\sigma_{-2 j}^{(h)} = p_j \sigma_{-2 -1}^{(h) } \quad \textbf{(iv) }\sigma_{-2 (m+1+j)}^{(h)} = p_{jj}(h) \sigma_{-2 2}^{(h)} \quad \\
     &\textbf{(v) }\sigma_{-1 -1}^{(h)} = \pi(1-\pi) + 2 \sum_{k=1}^{\infty} \gamma_O(k) \\
     &\textbf{(vi) }\sigma_{-1 j}^{(h)} = p_j \sigma_{-1 -1}^{(h)} \quad \textbf{(vii) }\sigma_{-1 (m+1+j)}^{(h)} = p_{jj}(h) \sigma_{-1 2}^{(h)} \\

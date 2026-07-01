@@ -25,7 +25,7 @@ df_plot <- sleep1[[1]] %>%
 
 sleep_plot <- ggplot(df_plot, aes(x = min, y = state, group = gruppe)) +
   geom_line(linewidth = 0.4, color = "steelblue") +
-  geom_point(size = 5, color = "steelblue") +
+  geom_point(size = 2, color = "steelblue") +
   scale_y_continuous(
     breaks = 1:6,
     labels = c("Deep", "Light 2", "Light 1", "REM", "Wake", "Movement")
